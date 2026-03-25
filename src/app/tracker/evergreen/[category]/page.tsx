@@ -12,7 +12,7 @@ import {
 } from "@/components/tracker";
 
 // ---------------------------------------------------------------------------
-// Helpers — Neon can return booleans as actual bools or strings
+// Helpers
 // ---------------------------------------------------------------------------
 
 function toBool(v: unknown): boolean {
@@ -22,7 +22,7 @@ function toBool(v: unknown): boolean {
 }
 
 // ---------------------------------------------------------------------------
-// Transform brand mentions into component props
+// Transforms
 // ---------------------------------------------------------------------------
 
 function buildTopBrands(mentions: BrandMention[]) {
@@ -79,123 +79,63 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function EvergreenCategoryPage({ params }: Props) {
   const { category } = await params;
 
-  // --- Step 1: load category (only hard failure = 404) ---
-  let categoryRow;
-  try {
-    categoryRow = await getCategoryBySlug(category, "evergreen");
-  } catch (err) {
-    // DB totally down — render the error visibly, don't crash
-    return (
-      <div style={{ maxWidth: 720, margin: "0 auto", padding: 40, fontFamily: "system-ui, sans-serif" }}>
-        <p style={{ background: "red", color: "white", padding: 16, fontSize: 18, fontWeight: "bold" }}>
-          DATABASE ERROR (category lookup): {String(err)}
-        </p>
-      </div>
-    );
-  }
-
+  const categoryRow = await getCategoryBySlug(category, "evergreen");
   if (!categoryRow) notFound();
 
-  // --- Step 2: load run + mentions + insights (catch errors visibly) ---
-  let run = null;
+  let run = await getLatestRun(categoryRow.id, "published");
+  if (!run) run = await getLatestRun(categoryRow.id);
+
   let mentions: BrandMention[] = [];
   let insight: RunInsight | null = null;
   let periodLabel = "—";
-  let dataError: string | null = null;
 
-  try {
-    run = await getLatestRun(categoryRow.id, "published");
-    if (!run) run = await getLatestRun(categoryRow.id);
-
-    if (run) {
-      const [realMentions, realInsight] = await Promise.all([
-        getBrandMentions(run.id),
-        getRunInsight(run.id),
-      ]);
-      mentions = realMentions;
-      insight = realInsight;
-      periodLabel = run.period_label;
-    }
-  } catch (err) {
-    dataError = String(err);
+  if (run) {
+    const [realMentions, realInsight] = await Promise.all([
+      getBrandMentions(run.id),
+      getRunInsight(run.id),
+    ]);
+    mentions = realMentions;
+    insight = realInsight;
+    periodLabel = run.period_label;
   }
 
-  // --- Step 3: transform (always runs, even on empty arrays) ---
   const topBrands = buildTopBrands(mentions);
   const agentRows = buildAgentRows(mentions);
 
-  // --- Step 4: render EVERYTHING unconditionally ---
   return (
-    <div style={{ maxWidth: 720, margin: "0 auto", padding: 40, fontFamily: "system-ui, sans-serif" }}>
-      <p style={{ background: "yellow", color: "black", padding: 16, fontSize: 24, fontWeight: "bold", textAlign: "center", border: "4px solid red", marginBottom: 24 }}>
-        RECO TEST ACTIVE — build 004c9f9v2
-      </p>
-
-      {/* --- Debug counters --- */}
-      <div style={{ background: "#eee", padding: 12, marginBottom: 24, fontFamily: "monospace", fontSize: 14 }}>
-        <p>topBrands length: <strong>{topBrands.length}</strong></p>
-        <p>agentRows length: <strong>{agentRows.length}</strong></p>
-        <p>insight exists: <strong>{String(insight !== null)}</strong></p>
-        <p>mentions length: <strong>{mentions.length}</strong></p>
-        <p>run: <strong>{run ? `id=${run.id} status=${run.status}` : "null"}</strong></p>
-        <p>dataError: <strong>{dataError ?? "none"}</strong></p>
-      </div>
-
-      {/* --- Visible error banner if data fetch failed --- */}
-      {dataError && (
-        <p style={{ background: "red", color: "white", padding: 12, marginBottom: 16, fontWeight: "bold" }}>
-          DATA FETCH ERROR: {dataError}
-        </p>
-      )}
-
-      {/* --- Header --- */}
+    <article className="mx-auto max-w-3xl px-6 py-16">
       <SectionHeader
         title={categoryRow.name}
         subtitle={`Evergreen monthly benchmark — ${periodLabel}`}
-        badge={run?.status ?? "no run"}
+        badge={run?.status === "published" ? "Published" : run?.status ?? "No data yet"}
       />
 
-      <div style={{ padding: '24px', background: '#fee2e2', color: '#991b1b', marginTop: '24px' }}>
-        <h2>RECO RENDER TEST</h2>
-        <p>If you can see this, the page is rendering below the hero.</p>
-        <p>topBrands length: {String(topBrands?.length ?? 'undefined')}</p>
-        <p>agentRows length: {String(agentRows?.length ?? 'undefined')}</p>
-        <p>mentions length: {String(mentions?.length ?? 'undefined')}</p>
-        <p>insight exists: {String(!!insight)}</p>
-        <pre>{JSON.stringify({ topBrands, agentRows, mentions: mentions?.slice(0,2), insight }, null, 2)}</pre>
-      </div>
-
-      {/* --- Key Takeaway (always rendered) --- */}
-      <section style={{ marginTop: 32 }}>
+      <section className="mt-8">
         <KeyTakeawayPanel
-          takeaway={insight?.key_takeaway ?? "No takeaway available."}
+          takeaway={insight?.key_takeaway ?? "No takeaway available yet."}
           auditAngle={insight?.audit_angle ?? undefined}
         />
       </section>
 
-      {/* --- Top Brands (always rendered) --- */}
-      <section style={{ marginTop: 32 }}>
+      <section className="mt-10">
         <TopBrandsList brands={topBrands} />
       </section>
 
-      {/* --- Cross Agent Table (always rendered) --- */}
-      <section style={{ marginTop: 32 }}>
+      <section className="mt-10">
         <CrossAgentTable rows={agentRows} />
       </section>
 
-      {/* --- Insights (always rendered) --- */}
-      <section style={{ marginTop: 32 }}>
+      <section className="mt-10">
         <InsightsSection
-          commonTraits={insight?.common_traits ?? "—"}
-          crossAgentDifferences={insight?.cross_agent_differences ?? "—"}
-          marketGaps={insight?.market_gaps ?? "—"}
+          commonTraits={insight?.common_traits ?? undefined}
+          crossAgentDifferences={insight?.cross_agent_differences ?? undefined}
+          marketGaps={insight?.market_gaps ?? undefined}
         />
       </section>
 
-      {/* --- CTA (always rendered) --- */}
-      <section style={{ marginTop: 48 }}>
+      <section className="mt-14">
         <CTABox />
       </section>
-    </div>
+    </article>
   );
 }
