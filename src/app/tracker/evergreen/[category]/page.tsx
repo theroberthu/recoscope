@@ -200,6 +200,31 @@ export default async function EvergreenCategoryPage({ params }: Props) {
         />
       </section>
 
+      <section className="mt-14 border-t border-gray-200 pt-10">
+        <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
+          How We Measure This
+        </p>
+        <div className="mt-3 space-y-3 text-sm leading-relaxed text-gray-600">
+          <p>
+            Each benchmark runs the same standardized prompts across multiple leading AI systems,
+            including ChatGPT, Claude, Gemini, and Perplexity. We use consistent, category-specific
+            questions designed to surface genuine product recommendations — not sponsored results.
+          </p>
+          <p>
+            Responses are parsed to extract brand mentions, rank position, and frequency. We then
+            analyze cross-model agreement, identify which brands consistently appear in top positions,
+            and flag where AI outputs diverge from marketplace trends.
+          </p>
+          <p>
+            Evergreen categories are benchmarked monthly. Results reflect organic AI behavior at the
+            time of testing.{" "}
+            <a href="/methodology" className="font-medium text-gray-900 underline underline-offset-2 hover:text-gray-600">
+              Read the full methodology
+            </a>
+          </p>
+        </div>
+      </section>
+
       <section className="mt-14">
         <CTABox />
       </section>
