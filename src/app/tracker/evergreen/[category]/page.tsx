@@ -98,48 +98,49 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function EvergreenCategoryPage({ params }: Props) {
   const { category } = await params;
 
-  let categoryRow;
-  try {
-    categoryRow = await getCategoryBySlug(category, "evergreen");
-  } catch {
-    categoryRow = null;
-  }
-
+  const categoryRow = await getCategoryBySlug(category, "evergreen");
   if (!categoryRow) notFound();
 
-  // Attempt to load real run data; fall back to samples
+  console.log("[evergreen] category:", categoryRow.id, categoryRow.slug);
+
+  // Try published first, then fall back to any status
+  let run = await getLatestRun(categoryRow.id, "published");
+  if (!run) run = await getLatestRun(categoryRow.id);
+
+  console.log("[evergreen] run:", run?.id ?? "none", "status:", run?.status ?? "—");
+
   let mentions: BrandMention[] = SAMPLE_BRANDS;
   let insight: RunInsight | null = SAMPLE_INSIGHT;
   let periodLabel = "March 2025";
   let usingSample = true;
 
-  try {
-    const run = await getLatestRun(categoryRow.id);
-    if (run) {
-      const [realMentions, realInsight] = await Promise.all([
-        getBrandMentions(run.id),
-        getRunInsight(run.id),
-      ]);
-      if (realMentions.length > 0) {
-        mentions = realMentions;
-        insight = realInsight;
-        periodLabel = run.period_label;
-        usingSample = false;
-      }
+  if (run) {
+    const [realMentions, realInsight] = await Promise.all([
+      getBrandMentions(run.id),
+      getRunInsight(run.id),
+    ]);
+
+    console.log("[evergreen] mentions:", realMentions.length, "insight:", !!realInsight);
+
+    if (realMentions.length > 0) {
+      mentions = realMentions;
+      insight = realInsight;
+      periodLabel = run.period_label;
+      usingSample = false;
     }
-  } catch {
-    // keep sample data on DB error
   }
 
   const topBrands = buildTopBrands(mentions);
   const agentRows = buildAgentRows(mentions);
+
+  console.log("[evergreen] topBrands:", topBrands.length, "agentRows:", agentRows.length, "sample:", usingSample);
 
   return (
     <article className="mx-auto max-w-3xl px-6 py-16">
       <SectionHeader
         title={categoryRow.name}
         subtitle={`Evergreen monthly benchmark — ${periodLabel}`}
-        badge={usingSample ? "Sample data" : "Published"}
+        badge={usingSample ? "Sample data" : run?.status === "published" ? "Published" : "Draft"}
       />
 
       {insight?.key_takeaway && (

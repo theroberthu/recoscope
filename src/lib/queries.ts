@@ -40,15 +40,25 @@ export async function getCategoryBySlug(
 // Runs
 // ---------------------------------------------------------------------------
 
-export async function getLatestRun(categoryId: number): Promise<Run | null> {
+export async function getLatestRun(
+  categoryId: number,
+  statusFilter?: string,
+): Promise<Run | null> {
   const sql = getDb();
-  const rows = await sql`
-    SELECT * FROM runs
-    WHERE category_id = ${categoryId}
-      AND status = 'published'
-    ORDER BY run_date DESC
-    LIMIT 1
-  `;
+  const rows = statusFilter
+    ? await sql`
+        SELECT * FROM runs
+        WHERE category_id = ${categoryId}
+          AND status = ${statusFilter}
+        ORDER BY run_date DESC
+        LIMIT 1
+      `
+    : await sql`
+        SELECT * FROM runs
+        WHERE category_id = ${categoryId}
+        ORDER BY run_date DESC
+        LIMIT 1
+      `;
   return (rows[0] as Run) ?? null;
 }
 
