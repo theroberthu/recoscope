@@ -2,43 +2,14 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getCategoryBySlug, getLatestRun, getBrandMentions, getRunInsight } from "@/lib/queries";
 import type { BrandMention, RunInsight } from "@/lib/types";
-// Components temporarily bypassed for plain-HTML render verification
-// import {
-//   SectionHeader, KeyTakeawayPanel, TopBrandsList,
-//   CrossAgentTable, InsightsSection, CTABox,
-// } from "@/components/tracker";
-
-// ---------------------------------------------------------------------------
-// Sample data used when no published run exists yet
-// ---------------------------------------------------------------------------
-
-const SAMPLE_BRANDS: BrandMention[] = [
-  { id: 0, run_id: 0, agent_name: "ChatGPT", prompt_number: 1, brand_name_raw: "Herman Miller", brand_name_normalized: "Herman Miller", mention_rank: 1, is_top_3: true, is_first: true, mentioned: true, created_at: "" },
-  { id: 0, run_id: 0, agent_name: "ChatGPT", prompt_number: 1, brand_name_raw: "Steelcase", brand_name_normalized: "Steelcase", mention_rank: 2, is_top_3: true, is_first: false, mentioned: true, created_at: "" },
-  { id: 0, run_id: 0, agent_name: "ChatGPT", prompt_number: 1, brand_name_raw: "Secretlab", brand_name_normalized: "Secretlab", mention_rank: 3, is_top_3: true, is_first: false, mentioned: true, created_at: "" },
-  { id: 0, run_id: 0, agent_name: "Claude", prompt_number: 1, brand_name_raw: "Steelcase", brand_name_normalized: "Steelcase", mention_rank: 1, is_top_3: true, is_first: true, mentioned: true, created_at: "" },
-  { id: 0, run_id: 0, agent_name: "Claude", prompt_number: 1, brand_name_raw: "Herman Miller", brand_name_normalized: "Herman Miller", mention_rank: 2, is_top_3: true, is_first: false, mentioned: true, created_at: "" },
-  { id: 0, run_id: 0, agent_name: "Claude", prompt_number: 1, brand_name_raw: "HON", brand_name_normalized: "HON", mention_rank: 3, is_top_3: true, is_first: false, mentioned: true, created_at: "" },
-  { id: 0, run_id: 0, agent_name: "Gemini", prompt_number: 1, brand_name_raw: "Herman Miller", brand_name_normalized: "Herman Miller", mention_rank: 1, is_top_3: true, is_first: true, mentioned: true, created_at: "" },
-  { id: 0, run_id: 0, agent_name: "Gemini", prompt_number: 1, brand_name_raw: "Secretlab", brand_name_normalized: "Secretlab", mention_rank: 2, is_top_3: true, is_first: false, mentioned: true, created_at: "" },
-  { id: 0, run_id: 0, agent_name: "Gemini", prompt_number: 1, brand_name_raw: "Steelcase", brand_name_normalized: "Steelcase", mention_rank: 3, is_top_3: true, is_first: false, mentioned: true, created_at: "" },
-  { id: 0, run_id: 0, agent_name: "Perplexity", prompt_number: 1, brand_name_raw: "Herman Miller", brand_name_normalized: "Herman Miller", mention_rank: 1, is_top_3: true, is_first: true, mentioned: true, created_at: "" },
-  { id: 0, run_id: 0, agent_name: "Perplexity", prompt_number: 1, brand_name_raw: "Steelcase", brand_name_normalized: "Steelcase", mention_rank: 2, is_top_3: true, is_first: false, mentioned: true, created_at: "" },
-  { id: 0, run_id: 0, agent_name: "Perplexity", prompt_number: 1, brand_name_raw: "Autonomous", brand_name_normalized: "Autonomous", mention_rank: 3, is_top_3: true, is_first: false, mentioned: true, created_at: "" },
-];
-
-const SAMPLE_INSIGHT: RunInsight = {
-  id: 0,
-  run_id: 0,
-  key_takeaway: "Herman Miller and Steelcase dominate AI recommendations for office chairs, appearing in the top 3 across all four agents tested. Secretlab is the most common challenger brand.",
-  audit_angle: "Mid-market ergonomic brands are largely invisible to AI — a clear opportunity for brands investing in structured content and authority signals.",
-  top_brands_summary: "Herman Miller leads with 4 first-place picks. Steelcase appears in every agent's top 3.",
-  common_traits: "Top-recommended brands share strong review ecosystems, detailed product spec pages, and consistent mentions in editorial roundups.",
-  cross_agent_differences: "Claude favors Steelcase over Herman Miller. Perplexity surfaces Autonomous, which no other agent recommends in the top 3.",
-  market_gaps: "Budget ergonomic brands (under $500) are almost entirely absent from AI recommendations despite high search volume.",
-  reviewed_by_human: false,
-  created_at: "",
-};
+import {
+  SectionHeader,
+  KeyTakeawayPanel,
+  TopBrandsList,
+  CrossAgentTable,
+  InsightsSection,
+  CTABox,
+} from "@/components/tracker";
 
 // ---------------------------------------------------------------------------
 // Helpers — Neon can return booleans as actual bools or strings
@@ -72,7 +43,6 @@ function buildTopBrands(mentions: BrandMention[]) {
 function buildAgentRows(mentions: BrandMention[]) {
   const map = new Map<string, string[]>();
   for (const m of mentions) {
-    // Use mention_rank <= 3 as fallback when is_top_3 is all false
     const isTop3 = toBool(m.is_top_3) || Number(m.mention_rank) <= 3;
     if (!isTop3) continue;
     const list = map.get(m.agent_name) ?? [];
@@ -109,120 +79,113 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function EvergreenCategoryPage({ params }: Props) {
   const { category } = await params;
 
-  const categoryRow = await getCategoryBySlug(category, "evergreen");
+  // --- Step 1: load category (only hard failure = 404) ---
+  let categoryRow;
+  try {
+    categoryRow = await getCategoryBySlug(category, "evergreen");
+  } catch (err) {
+    // DB totally down — render the error visibly, don't crash
+    return (
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: 40, fontFamily: "system-ui, sans-serif" }}>
+        <p style={{ background: "red", color: "white", padding: 16, fontSize: 18, fontWeight: "bold" }}>
+          DATABASE ERROR (category lookup): {String(err)}
+        </p>
+      </div>
+    );
+  }
+
   if (!categoryRow) notFound();
 
-  console.log("[evergreen] category:", categoryRow.id, categoryRow.slug);
+  // --- Step 2: load run + mentions + insights (catch errors visibly) ---
+  let run = null;
+  let mentions: BrandMention[] = [];
+  let insight: RunInsight | null = null;
+  let periodLabel = "—";
+  let dataError: string | null = null;
 
-  // Try published first, then fall back to any status
-  let run = await getLatestRun(categoryRow.id, "published");
-  if (!run) run = await getLatestRun(categoryRow.id);
+  try {
+    run = await getLatestRun(categoryRow.id, "published");
+    if (!run) run = await getLatestRun(categoryRow.id);
 
-  console.log("[evergreen] run:", run?.id ?? "none", "status:", run?.status ?? "—");
-
-  let mentions: BrandMention[] = SAMPLE_BRANDS;
-  let insight: RunInsight | null = SAMPLE_INSIGHT;
-  let periodLabel = "March 2025";
-  let usingSample = true;
-
-  if (run) {
-    const [realMentions, realInsight] = await Promise.all([
-      getBrandMentions(run.id),
-      getRunInsight(run.id),
-    ]);
-
-    console.log("[evergreen] mentions:", realMentions.length, "insight:", !!realInsight);
-    if (realMentions.length > 0) {
-      // Log a sample row to see actual types from Neon
-      const sample = realMentions[0];
-      console.log("[evergreen] sample mention row:", JSON.stringify(sample));
-      console.log("[evergreen] types — is_top_3:", typeof sample.is_top_3, sample.is_top_3,
-        "| is_first:", typeof sample.is_first, sample.is_first,
-        "| mention_rank:", typeof sample.mention_rank, sample.mention_rank,
-        "| brand_name_normalized:", typeof sample.brand_name_normalized, sample.brand_name_normalized);
-
+    if (run) {
+      const [realMentions, realInsight] = await Promise.all([
+        getBrandMentions(run.id),
+        getRunInsight(run.id),
+      ]);
       mentions = realMentions;
       insight = realInsight;
       periodLabel = run.period_label;
-      usingSample = false;
     }
+  } catch (err) {
+    dataError = String(err);
   }
 
+  // --- Step 3: transform (always runs, even on empty arrays) ---
   const topBrands = buildTopBrands(mentions);
   const agentRows = buildAgentRows(mentions);
 
-  console.log("[evergreen] topBrands:", topBrands.length, JSON.stringify(topBrands.slice(0, 3)));
-  console.log("[evergreen] agentRows:", agentRows.length, JSON.stringify(agentRows.slice(0, 2)));
-  console.log("[evergreen] insight keys:", insight ? Object.keys(insight).filter(k => insight![k as keyof typeof insight]) : "null");
-
-  // -----------------------------------------------------------------------
-  // TEMPORARY: Plain HTML render to verify data reaches the browser.
-  // No custom components. Restore styled version once this proves visible.
-  // -----------------------------------------------------------------------
+  // --- Step 4: render EVERYTHING unconditionally ---
   return (
     <div style={{ maxWidth: 720, margin: "0 auto", padding: 40, fontFamily: "system-ui, sans-serif" }}>
       <p style={{ background: "yellow", color: "black", padding: 16, fontSize: 24, fontWeight: "bold", textAlign: "center", border: "4px solid red", marginBottom: 24 }}>
-        RECO TEST ACTIVE — build 85d984a
-      </p>
-      <h1 style={{ fontSize: 28, marginBottom: 4 }}>{categoryRow.name}</h1>
-      <p style={{ color: "#666" }}>
-        Status: <strong>{run?.status ?? "no run"}</strong> | Period: {periodLabel} | Source: {usingSample ? "SAMPLE" : "DATABASE"}
+        RECO TEST ACTIVE — build 004c9f9v2
       </p>
 
-      <hr style={{ margin: "24px 0" }} />
+      {/* --- Debug counters --- */}
+      <div style={{ background: "#eee", padding: 12, marginBottom: 24, fontFamily: "monospace", fontSize: 14 }}>
+        <p>topBrands length: <strong>{topBrands.length}</strong></p>
+        <p>agentRows length: <strong>{agentRows.length}</strong></p>
+        <p>insight exists: <strong>{String(insight !== null)}</strong></p>
+        <p>mentions length: <strong>{mentions.length}</strong></p>
+        <p>run: <strong>{run ? `id=${run.id} status=${run.status}` : "null"}</strong></p>
+        <p>dataError: <strong>{dataError ?? "none"}</strong></p>
+      </div>
 
-      <h2 style={{ fontSize: 20, marginBottom: 12 }}>Key Takeaway</h2>
-      <p>{insight?.key_takeaway ?? "—"}</p>
-      {insight?.audit_angle && <p style={{ color: "#666", marginTop: 8 }}>Audit angle: {insight.audit_angle}</p>}
-
-      <hr style={{ margin: "24px 0" }} />
-
-      <h2 style={{ fontSize: 20, marginBottom: 12 }}>Top Brands ({topBrands.length})</h2>
-      {topBrands.length === 0 ? (
-        <p style={{ color: "red" }}>No brands produced by buildTopBrands()</p>
-      ) : (
-        <ul>
-          {topBrands.map((b) => (
-            <li key={b.name}>
-              <strong>{b.name}</strong> — {b.mentionCount} mentions {b.isFirst ? "(#1 pick)" : ""}
-            </li>
-          ))}
-        </ul>
+      {/* --- Visible error banner if data fetch failed --- */}
+      {dataError && (
+        <p style={{ background: "red", color: "white", padding: 12, marginBottom: 16, fontWeight: "bold" }}>
+          DATA FETCH ERROR: {dataError}
+        </p>
       )}
 
-      <hr style={{ margin: "24px 0" }} />
+      {/* --- Header --- */}
+      <SectionHeader
+        title={categoryRow.name}
+        subtitle={`Evergreen monthly benchmark — ${periodLabel}`}
+        badge={run?.status ?? "no run"}
+      />
 
-      <h2 style={{ fontSize: 20, marginBottom: 12 }}>Agent Rows ({agentRows.length})</h2>
-      {agentRows.length === 0 ? (
-        <p style={{ color: "red" }}>No rows produced by buildAgentRows()</p>
-      ) : (
-        <ul>
-          {agentRows.map((r) => (
-            <li key={r.agentName}>
-              <strong>{r.agentName}</strong>: {r.topBrands.join(", ") || "—"}
-            </li>
-          ))}
-        </ul>
-      )}
+      {/* --- Key Takeaway (always rendered) --- */}
+      <section style={{ marginTop: 32 }}>
+        <KeyTakeawayPanel
+          takeaway={insight?.key_takeaway ?? "No takeaway available."}
+          auditAngle={insight?.audit_angle ?? undefined}
+        />
+      </section>
 
-      <hr style={{ margin: "24px 0" }} />
+      {/* --- Top Brands (always rendered) --- */}
+      <section style={{ marginTop: 32 }}>
+        <TopBrandsList brands={topBrands} />
+      </section>
 
-      <h2 style={{ fontSize: 20, marginBottom: 12 }}>Insights</h2>
-      <p><strong>Common Traits:</strong> {insight?.common_traits ?? "—"}</p>
-      <p><strong>Cross-Agent Differences:</strong> {insight?.cross_agent_differences ?? "—"}</p>
-      <p><strong>Market Gaps:</strong> {insight?.market_gaps ?? "—"}</p>
+      {/* --- Cross Agent Table (always rendered) --- */}
+      <section style={{ marginTop: 32 }}>
+        <CrossAgentTable rows={agentRows} />
+      </section>
 
-      <hr style={{ margin: "24px 0" }} />
+      {/* --- Insights (always rendered) --- */}
+      <section style={{ marginTop: 32 }}>
+        <InsightsSection
+          commonTraits={insight?.common_traits ?? "—"}
+          crossAgentDifferences={insight?.cross_agent_differences ?? "—"}
+          marketGaps={insight?.market_gaps ?? "—"}
+        />
+      </section>
 
-      <h2 style={{ fontSize: 20, marginBottom: 12 }}>Raw Data Check</h2>
-      <p>mentions.length: <strong>{mentions.length}</strong></p>
-      <p>First mention keys: <strong>{mentions.length > 0 ? Object.keys(mentions[0]).join(", ") : "empty"}</strong></p>
-      <pre style={{ background: "#f5f5f5", padding: 12, fontSize: 11, overflow: "auto", maxHeight: 300 }}>
-        {JSON.stringify(mentions.slice(0, 3), null, 2)}
-      </pre>
-
-      <hr style={{ margin: "24px 0" }} />
-      <p><a href="/audit" style={{ color: "#0066cc" }}>Request Your Audit →</a></p>
+      {/* --- CTA (always rendered) --- */}
+      <section style={{ marginTop: 48 }}>
+        <CTABox />
+      </section>
     </div>
   );
 }
