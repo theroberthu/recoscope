@@ -161,6 +161,9 @@ export default async function EvergreenCategoryPage({ params }: Props) {
   // -----------------------------------------------------------------------
   return (
     <div style={{ maxWidth: 720, margin: "0 auto", padding: 40, fontFamily: "system-ui, sans-serif" }}>
+      <p style={{ background: "yellow", color: "black", padding: 16, fontSize: 24, fontWeight: "bold", textAlign: "center", border: "4px solid red", marginBottom: 24 }}>
+        RECO TEST ACTIVE — build 85d984a
+      </p>
       <h1 style={{ fontSize: 28, marginBottom: 4 }}>{categoryRow.name}</h1>
       <p style={{ color: "#666" }}>
         Status: <strong>{run?.status ?? "no run"}</strong> | Period: {periodLabel} | Source: {usingSample ? "SAMPLE" : "DATABASE"}
