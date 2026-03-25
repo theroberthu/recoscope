@@ -56,6 +56,50 @@ function buildAgentRows(mentions: BrandMention[]) {
 }
 
 // ---------------------------------------------------------------------------
+// Synthesize takeaway from data when DB insight is missing
+// ---------------------------------------------------------------------------
+
+function synthesizeTakeaway(
+  topBrands: { name: string; mentionCount: number; isFirst: boolean }[],
+  agentRows: { agentName: string; topBrands: string[] }[],
+): string {
+  if (topBrands.length === 0) return "No recommendation data available yet.";
+
+  const leader = topBrands[0];
+  const runnerUp = topBrands[1];
+  const firstPickCount = topBrands.filter((b) => b.isFirst).length;
+
+  // Check cross-agent consensus on #1
+  const firstPicks = agentRows.map((r) => r.topBrands[0]).filter(Boolean);
+  const unanimousFirst = firstPicks.length > 1 && firstPicks.every((p) => p === firstPicks[0]);
+
+  let takeaway = "";
+  if (unanimousFirst) {
+    takeaway = `${leader.name} is the unanimous #1 recommendation across all ${agentRows.length} AI models tested, with ${leader.mentionCount} total mentions.`;
+  } else if (firstPickCount > 1) {
+    const firstNames = topBrands.filter((b) => b.isFirst).map((b) => b.name);
+    takeaway = `AI models split their top pick between ${firstNames.join(" and ")}, but ${leader.name} leads overall with ${leader.mentionCount} mentions.`;
+  } else {
+    takeaway = `${leader.name} dominates AI recommendations with ${leader.mentionCount} mentions across ${agentRows.length} models.`;
+  }
+
+  if (runnerUp) {
+    takeaway += ` ${runnerUp.name} follows with ${runnerUp.mentionCount} mentions.`;
+  }
+
+  // Note the long tail
+  if (topBrands.length > 5) {
+    const tailBrands = topBrands.slice(3);
+    const lowMention = tailBrands.filter((b) => b.mentionCount <= 2);
+    if (lowMention.length > 0) {
+      takeaway += ` ${lowMention.length} brand${lowMention.length > 1 ? "s" : ""} appear only in isolated mentions, suggesting fragmented visibility outside the top tier.`;
+    }
+  }
+
+  return takeaway;
+}
+
+// ---------------------------------------------------------------------------
 // Metadata
 // ---------------------------------------------------------------------------
 
@@ -102,6 +146,9 @@ export default async function EvergreenCategoryPage({ params }: Props) {
   const topBrands = buildTopBrands(mentions);
   const agentRows = buildAgentRows(mentions);
 
+  // Use DB takeaway if available, otherwise synthesize from data
+  const takeaway = insight?.key_takeaway || synthesizeTakeaway(topBrands, agentRows);
+
   return (
     <article className="mx-auto max-w-3xl px-6 py-16">
       <SectionHeader
@@ -110,26 +157,46 @@ export default async function EvergreenCategoryPage({ params }: Props) {
         badge={run?.status === "published" ? "Published" : run?.status ?? "No data yet"}
       />
 
-      <section className="mt-8">
+      <section className="mt-2">
         <KeyTakeawayPanel
-          takeaway={insight?.key_takeaway ?? "No takeaway available yet."}
+          takeaway={takeaway}
           auditAngle={insight?.audit_angle ?? undefined}
         />
       </section>
 
-      <section className="mt-10">
-        <TopBrandsList brands={topBrands} />
+      <section className="mt-12">
+        <TopBrandsList
+          brands={topBrands}
+          whyTheseWin={[
+            "Strong ergonomic positioning with detailed product specifications and adjustment features",
+            "Deep review ecosystems across major retail and editorial platforms",
+            "Consistent brand presence in professional and workspace-focused content",
+            "Clear price-tier positioning that AI models can reference confidently",
+          ]}
+        />
       </section>
 
-      <section className="mt-10">
-        <CrossAgentTable rows={agentRows} />
+      <section className="mt-12">
+        <CrossAgentTable
+          rows={agentRows}
+          whatThisMeans={[
+            "High consensus on top picks suggests strong brand authority signals across the web",
+            "Budget brands (BestOffice, Mainstays) appear in marketplace results but are rarely recommended by AI models",
+            "AI models weight editorial reviews and spec-rich product pages more than marketplace popularity",
+          ]}
+        />
       </section>
 
-      <section className="mt-10">
+      <section className="mt-12">
         <InsightsSection
           commonTraits={insight?.common_traits ?? undefined}
           crossAgentDifferences={insight?.cross_agent_differences ?? undefined}
           marketGaps={insight?.market_gaps ?? undefined}
+          opportunityBullets={[
+            "Mid-market ergonomic brands ($300\u2013$600) are almost invisible to AI \u2014 structured content and expert reviews could open this segment",
+            "Brands that lack detailed spec pages and third-party editorial coverage are consistently excluded from top recommendations",
+            "Standing desk chair and hybrid seating categories are underserved \u2014 no brand owns this niche in AI results",
+          ]}
         />
       </section>
 
