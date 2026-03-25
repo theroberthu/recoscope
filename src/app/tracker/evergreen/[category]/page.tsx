@@ -2,14 +2,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getCategoryBySlug, getLatestRun, getBrandMentions, getRunInsight } from "@/lib/queries";
 import type { BrandMention, RunInsight } from "@/lib/types";
-import {
-  SectionHeader,
-  KeyTakeawayPanel,
-  TopBrandsList,
-  CrossAgentTable,
-  InsightsSection,
-  CTABox,
-} from "@/components/tracker";
+// Components temporarily bypassed for plain-HTML render verification
+// import {
+//   SectionHeader, KeyTakeawayPanel, TopBrandsList,
+//   CrossAgentTable, InsightsSection, CTABox,
+// } from "@/components/tracker";
 
 // ---------------------------------------------------------------------------
 // Sample data used when no published run exists yet
@@ -158,67 +155,71 @@ export default async function EvergreenCategoryPage({ params }: Props) {
   console.log("[evergreen] agentRows:", agentRows.length, JSON.stringify(agentRows.slice(0, 2)));
   console.log("[evergreen] insight keys:", insight ? Object.keys(insight).filter(k => insight![k as keyof typeof insight]) : "null");
 
+  // -----------------------------------------------------------------------
+  // TEMPORARY: Plain HTML render to verify data reaches the browser.
+  // No custom components. Restore styled version once this proves visible.
+  // -----------------------------------------------------------------------
   return (
-    <article className="mx-auto max-w-3xl px-6 py-16">
-      <SectionHeader
-        title={categoryRow.name}
-        subtitle={`Evergreen monthly benchmark — ${periodLabel}`}
-        badge={usingSample ? "Sample data" : run?.status === "published" ? "Published" : "Draft"}
-      />
+    <div style={{ maxWidth: 720, margin: "0 auto", padding: 40, fontFamily: "system-ui, sans-serif" }}>
+      <h1 style={{ fontSize: 28, marginBottom: 4 }}>{categoryRow.name}</h1>
+      <p style={{ color: "#666" }}>
+        Status: <strong>{run?.status ?? "no run"}</strong> | Period: {periodLabel} | Source: {usingSample ? "SAMPLE" : "DATABASE"}
+      </p>
 
-      {insight?.key_takeaway && (
-        <section className="mt-8">
-          <KeyTakeawayPanel
-            takeaway={insight.key_takeaway}
-            auditAngle={insight.audit_angle ?? undefined}
-          />
-        </section>
+      <hr style={{ margin: "24px 0" }} />
+
+      <h2 style={{ fontSize: 20, marginBottom: 12 }}>Key Takeaway</h2>
+      <p>{insight?.key_takeaway ?? "—"}</p>
+      {insight?.audit_angle && <p style={{ color: "#666", marginTop: 8 }}>Audit angle: {insight.audit_angle}</p>}
+
+      <hr style={{ margin: "24px 0" }} />
+
+      <h2 style={{ fontSize: 20, marginBottom: 12 }}>Top Brands ({topBrands.length})</h2>
+      {topBrands.length === 0 ? (
+        <p style={{ color: "red" }}>No brands produced by buildTopBrands()</p>
+      ) : (
+        <ul>
+          {topBrands.map((b) => (
+            <li key={b.name}>
+              <strong>{b.name}</strong> — {b.mentionCount} mentions {b.isFirst ? "(#1 pick)" : ""}
+            </li>
+          ))}
+        </ul>
       )}
 
-      <section className="mt-10">
-        <TopBrandsList brands={topBrands} />
-      </section>
+      <hr style={{ margin: "24px 0" }} />
 
-      <section className="mt-10">
-        <CrossAgentTable rows={agentRows} />
-      </section>
+      <h2 style={{ fontSize: 20, marginBottom: 12 }}>Agent Rows ({agentRows.length})</h2>
+      {agentRows.length === 0 ? (
+        <p style={{ color: "red" }}>No rows produced by buildAgentRows()</p>
+      ) : (
+        <ul>
+          {agentRows.map((r) => (
+            <li key={r.agentName}>
+              <strong>{r.agentName}</strong>: {r.topBrands.join(", ") || "—"}
+            </li>
+          ))}
+        </ul>
+      )}
 
-      <section className="mt-10">
-        <InsightsSection
-          commonTraits={insight?.common_traits ?? undefined}
-          crossAgentDifferences={insight?.cross_agent_differences ?? undefined}
-          marketGaps={insight?.market_gaps ?? undefined}
-        />
-      </section>
+      <hr style={{ margin: "24px 0" }} />
 
-      <section className="mt-14">
-        <CTABox />
-      </section>
+      <h2 style={{ fontSize: 20, marginBottom: 12 }}>Insights</h2>
+      <p><strong>Common Traits:</strong> {insight?.common_traits ?? "—"}</p>
+      <p><strong>Cross-Agent Differences:</strong> {insight?.cross_agent_differences ?? "—"}</p>
+      <p><strong>Market Gaps:</strong> {insight?.market_gaps ?? "—"}</p>
 
-      {/* --- Temporary debug dump — remove before production --- */}
-      <details className="mt-12 rounded border border-amber-300 bg-amber-50 p-4 text-xs">
-        <summary className="cursor-pointer font-semibold text-amber-800">
-          Debug: data passed to components ({usingSample ? "sample" : "real"})
-        </summary>
-        <div className="mt-3 space-y-4 overflow-x-auto font-mono">
-          <div>
-            <p className="font-bold">topBrands ({topBrands.length}):</p>
-            <pre>{JSON.stringify(topBrands, null, 2)}</pre>
-          </div>
-          <div>
-            <p className="font-bold">agentRows ({agentRows.length}):</p>
-            <pre>{JSON.stringify(agentRows, null, 2)}</pre>
-          </div>
-          <div>
-            <p className="font-bold">insight:</p>
-            <pre>{JSON.stringify(insight, null, 2)}</pre>
-          </div>
-          <div>
-            <p className="font-bold">raw mentions sample (first 2):</p>
-            <pre>{JSON.stringify(mentions.slice(0, 2), null, 2)}</pre>
-          </div>
-        </div>
-      </details>
-    </article>
+      <hr style={{ margin: "24px 0" }} />
+
+      <h2 style={{ fontSize: 20, marginBottom: 12 }}>Raw Data Check</h2>
+      <p>mentions.length: <strong>{mentions.length}</strong></p>
+      <p>First mention keys: <strong>{mentions.length > 0 ? Object.keys(mentions[0]).join(", ") : "empty"}</strong></p>
+      <pre style={{ background: "#f5f5f5", padding: 12, fontSize: 11, overflow: "auto", maxHeight: 300 }}>
+        {JSON.stringify(mentions.slice(0, 3), null, 2)}
+      </pre>
+
+      <hr style={{ margin: "24px 0" }} />
+      <p><a href="/audit" style={{ color: "#0066cc" }}>Request Your Audit →</a></p>
+    </div>
   );
 }
