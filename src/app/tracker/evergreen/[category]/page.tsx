@@ -44,16 +44,28 @@ const SAMPLE_INSIGHT: RunInsight = {
 };
 
 // ---------------------------------------------------------------------------
+// Helpers — Neon can return booleans as actual bools or strings
+// ---------------------------------------------------------------------------
+
+function toBool(v: unknown): boolean {
+  if (typeof v === "boolean") return v;
+  if (typeof v === "string") return v === "true" || v === "t";
+  return Boolean(v);
+}
+
+// ---------------------------------------------------------------------------
 // Transform brand mentions into component props
 // ---------------------------------------------------------------------------
 
 function buildTopBrands(mentions: BrandMention[]) {
   const map = new Map<string, { count: number; isFirst: boolean }>();
   for (const m of mentions) {
-    const entry = map.get(m.brand_name_normalized) ?? { count: 0, isFirst: false };
+    const key = m.brand_name_normalized;
+    if (!key) continue;
+    const entry = map.get(key) ?? { count: 0, isFirst: false };
     entry.count += 1;
-    if (m.is_first) entry.isFirst = true;
-    map.set(m.brand_name_normalized, entry);
+    if (toBool(m.is_first)) entry.isFirst = true;
+    map.set(key, entry);
   }
   return Array.from(map.entries())
     .map(([name, { count, isFirst }]) => ({ name, mentionCount: count, isFirst }))
@@ -63,7 +75,9 @@ function buildTopBrands(mentions: BrandMention[]) {
 function buildAgentRows(mentions: BrandMention[]) {
   const map = new Map<string, string[]>();
   for (const m of mentions) {
-    if (!m.is_top_3) continue;
+    // Use mention_rank <= 3 as fallback when is_top_3 is all false
+    const isTop3 = toBool(m.is_top_3) || Number(m.mention_rank) <= 3;
+    if (!isTop3) continue;
     const list = map.get(m.agent_name) ?? [];
     list.push(m.brand_name_normalized);
     map.set(m.agent_name, list);
@@ -121,8 +135,15 @@ export default async function EvergreenCategoryPage({ params }: Props) {
     ]);
 
     console.log("[evergreen] mentions:", realMentions.length, "insight:", !!realInsight);
-
     if (realMentions.length > 0) {
+      // Log a sample row to see actual types from Neon
+      const sample = realMentions[0];
+      console.log("[evergreen] sample mention row:", JSON.stringify(sample));
+      console.log("[evergreen] types — is_top_3:", typeof sample.is_top_3, sample.is_top_3,
+        "| is_first:", typeof sample.is_first, sample.is_first,
+        "| mention_rank:", typeof sample.mention_rank, sample.mention_rank,
+        "| brand_name_normalized:", typeof sample.brand_name_normalized, sample.brand_name_normalized);
+
       mentions = realMentions;
       insight = realInsight;
       periodLabel = run.period_label;
@@ -133,7 +154,9 @@ export default async function EvergreenCategoryPage({ params }: Props) {
   const topBrands = buildTopBrands(mentions);
   const agentRows = buildAgentRows(mentions);
 
-  console.log("[evergreen] topBrands:", topBrands.length, "agentRows:", agentRows.length, "sample:", usingSample);
+  console.log("[evergreen] topBrands:", topBrands.length, JSON.stringify(topBrands.slice(0, 3)));
+  console.log("[evergreen] agentRows:", agentRows.length, JSON.stringify(agentRows.slice(0, 2)));
+  console.log("[evergreen] insight keys:", insight ? Object.keys(insight).filter(k => insight![k as keyof typeof insight]) : "null");
 
   return (
     <article className="mx-auto max-w-3xl px-6 py-16">
@@ -171,6 +194,31 @@ export default async function EvergreenCategoryPage({ params }: Props) {
       <section className="mt-14">
         <CTABox />
       </section>
+
+      {/* --- Temporary debug dump — remove before production --- */}
+      <details className="mt-12 rounded border border-amber-300 bg-amber-50 p-4 text-xs">
+        <summary className="cursor-pointer font-semibold text-amber-800">
+          Debug: data passed to components ({usingSample ? "sample" : "real"})
+        </summary>
+        <div className="mt-3 space-y-4 overflow-x-auto font-mono">
+          <div>
+            <p className="font-bold">topBrands ({topBrands.length}):</p>
+            <pre>{JSON.stringify(topBrands, null, 2)}</pre>
+          </div>
+          <div>
+            <p className="font-bold">agentRows ({agentRows.length}):</p>
+            <pre>{JSON.stringify(agentRows, null, 2)}</pre>
+          </div>
+          <div>
+            <p className="font-bold">insight:</p>
+            <pre>{JSON.stringify(insight, null, 2)}</pre>
+          </div>
+          <div>
+            <p className="font-bold">raw mentions sample (first 2):</p>
+            <pre>{JSON.stringify(mentions.slice(0, 2), null, 2)}</pre>
+          </div>
+        </div>
+      </details>
     </article>
   );
 }
