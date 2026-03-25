@@ -155,6 +155,16 @@ export default async function EvergreenCategoryPage({ params }: Props) {
         badge={run?.status ?? "no run"}
       />
 
+      <div style={{ padding: '24px', background: '#fee2e2', color: '#991b1b', marginTop: '24px' }}>
+        <h2>RECO RENDER TEST</h2>
+        <p>If you can see this, the page is rendering below the hero.</p>
+        <p>topBrands length: {String(topBrands?.length ?? 'undefined')}</p>
+        <p>agentRows length: {String(agentRows?.length ?? 'undefined')}</p>
+        <p>mentions length: {String(mentions?.length ?? 'undefined')}</p>
+        <p>insight exists: {String(!!insight)}</p>
+        <pre>{JSON.stringify({ topBrands, agentRows, mentions: mentions?.slice(0,2), insight }, null, 2)}</pre>
+      </div>
+
       {/* --- Key Takeaway (always rendered) --- */}
       <section style={{ marginTop: 32 }}>
         <KeyTakeawayPanel
