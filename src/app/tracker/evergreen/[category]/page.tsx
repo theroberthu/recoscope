@@ -279,7 +279,6 @@ export default async function EvergreenCategoryPage({ params }: Props) {
       <section>
         <KeyTakeawayPanel
           takeaway={takeaway}
-          auditAngle={clean.auditAngle}
         />
       </section>
 
@@ -352,7 +351,9 @@ export default async function EvergreenCategoryPage({ params }: Props) {
       </ScrollFade>
 
       <ScrollFade className="mt-24">
-        <CTABox />
+        <CTABox
+          description={clean.auditAngle ?? undefined}
+        />
       </ScrollFade>
     </article>
   );
