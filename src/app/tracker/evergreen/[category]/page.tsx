@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getCategoryBySlug, getLatestRun, getBrandMentions, getRunInsight } from "@/lib/queries";
 import type { BrandMention, RunInsight } from "@/lib/types";
+import { cleanText } from "@/lib/clean-text";
 import {
   SectionHeader,
   KeyTakeawayPanel,
@@ -238,8 +239,17 @@ export default async function EvergreenCategoryPage({ params }: Props) {
   const topBrands = buildTopBrands(mentions, agentRows);
   const channelSplit = buildChannelSplit(mentions);
 
+  // Clean all insight text for display
+  const clean = {
+    keyTakeaway: cleanText(insight?.key_takeaway),
+    auditAngle: cleanText(insight?.audit_angle),
+    commonTraits: cleanText(insight?.common_traits),
+    crossAgentDifferences: cleanText(insight?.cross_agent_differences),
+    marketGaps: cleanText(insight?.market_gaps),
+  };
+
   // Use DB takeaway if available, otherwise synthesize from data
-  const takeaway = insight?.key_takeaway || synthesizeTakeaway(topBrands, agentRows);
+  const takeaway = clean.keyTakeaway || synthesizeTakeaway(topBrands, agentRows);
 
   return (
     <article className="mx-auto max-w-2xl px-6 py-24">
@@ -252,21 +262,21 @@ export default async function EvergreenCategoryPage({ params }: Props) {
       <section>
         <KeyTakeawayPanel
           takeaway={takeaway}
-          auditAngle={insight?.audit_angle ?? undefined}
+          auditAngle={clean.auditAngle}
         />
       </section>
 
       <section className="mt-20">
         <TopBrandsList
           brands={topBrands}
-          whyTheseWin={toBullets(insight?.common_traits)}
+          whyTheseWin={toBullets(clean.commonTraits)}
         />
       </section>
 
       <section className="mt-20">
         <CrossAgentTable
           rows={agentRows}
-          whatThisMeans={toBullets(insight?.cross_agent_differences)}
+          whatThisMeans={toBullets(clean.crossAgentDifferences)}
         />
       </section>
 
@@ -359,10 +369,10 @@ export default async function EvergreenCategoryPage({ params }: Props) {
 
       <section className="mt-20">
         <InsightsSection
-          commonTraits={insight?.common_traits ?? undefined}
-          crossAgentDifferences={insight?.cross_agent_differences ?? undefined}
-          marketGaps={insight?.market_gaps ?? undefined}
-          opportunityBullets={toBullets(insight?.market_gaps)}
+          commonTraits={clean.commonTraits}
+          crossAgentDifferences={clean.crossAgentDifferences}
+          marketGaps={clean.marketGaps}
+          opportunityBullets={toBullets(clean.marketGaps)}
         />
       </section>
 
