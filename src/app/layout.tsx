@@ -14,23 +14,23 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-white text-gray-900 antialiased">
-        <header className="border-b border-gray-100">
+      <body className="min-h-screen text-stone-900 antialiased">
+        <header className="border-b border-stone-200/60">
           <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
             <a
               href="/"
-              className="text-sm font-bold uppercase tracking-widest text-gray-900"
+              className="text-sm font-bold uppercase tracking-widest text-stone-800"
             >
               RecoScope
             </a>
-            <div className="flex gap-8 text-[13px] font-medium text-gray-400">
-              <a href="/tracker" className="transition-colors hover:text-gray-900">
+            <div className="flex gap-8 text-[13px] font-medium text-stone-400">
+              <a href="/tracker" className="transition-colors hover:text-stone-800">
                 Tracker
               </a>
-              <a href="/methodology" className="transition-colors hover:text-gray-900">
+              <a href="/methodology" className="transition-colors hover:text-stone-800">
                 Methodology
               </a>
-              <a href="/audit" className="transition-colors hover:text-gray-900">
+              <a href="/audit" className="transition-colors hover:text-stone-800">
                 Audit
               </a>
             </div>

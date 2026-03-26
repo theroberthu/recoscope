@@ -14,7 +14,7 @@ export function TopBrandsList({ brands, whyTheseWin }: TopBrandsListProps) {
 
   return (
     <div>
-      <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-gray-300">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-300">
         Top Brands by AI Mention Frequency
       </p>
 
@@ -29,9 +29,9 @@ export function TopBrandsList({ brands, whyTheseWin }: TopBrandsListProps) {
               key={brand.name}
               className={`rounded-lg ${
                 isFirst
-                  ? "bg-gray-900 px-6 pb-5 pt-5"
+                  ? "bg-stone-800 px-6 pb-5 pt-5"
                   : isTop3
-                    ? "bg-gray-50 px-6 pb-4 pt-4"
+                    ? "bg-stone-100 px-6 pb-4 pt-4"
                     : "px-6 pb-3 pt-3"
               }`}
             >
@@ -40,10 +40,10 @@ export function TopBrandsList({ brands, whyTheseWin }: TopBrandsListProps) {
                   <span
                     className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold ${
                       isFirst
-                        ? "bg-white text-gray-900"
+                        ? "bg-white/90 text-stone-800"
                         : isTop3
-                          ? "bg-gray-900 text-white"
-                          : "text-gray-300"
+                          ? "bg-stone-800 text-white"
+                          : "text-stone-300"
                     }`}
                   >
                     {i + 1}
@@ -53,8 +53,8 @@ export function TopBrandsList({ brands, whyTheseWin }: TopBrandsListProps) {
                       isFirst
                         ? "text-lg font-semibold text-white"
                         : isTop3
-                          ? "text-[15px] font-semibold text-gray-900"
-                          : "text-sm text-gray-500"
+                          ? "text-[15px] font-semibold text-stone-800"
+                          : "text-sm text-stone-500"
                     }`}
                   >
                     {brand.name}
@@ -63,8 +63,8 @@ export function TopBrandsList({ brands, whyTheseWin }: TopBrandsListProps) {
                     <span
                       className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
                         isFirst
-                          ? "bg-white/15 text-white/80"
-                          : "text-gray-400"
+                          ? "bg-white/15 text-white/70"
+                          : "text-stone-400"
                       }`}
                     >
                       {brand.label}
@@ -74,29 +74,28 @@ export function TopBrandsList({ brands, whyTheseWin }: TopBrandsListProps) {
                 <span
                   className={`tabular-nums ${
                     isFirst
-                      ? "text-sm text-white/50"
+                      ? "text-sm text-white/40"
                       : isTop3
-                        ? "text-[13px] font-medium text-gray-400"
-                        : "text-xs text-gray-300"
+                        ? "text-[13px] font-medium text-stone-400"
+                        : "text-xs text-stone-300"
                   }`}
                 >
                   {brand.mentionCount}
                 </span>
               </div>
 
-              {/* Momentum bar */}
               <div
                 className={`mt-3 h-1 rounded-full ${
-                  isFirst ? "bg-white/10" : "bg-gray-100"
+                  isFirst ? "bg-white/10" : "bg-stone-200"
                 }`}
               >
                 <div
                   className={`h-1 rounded-full ${
                     isFirst
-                      ? "bg-white/40"
+                      ? "bg-white/30"
                       : isTop3
-                        ? "bg-gray-900"
-                        : "bg-gray-300"
+                        ? "bg-stone-700"
+                        : "bg-stone-300"
                   }`}
                   style={{ width: `${barPct}%` }}
                 />
@@ -108,16 +107,16 @@ export function TopBrandsList({ brands, whyTheseWin }: TopBrandsListProps) {
 
       {whyTheseWin && whyTheseWin.length > 0 && (
         <div className="mt-10 pl-6">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-gray-300">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-300">
             Why These Brands Win
           </p>
           <ul className="mt-4 space-y-2.5">
             {whyTheseWin.map((point) => (
               <li
                 key={point}
-                className="flex items-start gap-3 text-[13px] leading-relaxed text-gray-400"
+                className="flex items-start gap-3 text-[13px] leading-relaxed text-stone-400"
               >
-                <span className="mt-[7px] block h-[3px] w-[3px] shrink-0 rounded-full bg-gray-300" />
+                <span className="mt-[7px] block h-[3px] w-[3px] shrink-0 rounded-full bg-stone-300" />
                 {point}
               </li>
             ))}

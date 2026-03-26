@@ -12,16 +12,16 @@ export function CTABox({
   href = "/audit",
 }: CTABoxProps) {
   return (
-    <div className="rounded-2xl bg-gray-950 px-8 py-16 text-center sm:px-12">
+    <div className="rounded-2xl bg-stone-900 px-8 py-16 text-center sm:px-12">
       <p className="mx-auto max-w-lg text-[28px] font-bold leading-[1.2] tracking-tight text-white">
         {heading}
       </p>
-      <p className="mx-auto mt-5 max-w-sm text-[14px] leading-relaxed text-gray-500">
+      <p className="mx-auto mt-5 max-w-sm text-[14px] leading-relaxed text-stone-400">
         {description}
       </p>
       <a
         href={href}
-        className="mt-10 inline-block rounded-full bg-white px-8 py-3.5 text-[13px] font-bold tracking-tight text-gray-900 transition-colors hover:bg-gray-100"
+        className="mt-10 inline-block rounded-full bg-white px-8 py-3.5 text-[13px] font-bold tracking-tight text-stone-900 transition-colors hover:bg-stone-100"
       >
         {buttonText}
       </a>

@@ -15,7 +15,7 @@ export function CrossAgentTable({ rows, whatThisMeans }: CrossAgentTableProps) {
 
   return (
     <div>
-      <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-gray-300">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-300">
         Cross-Agent Comparison
       </p>
 
@@ -23,16 +23,16 @@ export function CrossAgentTable({ rows, whatThisMeans }: CrossAgentTableProps) {
         <table className="w-full">
           <thead>
             <tr>
-              <th className="pb-4 pr-8 text-left text-[11px] font-semibold uppercase tracking-[0.15em] text-gray-300">
+              <th className="pb-4 pr-8 text-left text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-300">
                 Agent
               </th>
-              <th className="pb-4 pr-8 text-left text-[11px] font-semibold uppercase tracking-[0.15em] text-gray-300">
+              <th className="pb-4 pr-8 text-left text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-300">
                 #1
               </th>
-              <th className="pb-4 pr-8 text-left text-[11px] font-semibold uppercase tracking-[0.15em] text-gray-300">
+              <th className="pb-4 pr-8 text-left text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-300">
                 #2
               </th>
-              <th className="pb-4 text-left text-[11px] font-semibold uppercase tracking-[0.15em] text-gray-300">
+              <th className="pb-4 text-left text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-300">
                 #3
               </th>
             </tr>
@@ -43,11 +43,11 @@ export function CrossAgentTable({ rows, whatThisMeans }: CrossAgentTableProps) {
                 key={row.agentName}
                 className={
                   i < rows.length - 1
-                    ? "border-b border-gray-50"
+                    ? "border-b border-stone-100"
                     : ""
                 }
               >
-                <td className="py-4 pr-8 text-[13px] font-semibold text-gray-900">
+                <td className="py-4 pr-8 text-[13px] font-semibold text-stone-800">
                   {row.agentName}
                 </td>
                 {[0, 1, 2].map((idx) => (
@@ -55,8 +55,8 @@ export function CrossAgentTable({ rows, whatThisMeans }: CrossAgentTableProps) {
                     key={idx}
                     className={`py-4 pr-8 text-[13px] ${
                       idx === 0
-                        ? "font-medium text-gray-900"
-                        : "text-gray-300"
+                        ? "font-medium text-stone-800"
+                        : "text-stone-300"
                     }`}
                   >
                     {row.topBrands[idx] ?? "\u2014"}
@@ -69,25 +69,25 @@ export function CrossAgentTable({ rows, whatThisMeans }: CrossAgentTableProps) {
       </div>
 
       {consensus && (
-        <p className="mt-5 text-[13px] text-gray-400">
+        <p className="mt-5 text-[13px] text-stone-400">
           All {rows.length} models agree on{" "}
-          <span className="font-medium text-gray-900">{firstPicks[0]}</span>{" "}
+          <span className="font-medium text-stone-800">{firstPicks[0]}</span>{" "}
           as the top pick.
         </p>
       )}
 
       {whatThisMeans && whatThisMeans.length > 0 && (
         <div className="mt-10 pl-6">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-gray-300">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-300">
             What This Means
           </p>
           <ul className="mt-4 space-y-2.5">
             {whatThisMeans.map((point) => (
               <li
                 key={point}
-                className="flex items-start gap-3 text-[13px] leading-relaxed text-gray-400"
+                className="flex items-start gap-3 text-[13px] leading-relaxed text-stone-400"
               >
-                <span className="mt-[7px] block h-[3px] w-[3px] shrink-0 rounded-full bg-gray-300" />
+                <span className="mt-[7px] block h-[3px] w-[3px] shrink-0 rounded-full bg-stone-300" />
                 {point}
               </li>
             ))}

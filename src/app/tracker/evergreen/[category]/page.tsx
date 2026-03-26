@@ -256,17 +256,17 @@ export default async function EvergreenCategoryPage({ params }: Props) {
 
       {channelSplit.hasData && (
         <section className="mt-20">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-gray-300">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-300">
             AI Models vs Marketplace Agents
           </p>
           <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
             {/* AI column */}
             <div>
-              <p className="mb-4 text-[13px] font-semibold text-gray-900">
+              <p className="mb-4 text-[13px] font-semibold text-stone-800">
                 AI Models
               </p>
               {channelSplit.ai.length === 0 ? (
-                <p className="text-[13px] text-gray-300">No data</p>
+                <p className="text-[13px] text-stone-300">No data</p>
               ) : (
                 <div className="space-y-2">
                   {channelSplit.ai.map((b, i) => {
@@ -275,16 +275,16 @@ export default async function EvergreenCategoryPage({ params }: Props) {
                     return (
                       <div key={b.name}>
                         <div className="flex items-baseline justify-between">
-                          <span className={`text-[13px] ${i === 0 ? "font-semibold text-gray-900" : "text-gray-500"}`}>
+                          <span className={`text-[13px] ${i === 0 ? "font-semibold text-stone-800" : "text-stone-500"}`}>
                             {b.name}
                           </span>
-                          <span className="text-[11px] tabular-nums text-gray-300">
+                          <span className="text-[11px] tabular-nums text-stone-300">
                             {b.count}
                           </span>
                         </div>
-                        <div className="mt-1 h-1 rounded-full bg-gray-100">
+                        <div className="mt-1 h-1 rounded-full bg-stone-200">
                           <div
-                            className={`h-1 rounded-full ${i === 0 ? "bg-gray-900" : "bg-gray-300"}`}
+                            className={`h-1 rounded-full ${i === 0 ? "bg-stone-700" : "bg-stone-300"}`}
                             style={{ width: `${pct}%` }}
                           />
                         </div>
@@ -297,11 +297,11 @@ export default async function EvergreenCategoryPage({ params }: Props) {
 
             {/* Marketplace column */}
             <div>
-              <p className="mb-4 text-[13px] font-semibold text-gray-900">
+              <p className="mb-4 text-[13px] font-semibold text-stone-800">
                 Marketplace Agents
               </p>
               {channelSplit.marketplace.length === 0 ? (
-                <p className="text-[13px] text-gray-300">No marketplace data yet</p>
+                <p className="text-[13px] text-stone-300">No marketplace data yet</p>
               ) : (
                 <div className="space-y-2">
                   {channelSplit.marketplace.map((b, i) => {
@@ -310,16 +310,16 @@ export default async function EvergreenCategoryPage({ params }: Props) {
                     return (
                       <div key={b.name}>
                         <div className="flex items-baseline justify-between">
-                          <span className={`text-[13px] ${i === 0 ? "font-semibold text-gray-900" : "text-gray-500"}`}>
+                          <span className={`text-[13px] ${i === 0 ? "font-semibold text-stone-800" : "text-stone-500"}`}>
                             {b.name}
                           </span>
-                          <span className="text-[11px] tabular-nums text-gray-300">
+                          <span className="text-[11px] tabular-nums text-stone-300">
                             {b.count}
                           </span>
                         </div>
-                        <div className="mt-1 h-1 rounded-full bg-gray-100">
+                        <div className="mt-1 h-1 rounded-full bg-stone-200">
                           <div
-                            className={`h-1 rounded-full ${i === 0 ? "bg-gray-900" : "bg-gray-300"}`}
+                            className={`h-1 rounded-full ${i === 0 ? "bg-stone-700" : "bg-stone-300"}`}
                             style={{ width: `${pct}%` }}
                           />
                         </div>
@@ -332,7 +332,7 @@ export default async function EvergreenCategoryPage({ params }: Props) {
           </div>
 
           {channelSplit.hasBothChannels && (
-            <p className="mt-6 text-[13px] leading-relaxed text-gray-400">
+            <p className="mt-6 text-[13px] leading-relaxed text-stone-400">
               AI models and marketplace agents often recommend different brands.
               Marketplace results tend to favor best-sellers and price-competitive options,
               while AI models prioritize editorial authority and product depth.
@@ -355,10 +355,10 @@ export default async function EvergreenCategoryPage({ params }: Props) {
       </section>
 
       <section className="mt-24">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-gray-300">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-300">
           How we measure this
         </p>
-        <div className="mt-5 space-y-4 text-[13px] leading-[1.8] text-gray-400">
+        <div className="mt-5 space-y-4 text-[13px] leading-[1.8] text-stone-400">
           <p>
             Each benchmark runs the same standardized prompts across multiple leading AI systems,
             including ChatGPT, Claude, Gemini, and Perplexity. We use consistent, category-specific
@@ -372,7 +372,7 @@ export default async function EvergreenCategoryPage({ params }: Props) {
           <p>
             Evergreen categories are benchmarked monthly. Results reflect organic AI behavior at the
             time of testing.{" "}
-            <a href="/methodology" className="text-gray-500 underline underline-offset-2 transition-colors hover:text-gray-900">
+            <a href="/methodology" className="text-stone-500 underline underline-offset-2 transition-colors hover:text-stone-800">
               Read the full methodology
             </a>
           </p>
