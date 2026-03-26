@@ -8,7 +8,7 @@ export function SectionHeader({ title, subtitle, badge }: SectionHeaderProps) {
   return (
     <div className="mb-12">
       {subtitle && (
-        <p className="mb-4 text-[13px] font-medium text-stone-400">
+        <p className="mb-4 text-[13px] font-medium text-stone-500">
           {subtitle}
         </p>
       )}
@@ -16,7 +16,7 @@ export function SectionHeader({ title, subtitle, badge }: SectionHeaderProps) {
         {title}
       </h1>
       {badge && (
-        <span className="mt-5 inline-block rounded-full border border-stone-200 px-3 py-1 text-[11px] font-medium text-stone-400">
+        <span className="mt-5 inline-block rounded-full border border-stone-200 px-3 py-1 text-[11px] font-medium text-stone-500">
           {badge}
         </span>
       )}

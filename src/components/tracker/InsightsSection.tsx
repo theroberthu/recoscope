@@ -26,7 +26,7 @@ export function InsightsSection({
 
   return (
     <div>
-      <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-300">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-400">
         Analysis
       </p>
 
@@ -36,7 +36,7 @@ export function InsightsSection({
             <p className="text-[15px] font-semibold tracking-tight text-stone-800">
               {item.label}
             </p>
-            <p className="mt-2 text-[14px] leading-[1.7] text-stone-400">
+            <p className="mt-2 text-[14px] leading-[1.7] text-stone-500">
               {item.value}
             </p>
           </div>
@@ -52,7 +52,7 @@ export function InsightsSection({
             {opportunityBullets.map((point) => (
               <li
                 key={point}
-                className="flex items-start gap-3 text-[14px] leading-[1.7] text-stone-500"
+                className="flex items-start gap-3 text-[14px] leading-[1.7] text-stone-600"
               >
                 <span className="mt-[9px] block h-[3px] w-[3px] shrink-0 rounded-full bg-stone-800" />
                 {point}

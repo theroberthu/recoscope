@@ -29,13 +29,13 @@ export default function HomePage() {
     <div>
       {/* Hero */}
       <section className="mx-auto max-w-2xl px-6 pb-16 pt-28">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-300">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-400">
           AI Recommendation Intelligence
         </p>
         <h1 className="mt-4 text-5xl font-bold leading-[1.1] tracking-tight text-stone-900">
           AI is choosing winners in your category. Do you know who?
         </h1>
-        <p className="mt-6 max-w-lg text-lg leading-relaxed text-stone-400">
+        <p className="mt-6 max-w-lg text-lg leading-relaxed text-stone-500">
           When someone asks ChatGPT, Claude, or Gemini for a product recommendation,
           certain brands consistently appear at the top. Others don&rsquo;t appear at all.
           We reveal which &mdash; and why.
@@ -61,7 +61,7 @@ export default function HomePage() {
       {/* How we analyze */}
       <section className="border-t border-stone-200/60">
         <div className="mx-auto max-w-2xl px-6 py-20">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-300">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-400">
             How we analyze AI behavior
           </p>
           <div className="mt-8 grid grid-cols-1 gap-10 sm:grid-cols-3">
@@ -69,7 +69,7 @@ export default function HomePage() {
               <p className="text-[15px] font-semibold tracking-tight text-stone-800">
                 We query every major model
               </p>
-              <p className="mt-2 text-[13px] leading-[1.7] text-stone-400">
+              <p className="mt-2 text-[13px] leading-[1.7] text-stone-500">
                 Standardized prompts run monthly across ChatGPT, Claude, Gemini,
                 and Perplexity to capture real recommendation patterns.
               </p>
@@ -78,7 +78,7 @@ export default function HomePage() {
               <p className="text-[15px] font-semibold tracking-tight text-stone-800">
                 We rank what they recommend
               </p>
-              <p className="mt-2 text-[13px] leading-[1.7] text-stone-400">
+              <p className="mt-2 text-[13px] leading-[1.7] text-stone-500">
                 Every response is parsed for brand mentions, position,
                 and frequency &mdash; then compared across models to reveal consensus.
               </p>
@@ -87,7 +87,7 @@ export default function HomePage() {
               <p className="text-[15px] font-semibold tracking-tight text-stone-800">
                 We reveal who&rsquo;s invisible
               </p>
-              <p className="mt-2 text-[13px] leading-[1.7] text-stone-400">
+              <p className="mt-2 text-[13px] leading-[1.7] text-stone-500">
                 We surface where AI models agree, where they diverge from marketplaces,
                 and which brands are completely absent from AI results.
               </p>
@@ -99,7 +99,7 @@ export default function HomePage() {
       {/* Active reports */}
       <section className="border-t border-stone-200/60">
         <div className="mx-auto max-w-2xl px-6 py-20">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-300">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-400">
             Active Reports
           </p>
           <div className="mt-8 space-y-2">
@@ -129,12 +129,12 @@ export default function HomePage() {
                         {cat.label}
                       </span>
                     </span>
-                    <p className="mt-1 text-[13px] text-stone-400">
+                    <p className="mt-1 text-[13px] text-stone-500">
                       {cat.description}
                     </p>
                   </div>
                   {cat.live && (
-                    <span className="text-[13px] text-stone-300">&rarr;</span>
+                    <span className="text-[13px] text-stone-400">&rarr;</span>
                   )}
                 </div>
               </a>
