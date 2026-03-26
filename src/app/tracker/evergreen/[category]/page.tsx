@@ -25,19 +25,50 @@ function toBool(v: unknown): boolean {
 // Transforms
 // ---------------------------------------------------------------------------
 
-function buildTopBrands(mentions: BrandMention[]) {
-  const map = new Map<string, { count: number; isFirst: boolean }>();
+function buildTopBrands(
+  mentions: BrandMention[],
+  agentRows: { agentName: string; topBrands: string[] }[],
+) {
+  // Aggregate mention counts
+  const map = new Map<string, { count: number; firstInAgents: string[] }>();
   for (const m of mentions) {
     const key = m.brand_name_normalized;
     if (!key) continue;
-    const entry = map.get(key) ?? { count: 0, isFirst: false };
+    const entry = map.get(key) ?? { count: 0, firstInAgents: [] };
     entry.count += 1;
-    if (toBool(m.is_first)) entry.isFirst = true;
+    if (toBool(m.is_first)) entry.firstInAgents.push(m.agent_name);
     map.set(key, entry);
   }
-  return Array.from(map.entries())
-    .map(([name, { count, isFirst }]) => ({ name, mentionCount: count, isFirst }))
+
+  // Count how many agent top-3 lists each brand appears in
+  const top3Appearances = new Map<string, number>();
+  for (const row of agentRows) {
+    for (const brand of row.topBrands.slice(0, 3)) {
+      top3Appearances.set(brand, (top3Appearances.get(brand) ?? 0) + 1);
+    }
+  }
+
+  const sorted = Array.from(map.entries())
+    .map(([name, { count, firstInAgents }]) => ({ name, mentionCount: count, firstInAgents }))
     .sort((a, b) => b.mentionCount - a.mentionCount);
+
+  // Assign labels — only ONE brand gets "Overall Leader"
+  const leaderName = sorted[0]?.name;
+  const totalAgents = agentRows.length;
+
+  return sorted.map((brand) => {
+    let label: string | undefined;
+
+    if (brand.name === leaderName) {
+      label = "Overall Leader";
+    } else if ((top3Appearances.get(brand.name) ?? 0) >= Math.max(totalAgents - 1, 2)) {
+      label = "High Consensus";
+    } else if (brand.firstInAgents.length === 1) {
+      label = `Top in ${brand.firstInAgents[0]}`;
+    }
+
+    return { name: brand.name, mentionCount: brand.mentionCount, label };
+  });
 }
 
 function buildAgentRows(mentions: BrandMention[]) {
@@ -60,14 +91,13 @@ function buildAgentRows(mentions: BrandMention[]) {
 // ---------------------------------------------------------------------------
 
 function synthesizeTakeaway(
-  topBrands: { name: string; mentionCount: number; isFirst: boolean }[],
+  topBrands: { name: string; mentionCount: number; label?: string }[],
   agentRows: { agentName: string; topBrands: string[] }[],
 ): string {
   if (topBrands.length === 0) return "No recommendation data available yet.";
 
   const leader = topBrands[0];
   const runnerUp = topBrands[1];
-  const firstPickCount = topBrands.filter((b) => b.isFirst).length;
 
   // Check cross-agent consensus on #1
   const firstPicks = agentRows.map((r) => r.topBrands[0]).filter(Boolean);
@@ -76,21 +106,21 @@ function synthesizeTakeaway(
   let takeaway = "";
   if (unanimousFirst) {
     takeaway = `${leader.name} is the unanimous #1 recommendation across all ${agentRows.length} AI models tested, with ${leader.mentionCount} total mentions.`;
-  } else if (firstPickCount > 1) {
-    const firstNames = topBrands.filter((b) => b.isFirst).map((b) => b.name);
-    takeaway = `AI models split their top pick between ${firstNames.join(" and ")}, but ${leader.name} leads overall with ${leader.mentionCount} mentions.`;
   } else {
-    takeaway = `${leader.name} dominates AI recommendations with ${leader.mentionCount} mentions across ${agentRows.length} models.`;
+    const consensusBrands = topBrands.filter((b) => b.label === "High Consensus");
+    if (consensusBrands.length > 0) {
+      takeaway = `${leader.name} leads with ${leader.mentionCount} mentions, while ${consensusBrands.map((b) => b.name).join(" and ")} show strong cross-model consensus.`;
+    } else {
+      takeaway = `${leader.name} dominates AI recommendations with ${leader.mentionCount} mentions across ${agentRows.length} models.`;
+    }
   }
 
   if (runnerUp) {
     takeaway += ` ${runnerUp.name} follows with ${runnerUp.mentionCount} mentions.`;
   }
 
-  // Note the long tail
   if (topBrands.length > 5) {
-    const tailBrands = topBrands.slice(3);
-    const lowMention = tailBrands.filter((b) => b.mentionCount <= 2);
+    const lowMention = topBrands.slice(3).filter((b) => b.mentionCount <= 2);
     if (lowMention.length > 0) {
       takeaway += ` ${lowMention.length} brand${lowMention.length > 1 ? "s" : ""} appear only in isolated mentions, suggesting fragmented visibility outside the top tier.`;
     }
@@ -143,14 +173,14 @@ export default async function EvergreenCategoryPage({ params }: Props) {
     periodLabel = run.period_label;
   }
 
-  const topBrands = buildTopBrands(mentions);
   const agentRows = buildAgentRows(mentions);
+  const topBrands = buildTopBrands(mentions, agentRows);
 
   // Use DB takeaway if available, otherwise synthesize from data
   const takeaway = insight?.key_takeaway || synthesizeTakeaway(topBrands, agentRows);
 
   return (
-    <article className="mx-auto max-w-3xl px-6 py-20">
+    <article className="mx-auto max-w-2xl px-6 py-24">
       <SectionHeader
         title={categoryRow.name}
         subtitle={`Evergreen monthly benchmark \u2014 ${periodLabel}`}
@@ -164,7 +194,7 @@ export default async function EvergreenCategoryPage({ params }: Props) {
         />
       </section>
 
-      <section className="mt-16">
+      <section className="mt-20">
         <TopBrandsList
           brands={topBrands}
           whyTheseWin={[
@@ -176,7 +206,7 @@ export default async function EvergreenCategoryPage({ params }: Props) {
         />
       </section>
 
-      <section className="mt-16">
+      <section className="mt-20">
         <CrossAgentTable
           rows={agentRows}
           whatThisMeans={[
@@ -187,7 +217,7 @@ export default async function EvergreenCategoryPage({ params }: Props) {
         />
       </section>
 
-      <section className="mt-16">
+      <section className="mt-20">
         <InsightsSection
           commonTraits={insight?.common_traits ?? undefined}
           crossAgentDifferences={insight?.cross_agent_differences ?? undefined}
@@ -200,11 +230,11 @@ export default async function EvergreenCategoryPage({ params }: Props) {
         />
       </section>
 
-      <section className="mt-20">
-        <p className="text-[11px] font-semibold uppercase tracking-widest text-gray-300">
-          How We Measure This
+      <section className="mt-24">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-gray-300">
+          How we measure this
         </p>
-        <div className="mt-4 space-y-3 text-sm leading-relaxed text-gray-400">
+        <div className="mt-5 space-y-4 text-[13px] leading-[1.8] text-gray-400">
           <p>
             Each benchmark runs the same standardized prompts across multiple leading AI systems,
             including ChatGPT, Claude, Gemini, and Perplexity. We use consistent, category-specific
@@ -218,14 +248,14 @@ export default async function EvergreenCategoryPage({ params }: Props) {
           <p>
             Evergreen categories are benchmarked monthly. Results reflect organic AI behavior at the
             time of testing.{" "}
-            <a href="/methodology" className="font-medium text-gray-600 underline underline-offset-2 hover:text-gray-900">
+            <a href="/methodology" className="text-gray-500 underline underline-offset-2 transition-colors hover:text-gray-900">
               Read the full methodology
             </a>
           </p>
         </div>
       </section>
 
-      <section className="mt-20">
+      <section className="mt-24">
         <CTABox />
       </section>
     </article>
