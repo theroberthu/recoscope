@@ -87,6 +87,42 @@ function buildAgentRows(mentions: BrandMention[]) {
 }
 
 // ---------------------------------------------------------------------------
+// AI vs Marketplace split
+// ---------------------------------------------------------------------------
+
+const AI_AGENTS = new Set(["ChatGPT", "Claude", "Gemini", "Perplexity"]);
+const MARKETPLACE_AGENTS = new Set(["Rufus", "Sparky", "Amazon Rufus", "Walmart Sparky"]);
+
+function buildChannelSplit(mentions: BrandMention[]) {
+  const ai = new Map<string, number>();
+  const marketplace = new Map<string, number>();
+
+  for (const m of mentions) {
+    const key = m.brand_name_normalized;
+    if (!key) continue;
+
+    const isAi = AI_AGENTS.has(m.agent_name);
+    const isMkt = MARKETPLACE_AGENTS.has(m.agent_name);
+
+    if (isAi) ai.set(key, (ai.get(key) ?? 0) + 1);
+    if (isMkt) marketplace.set(key, (marketplace.get(key) ?? 0) + 1);
+  }
+
+  const sortDesc = (map: Map<string, number>) =>
+    Array.from(map.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([name, count]) => ({ name, count }));
+
+  return {
+    ai: sortDesc(ai),
+    marketplace: sortDesc(marketplace),
+    hasData: ai.size > 0 || marketplace.size > 0,
+    hasBothChannels: ai.size > 0 && marketplace.size > 0,
+  };
+}
+
+// ---------------------------------------------------------------------------
 // Synthesize takeaway from data when DB insight is missing
 // ---------------------------------------------------------------------------
 
@@ -175,6 +211,7 @@ export default async function EvergreenCategoryPage({ params }: Props) {
 
   const agentRows = buildAgentRows(mentions);
   const topBrands = buildTopBrands(mentions, agentRows);
+  const channelSplit = buildChannelSplit(mentions);
 
   // Use DB takeaway if available, otherwise synthesize from data
   const takeaway = insight?.key_takeaway || synthesizeTakeaway(topBrands, agentRows);
@@ -216,6 +253,93 @@ export default async function EvergreenCategoryPage({ params }: Props) {
           ]}
         />
       </section>
+
+      {channelSplit.hasData && (
+        <section className="mt-20">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-gray-300">
+            AI Models vs Marketplace Agents
+          </p>
+          <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
+            {/* AI column */}
+            <div>
+              <p className="mb-4 text-[13px] font-semibold text-gray-900">
+                AI Models
+              </p>
+              {channelSplit.ai.length === 0 ? (
+                <p className="text-[13px] text-gray-300">No data</p>
+              ) : (
+                <div className="space-y-2">
+                  {channelSplit.ai.map((b, i) => {
+                    const maxCount = channelSplit.ai[0].count;
+                    const pct = Math.max((b.count / maxCount) * 100, 6);
+                    return (
+                      <div key={b.name}>
+                        <div className="flex items-baseline justify-between">
+                          <span className={`text-[13px] ${i === 0 ? "font-semibold text-gray-900" : "text-gray-500"}`}>
+                            {b.name}
+                          </span>
+                          <span className="text-[11px] tabular-nums text-gray-300">
+                            {b.count}
+                          </span>
+                        </div>
+                        <div className="mt-1 h-1 rounded-full bg-gray-100">
+                          <div
+                            className={`h-1 rounded-full ${i === 0 ? "bg-gray-900" : "bg-gray-300"}`}
+                            style={{ width: `${pct}%` }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* Marketplace column */}
+            <div>
+              <p className="mb-4 text-[13px] font-semibold text-gray-900">
+                Marketplace Agents
+              </p>
+              {channelSplit.marketplace.length === 0 ? (
+                <p className="text-[13px] text-gray-300">No marketplace data yet</p>
+              ) : (
+                <div className="space-y-2">
+                  {channelSplit.marketplace.map((b, i) => {
+                    const maxCount = channelSplit.marketplace[0].count;
+                    const pct = Math.max((b.count / maxCount) * 100, 6);
+                    return (
+                      <div key={b.name}>
+                        <div className="flex items-baseline justify-between">
+                          <span className={`text-[13px] ${i === 0 ? "font-semibold text-gray-900" : "text-gray-500"}`}>
+                            {b.name}
+                          </span>
+                          <span className="text-[11px] tabular-nums text-gray-300">
+                            {b.count}
+                          </span>
+                        </div>
+                        <div className="mt-1 h-1 rounded-full bg-gray-100">
+                          <div
+                            className={`h-1 rounded-full ${i === 0 ? "bg-gray-900" : "bg-gray-300"}`}
+                            style={{ width: `${pct}%` }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {channelSplit.hasBothChannels && (
+            <p className="mt-6 text-[13px] leading-relaxed text-gray-400">
+              AI models and marketplace agents often recommend different brands.
+              Marketplace results tend to favor best-sellers and price-competitive options,
+              while AI models prioritize editorial authority and product depth.
+            </p>
+          )}
+        </section>
+      )}
 
       <section className="mt-20">
         <InsightsSection

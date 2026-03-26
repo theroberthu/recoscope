@@ -18,31 +18,24 @@ export function TopBrandsList({ brands, whyTheseWin }: TopBrandsListProps) {
         Top Brands by AI Mention Frequency
       </p>
 
-      <div className="mt-6 space-y-1">
+      <div className="mt-6 space-y-1.5">
         {brands.map((brand, i) => {
           const isFirst = i === 0;
           const isTop3 = i < 3;
-          const barWidth = Math.max((brand.mentionCount / maxMentions) * 100, 8);
+          const barPct = Math.max((brand.mentionCount / maxMentions) * 100, 4);
 
           return (
             <div
               key={brand.name}
-              className={`group relative overflow-hidden rounded-lg ${
+              className={`rounded-lg ${
                 isFirst
-                  ? "bg-gray-900 px-6 py-5"
+                  ? "bg-gray-900 px-6 pb-5 pt-5"
                   : isTop3
-                    ? "bg-gray-50 px-6 py-4"
-                    : "px-6 py-3"
+                    ? "bg-gray-50 px-6 pb-4 pt-4"
+                    : "px-6 pb-3 pt-3"
               }`}
             >
-              {isTop3 && !isFirst && (
-                <div
-                  className="absolute inset-y-0 left-0 bg-gray-100"
-                  style={{ width: `${barWidth}%` }}
-                />
-              )}
-
-              <div className="relative flex items-center justify-between">
+              <div className="flex items-center justify-between">
                 <span className="flex items-center gap-4">
                   <span
                     className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold ${
@@ -89,6 +82,24 @@ export function TopBrandsList({ brands, whyTheseWin }: TopBrandsListProps) {
                 >
                   {brand.mentionCount}
                 </span>
+              </div>
+
+              {/* Momentum bar */}
+              <div
+                className={`mt-3 h-1 rounded-full ${
+                  isFirst ? "bg-white/10" : "bg-gray-100"
+                }`}
+              >
+                <div
+                  className={`h-1 rounded-full ${
+                    isFirst
+                      ? "bg-white/40"
+                      : isTop3
+                        ? "bg-gray-900"
+                        : "bg-gray-300"
+                  }`}
+                  style={{ width: `${barPct}%` }}
+                />
               </div>
             </div>
           );
