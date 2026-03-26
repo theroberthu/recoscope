@@ -12,13 +12,6 @@ interface CrossAgentTableProps {
   whatThisMeans?: string[];
 }
 
-const AGENT_COLORS: Record<string, string> = {
-  Claude: "text-white/70",
-  Perplexity: "text-blue-400/70",
-  ChatGPT: "text-amber-400/70",
-  Gemini: "text-amber-400/70",
-};
-
 export function CrossAgentTable({ rows, whatThisMeans }: CrossAgentTableProps) {
   const [hovered, setHovered] = useState<string | null>(null);
 
@@ -70,7 +63,7 @@ export function CrossAgentTable({ rows, whatThisMeans }: CrossAgentTableProps) {
                   i < rows.length - 1 ? "border-b border-white/5" : ""
                 }
               >
-                <td className={`py-4 pr-8 font-mono text-[13px] font-semibold ${AGENT_COLORS[row.agentName] ?? "text-white/50"}`}>
+                <td className="py-4 pr-8 font-mono text-[13px] font-semibold text-white/60">
                   {row.agentName}
                 </td>
                 {[0, 1, 2].map((idx) => {
