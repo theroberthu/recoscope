@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getCategoryBySlug, getLatestRun, getBrandMentions, getRunInsight } from "@/lib/queries";
 import type { BrandMention, RunInsight } from "@/lib/types";
 import { cleanText } from "@/lib/clean-text";
+import { ScrollFade } from "@/components/home/ScrollFade";
 import {
   SectionHeader,
   KeyTakeawayPanel,
@@ -22,28 +23,23 @@ function toBool(v: unknown): boolean {
   return Boolean(v);
 }
 
-/** Split a DB text field into bullet points. Tries newlines first, then
- *  falls back to sentence splitting. Returns undefined if input is empty. */
 function toBullets(text: string | null | undefined): string[] | undefined {
   if (!text) return undefined;
   const trimmed = text.trim();
   if (!trimmed) return undefined;
 
-  // Try splitting on newlines (the DB field might already be line-separated)
   const byLine = trimmed
     .split(/\n+/)
     .map((s) => s.replace(/^[-•*]\s*/, "").trim())
     .filter(Boolean);
   if (byLine.length > 1) return byLine;
 
-  // Fall back to sentence splitting for single-paragraph fields
   const bySentence = trimmed
     .split(/(?<=\.)\s+/)
     .map((s) => s.trim())
     .filter((s) => s.length > 15);
   if (bySentence.length > 1) return bySentence;
 
-  // Single block — return as a one-item array
   return [trimmed];
 }
 
@@ -55,7 +51,6 @@ function buildTopBrands(
   mentions: BrandMention[],
   agentRows: { agentName: string; topBrands: string[] }[],
 ) {
-  // Aggregate mention counts
   const map = new Map<string, { count: number; firstInAgents: string[] }>();
   for (const m of mentions) {
     const key = m.brand_name_normalized;
@@ -66,7 +61,6 @@ function buildTopBrands(
     map.set(key, entry);
   }
 
-  // Count how many agent top-3 lists each brand appears in
   const top3Appearances = new Map<string, number>();
   for (const row of agentRows) {
     for (const brand of row.topBrands.slice(0, 3)) {
@@ -78,13 +72,11 @@ function buildTopBrands(
     .map(([name, { count, firstInAgents }]) => ({ name, mentionCount: count, firstInAgents }))
     .sort((a, b) => b.mentionCount - a.mentionCount);
 
-  // Assign labels — only ONE brand gets "Overall Leader"
   const leaderName = sorted[0]?.name;
   const totalAgents = agentRows.length;
 
   return sorted.map((brand) => {
     let label: string | undefined;
-
     if (brand.name === leaderName) {
       label = "Overall Leader";
     } else if ((top3Appearances.get(brand.name) ?? 0) >= Math.max(totalAgents - 1, 2)) {
@@ -92,7 +84,6 @@ function buildTopBrands(
     } else if (brand.firstInAgents.length === 1) {
       label = `Top in ${brand.firstInAgents[0]}`;
     }
-
     return { name: brand.name, mentionCount: brand.mentionCount, label };
   });
 }
@@ -126,12 +117,8 @@ function buildChannelSplit(mentions: BrandMention[]) {
   for (const m of mentions) {
     const key = m.brand_name_normalized;
     if (!key) continue;
-
-    const isAi = AI_AGENTS.has(m.agent_name);
-    const isMkt = MARKETPLACE_AGENTS.has(m.agent_name);
-
-    if (isAi) ai.set(key, (ai.get(key) ?? 0) + 1);
-    if (isMkt) marketplace.set(key, (marketplace.get(key) ?? 0) + 1);
+    if (AI_AGENTS.has(m.agent_name)) ai.set(key, (ai.get(key) ?? 0) + 1);
+    if (MARKETPLACE_AGENTS.has(m.agent_name)) marketplace.set(key, (marketplace.get(key) ?? 0) + 1);
   }
 
   const sortDesc = (map: Map<string, number>) =>
@@ -149,7 +136,7 @@ function buildChannelSplit(mentions: BrandMention[]) {
 }
 
 // ---------------------------------------------------------------------------
-// Synthesize takeaway from data when DB insight is missing
+// Synthesize takeaway
 // ---------------------------------------------------------------------------
 
 function synthesizeTakeaway(
@@ -157,11 +144,8 @@ function synthesizeTakeaway(
   agentRows: { agentName: string; topBrands: string[] }[],
 ): string {
   if (topBrands.length === 0) return "No recommendation data available yet.";
-
   const leader = topBrands[0];
   const runnerUp = topBrands[1];
-
-  // Check cross-agent consensus on #1
   const firstPicks = agentRows.map((r) => r.topBrands[0]).filter(Boolean);
   const unanimousFirst = firstPicks.length > 1 && firstPicks.every((p) => p === firstPicks[0]);
 
@@ -176,19 +160,54 @@ function synthesizeTakeaway(
       takeaway = `${leader.name} dominates AI recommendations with ${leader.mentionCount} mentions across ${agentRows.length} models.`;
     }
   }
-
-  if (runnerUp) {
-    takeaway += ` ${runnerUp.name} follows with ${runnerUp.mentionCount} mentions.`;
-  }
-
+  if (runnerUp) takeaway += ` ${runnerUp.name} follows with ${runnerUp.mentionCount} mentions.`;
   if (topBrands.length > 5) {
     const lowMention = topBrands.slice(3).filter((b) => b.mentionCount <= 2);
     if (lowMention.length > 0) {
       takeaway += ` ${lowMention.length} brand${lowMention.length > 1 ? "s" : ""} appear only in isolated mentions, suggesting fragmented visibility outside the top tier.`;
     }
   }
-
   return takeaway;
+}
+
+// ---------------------------------------------------------------------------
+// Channel split bar component (inline, server)
+// ---------------------------------------------------------------------------
+
+function ChannelBar({ items, label }: { items: { name: string; count: number }[]; label: string }) {
+  const max = items.length > 0 ? items[0].count : 1;
+  return (
+    <div>
+      <p className="mb-4 font-mono text-[12px] font-semibold text-white/50">{label}</p>
+      {items.length === 0 ? (
+        <p className="text-[13px] text-white/20">No data yet</p>
+      ) : (
+        <div className="space-y-2">
+          {items.map((b, i) => {
+            const pct = Math.max((b.count / max) * 100, 6);
+            return (
+              <div key={b.name}>
+                <div className="flex items-baseline justify-between">
+                  <span className={`text-[13px] ${i === 0 ? "font-semibold text-white/70" : "text-white/40"}`}>
+                    {b.name}
+                  </span>
+                  <span className="font-mono text-[11px] tabular-nums text-cyan/50">
+                    {b.count}
+                  </span>
+                </div>
+                <div className="mt-1 h-1 rounded-full bg-white/5">
+                  <div
+                    className={`h-1 rounded-full ${i === 0 ? "bg-cyan/50" : "bg-cyan/20"}`}
+                    style={{ width: `${pct}%` }}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -239,7 +258,6 @@ export default async function EvergreenCategoryPage({ params }: Props) {
   const topBrands = buildTopBrands(mentions, agentRows);
   const channelSplit = buildChannelSplit(mentions);
 
-  // Clean all insight text for display
   const clean = {
     keyTakeaway: cleanText(insight?.key_takeaway),
     auditAngle: cleanText(insight?.audit_angle),
@@ -248,11 +266,10 @@ export default async function EvergreenCategoryPage({ params }: Props) {
     marketGaps: cleanText(insight?.market_gaps),
   };
 
-  // Use DB takeaway if available, otherwise synthesize from data
   const takeaway = clean.keyTakeaway || synthesizeTakeaway(topBrands, agentRows);
 
   return (
-    <article className="mx-auto min-h-screen max-w-2xl bg-[#faf9f7] px-6 py-24 text-stone-900">
+    <article className="bg-dot-grid mx-auto min-h-screen max-w-3xl px-6 py-24">
       <SectionHeader
         title={categoryRow.name}
         subtitle={`Evergreen monthly benchmark \u2014 ${periodLabel}`}
@@ -266,121 +283,54 @@ export default async function EvergreenCategoryPage({ params }: Props) {
         />
       </section>
 
-      <section className="mt-20">
+      <ScrollFade className="mt-20">
         <TopBrandsList
           brands={topBrands}
           whyTheseWin={toBullets(clean.commonTraits)}
         />
-      </section>
+      </ScrollFade>
 
-      <section className="mt-20">
+      <ScrollFade className="mt-20">
         <CrossAgentTable
           rows={agentRows}
           whatThisMeans={toBullets(clean.crossAgentDifferences)}
         />
-      </section>
+      </ScrollFade>
 
       {channelSplit.hasData && (
-        <section className="mt-20">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-400">
+        <ScrollFade className="mt-20">
+          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
             AI Models vs Marketplace Agents
           </p>
-          <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
-            {/* AI column */}
-            <div>
-              <p className="mb-4 text-[13px] font-semibold text-stone-800">
-                AI Models
-              </p>
-              {channelSplit.ai.length === 0 ? (
-                <p className="text-[13px] text-stone-400">No data</p>
-              ) : (
-                <div className="space-y-2">
-                  {channelSplit.ai.map((b, i) => {
-                    const maxCount = channelSplit.ai[0].count;
-                    const pct = Math.max((b.count / maxCount) * 100, 6);
-                    return (
-                      <div key={b.name}>
-                        <div className="flex items-baseline justify-between">
-                          <span className={`text-[13px] ${i === 0 ? "font-semibold text-stone-800" : "text-stone-500"}`}>
-                            {b.name}
-                          </span>
-                          <span className="text-[11px] tabular-nums text-stone-400">
-                            {b.count}
-                          </span>
-                        </div>
-                        <div className="mt-1 h-1 rounded-full bg-stone-200">
-                          <div
-                            className={`h-1 rounded-full ${i === 0 ? "bg-stone-700" : "bg-stone-300"}`}
-                            style={{ width: `${pct}%` }}
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-
-            {/* Marketplace column */}
-            <div>
-              <p className="mb-4 text-[13px] font-semibold text-stone-800">
-                Marketplace Agents
-              </p>
-              {channelSplit.marketplace.length === 0 ? (
-                <p className="text-[13px] text-stone-400">No marketplace data yet</p>
-              ) : (
-                <div className="space-y-2">
-                  {channelSplit.marketplace.map((b, i) => {
-                    const maxCount = channelSplit.marketplace[0].count;
-                    const pct = Math.max((b.count / maxCount) * 100, 6);
-                    return (
-                      <div key={b.name}>
-                        <div className="flex items-baseline justify-between">
-                          <span className={`text-[13px] ${i === 0 ? "font-semibold text-stone-800" : "text-stone-500"}`}>
-                            {b.name}
-                          </span>
-                          <span className="text-[11px] tabular-nums text-stone-400">
-                            {b.count}
-                          </span>
-                        </div>
-                        <div className="mt-1 h-1 rounded-full bg-stone-200">
-                          <div
-                            className={`h-1 rounded-full ${i === 0 ? "bg-stone-700" : "bg-stone-300"}`}
-                            style={{ width: `${pct}%` }}
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
+          <div className="mt-6 grid grid-cols-1 gap-6 rounded-xl border border-white/10 bg-surface p-6 sm:grid-cols-2">
+            <ChannelBar items={channelSplit.ai} label="AI Models" />
+            <ChannelBar items={channelSplit.marketplace} label="Marketplace Agents" />
           </div>
 
           {channelSplit.hasBothChannels && (
-            <p className="mt-6 text-[13px] leading-relaxed text-stone-500">
+            <p className="mt-6 text-[13px] leading-relaxed text-white/30">
               AI models and marketplace agents often recommend different brands.
               Marketplace results tend to favor best-sellers and price-competitive options,
               while AI models prioritize editorial authority and product depth.
             </p>
           )}
-        </section>
+        </ScrollFade>
       )}
 
-      <section className="mt-20">
+      <ScrollFade className="mt-20">
         <InsightsSection
           commonTraits={clean.commonTraits}
           crossAgentDifferences={clean.crossAgentDifferences}
           marketGaps={clean.marketGaps}
           opportunityBullets={toBullets(clean.marketGaps)}
         />
-      </section>
+      </ScrollFade>
 
-      <section className="mt-24">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-400">
+      <ScrollFade className="mt-24">
+        <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/20">
           How we measure this
         </p>
-        <div className="mt-5 space-y-4 text-[13px] leading-[1.8] text-stone-500">
+        <div className="mt-5 space-y-4 text-[13px] leading-[1.8] text-white/30">
           <p>
             Each benchmark runs the same standardized prompts across multiple leading AI systems,
             including ChatGPT, Claude, Gemini, and Perplexity. We use consistent, category-specific
@@ -394,16 +344,16 @@ export default async function EvergreenCategoryPage({ params }: Props) {
           <p>
             Evergreen categories are benchmarked monthly. Results reflect organic AI behavior at the
             time of testing.{" "}
-            <a href="/methodology" className="text-stone-600 underline underline-offset-2 transition-colors hover:text-stone-900">
+            <a href="/methodology" className="text-cyan/40 underline underline-offset-2 transition-colors hover:text-cyan">
               Read the full methodology
             </a>
           </p>
         </div>
-      </section>
+      </ScrollFade>
 
-      <section className="mt-24">
+      <ScrollFade className="mt-24">
         <CTABox />
-      </section>
+      </ScrollFade>
     </article>
   );
 }

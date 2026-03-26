@@ -26,17 +26,17 @@ export function InsightsSection({
 
   return (
     <div>
-      <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-400">
+      <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
         Analysis
       </p>
 
       <div className="mt-8 space-y-10">
         {items.map((item) => (
-          <div key={item.label}>
-            <p className="text-[15px] font-semibold tracking-tight text-stone-800">
+          <div key={item.label} className="rounded-xl border border-white/5 bg-surface p-6">
+            <p className="text-[15px] font-semibold tracking-tight text-white/80">
               {item.label}
             </p>
-            <p className="mt-2 text-[14px] leading-[1.7] text-stone-500">
+            <p className="mt-2 text-[14px] leading-[1.7] text-white/40">
               {item.value}
             </p>
           </div>
@@ -44,17 +44,17 @@ export function InsightsSection({
       </div>
 
       {opportunityBullets && opportunityBullets.length > 0 && (
-        <div className="mt-12 border-l-[3px] border-stone-200 py-1 pl-8">
-          <p className="text-[15px] font-semibold tracking-tight text-stone-800">
+        <div className="mt-12 border-l-2 border-cyan/30 py-1 pl-8">
+          <p className="text-[15px] font-semibold tracking-tight text-white/80">
             Opportunity for brands
           </p>
           <ul className="mt-4 space-y-3">
             {opportunityBullets.map((point) => (
               <li
                 key={point}
-                className="flex items-start gap-3 text-[14px] leading-[1.7] text-stone-600"
+                className="flex items-start gap-3 text-[14px] leading-[1.7] text-white/50"
               >
-                <span className="mt-[9px] block h-[3px] w-[3px] shrink-0 rounded-full bg-stone-800" />
+                <span className="mt-[9px] block h-[3px] w-[3px] shrink-0 rounded-full bg-cyan" />
                 {point}
               </li>
             ))}
