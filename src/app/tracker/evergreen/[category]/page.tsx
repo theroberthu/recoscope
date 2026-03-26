@@ -21,6 +21,31 @@ function toBool(v: unknown): boolean {
   return Boolean(v);
 }
 
+/** Split a DB text field into bullet points. Tries newlines first, then
+ *  falls back to sentence splitting. Returns undefined if input is empty. */
+function toBullets(text: string | null | undefined): string[] | undefined {
+  if (!text) return undefined;
+  const trimmed = text.trim();
+  if (!trimmed) return undefined;
+
+  // Try splitting on newlines (the DB field might already be line-separated)
+  const byLine = trimmed
+    .split(/\n+/)
+    .map((s) => s.replace(/^[-•*]\s*/, "").trim())
+    .filter(Boolean);
+  if (byLine.length > 1) return byLine;
+
+  // Fall back to sentence splitting for single-paragraph fields
+  const bySentence = trimmed
+    .split(/(?<=\.)\s+/)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 15);
+  if (bySentence.length > 1) return bySentence;
+
+  // Single block — return as a one-item array
+  return [trimmed];
+}
+
 // ---------------------------------------------------------------------------
 // Transforms
 // ---------------------------------------------------------------------------
@@ -234,23 +259,14 @@ export default async function EvergreenCategoryPage({ params }: Props) {
       <section className="mt-20">
         <TopBrandsList
           brands={topBrands}
-          whyTheseWin={[
-            "Strong ergonomic positioning with detailed product specifications and adjustment features",
-            "Deep review ecosystems across major retail and editorial platforms",
-            "Consistent brand presence in professional and workspace-focused content",
-            "Clear price-tier positioning that AI models can reference confidently",
-          ]}
+          whyTheseWin={toBullets(insight?.common_traits)}
         />
       </section>
 
       <section className="mt-20">
         <CrossAgentTable
           rows={agentRows}
-          whatThisMeans={[
-            "High consensus on top picks suggests strong brand authority signals across the web",
-            "Budget brands (BestOffice, Mainstays) appear in marketplace results but are rarely recommended by AI models",
-            "AI models weight editorial reviews and spec-rich product pages more than marketplace popularity",
-          ]}
+          whatThisMeans={toBullets(insight?.cross_agent_differences)}
         />
       </section>
 
@@ -346,11 +362,7 @@ export default async function EvergreenCategoryPage({ params }: Props) {
           commonTraits={insight?.common_traits ?? undefined}
           crossAgentDifferences={insight?.cross_agent_differences ?? undefined}
           marketGaps={insight?.market_gaps ?? undefined}
-          opportunityBullets={[
-            "Mid-market ergonomic brands ($300\u2013$600) are almost invisible to AI \u2014 structured content and expert reviews could open this segment",
-            "Brands that lack detailed spec pages and third-party editorial coverage are consistently excluded from top recommendations",
-            "Standing desk chair and hybrid seating categories are underserved \u2014 no brand owns this niche in AI results",
-          ]}
+          opportunityBullets={toBullets(insight?.market_gaps)}
         />
       </section>
 
