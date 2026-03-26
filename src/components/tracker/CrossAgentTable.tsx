@@ -15,8 +15,8 @@ interface CrossAgentTableProps {
 const AGENT_COLORS: Record<string, string> = {
   Claude: "text-white/70",
   Perplexity: "text-blue-400/70",
-  ChatGPT: "text-coral/70",
-  Gemini: "text-coral/70",
+  ChatGPT: "text-amber-400/70",
+  Gemini: "text-amber-400/70",
 };
 
 export function CrossAgentTable({ rows, whatThisMeans }: CrossAgentTableProps) {
