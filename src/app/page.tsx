@@ -5,21 +5,21 @@ const CATEGORIES = [
     name: "Office Chairs",
     slug: "office-chairs",
     label: "Live Report",
-    description: "Which ergonomic brands do AI models recommend most?",
+    description: "We analyzed 4 AI models. Here\u2019s who they recommend \u2014 and who they ignore.",
     live: true,
   },
   {
     name: "Lawn Fertilizer",
     slug: "lawn-fertilizer",
     label: "Coming Soon",
-    description: "Seasonal tracking across spring and summer cycles.",
+    description: "Seasonal analysis of AI recommendations across spring and summer.",
     live: false,
   },
   {
     name: "Running Shoes",
     slug: "running-shoes",
     label: "Coming Soon",
-    description: "Performance brands vs lifestyle picks across AI models.",
+    description: "Which performance brands are AI models actually recommending?",
     live: false,
   },
 ];
@@ -28,69 +28,79 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero */}
-      <section className="mx-auto max-w-2xl px-6 pb-24 pt-28">
+      <section className="mx-auto max-w-2xl px-6 pb-16 pt-28">
         <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-gray-300">
           AI Recommendation Intelligence
         </p>
         <h1 className="mt-4 text-5xl font-bold leading-[1.1] tracking-tight text-gray-900">
-          See how AI recommends products in your category
+          AI is choosing winners in your category. Do you know who?
         </h1>
         <p className="mt-6 max-w-lg text-lg leading-relaxed text-gray-400">
-          RecoScope tracks what ChatGPT, Claude, Gemini, and Perplexity recommend
-          across product categories &mdash; so you can see where your brand stands
-          and where you&rsquo;re invisible.
+          When someone asks ChatGPT, Claude, or Gemini for a product recommendation,
+          certain brands consistently appear at the top. Others don&rsquo;t appear at all.
+          We reveal which &mdash; and why.
         </p>
         <a
           href="/tracker"
           className="mt-10 inline-block rounded-full bg-gray-900 px-8 py-3.5 text-[13px] font-bold tracking-tight text-white transition-colors hover:bg-gray-800"
         >
-          Explore Reports
+          View the Reports
         </a>
       </section>
 
-      {/* How it works */}
+      {/* Insight statement */}
+      <section className="mx-auto max-w-2xl px-6 pb-24">
+        <div className="border-l-[3px] border-gray-900 py-1 pl-8">
+          <p className="text-xl font-medium leading-snug tracking-tight text-gray-900">
+            The brands AI recommends are not always the brands consumers search for.
+            We surface the gap between marketplace popularity and AI visibility.
+          </p>
+        </div>
+      </section>
+
+      {/* How we analyze */}
       <section className="border-t border-gray-100">
         <div className="mx-auto max-w-2xl px-6 py-20">
           <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-gray-300">
-            How it works
+            How we analyze AI behavior
           </p>
           <div className="mt-8 grid grid-cols-1 gap-10 sm:grid-cols-3">
             <div>
               <p className="text-[15px] font-semibold tracking-tight text-gray-900">
-                Multi-agent testing
+                We query every major model
               </p>
               <p className="mt-2 text-[13px] leading-[1.7] text-gray-400">
-                We run standardized prompts across leading AI systems every month
-                to capture real recommendation behavior.
+                Standardized prompts run monthly across ChatGPT, Claude, Gemini,
+                and Perplexity to capture real recommendation patterns.
               </p>
             </div>
             <div>
               <p className="text-[15px] font-semibold tracking-tight text-gray-900">
-                Brand-level ranking
+                We rank what they recommend
               </p>
               <p className="mt-2 text-[13px] leading-[1.7] text-gray-400">
-                Every response is parsed for brand mentions, rank position,
-                and frequency &mdash; then compared across models.
+                Every response is parsed for brand mentions, position,
+                and frequency &mdash; then compared across models to reveal consensus.
               </p>
             </div>
             <div>
               <p className="text-[15px] font-semibold tracking-tight text-gray-900">
-                Actionable insights
+                We reveal who&rsquo;s invisible
               </p>
               <p className="mt-2 text-[13px] leading-[1.7] text-gray-400">
-                We surface where AI models agree, where they diverge, and
-                which brands are invisible to AI entirely.
+                We surface where AI models agree, where they diverge from marketplaces,
+                and which brands are completely absent from AI results.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Featured categories */}
+      {/* Active reports */}
       <section className="border-t border-gray-100">
         <div className="mx-auto max-w-2xl px-6 py-20">
           <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-gray-300">
-            Featured categories
+            Active Reports
           </p>
           <div className="mt-8 space-y-2">
             {CATEGORIES.map((cat) => (
@@ -100,7 +110,7 @@ export default function HomePage() {
                 className={`block rounded-lg px-6 py-5 ${
                   cat.live
                     ? "bg-gray-50 transition-colors hover:bg-gray-100"
-                    : "opacity-60"
+                    : "opacity-50"
                 }`}
               >
                 <div className="flex items-center justify-between">
