@@ -129,6 +129,42 @@ export async function getBrandMentions(
 }
 
 // ---------------------------------------------------------------------------
+// Homepage hero data
+// ---------------------------------------------------------------------------
+
+export async function getTopBrandsForHero(limit = 10): Promise<
+  { brand: string; mentions: number }[]
+> {
+  const sql = getDb();
+  const rows = await sql`
+    SELECT brand_name_normalized AS brand, COUNT(*)::int AS mentions
+    FROM brand_mentions bm
+    JOIN runs r ON r.id = bm.run_id
+    JOIN categories c ON c.id = r.category_id
+    WHERE c.is_active = true
+    ORDER BY mentions DESC
+    LIMIT ${limit}
+  `;
+  return rows as { brand: string; mentions: number }[];
+}
+
+export async function getCrossAgentPreview(): Promise<
+  { agent_name: string; brand: string; rank: number }[]
+> {
+  const sql = getDb();
+  const rows = await sql`
+    SELECT bm.agent_name, bm.brand_name_normalized AS brand, bm.mention_rank AS rank
+    FROM brand_mentions bm
+    JOIN runs r ON r.id = bm.run_id
+    JOIN categories c ON c.id = r.category_id
+    WHERE c.is_active = true
+      AND bm.mention_rank <= 3
+    ORDER BY bm.agent_name, bm.mention_rank
+  `;
+  return rows as { agent_name: string; brand: string; rank: number }[];
+}
+
+// ---------------------------------------------------------------------------
 // Insights
 // ---------------------------------------------------------------------------
 

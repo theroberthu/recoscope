@@ -252,7 +252,7 @@ export default async function EvergreenCategoryPage({ params }: Props) {
   const takeaway = clean.keyTakeaway || synthesizeTakeaway(topBrands, agentRows);
 
   return (
-    <article className="mx-auto max-w-2xl px-6 py-24">
+    <article className="mx-auto min-h-screen max-w-2xl bg-[#faf9f7] px-6 py-24 text-stone-900">
       <SectionHeader
         title={categoryRow.name}
         subtitle={`Evergreen monthly benchmark \u2014 ${periodLabel}`}
