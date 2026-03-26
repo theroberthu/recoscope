@@ -150,21 +150,21 @@ export default async function EvergreenCategoryPage({ params }: Props) {
   const takeaway = insight?.key_takeaway || synthesizeTakeaway(topBrands, agentRows);
 
   return (
-    <article className="mx-auto max-w-3xl px-6 py-16">
+    <article className="mx-auto max-w-3xl px-6 py-20">
       <SectionHeader
         title={categoryRow.name}
-        subtitle={`Evergreen monthly benchmark — ${periodLabel}`}
+        subtitle={`Evergreen monthly benchmark \u2014 ${periodLabel}`}
         badge={run?.status === "published" ? "Published" : run?.status ?? "No data yet"}
       />
 
-      <section className="mt-2">
+      <section>
         <KeyTakeawayPanel
           takeaway={takeaway}
           auditAngle={insight?.audit_angle ?? undefined}
         />
       </section>
 
-      <section className="mt-12">
+      <section className="mt-16">
         <TopBrandsList
           brands={topBrands}
           whyTheseWin={[
@@ -176,7 +176,7 @@ export default async function EvergreenCategoryPage({ params }: Props) {
         />
       </section>
 
-      <section className="mt-12">
+      <section className="mt-16">
         <CrossAgentTable
           rows={agentRows}
           whatThisMeans={[
@@ -187,7 +187,7 @@ export default async function EvergreenCategoryPage({ params }: Props) {
         />
       </section>
 
-      <section className="mt-12">
+      <section className="mt-16">
         <InsightsSection
           commonTraits={insight?.common_traits ?? undefined}
           crossAgentDifferences={insight?.cross_agent_differences ?? undefined}
@@ -200,15 +200,15 @@ export default async function EvergreenCategoryPage({ params }: Props) {
         />
       </section>
 
-      <section className="mt-14 border-t border-gray-200 pt-10">
-        <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
+      <section className="mt-20">
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-gray-300">
           How We Measure This
         </p>
-        <div className="mt-3 space-y-3 text-sm leading-relaxed text-gray-600">
+        <div className="mt-4 space-y-3 text-sm leading-relaxed text-gray-400">
           <p>
             Each benchmark runs the same standardized prompts across multiple leading AI systems,
             including ChatGPT, Claude, Gemini, and Perplexity. We use consistent, category-specific
-            questions designed to surface genuine product recommendations — not sponsored results.
+            questions designed to surface genuine product recommendations &mdash; not sponsored results.
           </p>
           <p>
             Responses are parsed to extract brand mentions, rank position, and frequency. We then
@@ -218,14 +218,14 @@ export default async function EvergreenCategoryPage({ params }: Props) {
           <p>
             Evergreen categories are benchmarked monthly. Results reflect organic AI behavior at the
             time of testing.{" "}
-            <a href="/methodology" className="font-medium text-gray-900 underline underline-offset-2 hover:text-gray-600">
+            <a href="/methodology" className="font-medium text-gray-600 underline underline-offset-2 hover:text-gray-900">
               Read the full methodology
             </a>
           </p>
         </div>
       </section>
 
-      <section className="mt-14">
+      <section className="mt-20">
         <CTABox />
       </section>
     </article>

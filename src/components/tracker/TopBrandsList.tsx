@@ -12,50 +12,59 @@ interface TopBrandsListProps {
 export function TopBrandsList({ brands, whyTheseWin }: TopBrandsListProps) {
   return (
     <div>
-      <p className="mb-4 text-xs font-semibold uppercase tracking-wide text-gray-400">
+      <p className="text-[11px] font-semibold uppercase tracking-widest text-gray-400">
         Top Brands by AI Mention Frequency
       </p>
-      <ol className="space-y-1.5">
+
+      <ol className="mt-5 space-y-2">
         {brands.map((brand, i) => {
           const isTop3 = i < 3;
           return (
             <li
               key={brand.name}
-              className={`flex items-center justify-between rounded-md px-4 py-2.5 ${
+              className={`flex items-center justify-between rounded-lg px-5 ${
                 isTop3
-                  ? "border border-gray-200 bg-gray-50"
-                  : "border border-transparent"
+                  ? "bg-gray-900 py-4 text-white"
+                  : "py-3 text-gray-600"
               }`}
             >
-              <span className="flex items-center gap-3">
+              <span className="flex items-center gap-4">
                 <span
-                  className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
+                  className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold ${
                     isTop3
-                      ? "bg-gray-900 text-white"
+                      ? "bg-white text-gray-900"
                       : "bg-gray-100 text-gray-400"
                   }`}
                 >
                   {i + 1}
                 </span>
                 <span
-                  className={`text-sm ${
-                    isTop3 ? "font-semibold text-gray-900" : "font-medium text-gray-600"
+                  className={`${
+                    isTop3 ? "text-base font-semibold" : "text-sm font-medium"
                   }`}
                 >
                   {brand.name}
                 </span>
                 {brand.isFirst && (
-                  <span className="rounded-full bg-green-50 px-2 py-0.5 text-xs font-semibold text-green-700">
+                  <span
+                    className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${
+                      isTop3
+                        ? "bg-white/20 text-white"
+                        : "bg-green-50 text-green-700"
+                    }`}
+                  >
                     #1 pick
                   </span>
                 )}
               </span>
               <span
-                className={`text-xs tabular-nums ${
-                  isTop3 ? "font-semibold text-gray-700" : "text-gray-400"
+                className={`tabular-nums ${
+                  isTop3
+                    ? "text-sm font-medium text-gray-400"
+                    : "text-xs text-gray-400"
                 }`}
               >
-                {brand.mentionCount} mention{brand.mentionCount !== 1 && "s"}
+                {brand.mentionCount}
               </span>
             </li>
           );
@@ -63,17 +72,17 @@ export function TopBrandsList({ brands, whyTheseWin }: TopBrandsListProps) {
       </ol>
 
       {whyTheseWin && whyTheseWin.length > 0 && (
-        <div className="mt-6 rounded-md bg-gray-50 px-5 py-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
+        <div className="mt-8">
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-gray-400">
             Why These Brands Win
           </p>
-          <ul className="mt-2.5 space-y-1.5">
+          <ul className="mt-3 space-y-2">
             {whyTheseWin.map((point) => (
               <li
                 key={point}
-                className="flex items-start gap-2 text-sm leading-relaxed text-gray-600"
+                className="flex items-start gap-3 text-sm leading-relaxed text-gray-500"
               >
-                <span className="mt-1.5 block h-1 w-1 flex-shrink-0 rounded-full bg-gray-400" />
+                <span className="mt-2 block h-1 w-1 flex-shrink-0 rounded-full bg-gray-300" />
                 {point}
               </li>
             ))}

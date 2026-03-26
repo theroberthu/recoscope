@@ -8,17 +8,17 @@ export function KeyTakeawayPanel({
   auditAngle,
 }: KeyTakeawayPanelProps) {
   return (
-    <div className="rounded-lg border-l-4 border-gray-900 bg-gray-50 px-6 py-6">
-      <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
+    <div className="border-l-2 border-gray-900 pl-6">
+      <p className="text-[11px] font-semibold uppercase tracking-widest text-gray-400">
         Key Takeaway
       </p>
-      <p className="mt-3 text-lg font-medium leading-relaxed text-gray-900">
+      <p className="mt-4 text-xl font-medium leading-relaxed text-gray-900">
         {takeaway}
       </p>
       {auditAngle && (
-        <p className="mt-5 border-t border-gray-200 pt-4 text-sm leading-relaxed text-gray-500">
-          <span className="font-semibold text-gray-700">Audit angle:</span>{" "}
-          {auditAngle}
+        <p className="mt-6 text-sm leading-relaxed text-gray-400">
+          <span className="font-semibold text-gray-600">Audit angle</span>{" "}
+          &mdash; {auditAngle}
         </p>
       )}
     </div>

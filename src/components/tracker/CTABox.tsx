@@ -7,19 +7,21 @@ interface CTABoxProps {
 
 export function CTABox({
   heading = "Your competitors are showing up in AI results. Are you?",
-  description = "Get a free AI Visibility Audit — see exactly how ChatGPT, Claude, and Gemini talk about your brand, and where you're missing.",
+  description = "Get a free AI Visibility Audit \u2014 see exactly how ChatGPT, Claude, and Gemini talk about your brand, and where you\u2019re missing.",
   buttonText = "Request Your Free Audit",
   href = "/audit",
 }: CTABoxProps) {
   return (
-    <div className="rounded-lg bg-gray-900 px-8 py-10 text-center">
-      <p className="text-lg font-bold leading-snug text-white">{heading}</p>
-      <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-gray-400">
+    <div className="rounded-2xl bg-gray-900 px-10 py-14 text-center">
+      <p className="mx-auto max-w-md text-2xl font-bold leading-snug tracking-tight text-white">
+        {heading}
+      </p>
+      <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-gray-400">
         {description}
       </p>
       <a
         href={href}
-        className="mt-6 inline-block rounded-md bg-white px-6 py-3 text-sm font-bold text-gray-900 transition-colors hover:bg-gray-100"
+        className="mt-8 inline-block rounded-lg bg-white px-8 py-3.5 text-sm font-bold tracking-tight text-gray-900 transition-colors hover:bg-gray-100"
       >
         {buttonText}
       </a>

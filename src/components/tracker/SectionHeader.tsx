@@ -6,17 +6,17 @@ interface SectionHeaderProps {
 
 export function SectionHeader({ title, subtitle, badge }: SectionHeaderProps) {
   return (
-    <div className="mb-8">
-      <div className="flex items-center gap-3">
-        <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
-        {badge && (
-          <span className="rounded-full bg-gray-100 px-3 py-0.5 text-xs font-semibold text-gray-500">
-            {badge}
-          </span>
-        )}
-      </div>
+    <div className="mb-10">
+      {badge && (
+        <span className="mb-3 inline-block rounded-full bg-gray-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-gray-500">
+          {badge}
+        </span>
+      )}
+      <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+        {title}
+      </h1>
       {subtitle && (
-        <p className="mt-2 text-sm text-gray-500">{subtitle}</p>
+        <p className="mt-3 text-base text-gray-400">{subtitle}</p>
       )}
     </div>
   );
