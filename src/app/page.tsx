@@ -1,30 +1,15 @@
 import { CTABox } from "@/components/tracker";
+import { getCategoriesWithRuns } from "@/lib/queries";
 
-const CATEGORIES = [
-  {
-    name: "Office Chairs",
-    slug: "office-chairs",
-    label: "Live Report",
-    description: "We analyzed 4 AI models. Here\u2019s who they recommend \u2014 and who they ignore.",
-    live: true,
-  },
-  {
-    name: "Lawn Fertilizer",
-    slug: "lawn-fertilizer",
-    label: "Coming Soon",
-    description: "Seasonal analysis of AI recommendations across spring and summer.",
-    live: false,
-  },
-  {
-    name: "Running Shoes",
-    slug: "running-shoes",
-    label: "Coming Soon",
-    description: "Which performance brands are AI models actually recommending?",
-    live: false,
-  },
-];
+export default async function HomePage() {
+  let categories: { name: string; slug: string; tracker_type: string; latest_summary: string | null }[] = [];
 
-export default function HomePage() {
+  try {
+    categories = await getCategoriesWithRuns();
+  } catch {
+    // DB unavailable — render page without dynamic reports
+  }
+
   return (
     <div>
       {/* Hero */}
@@ -67,81 +52,76 @@ export default function HomePage() {
           <div className="mt-8 grid grid-cols-1 gap-10 sm:grid-cols-3">
             <div>
               <p className="text-[15px] font-semibold tracking-tight text-stone-800">
-                We query every major model
+                We classify AI by commercial interest
               </p>
               <p className="mt-2 text-[13px] leading-[1.7] text-stone-500">
-                Standardized prompts run monthly across ChatGPT, Claude, Gemini,
-                and Perplexity to capture real recommendation patterns.
+                Not all AI recommendations are equal. We separate independent models (Claude),
+                search-grounded models (Perplexity), and commerce-influenced models (ChatGPT, Gemini)
+                to reveal how commercial integrations shift what gets recommended.
               </p>
             </div>
             <div>
               <p className="text-[15px] font-semibold tracking-tight text-stone-800">
-                We rank what they recommend
+                We run standardized benchmarks
               </p>
               <p className="mt-2 text-[13px] leading-[1.7] text-stone-500">
-                Every response is parsed for brand mentions, position,
-                and frequency &mdash; then compared across models to reveal consensus.
+                Three prompts per category, same questions across every model, collected monthly.
+                We parse brand mentions, rank position, and frequency to build comparable datasets
+                over time.
               </p>
             </div>
             <div>
               <p className="text-[15px] font-semibold tracking-tight text-stone-800">
-                We reveal who&rsquo;s invisible
+                We surface who&rsquo;s invisible
               </p>
               <p className="mt-2 text-[13px] leading-[1.7] text-stone-500">
-                We surface where AI models agree, where they diverge from marketplaces,
-                and which brands are completely absent from AI results.
+                Most brands never appear in AI recommendations. We identify the gaps between
+                what AI models recommend and what consumers actually buy, so brands can act
+                on the difference.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Active reports */}
-      <section className="border-t border-stone-200/60">
-        <div className="mx-auto max-w-2xl px-6 py-20">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-400">
-            Active Reports
-          </p>
-          <div className="mt-8 space-y-2">
-            {CATEGORIES.map((cat) => (
-              <a
-                key={cat.slug}
-                href={cat.live ? `/tracker/evergreen/${cat.slug}` : undefined}
-                className={`block rounded-lg px-6 py-5 ${
-                  cat.live
-                    ? "bg-stone-100/80 transition-colors hover:bg-stone-200/60"
-                    : "opacity-50"
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className="flex items-center gap-3">
-                      <span className="text-[15px] font-semibold tracking-tight text-stone-800">
-                        {cat.name}
+      {/* Active reports — dynamic from DB */}
+      {categories.length > 0 && (
+        <section className="border-t border-stone-200/60">
+          <div className="mx-auto max-w-2xl px-6 py-20">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-400">
+              Active Reports
+            </p>
+            <div className="mt-8 space-y-2">
+              {categories.map((cat) => (
+                <a
+                  key={cat.slug}
+                  href={`/tracker/${cat.tracker_type}/${cat.slug}`}
+                  className="block rounded-lg bg-stone-100/80 px-6 py-5 transition-colors hover:bg-stone-200/60"
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="flex items-center gap-3">
+                        <span className="text-[15px] font-semibold tracking-tight text-stone-800">
+                          {cat.name}
+                        </span>
+                        <span className="rounded-full bg-stone-800 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
+                          Live Report
+                        </span>
                       </span>
-                      <span
-                        className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
-                          cat.live
-                            ? "bg-stone-800 text-white"
-                            : "text-stone-400"
-                        }`}
-                      >
-                        {cat.label}
-                      </span>
-                    </span>
-                    <p className="mt-1 text-[13px] text-stone-500">
-                      {cat.description}
-                    </p>
-                  </div>
-                  {cat.live && (
+                      {cat.latest_summary && (
+                        <p className="mt-1 text-[13px] text-stone-500">
+                          {cat.latest_summary}
+                        </p>
+                      )}
+                    </div>
                     <span className="text-[13px] text-stone-400">&rarr;</span>
-                  )}
-                </div>
-              </a>
-            ))}
+                  </div>
+                </a>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Bottom CTA */}
       <section className="mx-auto max-w-2xl px-6 pb-24 pt-4">
@@ -149,7 +129,7 @@ export default function HomePage() {
           heading="Get your free GEO audit"
           description="See exactly how AI models talk about your brand, what they recommend instead, and where you can improve visibility."
           buttonText="Start Your Audit"
-          href="https://yourgeo.report"
+          href="/audit"
         />
       </section>
     </div>

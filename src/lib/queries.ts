@@ -36,6 +36,26 @@ export async function getCategoryBySlug(
   return (rows[0] as Category) ?? null;
 }
 
+/** Categories that have at least one run, with the latest run's summary. */
+export async function getCategoriesWithRuns(): Promise<
+  (Category & { latest_summary: string | null; tracker_type: string })[]
+> {
+  const sql = getDb();
+  const rows = await sql`
+    SELECT c.*, r.summary AS latest_summary
+    FROM categories c
+    JOIN LATERAL (
+      SELECT summary FROM runs
+      WHERE category_id = c.id
+      ORDER BY run_date DESC
+      LIMIT 1
+    ) r ON true
+    WHERE c.is_active = true
+    ORDER BY c.name
+  `;
+  return rows as (Category & { latest_summary: string | null })[];
+}
+
 // ---------------------------------------------------------------------------
 // Runs
 // ---------------------------------------------------------------------------
