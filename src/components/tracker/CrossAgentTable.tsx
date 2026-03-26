@@ -33,24 +33,36 @@ export function CrossAgentTable({ rows, whatThisMeans }: CrossAgentTableProps) {
 
   return (
     <div>
-      <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
-        Cross-Agent Comparison
-      </p>
+      {/* Section intro */}
+      <div className="mb-6 flex items-end justify-between">
+        <div>
+          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/50">
+            Cross-Agent Comparison
+          </p>
+          <p className="mt-1 text-[14px] text-white/40">
+            How {rows.length} AI models rank the same category. Hover a brand to trace it across models.
+          </p>
+        </div>
+        <p className="hidden font-mono text-[10px] text-white/20 sm:block">
+          {rows.length} agents &middot; top 3 each
+        </p>
+      </div>
 
-      <div className="mt-6 overflow-x-auto rounded-xl border border-white/10 bg-surface p-6">
+      {/* Table */}
+      <div className="overflow-x-auto rounded-xl border border-cyan/15 bg-surface shadow-[0_0_30px_rgba(0,212,170,0.06)]">
         <table className="w-full">
           <thead>
-            <tr>
-              <th className="pb-4 pr-8 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/20">
+            <tr className="border-b border-white/5">
+              <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/25">
                 Agent
               </th>
-              <th className="pb-4 pr-8 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/20">
+              <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-cyan/40">
                 #1
               </th>
-              <th className="pb-4 pr-8 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/20">
+              <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/20">
                 #2
               </th>
-              <th className="pb-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/20">
+              <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/20">
                 #3
               </th>
             </tr>
@@ -59,11 +71,11 @@ export function CrossAgentTable({ rows, whatThisMeans }: CrossAgentTableProps) {
             {rows.map((row, i) => (
               <tr
                 key={row.agentName}
-                className={
+                className={`transition-colors hover:bg-white/[0.02] ${
                   i < rows.length - 1 ? "border-b border-white/5" : ""
-                }
+                }`}
               >
-                <td className="py-4 pr-8 font-mono text-[13px] font-semibold text-white/60">
+                <td className="px-6 py-4 font-mono text-[13px] font-semibold text-white/60">
                   {row.agentName}
                 </td>
                 {[0, 1, 2].map((idx) => {
@@ -73,7 +85,7 @@ export function CrossAgentTable({ rows, whatThisMeans }: CrossAgentTableProps) {
                   return (
                     <td
                       key={idx}
-                      className={`cursor-default py-4 pr-8 text-[13px] transition-colors ${
+                      className={`cursor-default px-6 py-4 text-[13px] transition-colors ${
                         isHovered
                           ? "text-cyan"
                           : isUniversal
@@ -95,14 +107,19 @@ export function CrossAgentTable({ rows, whatThisMeans }: CrossAgentTableProps) {
         </table>
       </div>
 
+      {/* Consensus callout */}
       {consensus && (
-        <p className="mt-5 text-[13px] text-white/30">
-          All {rows.length} models agree on{" "}
-          <span className="font-medium text-cyan">{firstPicks[0]}</span>{" "}
-          as the top pick.
-        </p>
+        <div className="mt-4 flex items-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-cyan" />
+          <p className="text-[13px] text-white/40">
+            All {rows.length} models agree on{" "}
+            <span className="font-semibold text-cyan">{firstPicks[0]}</span>{" "}
+            as the top pick
+          </p>
+        </div>
       )}
 
+      {/* What this means */}
       {whatThisMeans && whatThisMeans.length > 0 && (
         <div className="mt-10 border-l-2 border-cyan/20 pl-6">
           <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
