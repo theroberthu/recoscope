@@ -221,7 +221,7 @@ export default async function EvergreenCategoryPage({ params }: Props) {
       <SectionHeader
         title={categoryRow.name}
         subtitle={`Evergreen monthly benchmark \u2014 ${periodLabel}`}
-        badge={run?.status === "published" ? "Published" : run?.status ?? "No data yet"}
+        badge={run ? (periodLabel !== "—" ? periodLabel : "Live Report") : "No data yet"}
       />
 
       <section>
