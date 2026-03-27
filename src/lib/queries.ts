@@ -164,6 +164,29 @@ export async function getCrossAgentPreview(): Promise<
   return rows as { agent_name: string; brand: string; rank: number }[];
 }
 
+/** Active categories with latest run date for the report schedule. */
+export async function getCategoriesWithSchedule(): Promise<
+  { name: string; slug: string; tracker_type: string; last_run_date: string | null }[]
+> {
+  const sql = getDb();
+  const rows = await sql`
+    SELECT c.name, c.slug, c.tracker_type,
+           r.run_date::text AS last_run_date
+    FROM categories c
+    LEFT JOIN LATERAL (
+      SELECT run_date FROM runs
+      WHERE category_id = c.id
+      ORDER BY run_date DESC
+      LIMIT 1
+    ) r ON true
+    WHERE c.is_active = true
+    ORDER BY
+      CASE WHEN c.tracker_type = 'seasonal' THEN 0 ELSE 1 END,
+      c.name
+  `;
+  return rows as { name: string; slug: string; tracker_type: string; last_run_date: string | null }[];
+}
+
 // ---------------------------------------------------------------------------
 // Audit page stats
 // ---------------------------------------------------------------------------
