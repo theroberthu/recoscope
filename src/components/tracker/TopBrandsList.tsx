@@ -1,15 +1,51 @@
+export type Movement = { type: "new" } | { type: "up"; positions: number } | { type: "down"; positions: number } | { type: "steady" };
+
 interface Brand {
   name: string;
   mentionCount: number;
   label?: string;
+  movement?: Movement;
+}
+
+interface DroppedBrand {
+  name: string;
+  previousRank: number;
 }
 
 interface TopBrandsListProps {
   brands: Brand[];
   whyTheseWin?: string[];
+  droppedBrands?: DroppedBrand[];
 }
 
-export function TopBrandsList({ brands, whyTheseWin }: TopBrandsListProps) {
+function MovementBadge({ movement }: { movement: Movement }) {
+  switch (movement.type) {
+    case "new":
+      return (
+        <span className="rounded-full bg-cyan/15 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-cyan">
+          New
+        </span>
+      );
+    case "up":
+      return (
+        <span className="font-mono text-[11px] font-bold text-green-400">
+          ▲ {movement.positions}
+        </span>
+      );
+    case "down":
+      return (
+        <span className="font-mono text-[11px] font-bold text-amber-400">
+          ▼ {movement.positions}
+        </span>
+      );
+    case "steady":
+      return (
+        <span className="font-mono text-[11px] text-white/15">—</span>
+      );
+  }
+}
+
+export function TopBrandsList({ brands, whyTheseWin, droppedBrands }: TopBrandsListProps) {
   const maxMentions = brands.length > 0 ? brands[0].mentionCount : 1;
 
   return (
@@ -59,7 +95,8 @@ export function TopBrandsList({ brands, whyTheseWin }: TopBrandsListProps) {
                   >
                     {brand.name}
                   </span>
-                  {brand.label && (
+                  {brand.movement && <MovementBadge movement={brand.movement} />}
+                  {brand.label && !brand.movement && (
                     <span
                       className={`rounded-full px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider ${
                         isFirst
@@ -104,6 +141,31 @@ export function TopBrandsList({ brands, whyTheseWin }: TopBrandsListProps) {
           );
         })}
       </div>
+
+      {/* Dropped brands */}
+      {droppedBrands && droppedBrands.length > 0 && (
+        <div className="mt-6">
+          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/20">
+            Dropped this week
+          </p>
+          <div className="mt-3 space-y-1">
+            {droppedBrands.map((b) => (
+              <div
+                key={b.name}
+                className="flex items-center justify-between px-6 py-2 text-white/20"
+              >
+                <span className="flex items-center gap-4">
+                  <span className="h-7 w-7" />
+                  <span className="text-sm line-through">{b.name}</span>
+                </span>
+                <span className="font-mono text-[11px]">
+                  was #{b.previousRank}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {whyTheseWin && whyTheseWin.length > 0 && (
         <div className="mt-10 border-l-2 border-cyan/20 pl-6">

@@ -188,6 +188,60 @@ export async function getCategoriesWithSchedule(): Promise<
 }
 
 // ---------------------------------------------------------------------------
+// Seasonal trend data
+// ---------------------------------------------------------------------------
+
+/** Get the previous run for a seasonal category (for week-over-week comparison). */
+export async function getPreviousRun(
+  categoryId: number,
+  currentPeriodLabel: string,
+): Promise<Run | null> {
+  const sql = getDb();
+  const rows = await sql`
+    SELECT * FROM runs
+    WHERE category_id = ${categoryId}
+      AND tracker_type = 'seasonal'
+      AND period_label < ${currentPeriodLabel}
+    ORDER BY period_label DESC
+    LIMIT 1
+  `;
+  return (rows[0] as Run) ?? null;
+}
+
+/** Get all runs for a seasonal category (for trend chart). */
+export async function getAllSeasonalRuns(
+  categoryId: number,
+): Promise<Run[]> {
+  const sql = getDb();
+  const rows = await sql`
+    SELECT * FROM runs
+    WHERE category_id = ${categoryId}
+      AND tracker_type = 'seasonal'
+    ORDER BY period_label ASC
+  `;
+  return rows as Run[];
+}
+
+/** Get brand rankings for multiple runs at once (for trend chart). */
+export async function getBrandRankingsForRuns(
+  runIds: number[],
+): Promise<{ run_id: number; brand: string; mentions: number }[]> {
+  if (runIds.length === 0) return [];
+  const sql = getDb();
+  const rows = await sql`
+    SELECT
+      run_id,
+      brand_name_normalized AS brand,
+      COUNT(*)::int AS mentions
+    FROM brand_mentions
+    WHERE run_id = ANY(${runIds})
+    GROUP BY run_id, brand_name_normalized
+    ORDER BY run_id, mentions DESC
+  `;
+  return rows as { run_id: number; brand: string; mentions: number }[];
+}
+
+// ---------------------------------------------------------------------------
 // Audit page stats
 // ---------------------------------------------------------------------------
 

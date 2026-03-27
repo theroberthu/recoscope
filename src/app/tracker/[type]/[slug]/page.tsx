@@ -1,9 +1,15 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getCategoryBySlug, getLatestRun, getBrandMentions, getRunInsight } from "@/lib/queries";
-import type { BrandMention, RunInsight, TrackerType } from "@/lib/types";
+import {
+  getCategoryBySlug, getLatestRun, getBrandMentions, getRunInsight,
+  getPreviousRun, getAllSeasonalRuns, getBrandRankingsForRuns,
+} from "@/lib/queries";
+import type { BrandMention, RunInsight, TrackerType, Run } from "@/lib/types";
 import { cleanText } from "@/lib/clean-text";
 import { ScrollFade } from "@/components/home/ScrollFade";
+import { TrendChart } from "@/components/seasonal/TrendChart";
+import { WeekNav } from "@/components/seasonal/WeekNav";
+import type { Movement } from "@/components/tracker/TopBrandsList";
 import {
   SectionHeader,
   KeyTakeawayPanel,
@@ -120,23 +126,17 @@ const MARKETPLACE_AGENTS = new Set(["Rufus", "Sparky", "Amazon Rufus", "Walmart 
 function buildChannelSplit(mentions: BrandMention[]) {
   const ai = new Map<string, number>();
   const marketplace = new Map<string, number>();
-
   for (const m of mentions) {
     const key = m.brand_name_normalized;
     if (!key) continue;
     if (AI_AGENTS.has(m.agent_name)) ai.set(key, (ai.get(key) ?? 0) + 1);
     if (MARKETPLACE_AGENTS.has(m.agent_name)) marketplace.set(key, (marketplace.get(key) ?? 0) + 1);
   }
-
   const sortDesc = (map: Map<string, number>) =>
-    Array.from(map.entries())
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5)
+    Array.from(map.entries()).sort((a, b) => b[1] - a[1]).slice(0, 5)
       .map(([name, count]) => ({ name, count }));
-
   return {
-    ai: sortDesc(ai),
-    marketplace: sortDesc(marketplace),
+    ai: sortDesc(ai), marketplace: sortDesc(marketplace),
     hasData: ai.size > 0 || marketplace.size > 0,
     hasBothChannels: ai.size > 0 && marketplace.size > 0,
   };
@@ -155,7 +155,6 @@ function synthesizeTakeaway(
   const runnerUp = topBrands[1];
   const firstPicks = agentRows.map((r) => r.topBrands[0]).filter(Boolean);
   const unanimousFirst = firstPicks.length > 1 && firstPicks.every((p) => p === firstPicks[0]);
-
   let takeaway = "";
   if (unanimousFirst) {
     takeaway = `${leader.name} is the unanimous #1 recommendation across all ${agentRows.length} AI models tested, with ${leader.mentionCount} total mentions.`;
@@ -168,13 +167,50 @@ function synthesizeTakeaway(
     }
   }
   if (runnerUp) takeaway += ` ${runnerUp.name} follows with ${runnerUp.mentionCount} mentions.`;
-  if (topBrands.length > 5) {
-    const lowMention = topBrands.slice(3).filter((b) => b.mentionCount <= 2);
-    if (lowMention.length > 0) {
-      takeaway += ` ${lowMention.length} brand${lowMention.length > 1 ? "s" : ""} appear only in isolated mentions, suggesting fragmented visibility outside the top tier.`;
+  return takeaway;
+}
+
+// ---------------------------------------------------------------------------
+// Seasonal movement computation
+// ---------------------------------------------------------------------------
+
+function computeMovements(
+  currentBrands: { name: string; mentionCount: number }[],
+  prevBrands: { name: string; mentionCount: number }[],
+): {
+  movements: Map<string, Movement>;
+  droppedBrands: { name: string; previousRank: number }[];
+} {
+  const prevRankMap = new Map<string, number>();
+  prevBrands.forEach((b, i) => prevRankMap.set(b.name, i + 1));
+
+  const currentNames = new Set(currentBrands.map((b) => b.name));
+  const movements = new Map<string, Movement>();
+
+  currentBrands.forEach((b, i) => {
+    const currentRank = i + 1;
+    const prevRank = prevRankMap.get(b.name);
+
+    if (prevRank === undefined) {
+      movements.set(b.name, { type: "new" });
+    } else if (prevRank > currentRank) {
+      movements.set(b.name, { type: "up", positions: prevRank - currentRank });
+    } else if (prevRank < currentRank) {
+      movements.set(b.name, { type: "down", positions: currentRank - prevRank });
+    } else {
+      movements.set(b.name, { type: "steady" });
+    }
+  });
+
+  const droppedBrands: { name: string; previousRank: number }[] = [];
+  for (const [name, rank] of prevRankMap) {
+    if (!currentNames.has(name)) {
+      droppedBrands.push({ name, previousRank: rank });
     }
   }
-  return takeaway;
+  droppedBrands.sort((a, b) => a.previousRank - b.previousRank);
+
+  return { movements, droppedBrands };
 }
 
 // ---------------------------------------------------------------------------
@@ -195,18 +231,11 @@ function ChannelBar({ items, label }: { items: { name: string; count: number }[]
             return (
               <div key={b.name}>
                 <div className="flex items-baseline justify-between">
-                  <span className={`text-[13px] ${i === 0 ? "font-semibold text-white/70" : "text-white/40"}`}>
-                    {b.name}
-                  </span>
-                  <span className="font-mono text-[11px] tabular-nums text-cyan/50">
-                    {b.count}
-                  </span>
+                  <span className={`text-[13px] ${i === 0 ? "font-semibold text-white/70" : "text-white/40"}`}>{b.name}</span>
+                  <span className="font-mono text-[11px] tabular-nums text-cyan/50">{b.count}</span>
                 </div>
                 <div className="mt-1 h-1 rounded-full bg-white/5">
-                  <div
-                    className={`h-1 rounded-full ${i === 0 ? "bg-cyan/50" : "bg-cyan/20"}`}
-                    style={{ width: `${pct}%` }}
-                  />
+                  <div className={`h-1 rounded-full ${i === 0 ? "bg-cyan/50" : "bg-cyan/20"}`} style={{ width: `${pct}%` }} />
                 </div>
               </div>
             );
@@ -268,6 +297,79 @@ export default async function TrackerReportPage({ params }: Props) {
   const topBrands = buildTopBrands(mentions, agentRows);
   const channelSplit = buildChannelSplit(mentions);
 
+  // --- Seasonal-specific data ---
+  const isSeasonal = trackerType === "seasonal";
+  let movementMap: Map<string, Movement> | null = null;
+  let droppedBrands: { name: string; previousRank: number }[] = [];
+  let allRuns: Run[] = [];
+  let trendLines: { brand: string; points: { week: string; rank: number }[] }[] = [];
+  let trendWeeks: string[] = [];
+  let weekNavItems: { label: string; href: string }[] = [];
+
+  if (isSeasonal && run) {
+    // Get all runs for week nav + trend
+    allRuns = await getAllSeasonalRuns(categoryRow.id);
+    weekNavItems = allRuns.map((r) => ({
+      label: r.period_label,
+      href: `/tracker/seasonal/${slug}/${r.period_label}`,
+    }));
+
+    // Movement: compare to previous run
+    const prevRun = await getPreviousRun(categoryRow.id, run.period_label);
+    if (prevRun) {
+      const prevMentions = await getBrandMentions(prevRun.id);
+      const prevAgentRows = buildAgentRows(prevMentions);
+      const prevTopBrands = buildTopBrands(prevMentions, prevAgentRows);
+      const result = computeMovements(topBrands, prevTopBrands);
+      movementMap = result.movements;
+      droppedBrands = result.droppedBrands;
+    }
+
+    // Trend: need 3+ runs
+    if (allRuns.length >= 3) {
+      const runIds = allRuns.map((r) => Number(r.id));
+      const rankings = await getBrandRankingsForRuns(runIds);
+
+      // Build rank per run per brand
+      const runRankings = new Map<number, Map<string, number>>();
+      for (const r of allRuns) {
+        runRankings.set(Number(r.id), new Map());
+      }
+      // Group by run_id, then assign ranks by mention count
+      const byRun = new Map<number, { brand: string; mentions: number }[]>();
+      for (const row of rankings) {
+        const list = byRun.get(row.run_id) ?? [];
+        list.push(row);
+        byRun.set(row.run_id, list);
+      }
+      for (const [runId, brands] of byRun) {
+        brands.sort((a, b) => b.mentions - a.mentions);
+        const rankMap = runRankings.get(runId)!;
+        brands.forEach((b, i) => rankMap.set(b.brand, i + 1));
+      }
+
+      trendWeeks = allRuns.map((r) => r.period_label);
+
+      // Get top 5 brands from most recent run
+      const top5Names = topBrands.slice(0, 5).map((b) => b.name);
+      trendLines = top5Names.map((brand) => ({
+        brand,
+        points: allRuns
+          .map((r) => {
+            const rank = runRankings.get(Number(r.id))?.get(brand);
+            return rank !== undefined ? { week: r.period_label, rank } : null;
+          })
+          .filter((p): p is { week: string; rank: number } => p !== null),
+      }));
+    }
+  }
+
+  // Apply movements to brands
+  const brandsWithMovement = topBrands.map((b) => ({
+    ...b,
+    movement: movementMap?.get(b.name),
+  }));
+
   const clean = {
     keyTakeaway: cleanText(insight?.key_takeaway),
     auditAngle: cleanText(insight?.audit_angle),
@@ -280,6 +382,11 @@ export default async function TrackerReportPage({ params }: Props) {
 
   return (
     <article className="bg-dot-grid mx-auto min-h-screen max-w-3xl px-6 py-24">
+      {/* Week nav (seasonal only, 2+ runs) */}
+      {isSeasonal && weekNavItems.length > 1 && (
+        <WeekNav weeks={weekNavItems} currentWeek={periodLabel} />
+      )}
+
       <SectionHeader
         title={categoryRow.name}
         subtitle={`${TYPE_LABELS[trackerType] ?? trackerType} \u2014 ${periodLabel}`}
@@ -290,10 +397,18 @@ export default async function TrackerReportPage({ params }: Props) {
         <KeyTakeawayPanel takeaway={takeaway} />
       </section>
 
+      {/* Trend chart (seasonal only, 3+ runs) */}
+      {isSeasonal && trendLines.length > 0 && trendWeeks.length >= 3 && (
+        <ScrollFade className="mt-20">
+          <TrendChart lines={trendLines} weeks={trendWeeks} />
+        </ScrollFade>
+      )}
+
       <ScrollFade className="mt-20">
         <TopBrandsList
-          brands={topBrands}
+          brands={brandsWithMovement}
           whyTheseWin={toBullets(clean.commonTraits)}
+          droppedBrands={isSeasonal && droppedBrands.length > 0 ? droppedBrands : undefined}
         />
       </ScrollFade>
 
@@ -313,7 +428,6 @@ export default async function TrackerReportPage({ params }: Props) {
             <ChannelBar items={channelSplit.ai} label="AI Models" />
             <ChannelBar items={channelSplit.marketplace} label="Marketplace Agents" />
           </div>
-
           {channelSplit.hasBothChannels && (
             <p className="mt-6 text-[13px] leading-relaxed text-white/30">
               AI models and marketplace agents often recommend different brands.
