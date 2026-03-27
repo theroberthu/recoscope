@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getCategoryBySlug, getLatestRun, getBrandMentions, getRunInsight } from "@/lib/queries";
-import type { BrandMention, RunInsight } from "@/lib/types";
+import type { BrandMention, RunInsight, TrackerType } from "@/lib/types";
 import { cleanText } from "@/lib/clean-text";
 import { ScrollFade } from "@/components/home/ScrollFade";
 import {
@@ -42,6 +42,13 @@ function toBullets(text: string | null | undefined): string[] | undefined {
 
   return [trimmed];
 }
+
+const VALID_TYPES = new Set<string>(["evergreen", "seasonal"]);
+
+const TYPE_LABELS: Record<string, string> = {
+  evergreen: "Evergreen monthly benchmark",
+  seasonal: "Seasonal weekly benchmark",
+};
 
 // ---------------------------------------------------------------------------
 // Transforms
@@ -171,7 +178,7 @@ function synthesizeTakeaway(
 }
 
 // ---------------------------------------------------------------------------
-// Channel split bar component (inline, server)
+// Channel split bar
 // ---------------------------------------------------------------------------
 
 function ChannelBar({ items, label }: { items: { name: string; count: number }[]; label: string }) {
@@ -215,15 +222,15 @@ function ChannelBar({ items, label }: { items: { name: string; count: number }[]
 // ---------------------------------------------------------------------------
 
 interface Props {
-  params: Promise<{ category: string }>;
+  params: Promise<{ type: string; slug: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { category } = await params;
-  const label = category.replace(/-/g, " ");
+  const { slug } = await params;
+  const label = slug.replace(/-/g, " ");
   return {
     title: `${label} — AI Recommendation Tracker | RecoScope`,
-    description: `See which brands AI models recommend for ${label}. Monthly benchmark data from ChatGPT, Claude, Gemini, and more.`,
+    description: `See which brands AI models recommend for ${label}. Benchmark data from ChatGPT, Claude, Gemini, and more.`,
   };
 }
 
@@ -231,10 +238,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 // Page
 // ---------------------------------------------------------------------------
 
-export default async function EvergreenCategoryPage({ params }: Props) {
-  const { category } = await params;
+export default async function TrackerReportPage({ params }: Props) {
+  const { type, slug } = await params;
 
-  const categoryRow = await getCategoryBySlug(category, "evergreen");
+  if (!VALID_TYPES.has(type)) notFound();
+  const trackerType = type as TrackerType;
+
+  const categoryRow = await getCategoryBySlug(slug, trackerType);
   if (!categoryRow) notFound();
 
   let run = await getLatestRun(categoryRow.id, "published");
@@ -272,14 +282,12 @@ export default async function EvergreenCategoryPage({ params }: Props) {
     <article className="bg-dot-grid mx-auto min-h-screen max-w-3xl px-6 py-24">
       <SectionHeader
         title={categoryRow.name}
-        subtitle={`Evergreen monthly benchmark \u2014 ${periodLabel}`}
+        subtitle={`${TYPE_LABELS[trackerType] ?? trackerType} \u2014 ${periodLabel}`}
         badge={run ? (periodLabel !== "—" ? periodLabel : "Live Report") : "No data yet"}
       />
 
       <section>
-        <KeyTakeawayPanel
-          takeaway={takeaway}
-        />
+        <KeyTakeawayPanel takeaway={takeaway} />
       </section>
 
       <ScrollFade className="mt-20">
@@ -341,8 +349,8 @@ export default async function EvergreenCategoryPage({ params }: Props) {
             and flag where AI outputs diverge from marketplace trends.
           </p>
           <p>
-            Evergreen categories are benchmarked monthly. Results reflect organic AI behavior at the
-            time of testing.{" "}
+            {trackerType === "seasonal" ? "Seasonal categories are benchmarked weekly during active periods." : "Evergreen categories are benchmarked monthly."}{" "}
+            Results reflect organic AI behavior at the time of testing.{" "}
             <a href="/methodology" className="text-cyan/40 underline underline-offset-2 transition-colors hover:text-cyan">
               Read the full methodology
             </a>
@@ -351,9 +359,7 @@ export default async function EvergreenCategoryPage({ params }: Props) {
       </ScrollFade>
 
       <ScrollFade className="mt-24">
-        <CTABox
-          description={clean.auditAngle ?? undefined}
-        />
+        <CTABox description={clean.auditAngle ?? undefined} />
       </ScrollFade>
     </article>
   );
