@@ -1,13 +1,191 @@
-export default function AuditPage() {
+import type { Metadata } from "next";
+import { ScrollFade } from "@/components/home/ScrollFade";
+import { AuditForm } from "@/components/audit/AuditForm";
+import { getActiveCategories, getAuditStats, getCrossAgentPreview } from "@/lib/queries";
+
+export const metadata: Metadata = {
+  title: "AI Visibility Audit — RecoScope",
+  description:
+    "Find out how AI models see your brand. See where you rank, who AI recommends instead, and what to fix.",
+};
+
+export const dynamic = "force-dynamic";
+
+export default async function AuditPage() {
+  let categories: { name: string; slug: string }[] = [];
+  let stats = { brandsTracked: 0, categoriesActive: 0 };
+  let crossAgentData: { agent_name: string; brand: string; rank: number }[] = [];
+
+  try {
+    [categories, stats, crossAgentData] = await Promise.all([
+      getActiveCategories(),
+      getAuditStats(),
+      getCrossAgentPreview(),
+    ]);
+  } catch {
+    // DB unavailable — render with defaults
+  }
+
+  // Group cross-agent data by agent for the preview table
+  const agentMap = new Map<string, string[]>();
+  for (const row of crossAgentData) {
+    const list = agentMap.get(row.agent_name) ?? [];
+    list.push(row.brand);
+    agentMap.set(row.agent_name, list);
+  }
+  const agentEntries = Array.from(agentMap.entries()).slice(0, 5);
+
+  const VALUE_ITEMS = [
+    "How often AI models mention your brand",
+    "Your rank position vs competitors",
+    "Which AI models recommend you and which don\u2019t",
+    "Specific content gaps holding your brand back",
+    "Actionable recommendations to improve AI visibility",
+  ];
+
   return (
-    <section className="mx-auto max-w-3xl px-6 py-24">
-      <h1 className="text-3xl font-bold tracking-tight">
-        AI Visibility Audit
-      </h1>
-      <p className="mt-4 text-gray-600">
-        Find out how AI models see your brand. Get a personalized audit showing
-        where you rank in AI recommendations across your category.
-      </p>
-    </section>
+    <div className="bg-dot-grid min-h-screen">
+      {/* Hero */}
+      <section className="mx-auto max-w-3xl px-6 pb-8 pt-24">
+        <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/60">
+          Free Audit
+        </p>
+        <h1 className="mt-4 bg-gradient-to-r from-white to-cyan/70 bg-clip-text text-5xl font-bold leading-[1.1] tracking-tight text-transparent">
+          AI Visibility Audit
+        </h1>
+        <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/40">
+          Find out how AI models see your brand. See where you rank, who AI recommends instead,
+          and what to fix.
+        </p>
+      </section>
+
+      {/* Stats */}
+      <ScrollFade className="mx-auto max-w-3xl px-6 py-12">
+        <div className="grid grid-cols-3 gap-4">
+          <div className="rounded-xl border border-white/10 bg-surface px-5 py-5 text-center">
+            <p className="font-mono text-3xl font-bold text-cyan">
+              {stats.brandsTracked || "100+"}
+            </p>
+            <p className="mt-1 text-[12px] text-white/30">Brands Tracked</p>
+          </div>
+          <div className="rounded-xl border border-white/10 bg-surface px-5 py-5 text-center">
+            <p className="font-mono text-3xl font-bold text-cyan">4</p>
+            <p className="mt-1 text-[12px] text-white/30">AI Models</p>
+          </div>
+          <div className="rounded-xl border border-white/10 bg-surface px-5 py-5 text-center">
+            <p className="font-mono text-3xl font-bold text-cyan">
+              {stats.categoriesActive || "3+"}
+            </p>
+            <p className="mt-1 text-[12px] text-white/30">Categories</p>
+          </div>
+        </div>
+        <p className="mt-6 text-[14px] leading-[1.8] text-[#c8ccd0]">
+          Every month, we benchmark what ChatGPT, Claude, Gemini, and Perplexity recommend
+          across consumer product categories. Most brands never appear in these results.
+          The audit shows you exactly where you stand and what to change.
+        </p>
+      </ScrollFade>
+
+      {/* Form + Value Prop */}
+      <ScrollFade className="border-t border-white/5">
+        <div className="mx-auto max-w-3xl px-6 py-20">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
+            {/* Form */}
+            <div>
+              <p className="mb-6 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/50">
+                Request Your Audit
+              </p>
+              <AuditForm categories={categories.map((c) => ({ name: c.name, slug: c.slug }))} />
+            </div>
+
+            {/* Value prop */}
+            <div>
+              <p className="mb-6 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+                What&rsquo;s in the audit
+              </p>
+              <ul className="space-y-4">
+                {VALUE_ITEMS.map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-cyan/10">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M2.5 6.5L5 9L9.5 3.5" stroke="#00d4aa" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                    <span className="text-[14px] leading-relaxed text-[#c8ccd0]">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8 rounded-xl border border-white/5 bg-white/[0.02] px-5 py-4">
+                <p className="text-[13px] leading-relaxed text-white/40">
+                  The audit is free. No call required. We send it to your email.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ScrollFade>
+
+      {/* Sample preview */}
+      {agentEntries.length > 0 && (
+        <ScrollFade className="border-t border-white/5">
+          <div className="mx-auto max-w-3xl px-6 py-20">
+            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/50">
+              See what we track
+            </p>
+            <p className="mt-2 text-[14px] text-white/40">
+              A sample of how AI models rank brands across a single category.
+            </p>
+
+            <div className="mt-8 overflow-x-auto rounded-xl border border-white/10 bg-surface">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-white/5">
+                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/25">
+                      Agent
+                    </th>
+                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-cyan/40">
+                      #1
+                    </th>
+                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/20">
+                      #2
+                    </th>
+                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/20">
+                      #3
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {agentEntries.map(([agent, brands], i) => (
+                    <tr
+                      key={agent}
+                      className={i < agentEntries.length - 1 ? "border-b border-white/5" : ""}
+                    >
+                      <td className="px-6 py-4 font-mono text-[13px] font-semibold text-white/60">
+                        {agent}
+                      </td>
+                      {[0, 1, 2].map((idx) => (
+                        <td
+                          key={idx}
+                          className={`px-6 py-4 text-[13px] ${
+                            idx === 0 ? "font-medium text-white/70" : "text-white/30"
+                          }`}
+                        >
+                          {brands[idx] ?? "\u2014"}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <p className="mt-6 text-center text-[14px] text-white/30">
+              Your brand could be in this data.{" "}
+              <span className="text-cyan/60">Find out where.</span>
+            </p>
+          </div>
+        </ScrollFade>
+      )}
+    </div>
   );
 }

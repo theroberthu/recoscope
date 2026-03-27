@@ -165,6 +165,25 @@ export async function getCrossAgentPreview(): Promise<
 }
 
 // ---------------------------------------------------------------------------
+// Audit page stats
+// ---------------------------------------------------------------------------
+
+export async function getAuditStats(): Promise<{
+  brandsTracked: number;
+  categoriesActive: number;
+}> {
+  const sql = getDb();
+  const [brands, cats] = await Promise.all([
+    sql`SELECT COUNT(DISTINCT brand_name_normalized)::int AS c FROM brand_mentions`,
+    sql`SELECT COUNT(*)::int AS c FROM categories WHERE is_active = true`,
+  ]);
+  return {
+    brandsTracked: (brands[0] as { c: number }).c,
+    categoriesActive: (cats[0] as { c: number }).c,
+  };
+}
+
+// ---------------------------------------------------------------------------
 // Insights
 // ---------------------------------------------------------------------------
 
