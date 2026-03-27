@@ -22,7 +22,7 @@ function SectionLabel({ children }: { children: string }) {
 
 function Prose({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mt-6 space-y-4 text-[14px] leading-[1.8] text-white/50">
+    <div className="mt-6 space-y-4 text-base leading-[1.8] text-[#c8ccd0]">
       {children}
     </div>
   );
@@ -72,108 +72,108 @@ export default function MethodologyPage() {
           Methodology
         </p>
         <h1 className="mt-4 bg-gradient-to-r from-white to-cyan/70 bg-clip-text text-5xl font-bold leading-[1.1] tracking-tight text-transparent">
-          How we benchmark AI recommendations
+          The RecoScope Framework
         </h1>
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/40">
           How we collect, normalize, and score AI recommendation data across models and categories.
         </p>
       </section>
 
-      {/* Why This Matters */}
-      <ScrollFade className="mx-auto max-w-3xl px-6 py-20">
-        <SectionLabel>Why This Matters</SectionLabel>
-        <Prose>
-          <p>
-            When consumers ask AI for product recommendations, they get answers shaped by each
-            model&rsquo;s training data, retrieval methods, and commercial integrations. Different
-            models recommend different brands for the same question.
-          </p>
-          <p>
-            RecoScope exists to make those differences visible and measurable. We run standardized
-            benchmarks across AI models so brands, agencies, and analysts can see exactly who AI
-            recommends, where models agree, and where commercial influence may be shifting results.
-          </p>
-        </Prose>
-      </ScrollFade>
-
       {/* Three-Tier Classification */}
-      <ScrollFade className="border-t border-white/5">
-        <div className="mx-auto max-w-3xl px-6 py-20">
-          <SectionLabel>The Three-Tier Model Classification</SectionLabel>
+      <ScrollFade className="mx-auto max-w-3xl px-6 py-20">
+        <SectionLabel>The Three-Tier Model Classification</SectionLabel>
 
-          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
-            {/* Independent */}
-            <div className="glow-card rounded-xl border border-white/10 bg-surface p-6">
-              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-cyan/10 text-cyan">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.5" />
-                  <circle cx="10" cy="10" r="2.5" fill="currentColor" />
-                </svg>
-              </div>
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-cyan/60">
-                Independent AI
-              </p>
-              <p className="mt-1 text-[14px] font-semibold text-white">
-                Claude <span className="font-normal text-white/30">(Anthropic)</span>
-              </p>
-              <p className="mt-3 text-[13px] leading-[1.7] text-white/40">
-                No advertising revenue from recommendations. No integrated shopping or checkout
-                features. Recommendations are based on training data and general knowledge without
-                commercial incentives.
-              </p>
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {/* Independent */}
+          <div className="glow-card rounded-xl border border-white/10 bg-surface p-6">
+            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-cyan/10 text-cyan">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.5" />
+                <circle cx="10" cy="10" r="2.5" fill="currentColor" />
+              </svg>
             </div>
-
-            {/* Search-Grounded */}
-            <div className="glow-card rounded-xl border border-white/10 bg-surface p-6">
-              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-400/10 text-blue-400">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <circle cx="9" cy="9" r="5.5" stroke="currentColor" strokeWidth="1.5" />
-                  <path d="M13.5 13.5L17 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                </svg>
-              </div>
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-blue-400/60">
-                Search-Grounded AI
-              </p>
-              <p className="mt-1 text-[14px] font-semibold text-white">
-                Perplexity
-              </p>
-              <p className="mt-3 text-[13px] leading-[1.7] text-white/40">
-                Retrieval-augmented model that searches the live web before answering.
-                Recommendations reflect current web consensus rather than static training data.
-                May surface brands with strong web presence that other models miss.
-              </p>
-            </div>
-
-            {/* Commerce-Influenced */}
-            <div className="glow-card rounded-xl border border-white/10 bg-surface p-6">
-              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-amber-400/10 text-amber-400">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <rect x="4" y="7" width="12" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
-                  <path d="M7 7V5.5A3 3 0 0 1 13 5.5V7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                </svg>
-              </div>
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-amber-400/60">
-                Commerce-Influenced AI
-              </p>
-              <p className="mt-1 text-[14px] font-semibold text-white">
-                ChatGPT <span className="font-normal text-white/30">(OpenAI)</span>,
-                Gemini <span className="font-normal text-white/30">(Google)</span>
-              </p>
-              <p className="mt-3 text-[13px] leading-[1.7] text-white/40">
-                Models with active or announced commercial integrations. OpenAI has publicly
-                introduced advertising into ChatGPT. Gemini is integrated with Google Shopping
-                and Shopify agentic commerce. Recommendations from these models may be influenced
-                by commercial relationships.
-              </p>
-            </div>
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-cyan/60">
+              Independent AI
+            </p>
+            <p className="mt-1 text-[14px] font-semibold text-white">
+              Claude <span className="font-normal text-white/30">(Anthropic)</span>
+            </p>
+            <p className="mt-3 text-[13px] leading-[1.7] text-[#c8ccd0]/70">
+              No advertising revenue from recommendations. No integrated shopping or checkout
+              features. Recommendations are based on training data and general knowledge without
+              commercial incentives.
+            </p>
           </div>
 
-          <p className="mt-8 text-[14px] leading-[1.8] text-white/40">
-            This classification is not a judgment of quality. All four models produce useful
-            recommendations. The classification helps readers interpret differences in their outputs.
-            When a commerce-influenced model consistently recommends different brands than an
-            independent model, that divergence is worth examining.
-          </p>
+          {/* Search-Grounded */}
+          <div className="glow-card rounded-xl border border-white/10 bg-surface p-6">
+            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-400/10 text-blue-400">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <circle cx="9" cy="9" r="5.5" stroke="currentColor" strokeWidth="1.5" />
+                <path d="M13.5 13.5L17 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+            </div>
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-blue-400/60">
+              Search-Grounded AI
+            </p>
+            <p className="mt-1 text-[14px] font-semibold text-white">
+              Perplexity
+            </p>
+            <p className="mt-3 text-[13px] leading-[1.7] text-[#c8ccd0]/70">
+              Retrieval-augmented model that searches the live web before answering.
+              Recommendations reflect current web consensus rather than static training data.
+              May surface brands with strong web presence that other models miss.
+            </p>
+          </div>
+
+          {/* Commerce-Influenced */}
+          <div className="glow-card rounded-xl border border-white/10 bg-surface p-6">
+            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-amber-400/10 text-amber-400">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <rect x="4" y="7" width="12" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+                <path d="M7 7V5.5A3 3 0 0 1 13 5.5V7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+            </div>
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-amber-400/60">
+              Commerce-Influenced AI
+            </p>
+            <p className="mt-1 text-[14px] font-semibold text-white">
+              ChatGPT <span className="font-normal text-white/30">(OpenAI)</span>,
+              Gemini <span className="font-normal text-white/30">(Google)</span>
+            </p>
+            <p className="mt-3 text-[13px] leading-[1.7] text-[#c8ccd0]/70">
+              Models with active or announced commercial integrations. OpenAI has publicly
+              introduced advertising into ChatGPT. Gemini is integrated with Google Shopping
+              and Shopify agentic commerce. Recommendations from these models may be influenced
+              by commercial relationships.
+            </p>
+          </div>
+        </div>
+
+        <p className="mt-8 text-base leading-[1.8] text-[#c8ccd0]">
+          This classification is not a judgment of quality. All four models produce useful
+          recommendations. The classification helps readers interpret differences in their outputs.
+          When a commerce-influenced model consistently recommends different brands than an
+          independent model, that divergence is worth examining.
+        </p>
+      </ScrollFade>
+
+      {/* Why This Matters */}
+      <ScrollFade className="border-t border-white/5">
+        <div className="mx-auto max-w-3xl px-6 py-20">
+          <SectionLabel>Why This Matters</SectionLabel>
+          <Prose>
+            <p>
+              When consumers ask AI for product recommendations, they get answers shaped by each
+              model&rsquo;s training data, retrieval methods, and commercial integrations. Different
+              models recommend different brands for the same question.
+            </p>
+            <p>
+              RecoScope exists to make those differences visible and measurable. We run standardized
+              benchmarks across AI models so brands, agencies, and analysts can see exactly who AI
+              recommends, where models agree, and where commercial influence may be shifting results.
+            </p>
+          </Prose>
         </div>
       </ScrollFade>
 
@@ -196,7 +196,7 @@ export default function MethodologyPage() {
                 {/* Content */}
                 <div className="pt-1.5">
                   <p className="text-[15px] font-semibold text-white">{step.title}</p>
-                  <p className="mt-2 text-[13px] leading-[1.7] text-white/40">{step.body}</p>
+                  <p className="mt-2 text-[14px] leading-[1.7] text-[#c8ccd0]/80">{step.body}</p>
                 </div>
               </div>
             ))}
@@ -230,7 +230,7 @@ export default function MethodologyPage() {
                     <td className="px-6 py-4 font-mono text-[13px] font-semibold text-cyan/70">
                       {row.metric}
                     </td>
-                    <td className="px-6 py-4 text-[13px] text-white/40">
+                    <td className="px-6 py-4 text-[14px] text-[#c8ccd0]/80">
                       {row.desc}
                     </td>
                   </tr>
@@ -274,7 +274,7 @@ export default function MethodologyPage() {
               <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-cyan/60">
                 Evergreen Categories
               </p>
-              <p className="mt-3 text-[13px] leading-[1.7] text-white/40">
+              <p className="mt-3 text-[14px] leading-[1.7] text-[#c8ccd0]/80">
                 Benchmarked monthly. Categories with year-round consumer demand like office chairs,
                 running shoes, and wireless earbuds. Reports track long-term trends in AI
                 recommendation patterns.
@@ -284,7 +284,7 @@ export default function MethodologyPage() {
               <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-cyan/60">
                 Seasonal Categories
               </p>
-              <p className="mt-3 text-[13px] leading-[1.7] text-white/40">
+              <p className="mt-3 text-[14px] leading-[1.7] text-[#c8ccd0]/80">
                 Benchmarked weekly during active periods. Categories with time-sensitive demand like
                 lawn fertilizer, sunscreen, and space heaters. Reports track how AI recommendations
                 shift through a season.
