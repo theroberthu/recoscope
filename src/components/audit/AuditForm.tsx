@@ -7,7 +7,7 @@ interface AuditFormProps {
 }
 
 export function AuditForm({ categories }: AuditFormProps) {
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "duplicate" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
   if (status === "success") {
@@ -20,9 +20,27 @@ export function AuditForm({ categories }: AuditFormProps) {
             </svg>
           </div>
         </div>
-        <p className="text-lg font-semibold text-white">We got your request.</p>
+        <p className="text-lg font-semibold text-white">You&rsquo;re in.</p>
         <p className="mt-2 text-[14px] text-[#c8ccd0]">
-          We&rsquo;ll send your audit within 48 hours.
+          We&rsquo;ll send your first report when the next benchmark drops.
+        </p>
+      </div>
+    );
+  }
+
+  if (status === "duplicate") {
+    return (
+      <div className="rounded-xl border border-cyan/20 bg-surface p-8 text-center">
+        <div className="mb-4 flex justify-center">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-cyan/10">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M5 13l4 4L19 7" stroke="#00d4aa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+        </div>
+        <p className="text-lg font-semibold text-white">You&rsquo;re already signed up.</p>
+        <p className="mt-2 text-[14px] text-[#c8ccd0]">
+          We&rsquo;ll be in touch.
         </p>
       </div>
     );
@@ -35,12 +53,11 @@ export function AuditForm({ categories }: AuditFormProps) {
 
     const fd = new FormData(e.currentTarget);
     const payload = {
-      name: fd.get("name"),
       email: fd.get("email"),
-      brand_name: fd.get("brand_name"),
-      website: fd.get("website") || null,
+      name: fd.get("name") || null,
+      brand_name: fd.get("brand_name") || null,
       category_interest: fd.get("category_interest") || null,
-      notes: fd.get("notes") || null,
+      lead_type: "free_monthly_signup",
     };
 
     try {
@@ -50,14 +67,20 @@ export function AuditForm({ categories }: AuditFormProps) {
         body: JSON.stringify(payload),
       });
 
+      const data = await res.json().catch(() => null);
+
+      if (data?.duplicate) {
+        setStatus("duplicate");
+        return;
+      }
+
       if (!res.ok) {
-        const data = await res.json().catch(() => null);
         throw new Error(data?.error ?? "Submission failed");
       }
 
       setStatus("success");
     } catch (err) {
-      setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Try again.");
       setStatus("error");
     }
   }
@@ -69,39 +92,28 @@ export function AuditForm({ categories }: AuditFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div>
-        <label htmlFor="name" className={labelCls}>Name *</label>
-        <input id="name" name="name" type="text" required className={inputCls} placeholder="Your name" />
-      </div>
-
-      <div>
         <label htmlFor="email" className={labelCls}>Email *</label>
         <input id="email" name="email" type="email" required className={inputCls} placeholder="you@company.com" />
       </div>
 
       <div>
-        <label htmlFor="brand_name" className={labelCls}>Brand Name *</label>
-        <input id="brand_name" name="brand_name" type="text" required className={inputCls} placeholder="Your brand or product name" />
+        <label htmlFor="name" className={labelCls}>Name</label>
+        <input id="name" name="name" type="text" className={inputCls} placeholder="Optional" />
       </div>
 
       <div>
-        <label htmlFor="website" className={labelCls}>Website</label>
-        <input id="website" name="website" type="url" className={inputCls} placeholder="https://..." />
+        <label htmlFor="brand_name" className={labelCls}>Brand Name</label>
+        <input id="brand_name" name="brand_name" type="text" className={inputCls} placeholder="Leave blank if you're not representing a brand" />
       </div>
 
       <div>
-        <label htmlFor="category_interest" className={labelCls}>Category</label>
+        <label htmlFor="category_interest" className={labelCls}>Category Interest</label>
         <select id="category_interest" name="category_interest" className={`${inputCls} appearance-none`}>
-          <option value="">Select a category</option>
+          <option value="">All Categories</option>
           {categories.map((c) => (
             <option key={c.slug} value={c.name}>{c.name}</option>
           ))}
-          <option value="Other">Other</option>
         </select>
-      </div>
-
-      <div>
-        <label htmlFor="notes" className={labelCls}>Anything else we should know?</label>
-        <textarea id="notes" name="notes" rows={3} className={inputCls} placeholder="Optional context..." />
       </div>
 
       {status === "error" && (
@@ -115,7 +127,7 @@ export function AuditForm({ categories }: AuditFormProps) {
         disabled={status === "submitting"}
         className="w-full rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-all hover:bg-cyan/90 hover:shadow-[0_0_20px_rgba(0,212,170,0.25)] disabled:opacity-50"
       >
-        {status === "submitting" ? "Submitting..." : "Request Your Free Audit"}
+        {status === "submitting" ? "Subscribing..." : "Subscribe \u2014 It\u2019s Free"}
       </button>
     </form>
   );

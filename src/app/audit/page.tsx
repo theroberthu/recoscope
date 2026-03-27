@@ -4,9 +4,9 @@ import { AuditForm } from "@/components/audit/AuditForm";
 import { getActiveCategories, getAuditStats, getCrossAgentPreview } from "@/lib/queries";
 
 export const metadata: Metadata = {
-  title: "AI Visibility Audit — RecoScope",
+  title: "Get the Reports — RecoScope",
   description:
-    "Find out how AI models see your brand. See where you rank, who AI recommends instead, and what to fix.",
+    "Free monthly AI recommendation benchmarks delivered to your inbox.",
 };
 
 export const dynamic = "force-dynamic";
@@ -26,7 +26,6 @@ export default async function AuditPage() {
     // DB unavailable — render with defaults
   }
 
-  // Group cross-agent data by agent for the preview table
   const agentMap = new Map<string, string[]>();
   for (const row of crossAgentData) {
     const list = agentMap.get(row.agent_name) ?? [];
@@ -36,11 +35,10 @@ export default async function AuditPage() {
   const agentEntries = Array.from(agentMap.entries()).slice(0, 5);
 
   const VALUE_ITEMS = [
-    "How often AI models mention your brand",
-    "Your rank position vs competitors",
-    "Which AI models recommend you and which don\u2019t",
-    "Specific content gaps holding your brand back",
-    "Actionable recommendations to improve AI visibility",
+    "Monthly brand ranking reports for your categories",
+    "Cross-model comparison data (ChatGPT vs Claude vs Gemini vs Perplexity)",
+    "Independent vs commerce-influenced AI analysis",
+    "Early access to new category launches",
   ];
 
   return (
@@ -48,14 +46,14 @@ export default async function AuditPage() {
       {/* Hero */}
       <section className="mx-auto max-w-3xl px-6 pb-8 pt-24">
         <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/60">
-          Free Audit
+          Free Reports
         </p>
         <h1 className="mt-4 bg-gradient-to-r from-white to-cyan/70 bg-clip-text text-5xl font-bold leading-[1.1] tracking-tight text-transparent">
-          AI Visibility Audit
+          Get the Reports
         </h1>
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/40">
-          Find out how AI models see your brand. See where you rank, who AI recommends instead,
-          and what to fix.
+          Free monthly AI recommendation benchmarks delivered to your inbox.
+          See which brands AI models recommend in your category &mdash; and which ones they ignore.
         </p>
       </section>
 
@@ -70,20 +68,15 @@ export default async function AuditPage() {
           </div>
           <div className="rounded-xl border border-white/10 bg-surface px-5 py-5 text-center">
             <p className="font-mono text-3xl font-bold text-cyan">4</p>
-            <p className="mt-1 text-[12px] text-white/30">AI Models</p>
+            <p className="mt-1 text-[12px] text-white/30">AI Models Benchmarked</p>
           </div>
           <div className="rounded-xl border border-white/10 bg-surface px-5 py-5 text-center">
             <p className="font-mono text-3xl font-bold text-cyan">
               {stats.categoriesActive || "3+"}
             </p>
-            <p className="mt-1 text-[12px] text-white/30">Categories</p>
+            <p className="mt-1 text-[12px] text-white/30">Active Categories</p>
           </div>
         </div>
-        <p className="mt-6 text-[14px] leading-[1.8] text-[#c8ccd0]">
-          Every month, we benchmark what ChatGPT, Claude, Gemini, and Perplexity recommend
-          across consumer product categories. Most brands never appear in these results.
-          The audit shows you exactly where you stand and what to change.
-        </p>
       </ScrollFade>
 
       {/* Form + Value Prop */}
@@ -93,7 +86,7 @@ export default async function AuditPage() {
             {/* Form */}
             <div>
               <p className="mb-6 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/50">
-                Request Your Audit
+                Subscribe
               </p>
               <AuditForm categories={categories.map((c) => ({ name: c.name, slug: c.slug }))} />
             </div>
@@ -101,7 +94,7 @@ export default async function AuditPage() {
             {/* Value prop */}
             <div>
               <p className="mb-6 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
-                What&rsquo;s in the audit
+                What you get
               </p>
               <ul className="space-y-4">
                 {VALUE_ITEMS.map((item) => (
@@ -116,8 +109,9 @@ export default async function AuditPage() {
                 ))}
               </ul>
               <div className="mt-8 rounded-xl border border-white/5 bg-white/[0.02] px-5 py-4">
-                <p className="text-[13px] leading-relaxed text-white/40">
-                  The audit is free. No call required. We send it to your email.
+                <p className="text-[13px] leading-relaxed text-white/30">
+                  Need weekly reports or custom brand tracking?{" "}
+                  <span className="text-cyan/50">Paid plans coming soon.</span>
                 </p>
               </div>
             </div>
@@ -133,7 +127,7 @@ export default async function AuditPage() {
               See what we track
             </p>
             <p className="mt-2 text-[14px] text-white/40">
-              A sample of how AI models rank brands across a single category.
+              This is real data from our latest benchmark. Subscribers get this monthly.
             </p>
 
             <div className="mt-8 overflow-x-auto rounded-xl border border-white/10 bg-surface">

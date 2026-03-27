@@ -9,25 +9,42 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const { name, email, brand_name, website, category_interest, notes } = body;
+  const { name, email, brand_name, category_interest, lead_type } = body;
 
-  if (!name || !email || !brand_name) {
-    return NextResponse.json(
-      { error: "Name, email, and brand name are required." },
-      { status: 400 },
-    );
+  if (!email || typeof email !== "string" || !email.includes("@")) {
+    return NextResponse.json({ error: "A valid email is required." }, { status: 400 });
   }
 
-  if (typeof email !== "string" || !email.includes("@")) {
-    return NextResponse.json({ error: "Invalid email address." }, { status: 400 });
-  }
+  const resolvedLeadType = lead_type === "free_monthly_signup" ? "free_monthly_signup" : "audit";
 
   try {
     const sql = getDb();
+
+    // Check for duplicate email with the same lead type
+    const existing = await sql`
+      SELECT id FROM audit_leads
+      WHERE email = ${email} AND lead_type = ${resolvedLeadType}
+      LIMIT 1
+    `;
+
+    if (existing.length > 0) {
+      return NextResponse.json({ duplicate: true });
+    }
+
     await sql`
       INSERT INTO audit_leads (name, email, brand_name, website, category_interest, source_page, lead_type, notes)
-      VALUES (${name}, ${email}, ${brand_name}, ${website ?? null}, ${category_interest ?? null}, '/audit', 'audit', ${notes ?? null})
+      VALUES (
+        ${name || ""},
+        ${email},
+        ${brand_name || ""},
+        ${null},
+        ${category_interest ?? null},
+        '/audit',
+        ${resolvedLeadType},
+        ${null}
+      )
     `;
+
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("[audit-api] insert error:", err);
