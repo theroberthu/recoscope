@@ -85,13 +85,16 @@ function buildTopBrands(
     .map(([name, { count, firstInAgents }]) => ({ name, mentionCount: count, firstInAgents }))
     .sort((a, b) => b.mentionCount - a.mentionCount);
 
-  const leaderName = sorted[0]?.name;
+  const topCount = sorted[0]?.mentionCount ?? 0;
+  const tiedAtTop = sorted.filter((b) => b.mentionCount === topCount);
   const totalAgents = agentRows.length;
 
   return sorted.map((brand) => {
     let label: string | undefined;
-    if (brand.name === leaderName) {
+    if (brand.mentionCount === topCount && tiedAtTop.length === 1) {
       label = "Overall Leader";
+    } else if (brand.mentionCount === topCount && tiedAtTop.length > 1) {
+      label = "Tied #1";
     } else if ((top3Appearances.get(brand.name) ?? 0) >= Math.max(totalAgents - 1, 2)) {
       label = "High Consensus";
     } else if (brand.firstInAgents.length === 1) {
@@ -151,22 +154,32 @@ function synthesizeTakeaway(
   agentRows: { agentName: string; topBrands: string[] }[],
 ): string {
   if (topBrands.length === 0) return "No recommendation data available yet.";
+
   const leader = topBrands[0];
-  const runnerUp = topBrands[1];
   const firstPicks = agentRows.map((r) => r.topBrands[0]).filter(Boolean);
   const unanimousFirst = firstPicks.length > 1 && firstPicks.every((p) => p === firstPicks[0]);
+
+  // Check for ties at the top
+  const tiedAtTop = topBrands.filter((b) => b.mentionCount === leader.mentionCount);
+
   let takeaway = "";
-  if (unanimousFirst) {
+  if (tiedAtTop.length >= 3) {
+    const names = tiedAtTop.slice(0, 3).map((b) => b.name);
+    takeaway = `${names.join(", ")} are tied at ${leader.mentionCount} mentions each across ${agentRows.length} AI models. No single brand dominates.`;
+  } else if (tiedAtTop.length === 2) {
+    takeaway = `${tiedAtTop[0].name} and ${tiedAtTop[1].name} are tied at ${leader.mentionCount} mentions each across ${agentRows.length} AI models.`;
+  } else if (unanimousFirst) {
     takeaway = `${leader.name} is the unanimous #1 recommendation across all ${agentRows.length} AI models tested, with ${leader.mentionCount} total mentions.`;
   } else {
-    const consensusBrands = topBrands.filter((b) => b.label === "High Consensus");
-    if (consensusBrands.length > 0) {
-      takeaway = `${leader.name} leads with ${leader.mentionCount} mentions, while ${consensusBrands.map((b) => b.name).join(" and ")} show strong cross-model consensus.`;
-    } else {
-      takeaway = `${leader.name} dominates AI recommendations with ${leader.mentionCount} mentions across ${agentRows.length} models.`;
-    }
+    takeaway = `${leader.name} leads with ${leader.mentionCount} mentions across ${agentRows.length} models.`;
   }
-  if (runnerUp) takeaway += ` ${runnerUp.name} follows with ${runnerUp.mentionCount} mentions.`;
+
+  // Mention the next brand after the tie group
+  const nextAfterTie = topBrands[tiedAtTop.length];
+  if (nextAfterTie && nextAfterTie.mentionCount < leader.mentionCount) {
+    takeaway += ` ${nextAfterTie.name} follows with ${nextAfterTie.mentionCount} mentions.`;
+  }
+
   return takeaway;
 }
 
