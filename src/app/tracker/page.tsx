@@ -49,10 +49,11 @@ export default async function TrackerIndexPage() {
           Tracker
         </p>
         <h1 className="mt-4 bg-gradient-to-r from-white to-cyan/70 bg-clip-text text-5xl font-bold leading-[1.1] tracking-tight text-transparent">
-          AI Recommendation Reports
+          AI Recommendation Benchmarks
         </h1>
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/40">
-          Browse evergreen monthly benchmarks and seasonal weekly reports across consumer categories.
+          We run the same buying prompts through ChatGPT, Claude, Gemini, and Perplexity
+          every month &mdash; and track which brands AI recommends. Pick a category to see the data.
         </p>
       </section>
 
@@ -165,6 +166,15 @@ export default async function TrackerIndexPage() {
           </div>
         </ScrollFade>
       )}
+
+      <section className="mx-auto max-w-3xl px-6 pb-24 pt-4">
+        <p className="text-center text-[14px] text-white/30">
+          Don&rsquo;t see your category?{" "}
+          <a href="/audit" className="text-cyan/60 underline underline-offset-2 transition-colors hover:text-cyan">
+            Request a custom benchmark
+          </a>
+        </p>
+      </section>
     </div>
   );
 }
