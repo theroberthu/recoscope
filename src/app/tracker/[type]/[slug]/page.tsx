@@ -18,6 +18,7 @@ import {
   InsightsSection,
   CTABox,
 } from "@/components/tracker";
+import { ReportViewTracker } from "@/components/tracker/ReportViewTracker";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -395,6 +396,8 @@ export default async function TrackerReportPage({ params }: Props) {
 
   return (
     <article className="bg-dot-grid mx-auto min-h-screen max-w-3xl px-6 py-24">
+      <ReportViewTracker slug={slug} />
+
       {/* Week nav (seasonal only, 2+ runs) */}
       {isSeasonal && weekNavItems.length > 1 && (
         <WeekNav weeks={weekNavItems} currentWeek={periodLabel} />

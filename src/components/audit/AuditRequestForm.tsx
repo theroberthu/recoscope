@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 
 interface AuditRequestFormProps {
   categories: { name: string; slug: string }[];
@@ -63,6 +64,7 @@ export function AuditRequestForm({ categories }: AuditRequestFormProps) {
         throw new Error(data?.error ?? "Submission failed");
       }
 
+      trackEvent("audit_form_submit");
       setStatus("success");
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Try again.");
