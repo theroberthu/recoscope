@@ -272,7 +272,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const label = slug.replace(/-/g, " ");
   return {
-    title: `${label} — AI Recommendation Tracker | RecoScope`,
+    title: `${label} AI Benchmark`,
     description: `See which brands AI models recommend for ${label}. Benchmark data from ChatGPT, Claude, Gemini, and more.`,
   };
 }

@@ -4,7 +4,7 @@ import { AuditForm } from "@/components/audit/AuditForm";
 import { getActiveCategories, getAuditStats, getCrossAgentPreview } from "@/lib/queries";
 
 export const metadata: Metadata = {
-  title: "Subscribe — RecoScope",
+  title: "Subscribe",
   description:
     "Free monthly AI recommendation benchmarks delivered to your inbox.",
 };

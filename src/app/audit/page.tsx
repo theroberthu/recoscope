@@ -4,7 +4,7 @@ import { AuditRequestForm } from "@/components/audit/AuditRequestForm";
 import { getActiveCategories, getCrossAgentPreview } from "@/lib/queries";
 
 export const metadata: Metadata = {
-  title: "AI Visibility Audit — RecoScope",
+  title: "Free AI Visibility Audit",
   description:
     "We'll run your brand through ChatGPT, Claude, Gemini, and Perplexity and show you exactly where you stand — free.",
 };

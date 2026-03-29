@@ -3,9 +3,26 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "RecoScope — AI Recommendation Tracking & Benchmarks",
+  title: {
+    template: "%s — RecoScope",
+    default: "RecoScope — AI Recommendation Benchmarks for Consumer Brands",
+  },
   description:
-    "Track how AI models recommend products and services. Monthly evergreen benchmarks, seasonal weekly reports, and AI Visibility Audits.",
+    "Track which brands AI models recommend. RecoScope benchmarks product recommendations across ChatGPT, Claude, Gemini, and Perplexity so brands can see where they stand.",
+  metadataBase: new URL("https://getrecoscope.com"),
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+  },
+  openGraph: {
+    type: "website",
+    siteName: "RecoScope",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({

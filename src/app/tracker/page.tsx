@@ -3,7 +3,7 @@ import { ScrollFade } from "@/components/home/ScrollFade";
 import { getCategoriesWithSchedule } from "@/lib/queries";
 
 export const metadata: Metadata = {
-  title: "Tracker — RecoScope",
+  title: "AI Recommendation Reports",
   description: "Browse AI recommendation benchmark reports across consumer categories.",
 };
 

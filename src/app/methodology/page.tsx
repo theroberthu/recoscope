@@ -3,7 +3,7 @@ import { ScrollFade } from "@/components/home/ScrollFade";
 import { CTABox } from "@/components/tracker";
 
 export const metadata: Metadata = {
-  title: "Methodology — RecoScope",
+  title: "Methodology",
   description:
     "How RecoScope collects, normalizes, and scores AI recommendation data across models and categories.",
 };
