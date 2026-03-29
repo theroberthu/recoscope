@@ -1,5 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
+import { Resend } from "resend";
+
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
+
+const NOTIFY_EMAIL = "roberthu83@gmail.com";
 
 export async function POST(req: NextRequest) {
   let body;
@@ -15,7 +22,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "A valid email is required." }, { status: 400 });
   }
 
-  // Audit requests require name and brand_name
   const resolvedLeadType = lead_type === "free_monthly_signup" ? "free_monthly_signup" : "audit";
   if (resolvedLeadType === "audit" && (!name || !brand_name)) {
     return NextResponse.json(
@@ -27,7 +33,6 @@ export async function POST(req: NextRequest) {
   try {
     const sql = getDb();
 
-    // Check for duplicate email with the same lead type
     const existing = await sql`
       SELECT id FROM audit_leads
       WHERE email = ${email} AND lead_type = ${resolvedLeadType}
@@ -51,6 +56,28 @@ export async function POST(req: NextRequest) {
         ${notes ?? null}
       )
     `;
+
+    // Send email notification for audit leads (non-blocking)
+    if (resolvedLeadType === "audit" && resend) {
+      resend.emails
+        .send({
+          from: "RecoScope <onboarding@resend.dev>",
+          to: NOTIFY_EMAIL,
+          subject: `New RecoScope Audit Lead: ${brand_name}`,
+          text: [
+            `Name: ${name}`,
+            `Email: ${email}`,
+            `Brand: ${brand_name}`,
+            `Product URL: ${website || "—"}`,
+            `Category: ${category_interest || "—"}`,
+            `Challenge: ${notes || "—"}`,
+            `Submitted: ${new Date().toISOString()}`,
+          ].join("\n"),
+        })
+        .catch((err) => {
+          console.error("[audit-api] email notification failed:", err);
+        });
+    }
 
     return NextResponse.json({ ok: true });
   } catch (err) {
