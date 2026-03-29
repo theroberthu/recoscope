@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
     if (resolvedLeadType === "audit" && resend) {
       resend.emails
         .send({
-          from: "RecoScope <onboarding@resend.dev>",
+          from: "RecoScope <notifications@getrecoscope.com>",
           to: NOTIFY_EMAIL,
           subject: `New RecoScope Audit Lead: ${brand_name}`,
           text: [
