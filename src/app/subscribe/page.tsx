@@ -1,27 +1,29 @@
 import type { Metadata } from "next";
 import { ScrollFade } from "@/components/home/ScrollFade";
-import { AuditRequestForm } from "@/components/audit/AuditRequestForm";
-import { getActiveCategories, getCrossAgentPreview } from "@/lib/queries";
+import { AuditForm } from "@/components/audit/AuditForm";
+import { getActiveCategories, getAuditStats, getCrossAgentPreview } from "@/lib/queries";
 
 export const metadata: Metadata = {
-  title: "AI Visibility Audit — RecoScope",
+  title: "Subscribe — RecoScope",
   description:
-    "We'll run your brand through ChatGPT, Claude, Gemini, and Perplexity and show you exactly where you stand — free.",
+    "Free monthly AI recommendation benchmarks delivered to your inbox.",
 };
 
 export const dynamic = "force-dynamic";
 
 export default async function AuditPage() {
   let categories: { name: string; slug: string }[] = [];
+  let stats = { brandsTracked: 0, categoriesActive: 0 };
   let crossAgentData: { agent_name: string; brand: string; rank: number }[] = [];
 
   try {
-    [categories, crossAgentData] = await Promise.all([
+    [categories, stats, crossAgentData] = await Promise.all([
       getActiveCategories(),
+      getAuditStats(),
       getCrossAgentPreview(),
     ]);
   } catch {
-    // DB unavailable
+    // DB unavailable — render with defaults
   }
 
   const agentMap = new Map<string, string[]>();
@@ -32,21 +34,50 @@ export default async function AuditPage() {
   }
   const agentEntries = Array.from(agentMap.entries()).slice(0, 5);
 
+  const VALUE_ITEMS = [
+    "Monthly brand ranking reports for your categories",
+    "Cross-model comparison data (ChatGPT vs Claude vs Gemini vs Perplexity)",
+    "Independent vs commerce-influenced AI analysis",
+    "Early access to new category launches",
+  ];
+
   return (
     <div className="bg-dot-grid min-h-screen">
       {/* Hero */}
       <section className="mx-auto max-w-3xl px-6 pb-8 pt-24">
         <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/60">
-          Free Audit
+          Free Reports
         </p>
         <h1 className="mt-4 bg-gradient-to-r from-white to-cyan/70 bg-clip-text text-5xl font-bold leading-[1.1] tracking-tight text-transparent">
-          Is AI Recommending Your Brand?
+          Get the Reports
         </h1>
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/40">
-          We&rsquo;ll run your brand through ChatGPT, Claude, Gemini, and Perplexity
-          and show you exactly where you stand &mdash; free.
+          Free monthly AI recommendation benchmarks delivered to your inbox.
+          See which brands AI models recommend in your category &mdash; and which ones they ignore.
         </p>
       </section>
+
+      {/* Stats */}
+      <ScrollFade className="mx-auto max-w-3xl px-6 py-12">
+        <div className="grid grid-cols-3 gap-4">
+          <div className="rounded-xl border border-white/10 bg-surface px-5 py-5 text-center">
+            <p className="font-mono text-3xl font-bold text-cyan">
+              {stats.brandsTracked || "100+"}
+            </p>
+            <p className="mt-1 text-[12px] text-white/30">Brands Tracked</p>
+          </div>
+          <div className="rounded-xl border border-white/10 bg-surface px-5 py-5 text-center">
+            <p className="font-mono text-3xl font-bold text-cyan">4</p>
+            <p className="mt-1 text-[12px] text-white/30">AI Models Benchmarked</p>
+          </div>
+          <div className="rounded-xl border border-white/10 bg-surface px-5 py-5 text-center">
+            <p className="font-mono text-3xl font-bold text-cyan">
+              {stats.categoriesActive || "3+"}
+            </p>
+            <p className="mt-1 text-[12px] text-white/30">Active Categories</p>
+          </div>
+        </div>
+      </ScrollFade>
 
       {/* Form + Value Prop */}
       <ScrollFade className="border-t border-white/5">
@@ -55,47 +86,48 @@ export default async function AuditPage() {
             {/* Form */}
             <div>
               <p className="mb-6 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/50">
-                Request Your Audit
+                Subscribe
               </p>
-              <AuditRequestForm
-                categories={categories.map((c) => ({ name: c.name, slug: c.slug }))}
-              />
+              <AuditForm categories={categories.map((c) => ({ name: c.name, slug: c.slug }))} />
             </div>
 
-            {/* What you'll get */}
+            {/* Value prop */}
             <div>
               <p className="mb-6 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
-                What you&rsquo;ll get
+                What you get
               </p>
-              <div className="space-y-5 text-[14px] leading-relaxed text-[#c8ccd0]">
-                <p>How 4 major AI models talk about your brand.</p>
-                <p>
-                  Side-by-side: are you visible in independent AI vs commerce-influenced AI?
-                </p>
-                <p>
-                  Which buyer prompts surface your competitors instead of you.
-                </p>
-                <p>
-                  Actionable recommendations to improve your AI visibility.
+              <ul className="space-y-4">
+                {VALUE_ITEMS.map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-cyan/10">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M2.5 6.5L5 9L9.5 3.5" stroke="#00d4aa" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                    <span className="text-[14px] leading-relaxed text-[#c8ccd0]">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8 rounded-xl border border-white/5 bg-white/[0.02] px-5 py-4">
+                <p className="text-[13px] leading-relaxed text-white/30">
+                  Need weekly reports or custom brand tracking?{" "}
+                  <span className="text-cyan/50">Paid plans coming soon.</span>
                 </p>
               </div>
-              <p className="mt-8 text-[13px] leading-relaxed text-white/30">
-                The audit is free. No call required. Delivered to your inbox within 48 hours.
-              </p>
             </div>
           </div>
         </div>
       </ScrollFade>
 
-      {/* Social proof — live benchmark sample */}
+      {/* Sample preview */}
       {agentEntries.length > 0 && (
         <ScrollFade className="border-t border-white/5">
           <div className="mx-auto max-w-3xl px-6 py-20">
             <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/50">
-              Sample from our latest benchmark
+              See what we track
             </p>
             <p className="mt-2 text-[14px] text-white/40">
-              Your audit covers your brand across these same AI models.
+              This is real data from our latest benchmark. Subscribers get this monthly.
             </p>
 
             <div className="mt-8 overflow-x-auto rounded-xl border border-white/10 bg-surface">
