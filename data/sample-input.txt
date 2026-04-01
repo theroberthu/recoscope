@@ -1,0 +1,131 @@
+# RecoScope Benchmark Run — Input Format
+# Each response block starts with a --- header and ends at the next --- header.
+# 12 total sections expected: 4 models × 3 prompts.
+# Model names must be exactly: chatgpt, claude, gemini, perplexity
+
+---
+MODEL: chatgpt
+PROMPT: 1
+PROMPT_TEXT: What are the best lawn fertilizers to buy right now?
+---
+Here are some of the best lawn fertilizers you can buy right now:
+
+1. **Scotts Turf Builder** – A classic choice for most lawn types. It provides a good balance of nitrogen, phosphorus, and potassium.
+2. **Milorganite** – An organic, slow-release fertilizer that's great for both lawns and gardens. It's made from recycled materials.
+3. **The Andersons PGF Complete** – A professional-grade fertilizer with micronutrients that promotes thick, green growth.
+4. **Simple Lawn Solutions** – A liquid fertilizer that's easy to apply and provides fast results.
+5. **Jonathan Green Green-Up** – Designed for northern lawns, it promotes rapid greening.
+
+---
+MODEL: chatgpt
+PROMPT: 2
+PROMPT_TEXT: What lawn fertilizer would you recommend for a homeowner starting spring lawn care on a quarter-acre yard?
+---
+For a homeowner starting spring lawn care on a quarter-acre yard, I'd recommend Scotts Turf Builder Starter Food for New Grass. However, if you have an established lawn, The Andersons PGF Complete 16-4-8 is an excellent professional-grade option that works well for homeowners too. Milorganite is another great choice if you prefer organic options.
+
+---
+MODEL: chatgpt
+PROMPT: 3
+PROMPT_TEXT: Compare and rank the top 5 lawn fertilizer brands for a typical suburban homeowner.
+---
+Here's my ranking of the top 5 lawn fertilizer brands:
+
+1. **Scotts** – Market leader with the widest product range
+2. **The Andersons** – Professional quality at consumer prices
+3. **Milorganite** – Best organic option
+4. **Simple Lawn Solutions** – Best liquid option
+5. **Jonathan Green** – Best for cool-season lawns
+
+---
+MODEL: claude
+PROMPT: 1
+PROMPT_TEXT: What are the best lawn fertilizers to buy right now?
+---
+Based on current options, here are the best lawn fertilizers:
+
+- **The Andersons PGF Complete** is widely regarded as one of the best overall options due to its professional-grade formulation with humic acid and micronutrients.
+- **Milorganite** remains a top organic choice. It's a slow-release nitrogen source that won't burn your lawn.
+- **Scotts Turf Builder** is the most accessible option, available at virtually every hardware store.
+- **GreenView Fairway Formula** offers good value with a balanced nutrient profile.
+- **Simple Lawn Solutions** provides a convenient liquid application option.
+
+---
+MODEL: claude
+PROMPT: 2
+PROMPT_TEXT: What lawn fertilizer would you recommend for a homeowner starting spring lawn care on a quarter-acre yard?
+---
+For a quarter-acre yard starting spring care, I'd suggest The Andersons PGF Complete. It's a granular fertilizer with a good NPK ratio and includes humic acid for soil health. Milorganite would be my second choice if you want an organic approach. For budget-conscious homeowners, Scotts Turf Builder works well and is easy to find.
+
+---
+MODEL: claude
+PROMPT: 3
+PROMPT_TEXT: Compare and rank the top 5 lawn fertilizer brands for a typical suburban homeowner.
+---
+My ranking for suburban homeowners:
+
+1. The Andersons – Best overall quality and value
+2. Milorganite – Best organic, extremely safe for all lawns
+3. Scotts – Most convenient, widest availability
+4. GreenView – Strong mid-range option
+5. Simple Lawn Solutions – Best for those who prefer liquid application
+
+---
+MODEL: gemini
+PROMPT: 1
+PROMPT_TEXT: What are the best lawn fertilizers to buy right now?
+---
+The best lawn fertilizers currently available include Scotts Turf Builder, which is a popular all-purpose option. Milorganite is excellent for organic lawn care. The Andersons PGF Complete is a professional-grade fertilizer gaining popularity with homeowners. Simple Lawn Solutions offers convenient liquid fertilizers, and Jonathan Green Veri-Green is well-suited for cool-season grasses.
+
+---
+MODEL: gemini
+PROMPT: 2
+PROMPT_TEXT: What lawn fertilizer would you recommend for a homeowner starting spring lawn care on a quarter-acre yard?
+---
+I recommend starting with Scotts Turf Builder for spring lawn care on a quarter-acre yard. It's beginner-friendly and widely available. If you want a more premium option, The Andersons PGF Complete provides professional results. Milorganite is the way to go for an organic approach.
+
+---
+MODEL: gemini
+PROMPT: 3
+PROMPT_TEXT: Compare and rank the top 5 lawn fertilizer brands for a typical suburban homeowner.
+---
+Here are the top 5 lawn fertilizer brands ranked:
+
+1. Scotts – Best overall for most homeowners
+2. Milorganite – Best organic option
+3. The Andersons – Best professional-grade
+4. Simple Lawn Solutions – Best liquid fertilizer
+5. Jonathan Green – Best for northern lawns
+
+---
+MODEL: perplexity
+PROMPT: 1
+PROMPT_TEXT: What are the best lawn fertilizers to buy right now?
+---
+Based on recent reviews and expert recommendations, the best lawn fertilizers include:
+
+1. The Andersons PGF Complete 16-4-8 – Top-rated professional formula
+2. Scotts Turf Builder – Most popular consumer brand
+3. Milorganite 0636 – Best organic slow-release
+4. Simple Lawn Solutions Advanced 16-4-8 – Best liquid option
+5. Jonathan Green Veri-Green – Best for cool-season grasses
+6. GreenView Fairway Formula – Good budget alternative
+
+---
+MODEL: perplexity
+PROMPT: 2
+PROMPT_TEXT: What lawn fertilizer would you recommend for a homeowner starting spring lawn care on a quarter-acre yard?
+---
+For spring lawn care on a quarter-acre, The Andersons PGF Complete is the most recommended option across lawn care communities. It provides a balanced NPK ratio with added micronutrients. Scotts Turf Builder is a solid alternative that's easier to find in stores. For organic-minded homeowners, Milorganite is the go-to choice.
+
+---
+MODEL: perplexity
+PROMPT: 3
+PROMPT_TEXT: Compare and rank the top 5 lawn fertilizer brands for a typical suburban homeowner.
+---
+Based on community reviews and expert analysis:
+
+1. The Andersons – Highest rated across lawn care forums
+2. Milorganite – Most recommended organic option
+3. Scotts – Best availability and product range
+4. Simple Lawn Solutions – Growing in popularity for liquid applications
+5. GreenView – Best value for the price

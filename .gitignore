@@ -32,6 +32,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# data outputs (keep sample-input.txt, ignore generated files)
+/data/*.sql
+/data/*.json
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
