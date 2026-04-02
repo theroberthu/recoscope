@@ -52,6 +52,8 @@ function toBullets(text: string | null | undefined): string[] | undefined {
 
 const VALID_TYPES = new Set<string>(["evergreen", "seasonal"]);
 
+export const dynamic = "force-dynamic";
+
 const TYPE_LABELS: Record<string, string> = {
   evergreen: "Evergreen monthly benchmark",
   seasonal: "Seasonal weekly benchmark",
