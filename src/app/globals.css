@@ -18,16 +18,24 @@
   background-size: 24px 24px;
 }
 
-/* Scroll-triggered fade-in */
+/* Scroll-triggered fade-in with CSS fallback */
+@keyframes fade-in-fallback {
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .fade-section {
   opacity: 0;
   transform: translateY(8px);
-  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+  /* CSS fallback: always become visible after 1.5s even if JS fails */
+  animation: fade-in-fallback 0.4s ease-out 1.5s forwards;
 }
 
+/* When JS adds .visible, cancel the fallback and show immediately */
 .fade-section.visible {
+  animation: none;
   opacity: 1;
   transform: translateY(0);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
 }
 
 /* Glow card hover */

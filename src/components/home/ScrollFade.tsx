@@ -9,25 +9,41 @@ export function ScrollFade({ children, className = "" }: { children: React.React
     const el = ref.current;
     if (!el) return;
 
-    // Make visible immediately if already in viewport on mount
+    // Show immediately — don't wait for observer
+    const show = () => el.classList.add("visible");
+
+    // If already in viewport, show now
     const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      el.classList.add("visible");
+    if (rect.top < window.innerHeight + 100) {
+      show();
       return;
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add("visible");
-          observer.unobserve(el);
-        }
-      },
-      { threshold: 0.05, rootMargin: "0px 0px 50px 0px" },
-    );
+    // Observe for scroll into view
+    let observer: IntersectionObserver | null = null;
+    if (typeof IntersectionObserver !== "undefined") {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            show();
+            observer?.disconnect();
+          }
+        },
+        { threshold: 0, rootMargin: "0px 0px 100px 0px" },
+      );
+      observer.observe(el);
+    } else {
+      // No IntersectionObserver support — show immediately
+      show();
+    }
 
-    observer.observe(el);
-    return () => observer.disconnect();
+    // Safety net: always show after 2 seconds no matter what
+    const timeout = setTimeout(show, 2000);
+
+    return () => {
+      observer?.disconnect();
+      clearTimeout(timeout);
+    };
   }, []);
 
   return (
