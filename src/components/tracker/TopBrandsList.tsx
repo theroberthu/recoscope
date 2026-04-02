@@ -47,12 +47,27 @@ function MovementBadge({ movement }: { movement: Movement }) {
 
 export function TopBrandsList({ brands, whyTheseWin, droppedBrands }: TopBrandsListProps) {
   const maxMentions = brands.length > 0 ? brands[0].mentionCount : 1;
+  const hasLabels = brands.some((b) => b.label);
 
   return (
     <div>
       <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
         Top Brands by AI Mention Frequency
       </p>
+      <p className="mt-2 text-[13px] text-white/30">
+        Mention frequency counts how many times a brand appeared across all AI responses.
+        This differs from top-pick rank, which reflects each model&rsquo;s #1 choice.
+      </p>
+
+      {/* Tag legend */}
+      {hasLabels && (
+        <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-[11px] text-white/25">
+          <span><span className="font-semibold text-cyan/50">Overall Leader</span> = most total mentions</span>
+          <span><span className="font-semibold text-white/40">Tied #1</span> = tied for most mentions</span>
+          <span><span className="font-semibold text-white/40">High Consensus</span> = top 3 in 3+ models</span>
+          <span><span className="font-semibold text-white/40">Top in [Model]</span> = #1 pick by that model only</span>
+        </div>
+      )}
 
       <div className="mt-6 space-y-1.5">
         {brands.map((brand, i) => {

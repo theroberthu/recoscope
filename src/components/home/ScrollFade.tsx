@@ -9,6 +9,13 @@ export function ScrollFade({ children, className = "" }: { children: React.React
     const el = ref.current;
     if (!el) return;
 
+    // Make visible immediately if already in viewport on mount
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      el.classList.add("visible");
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -16,7 +23,7 @@ export function ScrollFade({ children, className = "" }: { children: React.React
           observer.unobserve(el);
         }
       },
-      { threshold: 0.1 },
+      { threshold: 0.05, rootMargin: "0px 0px 50px 0px" },
     );
 
     observer.observe(el);

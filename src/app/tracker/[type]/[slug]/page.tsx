@@ -15,7 +15,6 @@ import {
   KeyTakeawayPanel,
   TopBrandsList,
   CrossAgentTable,
-  InsightsSection,
   CTABox,
 } from "@/components/tracker";
 import { ReportViewTracker } from "@/components/tracker/ReportViewTracker";
@@ -101,7 +100,9 @@ function buildTopBrands(
     } else if ((top3Appearances.get(brand.name) ?? 0) >= Math.max(totalAgents - 1, 2)) {
       label = "High Consensus";
     } else if (brand.firstInAgents.length === 1) {
-      label = `Top in ${brand.firstInAgents[0]}`;
+      const agentName = brand.firstInAgents[0];
+      const displayName = agentName.charAt(0).toUpperCase() + agentName.slice(1);
+      label = `Top in ${displayName}`;
     }
     return { name: brand.name, mentionCount: brand.mentionCount, label };
   });
@@ -456,14 +457,26 @@ export default async function TrackerReportPage({ params }: Props) {
         </ScrollFade>
       )}
 
-      <ScrollFade className="mt-20">
-        <InsightsSection
-          commonTraits={clean.commonTraits}
-          crossAgentDifferences={clean.crossAgentDifferences}
-          marketGaps={clean.marketGaps}
-          opportunityBullets={toBullets(clean.marketGaps)}
-        />
-      </ScrollFade>
+      {clean.marketGaps && (
+        <ScrollFade className="mt-20">
+          <div className="border-l-2 border-cyan/30 py-1 pl-8">
+            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+              Opportunity for Brands
+            </p>
+            <ul className="mt-4 space-y-3">
+              {(toBullets(clean.marketGaps) ?? []).map((point) => (
+                <li
+                  key={point}
+                  className="flex items-start gap-3 text-[14px] leading-[1.7] text-white/50"
+                >
+                  <span className="mt-[9px] block h-[3px] w-[3px] shrink-0 rounded-full bg-cyan" />
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </ScrollFade>
+      )}
 
       <ScrollFade className="mt-24">
         <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/20">
