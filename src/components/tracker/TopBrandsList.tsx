@@ -5,6 +5,7 @@ interface Brand {
   mentionCount: number;
   label?: string;
   movement?: Movement;
+  neverTopPicked?: boolean;
 }
 
 interface DroppedBrand {
@@ -66,6 +67,7 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands }: TopBrandsL
           <span><span className="font-semibold text-white/40">Tied #1</span> = tied for most mentions</span>
           <span><span className="font-semibold text-white/40">High Consensus</span> = top 3 in 3+ models</span>
           <span><span className="font-semibold text-white/40">Top in [Model]</span> = #1 pick by that model only</span>
+          <span><span className="font-semibold text-amber-400/60">Never Top-Picked</span> = high mentions but not in any model&rsquo;s top 3</span>
         </div>
       )}
 
@@ -114,9 +116,11 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands }: TopBrandsL
                   {brand.label && !brand.movement && (
                     <span
                       className={`rounded-full px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider ${
-                        isFirst
-                          ? "bg-cyan/10 text-cyan/70"
-                          : "text-white/30"
+                        brand.neverTopPicked
+                          ? "bg-amber-400/10 text-amber-400/70"
+                          : isFirst
+                            ? "bg-cyan/10 text-cyan/70"
+                            : "text-white/30"
                       }`}
                     >
                       {brand.label}

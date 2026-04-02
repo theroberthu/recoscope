@@ -7,12 +7,18 @@ interface AgentRow {
   topBrands: string[];
 }
 
+interface NotableAbsent {
+  name: string;
+  mentionCount: number;
+}
+
 interface CrossAgentTableProps {
   rows: AgentRow[];
   whatThisMeans?: string[];
+  notableAbsents?: NotableAbsent[];
 }
 
-export function CrossAgentTable({ rows, whatThisMeans }: CrossAgentTableProps) {
+export function CrossAgentTable({ rows, whatThisMeans, notableAbsents }: CrossAgentTableProps) {
   const [hovered, setHovered] = useState<string | null>(null);
 
   const firstPicks = rows.map((r) => r.topBrands[0]).filter(Boolean);
@@ -47,6 +53,21 @@ export function CrossAgentTable({ rows, whatThisMeans }: CrossAgentTableProps) {
           {rows.length} agents &middot; top 3 each
         </p>
       </div>
+
+      {/* Notable absent callout */}
+      {notableAbsents && notableAbsents.length > 0 && (
+        <div className="mb-6 border-l-2 border-amber-400/30 py-2 pl-6">
+          <p className="text-[13px] leading-relaxed text-white/40">
+            {notableAbsents.map((b) => (
+              <span key={b.name}>
+                <span className="font-semibold text-amber-400/80">{b.name}</span>
+                {" "}leads in total mentions ({b.mentionCount}) but doesn&rsquo;t appear below.
+              </span>
+            ))}{" "}
+            High mention volume doesn&rsquo;t always equal top-pick authority.
+          </p>
+        </div>
+      )}
 
       {/* Table */}
       <div className="overflow-x-auto rounded-xl border border-cyan/15 bg-surface shadow-[0_0_30px_rgba(0,212,170,0.06)]">
@@ -104,6 +125,25 @@ export function CrossAgentTable({ rows, whatThisMeans }: CrossAgentTableProps) {
               </tr>
             ))}
           </tbody>
+
+          {/* Notable absent footnote */}
+          {notableAbsents && notableAbsents.length > 0 && (
+            <tfoot>
+              <tr className="border-t border-white/5">
+                <td colSpan={4} className="px-6 py-3">
+                  <div className="flex items-center gap-3 text-[12px]">
+                    {notableAbsents.map((b) => (
+                      <span key={b.name} className="flex items-center gap-1.5 text-amber-400/50">
+                        <span className="font-mono font-semibold">{b.name}</span>
+                        <span className="text-white/20">&middot;</span>
+                        <span className="text-white/25">{b.mentionCount} mentions, outside top 3 for all models</span>
+                      </span>
+                    ))}
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+          )}
         </table>
       </div>
 
