@@ -91,12 +91,18 @@ function buildTopBrands(
   const tiedAtTop = sorted.filter((b) => b.mentionCount === topCount);
   const totalAgents = agentRows.length;
 
+  // Build a map of which brand is #1 for each agent (from the agentRows top-3 data)
+  const agentFirstPick = new Map<string, string>();
+  for (const row of agentRows) {
+    if (row.topBrands[0]) agentFirstPick.set(row.topBrands[0], row.agentName);
+  }
+
   return sorted.map((brand) => {
     let label: string | undefined;
     const inTop3Count = top3Appearances.get(brand.name) ?? 0;
+    const isFirstPickAgent = agentFirstPick.get(brand.name);
 
     if (brand.mentionCount === topCount && tiedAtTop.length === 1 && inTop3Count === 0) {
-      // Leader in mentions but never top-picked
       label = "Most Mentioned, Never Top-Picked";
     } else if (brand.mentionCount === topCount && tiedAtTop.length === 1) {
       label = "Overall Leader";
@@ -104,9 +110,8 @@ function buildTopBrands(
       label = "Tied #1";
     } else if (inTop3Count >= Math.max(totalAgents - 1, 2)) {
       label = "High Consensus";
-    } else if (brand.firstInAgents.length === 1) {
-      const agentName = brand.firstInAgents[0];
-      const displayName = agentName.charAt(0).toUpperCase() + agentName.slice(1);
+    } else if (isFirstPickAgent) {
+      const displayName = isFirstPickAgent.charAt(0).toUpperCase() + isFirstPickAgent.slice(1);
       label = `Top in ${displayName}`;
     }
     return { name: brand.name, mentionCount: brand.mentionCount, label, neverTopPicked: inTop3Count === 0 };
@@ -392,11 +397,10 @@ export default async function TrackerReportPage({ params }: Props) {
     movement: movementMap?.get(b.name),
   }));
 
-  // Find brands with high mentions but zero top-3 appearances (the Nike anomaly)
-  const allTop3Brands = new Set(agentRows.flatMap((r) => r.topBrands.slice(0, 3)));
+  // Find brands in the top 3 by mention count that are absent from all agents' top-3 picks
   const notableAbsents = topBrands
-    .filter((b) => b.neverTopPicked && b.mentionCount > 0)
     .slice(0, 3)
+    .filter((b) => b.neverTopPicked)
     .map((b) => ({ name: b.name, mentionCount: b.mentionCount }));
 
   const clean = {
