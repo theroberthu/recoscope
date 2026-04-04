@@ -25,13 +25,25 @@ export default async function SubscribePage() {
     // DB unavailable
   }
 
-  const agentMap = new Map<string, string[]>();
+  // Deduplicate: best rank per brand per agent, then top 3 per agent
+  const agentBrandRank = new Map<string, Map<string, number>>();
   for (const row of crossAgentData) {
-    const list = agentMap.get(row.agent_name) ?? [];
-    list.push(row.brand);
-    agentMap.set(row.agent_name, list);
+    const brandMap = agentBrandRank.get(row.agent_name) ?? new Map<string, number>();
+    const current = brandMap.get(row.brand);
+    if (current === undefined || row.rank < current) {
+      brandMap.set(row.brand, row.rank);
+    }
+    agentBrandRank.set(row.agent_name, brandMap);
   }
-  const agentEntries = Array.from(agentMap.entries()).slice(0, 5);
+  const agentEntries = Array.from(agentBrandRank.entries())
+    .map(([agent, brandMap]) => [
+      agent,
+      Array.from(brandMap.entries())
+        .sort((a, b) => a[1] - b[1])
+        .slice(0, 3)
+        .map(([brand]) => brand),
+    ] as [string, string[]])
+    .slice(0, 5);
 
   const VALUE_ITEMS = [
     "Monthly brand ranking reports for your categories",
@@ -41,7 +53,7 @@ export default async function SubscribePage() {
   ];
 
   return (
-    <div className="bg-dot-grid min-h-screen">
+    <div className="bg-dot-grid">
       {/* Hero */}
       <section className="mx-auto max-w-3xl px-6 pb-8 pt-24">
         <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/60">
