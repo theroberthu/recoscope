@@ -91,16 +91,20 @@ function buildTopBrands(
   const tiedAtTop = sorted.filter((b) => b.mentionCount === topCount);
   const totalAgents = agentRows.length;
 
-  // Build a map of which brand is #1 for each agent (from the agentRows top-3 data)
-  const agentFirstPick = new Map<string, string>();
+  // Track which agents pick each brand as #1
+  const brandFirstPickAgents = new Map<string, string[]>();
   for (const row of agentRows) {
-    if (row.topBrands[0]) agentFirstPick.set(row.topBrands[0], row.agentName);
+    if (row.topBrands[0]) {
+      const list = brandFirstPickAgents.get(row.topBrands[0]) ?? [];
+      list.push(row.agentName);
+      brandFirstPickAgents.set(row.topBrands[0], list);
+    }
   }
 
   return sorted.map((brand) => {
     let label: string | undefined;
     const inTop3Count = top3Appearances.get(brand.name) ?? 0;
-    const isFirstPickAgent = agentFirstPick.get(brand.name);
+    const firstPickAgents = brandFirstPickAgents.get(brand.name) ?? [];
 
     if (brand.mentionCount === topCount && tiedAtTop.length === 1 && inTop3Count === 0) {
       label = "Most Mentioned, Never Top-Picked";
@@ -110,8 +114,8 @@ function buildTopBrands(
       label = "Tied #1";
     } else if (inTop3Count >= Math.max(totalAgents - 1, 2)) {
       label = "High Consensus";
-    } else if (isFirstPickAgent) {
-      const displayName = isFirstPickAgent.charAt(0).toUpperCase() + isFirstPickAgent.slice(1);
+    } else if (firstPickAgents.length === 1) {
+      const displayName = firstPickAgents[0].charAt(0).toUpperCase() + firstPickAgents[0].slice(1);
       label = `Top in ${displayName}`;
     }
     return { name: brand.name, mentionCount: brand.mentionCount, label, neverTopPicked: inTop3Count === 0 };
@@ -119,17 +123,29 @@ function buildTopBrands(
 }
 
 function buildAgentRows(mentions: BrandMention[]) {
-  const map = new Map<string, string[]>();
+  // Track the best (lowest) rank per brand per agent across all prompts
+  const agentBrandRank = new Map<string, Map<string, number>>();
+
   for (const m of mentions) {
     const isTop3 = toBool(m.is_top_3) || Number(m.mention_rank) <= 3;
     if (!isTop3) continue;
-    const list = map.get(m.agent_name) ?? [];
-    list.push(m.brand_name_normalized);
-    map.set(m.agent_name, list);
+
+    const brandMap = agentBrandRank.get(m.agent_name) ?? new Map<string, number>();
+    const rank = Number(m.mention_rank);
+    const current = brandMap.get(m.brand_name_normalized);
+
+    if (current === undefined || rank < current) {
+      brandMap.set(m.brand_name_normalized, rank);
+    }
+    agentBrandRank.set(m.agent_name, brandMap);
   }
-  return Array.from(map.entries()).map(([agentName, topBrands]) => ({
+
+  return Array.from(agentBrandRank.entries()).map(([agentName, brandMap]) => ({
     agentName,
-    topBrands,
+    topBrands: Array.from(brandMap.entries())
+      .sort((a, b) => a[1] - b[1])
+      .slice(0, 3)
+      .map(([brand]) => brand),
   }));
 }
 
