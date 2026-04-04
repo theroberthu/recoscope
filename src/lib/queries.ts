@@ -152,14 +152,36 @@ export async function getCrossAgentPreview(): Promise<
   { agent_name: string; brand: string; rank: number }[]
 > {
   const sql = getDb();
+  // Get the best rank per brand per agent from the most recent run,
+  // deduplicated across prompts, limited to top 3 per agent
   const rows = await sql`
-    SELECT bm.agent_name, bm.brand_name_normalized AS brand, bm.mention_rank AS rank
-    FROM brand_mentions bm
-    JOIN runs r ON r.id = bm.run_id
-    JOIN categories c ON c.id = r.category_id
-    WHERE c.is_active = true
-      AND bm.mention_rank <= 3
-    ORDER BY bm.agent_name, bm.mention_rank
+    WITH latest_run AS (
+      SELECT r.id
+      FROM runs r
+      JOIN categories c ON c.id = r.category_id
+      WHERE c.is_active = true
+      ORDER BY r.run_date DESC
+      LIMIT 1
+    ),
+    ranked AS (
+      SELECT
+        bm.agent_name,
+        bm.brand_name_normalized AS brand,
+        MIN(bm.mention_rank) AS best_rank
+      FROM brand_mentions bm
+      WHERE bm.run_id = (SELECT id FROM latest_run)
+        AND bm.mention_rank <= 3
+      GROUP BY bm.agent_name, bm.brand_name_normalized
+    ),
+    numbered AS (
+      SELECT agent_name, brand, best_rank,
+             ROW_NUMBER() OVER (PARTITION BY agent_name ORDER BY best_rank) AS rn
+      FROM ranked
+    )
+    SELECT agent_name, brand, best_rank AS rank
+    FROM numbered
+    WHERE rn <= 3
+    ORDER BY agent_name, best_rank
   `;
   return rows as { agent_name: string; brand: string; rank: number }[];
 }

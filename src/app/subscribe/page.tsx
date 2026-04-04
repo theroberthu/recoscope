@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { ScrollFade } from "@/components/home/ScrollFade";
 import { AuditForm } from "@/components/audit/AuditForm";
 import { getActiveCategories, getAuditStats, getCrossAgentPreview } from "@/lib/queries";
 
@@ -11,7 +10,7 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default async function AuditPage() {
+export default async function SubscribePage() {
   let categories: { name: string; slug: string }[] = [];
   let stats = { brandsTracked: 0, categoriesActive: 0 };
   let crossAgentData: { agent_name: string; brand: string; rank: number }[] = [];
@@ -23,7 +22,7 @@ export default async function AuditPage() {
       getCrossAgentPreview(),
     ]);
   } catch {
-    // DB unavailable — render with defaults
+    // DB unavailable
   }
 
   const agentMap = new Map<string, string[]>();
@@ -58,12 +57,10 @@ export default async function AuditPage() {
       </section>
 
       {/* Stats */}
-      <ScrollFade className="mx-auto max-w-3xl px-6 py-12">
+      <section className="mx-auto max-w-3xl px-6 py-12">
         <div className="grid grid-cols-3 gap-4">
           <div className="rounded-xl border border-white/10 bg-surface px-5 py-5 text-center">
-            <p className="font-mono text-3xl font-bold text-cyan">
-              {stats.brandsTracked || "100+"}
-            </p>
+            <p className="font-mono text-3xl font-bold text-cyan">{stats.brandsTracked || "100+"}</p>
             <p className="mt-1 text-[12px] text-white/30">Brands Tracked</p>
           </div>
           <div className="rounded-xl border border-white/10 bg-surface px-5 py-5 text-center">
@@ -71,19 +68,16 @@ export default async function AuditPage() {
             <p className="mt-1 text-[12px] text-white/30">AI Models Benchmarked</p>
           </div>
           <div className="rounded-xl border border-white/10 bg-surface px-5 py-5 text-center">
-            <p className="font-mono text-3xl font-bold text-cyan">
-              {stats.categoriesActive || "3+"}
-            </p>
+            <p className="font-mono text-3xl font-bold text-cyan">{stats.categoriesActive || "3+"}</p>
             <p className="mt-1 text-[12px] text-white/30">Active Categories</p>
           </div>
         </div>
-      </ScrollFade>
+      </section>
 
       {/* Form + Value Prop */}
-      <ScrollFade className="border-t border-white/5">
+      <section className="border-t border-white/5">
         <div className="mx-auto max-w-3xl px-6 py-20">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-            {/* Form */}
             <div>
               <p className="mb-6 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/50">
                 Subscribe
@@ -91,7 +85,6 @@ export default async function AuditPage() {
               <AuditForm categories={categories.map((c) => ({ name: c.name, slug: c.slug }))} />
             </div>
 
-            {/* Value prop */}
             <div>
               <p className="mb-6 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
                 What you get
@@ -117,11 +110,11 @@ export default async function AuditPage() {
             </div>
           </div>
         </div>
-      </ScrollFade>
+      </section>
 
       {/* Sample preview */}
       {agentEntries.length > 0 && (
-        <ScrollFade className="border-t border-white/5">
+        <section className="border-t border-white/5">
           <div className="mx-auto max-w-3xl px-6 py-20">
             <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/50">
               See what we track
@@ -134,36 +127,18 @@ export default async function AuditPage() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-white/5">
-                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/25">
-                      Agent
-                    </th>
-                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-cyan/40">
-                      #1
-                    </th>
-                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/20">
-                      #2
-                    </th>
-                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/20">
-                      #3
-                    </th>
+                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/25">Agent</th>
+                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-cyan/40">#1</th>
+                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/20">#2</th>
+                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/20">#3</th>
                   </tr>
                 </thead>
                 <tbody>
                   {agentEntries.map(([agent, brands], i) => (
-                    <tr
-                      key={agent}
-                      className={i < agentEntries.length - 1 ? "border-b border-white/5" : ""}
-                    >
-                      <td className="px-6 py-4 font-mono text-[13px] font-semibold text-white/60">
-                        {agent}
-                      </td>
+                    <tr key={agent} className={i < agentEntries.length - 1 ? "border-b border-white/5" : ""}>
+                      <td className="px-6 py-4 font-mono text-[13px] font-semibold text-white/60">{agent}</td>
                       {[0, 1, 2].map((idx) => (
-                        <td
-                          key={idx}
-                          className={`px-6 py-4 text-[13px] ${
-                            idx === 0 ? "font-medium text-white/70" : "text-white/30"
-                          }`}
-                        >
+                        <td key={idx} className={`px-6 py-4 text-[13px] ${idx === 0 ? "font-medium text-white/70" : "text-white/30"}`}>
                           {brands[idx] ?? "\u2014"}
                         </td>
                       ))}
@@ -178,7 +153,7 @@ export default async function AuditPage() {
               <span className="text-cyan/60">Find out where.</span>
             </p>
           </div>
-        </ScrollFade>
+        </section>
       )}
     </div>
   );

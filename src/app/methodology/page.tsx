@@ -99,9 +99,10 @@ export default function MethodologyPage() {
               Claude <span className="font-normal text-white/30">(Anthropic)</span>
             </p>
             <p className="mt-3 text-[13px] leading-[1.7] text-[#c8ccd0]/70">
-              No advertising revenue from recommendations. No integrated shopping or checkout
-              features. Recommendations are based on training data and general knowledge without
-              commercial incentives.
+              As of April 2026, no advertising revenue from recommendations and no integrated
+              shopping or checkout features. Recommendations based on training data and general
+              knowledge. We revisit this classification as each company&rsquo;s commercial model
+              evolves.
             </p>
           </div>
 

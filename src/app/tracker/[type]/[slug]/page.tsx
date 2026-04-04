@@ -189,22 +189,28 @@ function synthesizeTakeaway(
   const firstPicks = agentRows.map((r) => r.topBrands[0]).filter(Boolean);
   const unanimousFirst = firstPicks.length > 1 && firstPicks.every((p) => p === firstPicks[0]);
 
+  // Count AI models vs marketplace agents separately
+  const aiCount = agentRows.filter((r) => AI_AGENTS.has(r.agentName)).length;
+  const mktCount = agentRows.filter((r) => MARKETPLACE_AGENTS.has(r.agentName)).length;
+  const agentLabel = mktCount > 0
+    ? `${aiCount} AI model${aiCount !== 1 ? "s" : ""} and ${mktCount} marketplace agent${mktCount !== 1 ? "s" : ""}`
+    : `${agentRows.length} AI model${agentRows.length !== 1 ? "s" : ""}`;
+
   // Check for ties at the top
   const tiedAtTop = topBrands.filter((b) => b.mentionCount === leader.mentionCount);
 
   let takeaway = "";
   if (tiedAtTop.length >= 3) {
     const names = tiedAtTop.slice(0, 3).map((b) => b.name);
-    takeaway = `${names.join(", ")} are tied at ${leader.mentionCount} mentions each across ${agentRows.length} AI models. No single brand dominates.`;
+    takeaway = `${names.join(", ")} are tied at ${leader.mentionCount} mentions each across ${agentLabel}. No single brand dominates.`;
   } else if (tiedAtTop.length === 2) {
-    takeaway = `${tiedAtTop[0].name} and ${tiedAtTop[1].name} are tied at ${leader.mentionCount} mentions each across ${agentRows.length} AI models.`;
+    takeaway = `${tiedAtTop[0].name} and ${tiedAtTop[1].name} are tied at ${leader.mentionCount} mentions each across ${agentLabel}.`;
   } else if (unanimousFirst) {
-    takeaway = `${leader.name} is the unanimous #1 recommendation across all ${agentRows.length} AI models tested, with ${leader.mentionCount} total mentions.`;
+    takeaway = `${leader.name} is the unanimous #1 recommendation across ${agentLabel}, with ${leader.mentionCount} total mentions.`;
   } else {
-    takeaway = `${leader.name} leads with ${leader.mentionCount} mentions across ${agentRows.length} models.`;
+    takeaway = `${leader.name} leads with ${leader.mentionCount} mentions across ${agentLabel}.`;
   }
 
-  // Mention the next brand after the tie group
   const nextAfterTie = topBrands[tiedAtTop.length];
   if (nextAfterTie && nextAfterTie.mentionCount < leader.mentionCount) {
     takeaway += ` ${nextAfterTie.name} follows with ${nextAfterTie.mentionCount} mentions.`;
@@ -475,6 +481,9 @@ export default async function TrackerReportPage({ params }: Props) {
         <ScrollFade className="mt-20">
           <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
             AI Models vs Marketplace Agents
+          </p>
+          <p className="mt-2 text-[13px] text-white/25">
+            Mentions counted separately by channel. A brand&rsquo;s AI count and marketplace count won&rsquo;t sum to its total above because the total includes all sources.
           </p>
           <div className="mt-6 grid grid-cols-1 gap-6 rounded-xl border border-white/10 bg-surface p-6 sm:grid-cols-2">
             <ChannelBar items={channelSplit.ai} label="AI Models" />

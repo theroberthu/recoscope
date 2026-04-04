@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { ScrollFade } from "@/components/home/ScrollFade";
 import { AuditRequestForm } from "@/components/audit/AuditRequestForm";
 import { getActiveCategories, getCrossAgentPreview } from "@/lib/queries";
 
@@ -49,10 +48,9 @@ export default async function AuditPage() {
       </section>
 
       {/* Form + Value Prop */}
-      <ScrollFade className="border-t border-white/5">
+      <section className="border-t border-white/5">
         <div className="mx-auto max-w-3xl px-6 py-20">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-            {/* Form */}
             <div>
               <p className="mb-6 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/50">
                 Request Your Audit
@@ -62,22 +60,15 @@ export default async function AuditPage() {
               />
             </div>
 
-            {/* What you'll get */}
             <div>
               <p className="mb-6 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
                 What you&rsquo;ll get
               </p>
               <div className="space-y-5 text-[14px] leading-relaxed text-[#c8ccd0]">
                 <p>How 4 major AI models talk about your brand.</p>
-                <p>
-                  Side-by-side: are you visible in independent AI vs commerce-influenced AI?
-                </p>
-                <p>
-                  Which buyer prompts surface your competitors instead of you.
-                </p>
-                <p>
-                  Actionable recommendations to improve your AI visibility.
-                </p>
+                <p>Side-by-side: are you visible in independent AI vs commerce-influenced AI?</p>
+                <p>Which buyer prompts surface your competitors instead of you.</p>
+                <p>Actionable recommendations to improve your AI visibility.</p>
               </div>
               <p className="mt-8 text-[13px] leading-relaxed text-white/30">
                 The audit is free. No call required. Delivered to your inbox within 48 hours.
@@ -85,11 +76,11 @@ export default async function AuditPage() {
             </div>
           </div>
         </div>
-      </ScrollFade>
+      </section>
 
       {/* Social proof — live benchmark sample */}
       {agentEntries.length > 0 && (
-        <ScrollFade className="border-t border-white/5">
+        <section className="border-t border-white/5">
           <div className="mx-auto max-w-3xl px-6 py-20">
             <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/50">
               Sample from our latest benchmark
@@ -102,36 +93,18 @@ export default async function AuditPage() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-white/5">
-                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/25">
-                      Agent
-                    </th>
-                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-cyan/40">
-                      #1
-                    </th>
-                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/20">
-                      #2
-                    </th>
-                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/20">
-                      #3
-                    </th>
+                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/25">Agent</th>
+                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-cyan/40">#1</th>
+                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/20">#2</th>
+                    <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/20">#3</th>
                   </tr>
                 </thead>
                 <tbody>
                   {agentEntries.map(([agent, brands], i) => (
-                    <tr
-                      key={agent}
-                      className={i < agentEntries.length - 1 ? "border-b border-white/5" : ""}
-                    >
-                      <td className="px-6 py-4 font-mono text-[13px] font-semibold text-white/60">
-                        {agent}
-                      </td>
+                    <tr key={agent} className={i < agentEntries.length - 1 ? "border-b border-white/5" : ""}>
+                      <td className="px-6 py-4 font-mono text-[13px] font-semibold text-white/60">{agent}</td>
                       {[0, 1, 2].map((idx) => (
-                        <td
-                          key={idx}
-                          className={`px-6 py-4 text-[13px] ${
-                            idx === 0 ? "font-medium text-white/70" : "text-white/30"
-                          }`}
-                        >
+                        <td key={idx} className={`px-6 py-4 text-[13px] ${idx === 0 ? "font-medium text-white/70" : "text-white/30"}`}>
                           {brands[idx] ?? "\u2014"}
                         </td>
                       ))}
@@ -146,7 +119,7 @@ export default async function AuditPage() {
               <span className="text-cyan/60">Find out where.</span>
             </p>
           </div>
-        </ScrollFade>
+        </section>
       )}
     </div>
   );
