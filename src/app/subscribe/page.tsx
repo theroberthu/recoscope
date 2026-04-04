@@ -55,7 +55,7 @@ export default async function SubscribePage() {
   return (
     <div className="bg-dot-grid">
       {/* Hero */}
-      <section className="mx-auto max-w-3xl px-6 pb-8 pt-24">
+      <section className="mx-auto max-w-3xl px-6 pb-8 pt-10">
         <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/60">
           Free Reports
         </p>
