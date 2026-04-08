@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 export type Movement = { type: "new" } | { type: "up"; positions: number } | { type: "down"; positions: number } | { type: "steady" };
 
 interface Brand {
@@ -18,6 +22,8 @@ interface TopBrandsListProps {
   whyTheseWin?: string[];
   droppedBrands?: DroppedBrand[];
 }
+
+const COLLAPSED_COUNT = 5;
 
 function MovementBadge({ movement }: { movement: Movement }) {
   switch (movement.type) {
@@ -47,8 +53,12 @@ function MovementBadge({ movement }: { movement: Movement }) {
 }
 
 export function TopBrandsList({ brands, whyTheseWin, droppedBrands }: TopBrandsListProps) {
+  const [expanded, setExpanded] = useState(false);
+
   const maxMentions = brands.length > 0 ? brands[0].mentionCount : 1;
   const hasLabels = brands.some((b) => b.label);
+  const canCollapse = brands.length > COLLAPSED_COUNT;
+  const visibleBrands = canCollapse && !expanded ? brands.slice(0, COLLAPSED_COUNT) : brands;
 
   return (
     <div>
@@ -60,7 +70,6 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands }: TopBrandsL
         This differs from top-pick rank, which reflects each model&rsquo;s #1 choice.
       </p>
 
-      {/* Tag legend */}
       {hasLabels && (
         <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-[11px] text-white/25">
           <span><span className="font-semibold text-cyan/50">Overall Leader</span> = most total mentions</span>
@@ -72,7 +81,7 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands }: TopBrandsL
       )}
 
       <div className="mt-6 space-y-1.5">
-        {brands.map((brand, i) => {
+        {visibleBrands.map((brand, i) => {
           const isFirst = i === 0;
           const isTop3 = i < 3;
           const barPct = Math.max((brand.mentionCount / maxMentions) * 100, 4);
@@ -161,7 +170,15 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands }: TopBrandsL
         })}
       </div>
 
-      {/* Dropped brands */}
+      {canCollapse && (
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="mt-3 w-full rounded-lg py-2.5 text-center font-mono text-[12px] font-medium text-white/30 transition-colors hover:bg-white/5 hover:text-white/50"
+        >
+          {expanded ? "Show less" : `Show all ${brands.length} brands`}
+        </button>
+      )}
+
       {droppedBrands && droppedBrands.length > 0 && (
         <div className="mt-6">
           <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/20">
