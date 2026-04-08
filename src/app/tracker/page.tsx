@@ -167,13 +167,33 @@ export default async function TrackerIndexPage() {
         </ScrollFade>
       )}
 
+      {/* Item 6: Missing category callout */}
       <section className="mx-auto max-w-3xl px-6 pb-24 pt-4">
-        <p className="text-center text-[14px] text-white/30">
-          Don&rsquo;t see your category?{" "}
-          <a href="/audit" className="text-cyan/60 underline underline-offset-2 transition-colors hover:text-cyan">
-            Request a custom benchmark
-          </a>
-        </p>
+        <div className="rounded-xl border border-white/10 bg-surface px-8 py-8 sm:flex sm:items-start sm:justify-between sm:gap-8">
+          <div>
+            <p className="text-[15px] font-semibold text-white">
+              Don&rsquo;t see your category yet?
+            </p>
+            <p className="mt-2 text-[13px] leading-relaxed text-white/40">
+              We&rsquo;re adding new categories every month. Request yours and we&rsquo;ll prioritize based on demand.
+            </p>
+            <a
+              href="/audit"
+              className="mt-4 inline-block rounded-full bg-cyan px-6 py-2.5 font-mono text-[12px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90"
+            >
+              Request a Category
+            </a>
+          </div>
+          <div className="mt-6 sm:mt-0 sm:shrink-0">
+            {/* TODO: update with real roadmap */}
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-white/20">
+              Coming Soon
+            </p>
+            <p className="mt-2 text-[13px] leading-relaxed text-white/30">
+              Skincare &middot; Supplements &middot; Pet Food &middot; Coffee &middot; Wireless Earbuds
+            </p>
+          </div>
+        </div>
       </section>
     </div>
   );

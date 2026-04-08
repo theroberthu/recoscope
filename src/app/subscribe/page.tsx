@@ -90,7 +90,7 @@ export default async function SubscribePage() {
       <section className="border-t border-white/5">
         <div className="mx-auto max-w-3xl px-6 py-20">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-            <div>
+            <div id="subscribe-form">
               <p className="mb-6 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/50">
                 Subscribe
               </p>
@@ -113,11 +113,22 @@ export default async function SubscribePage() {
                   </li>
                 ))}
               </ul>
-              <div className="mt-8 rounded-xl border border-white/5 bg-white/[0.02] px-5 py-4">
-                <p className="text-[13px] leading-relaxed text-white/30">
-                  Need weekly reports or custom brand tracking?{" "}
-                  <span className="text-cyan/50">Paid plans coming soon.</span>
+              {/* Item 5: Pricing intent callout */}
+              {/* TODO: insert pricing */}
+              <div className="mt-8 rounded-xl border border-cyan/15 bg-surface p-5">
+                <p className="font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-cyan/60">
+                  Paid Plans &mdash; Coming Soon
                 </p>
+                <p className="mt-2 text-[13px] leading-relaxed text-white/40">
+                  Custom category tracking, weekly reports, competitor alerts, and API access.
+                  Plans starting at $X/mo.
+                </p>
+                <a
+                  href="#subscribe-form"
+                  className="mt-3 inline-block font-mono text-[12px] font-medium text-cyan/60 transition-colors hover:text-cyan"
+                >
+                  Join the waitlist &rarr;
+                </a>
               </div>
             </div>
           </div>

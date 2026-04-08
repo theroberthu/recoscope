@@ -18,24 +18,22 @@
   background-size: 24px 24px;
 }
 
-/* Scroll-triggered fade-in with CSS fallback */
-@keyframes fade-in-fallback {
-  to { opacity: 1; transform: translateY(0); }
+/* Scroll-triggered fade-in — progressive enhancement only.
+   Content is VISIBLE by default. JS adds .fade-ready to opt in,
+   then .visible to reveal. If JS never runs, content stays visible. */
+.fade-section {
+  /* Visible by default — no opacity:0 */
 }
 
-.fade-section {
+.fade-section.fade-ready {
   opacity: 0;
   transform: translateY(8px);
-  /* CSS fallback: always become visible after 1.5s even if JS fails */
-  animation: fade-in-fallback 0.4s ease-out 1.5s forwards;
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
 }
 
-/* When JS adds .visible, cancel the fallback and show immediately */
-.fade-section.visible {
-  animation: none;
+.fade-section.fade-ready.visible {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
 }
 
 /* Glow card hover */

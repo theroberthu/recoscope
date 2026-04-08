@@ -9,17 +9,21 @@ export function ScrollFade({ children, className = "" }: { children: React.React
     const el = ref.current;
     if (!el) return;
 
-    // Show immediately — don't wait for observer
-    const show = () => el.classList.add("visible");
+    const show = () => {
+      el.classList.add("visible");
+    };
 
-    // If already in viewport, show now
+    // Opt into the animation (content is visible by default without this)
+    el.classList.add("fade-ready");
+
+    // If already in viewport, show immediately
     const rect = el.getBoundingClientRect();
     if (rect.top < window.innerHeight + 100) {
-      show();
+      // Use rAF to ensure fade-ready is painted before visible is added
+      requestAnimationFrame(() => show());
       return;
     }
 
-    // Observe for scroll into view
     let observer: IntersectionObserver | null = null;
     if (typeof IntersectionObserver !== "undefined") {
       observer = new IntersectionObserver(
@@ -33,11 +37,10 @@ export function ScrollFade({ children, className = "" }: { children: React.React
       );
       observer.observe(el);
     } else {
-      // No IntersectionObserver support — show immediately
       show();
     }
 
-    // Safety net: always show after 2 seconds no matter what
+    // Safety net
     const timeout = setTimeout(show, 2000);
 
     return () => {
