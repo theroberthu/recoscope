@@ -18,22 +18,9 @@
   background-size: 24px 24px;
 }
 
-/* Scroll-triggered fade-in — progressive enhancement only.
-   Content is VISIBLE by default. JS adds .fade-ready to opt in,
-   then .visible to reveal. If JS never runs, content stays visible. */
+/* Scroll sections — no animation, always visible */
 .fade-section {
-  /* Visible by default — no opacity:0 */
-}
-
-.fade-section.fade-ready {
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
-}
-
-.fade-section.fade-ready.visible {
-  opacity: 1;
-  transform: translateY(0);
+  /* intentionally empty — content always visible */
 }
 
 /* Glow card hover */
