@@ -178,7 +178,7 @@ export default async function TrackerIndexPage() {
               We&rsquo;re adding new categories every month. Request yours and we&rsquo;ll prioritize based on demand.
             </p>
             <a
-              href="/audit"
+              href="/request-category"
               className="mt-4 inline-block rounded-full bg-cyan px-6 py-2.5 font-mono text-[12px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90"
             >
               Request a Category
