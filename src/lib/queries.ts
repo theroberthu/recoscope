@@ -214,6 +214,19 @@ export async function getPreviousRun(
   return (rows[0] as Run) ?? null;
 }
 
+/** Get all runs for a category (for period navigation). */
+export async function getAllRunsForCategory(
+  categoryId: number,
+): Promise<Run[]> {
+  const sql = getDb();
+  const rows = await sql`
+    SELECT * FROM runs
+    WHERE category_id = ${categoryId}
+    ORDER BY period_label ASC
+  `;
+  return rows as Run[];
+}
+
 /** Get all runs for a seasonal category (for trend chart). */
 export async function getAllSeasonalRuns(
   categoryId: number,

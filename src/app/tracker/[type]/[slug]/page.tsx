@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import {
   getCategoryBySlug, getLatestRun, getBrandMentions, getRunInsight,
   getPreviousRun, getAllSeasonalRuns, getBrandRankingsForRuns,
+  getAllRunsForCategory, getRunByPeriod,
 } from "@/lib/queries";
 import type { BrandMention, RunInsight, TrackerType, Run } from "@/lib/types";
 import { cleanText } from "@/lib/clean-text";
@@ -303,6 +304,7 @@ function ChannelBar({ items, label }: { items: { name: string; count: number }[]
 
 interface Props {
   params: Promise<{ type: string; slug: string }>;
+  searchParams: Promise<{ period?: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -318,8 +320,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 // Page
 // ---------------------------------------------------------------------------
 
-export default async function TrackerReportPage({ params }: Props) {
+export default async function TrackerReportPage({ params, searchParams }: Props) {
   const { type, slug } = await params;
+  const { period } = await searchParams;
 
   if (!VALID_TYPES.has(type)) notFound();
   const trackerType = type as TrackerType;
@@ -327,7 +330,11 @@ export default async function TrackerReportPage({ params }: Props) {
   const categoryRow = await getCategoryBySlug(slug, trackerType);
   if (!categoryRow) notFound();
 
-  let run = await getLatestRun(categoryRow.id, "published");
+  // Load a specific period if requested, otherwise latest
+  let run = period
+    ? await getRunByPeriod(categoryRow.id, period)
+    : null;
+  if (!run) run = await getLatestRun(categoryRow.id, "published");
   if (!run) run = await getLatestRun(categoryRow.id);
 
   let mentions: BrandMention[] = [];
@@ -348,22 +355,25 @@ export default async function TrackerReportPage({ params }: Props) {
   const topBrands = buildTopBrands(mentions, agentRows);
   const channelSplit = buildChannelSplit(mentions);
 
-  // --- Seasonal-specific data ---
+  // --- Period navigation (all report types) ---
   const isSeasonal = trackerType === "seasonal";
+  let periodNavItems: { label: string; href: string }[] = [];
   let movementMap: Map<string, Movement> | null = null;
   let droppedBrands: { name: string; previousRank: number }[] = [];
   let allRuns: Run[] = [];
   let trendLines: { brand: string; points: { week: string; rank: number }[] }[] = [];
   let trendWeeks: string[] = [];
-  let weekNavItems: { label: string; href: string }[] = [];
+
+  if (run) {
+    // Get all runs for period navigation
+    allRuns = await getAllRunsForCategory(categoryRow.id);
+    periodNavItems = allRuns.map((r) => ({
+      label: r.period_label,
+      href: `/tracker/${type}/${slug}/${r.period_label}`,
+    }));
+  }
 
   if (isSeasonal && run) {
-    // Get all runs for week nav + trend
-    allRuns = await getAllSeasonalRuns(categoryRow.id);
-    weekNavItems = allRuns.map((r) => ({
-      label: r.period_label,
-      href: `/tracker/seasonal/${slug}/${r.period_label}`,
-    }));
 
     // Movement: compare to previous run
     const prevRun = await getPreviousRun(categoryRow.id, run.period_label);
@@ -442,8 +452,8 @@ export default async function TrackerReportPage({ params }: Props) {
       <ReportViewTracker slug={slug} />
 
       {/* Week nav (seasonal only, 2+ runs) */}
-      {isSeasonal && weekNavItems.length > 1 && (
-        <WeekNav weeks={weekNavItems} currentWeek={periodLabel} />
+      {periodNavItems.length > 1 && (
+        <WeekNav weeks={periodNavItems} currentWeek={periodLabel} />
       )}
 
       <SectionHeader
