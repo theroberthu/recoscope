@@ -75,6 +75,19 @@ export default function RootLayout({
           </nav>
         </header>
         <main>{children}</main>
+        <footer className="border-t border-white/5 py-8 text-center">
+          <p className="text-[12px] text-white/20">
+            Built by{" "}
+            <a
+              href="https://theroberthu.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/30 transition-colors hover:text-white/50"
+            >
+              Robert Hu
+            </a>
+          </p>
+        </footer>
       </body>
     </html>
   );
