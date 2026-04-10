@@ -201,6 +201,7 @@ export async function getCategoriesWithSchedule(): Promise<
     ) r ON true
     WHERE c.is_active = true
     ORDER BY
+      CASE WHEN r.run_date IS NULL THEN 1 ELSE 0 END,
       CASE WHEN c.tracker_type = 'seasonal' THEN 0 ELSE 1 END,
       c.name
   `;
