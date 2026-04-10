@@ -1,6 +1,7 @@
 import { getCategoriesWithRuns, getTopBrandsForHero } from "@/lib/queries";
 import { BarRace } from "@/components/home/BarRace";
 import { ScrollFade } from "@/components/home/ScrollFade";
+import { CTABox } from "@/components/tracker";
 
 /* Hardcoded sample data for the data preview section — from the latest
    lawn fertilizer seasonal benchmark. Update when new flagship data lands. */
@@ -246,21 +247,7 @@ export default async function HomePage() {
 
       {/* CTA */}
       <section className="mx-auto max-w-3xl px-6 pb-24 pt-4">
-        <div className="animate-pulse_glow rounded-2xl border border-cyan/20 bg-surface px-8 py-16 text-center sm:px-12">
-          <p className="mx-auto max-w-lg text-[28px] font-bold leading-[1.2] tracking-tight text-white">
-            Your competitors are showing up in AI results. Are you?
-          </p>
-          <p className="mx-auto mt-5 max-w-sm text-[14px] leading-relaxed text-white/40">
-            Get a free AI Visibility Audit &mdash; see exactly how ChatGPT, Claude,
-            and Gemini talk about your brand.
-          </p>
-          <a
-            href="/audit"
-            className="mt-10 inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90"
-          >
-            Request Your Free Audit
-          </a>
-        </div>
+        <CTABox ctaLocation="homepage_bottom" />
       </section>
     </div>
   );

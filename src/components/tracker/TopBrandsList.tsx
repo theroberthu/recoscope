@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { trackPostHog } from "@/lib/posthog";
 
 export type Movement = { type: "new" } | { type: "up"; positions: number } | { type: "down"; positions: number } | { type: "steady" };
 
@@ -21,6 +22,7 @@ interface TopBrandsListProps {
   brands: Brand[];
   whyTheseWin?: string[];
   droppedBrands?: DroppedBrand[];
+  category?: string;
 }
 
 const COLLAPSED_COUNT = 5;
@@ -52,8 +54,32 @@ function MovementBadge({ movement }: { movement: Movement }) {
   }
 }
 
-export function TopBrandsList({ brands, whyTheseWin, droppedBrands }: TopBrandsListProps) {
+export function TopBrandsList({ brands, whyTheseWin, droppedBrands, category }: TopBrandsListProps) {
   const [expanded, setExpanded] = useState(false);
+  const droppedRef = useRef<HTMLDivElement>(null);
+  const droppedTracked = useRef(false);
+
+  // Event 1: dropped_section_viewed
+  useEffect(() => {
+    const el = droppedRef.current;
+    if (!el || !droppedBrands?.length || droppedTracked.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !droppedTracked.current) {
+          droppedTracked.current = true;
+          trackPostHog("dropped_section_viewed", {
+            category: category ?? "unknown",
+            brands_dropped: droppedBrands.length,
+          });
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [droppedBrands, category]);
 
   const maxMentions = brands.length > 0 ? brands[0].mentionCount : 1;
   const hasLabels = brands.some((b) => b.label);
@@ -172,7 +198,15 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands }: TopBrandsL
 
       {canCollapse && (
         <button
-          onClick={() => setExpanded(!expanded)}
+          onClick={() => {
+            if (!expanded) {
+              trackPostHog("full_list_expanded", {
+                category: category ?? "unknown",
+                total_brands: brands.length,
+              });
+            }
+            setExpanded(!expanded);
+          }}
           className="mt-3 w-full rounded-lg py-2.5 text-center font-mono text-[12px] font-medium text-white/30 transition-colors hover:bg-white/5 hover:text-white/50"
         >
           {expanded ? "Show less" : `Show all ${brands.length} brands`}
@@ -180,7 +214,7 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands }: TopBrandsL
       )}
 
       {droppedBrands && droppedBrands.length > 0 && (
-        <div className="mt-6">
+        <div ref={droppedRef} className="mt-6">
           <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/20">
             Dropped this week
           </p>

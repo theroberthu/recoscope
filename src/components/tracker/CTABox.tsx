@@ -1,8 +1,13 @@
+"use client";
+
+import { trackPostHog } from "@/lib/posthog";
+
 interface CTABoxProps {
   heading?: string;
   description?: string;
   buttonText?: string;
   href?: string;
+  ctaLocation?: string;
 }
 
 export function CTABox({
@@ -10,6 +15,7 @@ export function CTABox({
   description = "Get a free AI Visibility Audit \u2014 see exactly how ChatGPT, Claude, and Gemini talk about your brand, and where you\u2019re missing.",
   buttonText = "Request Your Free Audit",
   href = "/audit",
+  ctaLocation = "report_bottom",
 }: CTABoxProps) {
   return (
     <div className="animate-pulse_glow rounded-2xl border border-cyan/20 bg-surface px-8 py-16 text-center sm:px-12">
@@ -21,6 +27,7 @@ export function CTABox({
       </p>
       <a
         href={href}
+        onClick={() => trackPostHog("cta_clicked", { cta_location: ctaLocation, cta_type: "audit" })}
         className="mt-10 inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90"
       >
         {buttonText}

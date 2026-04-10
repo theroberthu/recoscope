@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { PostHogProvider } from "@/lib/posthog";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -74,7 +75,9 @@ export default function RootLayout({
             </div>
           </nav>
         </header>
-        <main>{children}</main>
+        <PostHogProvider>
+          <main>{children}</main>
+        </PostHogProvider>
         <footer className="border-t border-white/5 py-8 text-center">
           <p className="text-[12px] text-white/20">
             Built by{" "}

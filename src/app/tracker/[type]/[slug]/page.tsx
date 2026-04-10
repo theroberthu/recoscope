@@ -510,6 +510,7 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
           brands={brandsWithMovement}
           whyTheseWin={toBullets(clean.commonTraits)}
           droppedBrands={isSeasonal && droppedBrands.length > 0 ? droppedBrands : undefined}
+          category={slug}
         />
       </ScrollFade>
 
@@ -590,7 +591,7 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
       </ScrollFade>
 
       <ScrollFade className="mt-24">
-        <CTABox description={clean.auditAngle ?? undefined} />
+        <CTABox description={clean.auditAngle ?? undefined} ctaLocation="report_bottom" />
       </ScrollFade>
     </article>
   );

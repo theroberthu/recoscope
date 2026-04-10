@@ -12,6 +12,7 @@
     "@anthropic-ai/sdk": "^0.81.0",
     "@neondatabase/serverless": "^0.10.4",
     "next": "^15.1.0",
+    "posthog-js": "^1.367.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "resend": "^6.9.4"
