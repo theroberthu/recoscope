@@ -104,6 +104,11 @@ export default async function TrackerIndexPage() {
                       >
                         {cat.name}
                       </a>
+                      {!cat.last_run_date && (
+                        <span className="ml-2 rounded-full bg-white/5 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-white/25">
+                          Coming Soon
+                        </span>
+                      )}
                     </td>
                     <td className="px-6 py-4">
                       <span
@@ -120,10 +125,10 @@ export default async function TrackerIndexPage() {
                       {cat.tracker_type === "seasonal" ? "Weekly" : "Monthly"}
                     </td>
                     <td className="px-6 py-4 font-mono text-[13px] text-white/40">
-                      {formatDate(cat.last_run_date)}
+                      {cat.last_run_date ? formatDate(cat.last_run_date) : "—"}
                     </td>
                     <td className="px-6 py-4 font-mono text-[13px] font-medium text-cyan">
-                      {getNextReport(cat.tracker_type, cat.last_run_date)}
+                      {cat.last_run_date ? getNextReport(cat.tracker_type, cat.last_run_date) : "TBD"}
                     </td>
                   </tr>
                 ))}
@@ -140,7 +145,14 @@ export default async function TrackerIndexPage() {
                 className="glow-card block rounded-xl border border-white/10 bg-surface p-5"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-[15px] font-semibold text-white">{cat.name}</span>
+                  <span className="text-[15px] font-semibold text-white">
+                    {cat.name}
+                    {!cat.last_run_date && (
+                      <span className="ml-2 rounded-full bg-white/5 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-white/25">
+                        Coming Soon
+                      </span>
+                    )}
+                  </span>
                   <span
                     className={`rounded-full px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider ${
                       cat.tracker_type === "seasonal"
@@ -154,11 +166,11 @@ export default async function TrackerIndexPage() {
                 <div className="mt-3 flex gap-6 font-mono text-[12px]">
                   <div>
                     <span className="text-white/25">Last: </span>
-                    <span className="text-white/40">{formatDate(cat.last_run_date)}</span>
+                    <span className="text-white/40">{cat.last_run_date ? formatDate(cat.last_run_date) : "—"}</span>
                   </div>
                   <div>
                     <span className="text-white/25">Next: </span>
-                    <span className="font-medium text-cyan">{getNextReport(cat.tracker_type, cat.last_run_date)}</span>
+                    <span className="font-medium text-cyan">{cat.last_run_date ? getNextReport(cat.tracker_type, cat.last_run_date) : "TBD"}</span>
                   </div>
                 </div>
               </a>
