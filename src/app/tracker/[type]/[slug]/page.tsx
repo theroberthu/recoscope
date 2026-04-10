@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import {
   getCategoryBySlug, getLatestRun, getBrandMentions, getRunInsight,
   getPreviousRun, getAllSeasonalRuns, getBrandRankingsForRuns,
-  getAllRunsForCategory, getRunByPeriod,
+  getAllRunsForCategory, getRunByPeriod, getPromptsForRun,
 } from "@/lib/queries";
 import type { BrandMention, RunInsight, TrackerType, Run } from "@/lib/types";
 import { cleanText } from "@/lib/clean-text";
@@ -19,6 +19,7 @@ import {
   CTABox,
 } from "@/components/tracker";
 import { ReportViewTracker } from "@/components/tracker/ReportViewTracker";
+import { PromptsUsed } from "@/components/tracker/PromptsUsed";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -340,15 +341,18 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
   let mentions: BrandMention[] = [];
   let insight: RunInsight | null = null;
   let periodLabel = "—";
+  let prompts: { prompt_number: number; prompt_text: string }[] = [];
 
   if (run) {
-    const [realMentions, realInsight] = await Promise.all([
+    const [realMentions, realInsight, runPrompts] = await Promise.all([
       getBrandMentions(run.id),
       getRunInsight(run.id),
+      getPromptsForRun(run.id),
     ]);
     mentions = realMentions;
     insight = realInsight;
     periodLabel = run.period_label;
+    prompts = runPrompts;
   }
 
   const agentRows = buildAgentRows(mentions);
@@ -462,7 +466,9 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
         badge={run ? (periodLabel !== "—" ? periodLabel : "Live Report") : "No data yet"}
       />
 
-      <section>
+      <PromptsUsed prompts={prompts} />
+
+      <section className="mt-8">
         <KeyTakeawayPanel takeaway={takeaway} />
       </section>
 

@@ -128,6 +128,20 @@ export async function getBrandMentions(
   return rows as BrandMention[];
 }
 
+/** Get deduplicated prompts for a run (one per prompt_number). */
+export async function getPromptsForRun(
+  runId: number,
+): Promise<{ prompt_number: number; prompt_text: string }[]> {
+  const sql = getDb();
+  const rows = await sql`
+    SELECT DISTINCT ON (prompt_number) prompt_number, prompt_text
+    FROM agent_responses
+    WHERE run_id = ${runId}
+    ORDER BY prompt_number, id
+  `;
+  return rows as { prompt_number: number; prompt_text: string }[];
+}
+
 // ---------------------------------------------------------------------------
 // Homepage hero data
 // ---------------------------------------------------------------------------
