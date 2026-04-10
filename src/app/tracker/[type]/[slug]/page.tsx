@@ -338,6 +338,32 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
   if (!run) run = await getLatestRun(categoryRow.id, "published");
   if (!run) run = await getLatestRun(categoryRow.id);
 
+  // No runs at all — show coming soon state
+  if (!run) {
+    return (
+      <article className="bg-dot-grid mx-auto min-h-[60vh] max-w-3xl px-6 py-24">
+        <ReportViewTracker slug={slug} />
+        <SectionHeader
+          title={categoryRow.name}
+          subtitle={TYPE_LABELS[trackerType] ?? trackerType}
+          badge="Coming Soon"
+        />
+        <div className="mt-8 rounded-xl border border-white/10 bg-surface px-8 py-12 text-center">
+          <p className="text-lg font-semibold text-white/60">
+            We&rsquo;re collecting data for this category.
+          </p>
+          <p className="mt-3 text-[14px] text-white/30">
+            Check back soon &mdash; or{" "}
+            <a href="/subscribe" className="text-cyan/60 underline underline-offset-2 transition-colors hover:text-cyan">
+              subscribe
+            </a>
+            {" "}to get notified when this report launches.
+          </p>
+        </div>
+      </article>
+    );
+  }
+
   let mentions: BrandMention[] = [];
   let insight: RunInsight | null = null;
   let periodLabel = "—";
