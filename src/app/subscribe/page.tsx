@@ -113,21 +113,19 @@ export default async function SubscribePage() {
                   </li>
                 ))}
               </ul>
-              {/* Item 5: Pricing intent callout */}
-              {/* TODO: insert pricing */}
               <div className="mt-8 rounded-xl border border-cyan/15 bg-surface p-5">
                 <p className="font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-cyan/60">
-                  Paid Plans &mdash; Coming Soon
+                  Paid Plans
                 </p>
                 <p className="mt-2 text-[13px] leading-relaxed text-white/40">
-                  Custom category tracking, weekly reports, competitor alerts, and API access.
-                  Plans starting at $X/mo.
+                  We&rsquo;re finalizing pricing based on early user feedback.
+                  Want early access rates?
                 </p>
                 <a
-                  href="#subscribe-form"
+                  href="/audit"
                   className="mt-3 inline-block font-mono text-[12px] font-medium text-cyan/60 transition-colors hover:text-cyan"
                 >
-                  Join the waitlist &rarr;
+                  Request Early Access &rarr;
                 </a>
               </div>
             </div>

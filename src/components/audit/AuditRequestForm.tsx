@@ -124,7 +124,7 @@ export function AuditRequestForm({ categories }: AuditRequestFormProps) {
       </div>
 
       <div>
-        <label htmlFor="challenge" className={labelCls}>Biggest challenge</label>
+        <label htmlFor="challenge" className={labelCls}>Biggest challenge <span className="normal-case tracking-normal text-white/15">(optional)</span></label>
         <textarea
           id="challenge"
           name="challenge"

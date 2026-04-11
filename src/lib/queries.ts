@@ -282,15 +282,18 @@ export async function getBrandRankingsForRuns(
 export async function getAuditStats(): Promise<{
   brandsTracked: number;
   categoriesActive: number;
+  runsCompleted: number;
 }> {
   const sql = getDb();
-  const [brands, cats] = await Promise.all([
+  const [brands, cats, runs] = await Promise.all([
     sql`SELECT COUNT(DISTINCT brand_name_normalized)::int AS c FROM brand_mentions`,
     sql`SELECT COUNT(*)::int AS c FROM categories WHERE is_active = true`,
+    sql`SELECT COUNT(*)::int AS c FROM runs`,
   ]);
   return {
     brandsTracked: (brands[0] as { c: number }).c,
     categoriesActive: (cats[0] as { c: number }).c,
+    runsCompleted: (runs[0] as { c: number }).c,
   };
 }
 
