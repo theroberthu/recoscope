@@ -20,17 +20,15 @@ export default function OGImage() {
           fontFamily: "system-ui, sans-serif",
         }}
       >
-        {/* Logo row: crosshair + text */}
+        {/* Logo row: radar icon + text */}
         <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
-          {/* Crosshair scope icon */}
+          {/* Radar/lens icon */}
           <svg width="80" height="80" viewBox="0 0 120 120" fill="none">
-            <circle cx="60" cy="60" r="42" stroke="#00d4aa" strokeWidth="5" fill="none" />
-            <circle cx="60" cy="60" r="26" stroke="#00d4aa" strokeWidth="2" fill="none" opacity="0.4" />
-            <circle cx="60" cy="60" r="5" fill="#00d4aa" />
-            <line x1="60" y1="5" x2="60" y2="14" stroke="#00d4aa" strokeWidth="4" />
-            <line x1="60" y1="106" x2="60" y2="115" stroke="#00d4aa" strokeWidth="4" />
-            <line x1="5" y1="60" x2="14" y2="60" stroke="#00d4aa" strokeWidth="4" />
-            <line x1="106" y1="60" x2="115" y2="60" stroke="#00d4aa" strokeWidth="4" />
+            <circle cx="60" cy="60" r="44" stroke="#00d4aa" strokeWidth="4" fill="none" />
+            <circle cx="60" cy="60" r="28" stroke="#00d4aa" strokeWidth="2" fill="none" opacity="0.5" />
+            <circle cx="60" cy="60" r="14" stroke="#00d4aa" strokeWidth="1.5" fill="none" opacity="0.3" />
+            <circle cx="60" cy="60" r="4" fill="#00d4aa" />
+            <path d="M60 60 L60 16 A44 44 0 0 1 91 29 Z" fill="#00d4aa" opacity="0.1" />
           </svg>
 
           <div
