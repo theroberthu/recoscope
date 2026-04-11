@@ -23,6 +23,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    site: "@recoscope",
   },
 };
 
@@ -87,6 +88,8 @@ export default function RootLayout({
         </PostHogProvider>
         <footer className="border-t border-white/5 py-8 text-center">
           <div className="flex justify-center gap-4 text-[12px] text-white/20">
+            <a href="https://x.com/recoscope" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white/40">@recoscope</a>
+            <span className="text-white/10">&middot;</span>
             <a href="/terms" className="transition-colors hover:text-white/40">Terms</a>
             <span className="text-white/10">&middot;</span>
             <a href="/privacy" className="transition-colors hover:text-white/40">Privacy</a>
