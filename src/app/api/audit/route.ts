@@ -8,6 +8,8 @@ const resend = process.env.RESEND_API_KEY
 
 const NOTIFY_EMAIL = "roberthu83@gmail.com";
 
+const VALID_LEAD_TYPES = new Set(["audit", "free_monthly_signup", "waitlist"]);
+
 export async function POST(req: NextRequest) {
   let body;
   try {
@@ -22,7 +24,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "A valid email is required." }, { status: 400 });
   }
 
-  const resolvedLeadType = lead_type === "free_monthly_signup" ? "free_monthly_signup" : "audit";
+  const resolvedLeadType = VALID_LEAD_TYPES.has(lead_type) ? lead_type : "audit";
+
   if (resolvedLeadType === "audit" && (!name || !brand_name)) {
     return NextResponse.json(
       { error: "Name and brand name are required for audit requests." },
@@ -57,22 +60,46 @@ export async function POST(req: NextRequest) {
       )
     `;
 
-    // Send email notification for audit leads (non-blocking)
-    if (resolvedLeadType === "audit" && resend) {
+    // Send email notification (non-blocking)
+    if (resend) {
+      const subjects: Record<string, string> = {
+        audit: `New Audit Lead: ${brand_name || email}`,
+        free_monthly_signup: `New Subscriber: ${email}`,
+        waitlist: `Category Request: ${category_interest || email}`,
+      };
+
+      const bodies: Record<string, string> = {
+        audit: [
+          `Name: ${name}`,
+          `Email: ${email}`,
+          `Brand: ${brand_name}`,
+          `Product URL: ${website || "—"}`,
+          `Category: ${category_interest || "—"}`,
+          `Challenge: ${notes || "—"}`,
+          `Submitted: ${new Date().toISOString()}`,
+        ].join("\n"),
+        free_monthly_signup: [
+          `Email: ${email}`,
+          `Name: ${name || "—"}`,
+          `Brand: ${brand_name || "—"}`,
+          `Category: ${category_interest || "All"}`,
+          `Submitted: ${new Date().toISOString()}`,
+        ].join("\n"),
+        waitlist: [
+          `Category: ${category_interest || "—"}`,
+          `Email: ${email}`,
+          `Brand: ${brand_name || "—"}`,
+          `Details: ${notes || "—"}`,
+          `Submitted: ${new Date().toISOString()}`,
+        ].join("\n"),
+      };
+
       resend.emails
         .send({
           from: "RecoScope <notifications@getrecoscope.com>",
           to: NOTIFY_EMAIL,
-          subject: `New RecoScope Audit Lead: ${brand_name}`,
-          text: [
-            `Name: ${name}`,
-            `Email: ${email}`,
-            `Brand: ${brand_name}`,
-            `Product URL: ${website || "—"}`,
-            `Category: ${category_interest || "—"}`,
-            `Challenge: ${notes || "—"}`,
-            `Submitted: ${new Date().toISOString()}`,
-          ].join("\n"),
+          subject: subjects[resolvedLeadType] ?? `New RecoScope Lead: ${email}`,
+          text: bodies[resolvedLeadType] ?? `Email: ${email}\nType: ${resolvedLeadType}`,
         })
         .catch((err) => {
           console.error("[audit-api] email notification failed:", err);
