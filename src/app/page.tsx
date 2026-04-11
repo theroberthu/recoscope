@@ -12,20 +12,6 @@ const SAMPLE_TABLE = [
   { agent: "Perplexity", picks: ["The Andersons", "Milorganite", "Scotts Turf Builder"] },
 ];
 
-/* TODO: replace with real quotes */
-const TESTIMONIALS = [
-  {
-    quote: "We had no idea ChatGPT was recommending our top competitor for every buying prompt in our category. RecoScope showed us the gap in an afternoon.",
-    author: "Head of Growth",
-    company: "DTC Supplement Brand",
-  },
-  {
-    quote: "The independent vs commerce-influenced AI split is exactly the lens our team needed. This isn\u2019t just data \u2014 it\u2019s actionable.",
-    author: "Brand Manager",
-    company: "Consumer Electronics",
-  },
-];
-
 export default async function HomePage() {
   let categories: { name: string; slug: string; tracker_type: string; latest_summary: string | null }[] = [];
   let heroBrands: { brand: string; mentions: number }[] = [];
@@ -222,28 +208,6 @@ export default async function HomePage() {
           </div>
         </ScrollFade>
       )}
-
-      {/* Item 4: Social proof quotes */}
-      {/* TODO: replace with real quotes */}
-      <ScrollFade className="border-t border-white/5">
-        <div className="mx-auto max-w-3xl px-6 py-20">
-          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
-            What Brands Are Saying
-          </p>
-          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {TESTIMONIALS.map((t) => (
-              <div key={t.author} className="rounded-xl border border-white/10 bg-surface p-6">
-                <p className="text-[14px] leading-[1.7] text-white/50">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-                <p className="mt-4 font-mono text-[11px] text-white/30">
-                  {t.author}, <span className="text-white/20">{t.company}</span>
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </ScrollFade>
 
       {/* CTA */}
       <section className="mx-auto max-w-3xl px-6 pb-24 pt-4">
