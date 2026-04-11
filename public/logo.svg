@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" fill="none">
+  <!-- Crosshair scope icon -->
+  <g transform="translate(60,60)">
+    <!-- Outer ring -->
+    <circle cx="0" cy="0" r="42" stroke="#00d4aa" stroke-width="5" fill="none"/>
+    <!-- Inner ring -->
+    <circle cx="0" cy="0" r="26" stroke="#00d4aa" stroke-width="2" fill="none" opacity="0.4"/>
+    <!-- Center dot -->
+    <circle cx="0" cy="0" r="5" fill="#00d4aa"/>
+    <!-- Crosshair lines -->
+    <line x1="0" y1="-55" x2="0" y2="-46" stroke="#00d4aa" stroke-width="4"/>
+    <line x1="0" y1="46" x2="0" y2="55" stroke="#00d4aa" stroke-width="4"/>
+    <line x1="-55" y1="0" x2="-46" y2="0" stroke="#00d4aa" stroke-width="4"/>
+    <line x1="46" y1="0" x2="55" y2="0" stroke="#00d4aa" stroke-width="4"/>
+  </g>
+  <!-- RECO text with gradient colors -->
+  <text x="130" y="58" font-family="system-ui, sans-serif" font-weight="700" font-size="42" letter-spacing="3">
+    <tspan fill="#00d4aa" opacity="0.6">R</tspan><tspan fill="#a8e06c">E</tspan><tspan fill="#f0e040">C</tspan><tspan fill="#00d4aa" opacity="0.6">O</tspan>
+  </text>
+  <!-- SCOPE text -->
+  <text x="312" y="58" font-family="system-ui, sans-serif" font-weight="700" font-size="42" letter-spacing="5" fill="#00d4aa">SCOPE</text>
+  <!-- Tagline -->
+  <text x="132" y="88" font-family="monospace" font-weight="400" font-size="14" letter-spacing="4" fill="#00d4aa" opacity="0.5">AI RECOMMENDATION BENCHMARKS</text>
+</svg>

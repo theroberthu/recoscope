@@ -49,12 +49,19 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-void font-sans text-white antialiased">
         <header className="relative z-50 border-b border-white/5">
-          <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
-            <a
-              href="/"
-              className="font-mono text-sm font-bold uppercase tracking-widest text-cyan"
-            >
-              RecoScope
+          <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+            <a href="/" className="block">
+              {/* Full logo on desktop, icon-only on mobile */}
+              <img
+                src="/logo.svg"
+                alt="RecoScope"
+                className="hidden h-10 w-auto sm:block"
+              />
+              <img
+                src="/icon.svg"
+                alt="RecoScope"
+                className="block h-8 w-8 sm:hidden"
+              />
             </a>
             <div className="flex items-center gap-8 text-[13px] font-medium text-white/40">
               <a href="/tracker" className="transition-colors hover:text-white">

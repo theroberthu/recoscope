@@ -1,4 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
   <rect width="32" height="32" rx="6" fill="#0a0a0f"/>
-  <text x="16" y="23" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="700" font-size="22" fill="#00d4aa">R</text>
+  <g transform="translate(16,16)">
+    <circle cx="0" cy="0" r="9" stroke="#00d4aa" stroke-width="2" fill="none"/>
+    <circle cx="0" cy="0" r="5.5" stroke="#00d4aa" stroke-width="0.8" fill="none" opacity="0.4"/>
+    <circle cx="0" cy="0" r="1.5" fill="#00d4aa"/>
+    <line x1="0" y1="-13" x2="0" y2="-10.5" stroke="#00d4aa" stroke-width="1.5"/>
+    <line x1="0" y1="10.5" x2="0" y2="13" stroke="#00d4aa" stroke-width="1.5"/>
+    <line x1="-13" y1="0" x2="-10.5" y2="0" stroke="#00d4aa" stroke-width="1.5"/>
+    <line x1="10.5" y1="0" x2="13" y2="0" stroke="#00d4aa" stroke-width="1.5"/>
+  </g>
 </svg>
