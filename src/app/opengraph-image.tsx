@@ -20,34 +20,49 @@ export default function OGImage() {
           fontFamily: "system-ui, sans-serif",
         }}
       >
-        <div
-          style={{
-            fontSize: 80,
-            fontWeight: 700,
-            color: "#00d4aa",
-            letterSpacing: "0.1em",
-            marginBottom: 24,
-          }}
-        >
-          RecoScope
+        {/* Logo row: crosshair + text */}
+        <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
+          {/* Crosshair scope icon */}
+          <svg width="80" height="80" viewBox="0 0 120 120" fill="none">
+            <circle cx="60" cy="60" r="42" stroke="#00d4aa" strokeWidth="5" fill="none" />
+            <circle cx="60" cy="60" r="26" stroke="#00d4aa" strokeWidth="2" fill="none" opacity="0.4" />
+            <circle cx="60" cy="60" r="5" fill="#00d4aa" />
+            <line x1="60" y1="5" x2="60" y2="14" stroke="#00d4aa" strokeWidth="4" />
+            <line x1="60" y1="106" x2="60" y2="115" stroke="#00d4aa" strokeWidth="4" />
+            <line x1="5" y1="60" x2="14" y2="60" stroke="#00d4aa" strokeWidth="4" />
+            <line x1="106" y1="60" x2="115" y2="60" stroke="#00d4aa" strokeWidth="4" />
+          </svg>
+
+          <div
+            style={{
+              fontSize: 72,
+              fontWeight: 700,
+              color: "#00d4aa",
+              letterSpacing: "0.08em",
+            }}
+          >
+            RECOSCOPE
+          </div>
         </div>
+
         <div
           style={{
-            fontSize: 28,
-            color: "rgba(255,255,255,0.5)",
-            maxWidth: 700,
+            fontSize: 26,
+            color: "rgba(255,255,255,0.45)",
+            marginTop: 28,
             textAlign: "center",
             lineHeight: 1.4,
           }}
         >
           AI Recommendation Benchmarks for Consumer Brands
         </div>
+
         <div
           style={{
-            marginTop: 40,
-            fontSize: 16,
-            color: "rgba(255,255,255,0.25)",
-            letterSpacing: "0.15em",
+            marginTop: 36,
+            fontSize: 15,
+            color: "rgba(255,255,255,0.2)",
+            letterSpacing: "0.18em",
             textTransform: "uppercase" as const,
           }}
         >
