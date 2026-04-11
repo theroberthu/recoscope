@@ -79,7 +79,12 @@ export default function RootLayout({
           <main>{children}</main>
         </PostHogProvider>
         <footer className="border-t border-white/5 py-8 text-center">
-          <p className="text-[12px] text-white/20">
+          <div className="flex justify-center gap-4 text-[12px] text-white/20">
+            <a href="/terms" className="transition-colors hover:text-white/40">Terms</a>
+            <span className="text-white/10">&middot;</span>
+            <a href="/privacy" className="transition-colors hover:text-white/40">Privacy</a>
+          </div>
+          <p className="mt-3 text-[12px] text-white/20">
             Built by{" "}
             <a
               href="https://theroberthu.com"

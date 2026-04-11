@@ -66,7 +66,8 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
         <div className="fixed bottom-0 left-0 right-0 z-[100] border-t border-white/10 bg-surface/95 backdrop-blur-sm">
           <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-6 py-3">
             <p className="text-[13px] text-white/40">
-              We use cookies to improve your experience.
+              We use cookies to improve your experience.{" "}
+              <a href="/privacy" className="underline underline-offset-2 hover:text-white/60">Learn more</a>
             </p>
             <div className="flex shrink-0 gap-2">
               <button
