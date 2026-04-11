@@ -287,7 +287,7 @@ export async function getAuditStats(): Promise<{
   const sql = getDb();
   const [brands, cats, runs] = await Promise.all([
     sql`SELECT COUNT(DISTINCT brand_name_normalized)::int AS c FROM brand_mentions`,
-    sql`SELECT COUNT(*)::int AS c FROM categories WHERE is_active = true`,
+    sql`SELECT COUNT(DISTINCT c.id)::int AS c FROM categories c JOIN runs r ON r.category_id = c.id WHERE c.is_active = true`,
     sql`SELECT COUNT(*)::int AS c FROM runs`,
   ]);
   return {
