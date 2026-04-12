@@ -3,8 +3,6 @@ import { BarRace } from "@/components/home/BarRace";
 import { ScrollFade } from "@/components/home/ScrollFade";
 import { CTABox } from "@/components/tracker";
 
-/* Hardcoded sample data for the data preview section — from the latest
-   lawn fertilizer seasonal benchmark. Update when new flagship data lands. */
 const SAMPLE_TABLE = [
   { agent: "ChatGPT", picks: ["Scotts Turf Builder", "Jonathan Green", "The Andersons"] },
   { agent: "Claude", picks: ["Scotts Turf Builder", "Lesco", "Milorganite"] },
@@ -30,7 +28,7 @@ export default async function HomePage() {
   return (
     <div className="bg-dot-grid">
       {/* Hero */}
-      <section className="mx-auto max-w-3xl px-6 pb-8 pt-24">
+      <section className="mx-auto max-w-3xl px-6 pb-6 pt-16">
         <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/60">
           AI Recommendation Intelligence
         </p>
@@ -49,38 +47,32 @@ export default async function HomePage() {
 
         <BarRace brands={heroBrands} />
 
-        <div className="mt-10 flex flex-wrap gap-4">
-          <a
-            href="/audit"
-            className="inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90"
-          >
+        <div className="mt-8 flex flex-wrap gap-4">
+          <a href="/audit" className="inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90">
             Get a Free Audit
           </a>
-          <a
-            href="/tracker"
-            className="inline-block rounded-full border border-cyan/30 bg-cyan/10 px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-cyan transition-all hover:bg-cyan/20 hover:shadow-[0_0_20px_rgba(0,212,170,0.2)]"
-          >
+          <a href="/tracker" className="inline-block rounded-full border border-cyan/30 bg-cyan/10 px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-cyan transition-all hover:bg-cyan/20 hover:shadow-[0_0_20px_rgba(0,212,170,0.2)]">
             View the Reports
           </a>
         </div>
       </section>
 
       {/* Stats bar */}
-      <section className="mx-auto max-w-3xl px-6 py-10">
+      <section className="mx-auto max-w-3xl px-6 py-8">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <div className="rounded-lg border border-white/5 bg-surface px-4 py-4 text-center">
+          <div className="rounded-lg border border-white/5 bg-surface px-4 py-3 text-center">
             <p className="font-mono text-2xl font-bold text-cyan">{stats.brandsTracked || "75"}+</p>
             <p className="mt-1 text-[11px] text-white/25">Brands Tracked</p>
           </div>
-          <div className="rounded-lg border border-white/5 bg-surface px-4 py-4 text-center">
+          <div className="rounded-lg border border-white/5 bg-surface px-4 py-3 text-center">
             <p className="font-mono text-2xl font-bold text-cyan">4</p>
             <p className="mt-1 text-[11px] text-white/25">AI Models</p>
           </div>
-          <div className="rounded-lg border border-white/5 bg-surface px-4 py-4 text-center">
+          <div className="rounded-lg border border-white/5 bg-surface px-4 py-3 text-center">
             <p className="font-mono text-2xl font-bold text-cyan">{stats.categoriesActive || "3"}</p>
             <p className="mt-1 text-[11px] text-white/25">Categories</p>
           </div>
-          <div className="rounded-lg border border-white/5 bg-surface px-4 py-4 text-center">
+          <div className="rounded-lg border border-white/5 bg-surface px-4 py-3 text-center">
             <p className="font-mono text-2xl font-bold text-cyan">{stats.runsCompleted || "6"}</p>
             <p className="mt-1 text-[11px] text-white/25">Benchmark Runs</p>
           </div>
@@ -88,22 +80,22 @@ export default async function HomePage() {
       </section>
 
       {/* Insight statement */}
-      <ScrollFade className="mx-auto max-w-3xl px-6 py-16">
+      <section className="mx-auto max-w-3xl px-6 py-10">
         <div className="border-l-2 border-cyan/40 py-1 pl-8">
           <p className="text-xl font-medium leading-snug tracking-tight text-white/70">
             The brands AI recommends are not always the brands consumers search for.
             We surface the gap between marketplace popularity and AI visibility.
           </p>
         </div>
-      </ScrollFade>
+      </section>
 
       {/* Three-tier classification */}
-      <ScrollFade className="border-t border-white/5">
-        <div className="mx-auto max-w-3xl px-6 py-20">
+      <section className="border-t border-white/5">
+        <div className="mx-auto max-w-3xl px-6 py-14">
           <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
             How we analyze AI behavior
           </p>
-          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div className="glow-card rounded-xl border border-white/10 bg-surface p-6">
               <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-cyan/10 text-cyan">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.5"/><path d="M10 6v4l2.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
@@ -137,18 +129,18 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
-      </ScrollFade>
+      </section>
 
       {/* Data preview table */}
-      <ScrollFade className="border-t border-white/5">
-        <div className="mx-auto max-w-3xl px-6 py-20">
+      <section className="border-t border-white/5">
+        <div className="mx-auto max-w-3xl px-6 py-14">
           <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/50">
             See the Data We Produce
           </p>
           <p className="mt-3 text-[14px] text-white/40">
             A sample from our latest benchmark &mdash; delivered monthly to subscribers.
           </p>
-          <div className="mt-8 overflow-x-auto rounded-xl border border-cyan/15 bg-surface shadow-[0_0_30px_rgba(0,212,170,0.06)]">
+          <div className="mt-6 overflow-x-auto rounded-xl border border-cyan/15 bg-surface shadow-[0_0_30px_rgba(0,212,170,0.06)]">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-white/5">
@@ -179,11 +171,11 @@ export default async function HomePage() {
             </a>
           </p>
         </div>
-      </ScrollFade>
+      </section>
 
-      {/* AI Visibility Gap — the "aha moment" */}
-      <ScrollFade className="border-t border-white/5">
-        <div className="mx-auto max-w-3xl px-6 py-20">
+      {/* AI Visibility Gap */}
+      <section className="border-t border-white/5">
+        <div className="mx-auto max-w-3xl px-6 py-14">
           <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-amber-400/60">
             The AI Visibility Gap
           </p>
@@ -195,33 +187,20 @@ export default async function HomePage() {
             A top-selling product can be completely absent from AI recommendations.
           </p>
 
-          {/* Side-by-side comparison — real data: Nike leads running shoe
-              sales but 0 of 4 AI models rank it in their top 3 */}
-          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {/* Marketplace side */}
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="rounded-xl border border-green-500/20 bg-green-500/5 p-6">
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-green-400/60">
-                Amazon Best Sellers
-              </p>
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-green-400/60">Amazon Best Sellers</p>
               <p className="mt-4 text-3xl font-bold text-green-400">Nike</p>
-              <p className="mt-1 text-[14px] text-green-400/60">
-                #1 in Running Shoes
-              </p>
+              <p className="mt-1 text-[14px] text-green-400/60">#1 in Running Shoes</p>
               <div className="mt-4 h-2 rounded-full bg-green-400/10">
                 <div className="h-2 w-full rounded-full bg-green-400/40" />
               </div>
               <p className="mt-2 text-[12px] text-green-400/40">Marketplace visibility: dominant</p>
             </div>
-
-            {/* AI side */}
             <div className="rounded-xl border border-amber-400/20 bg-amber-400/5 p-6">
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-amber-400/60">
-                AI Recommendations
-              </p>
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-amber-400/60">AI Recommendations</p>
               <p className="mt-4 text-3xl font-bold text-amber-400">Nike</p>
-              <p className="mt-1 text-[14px] text-amber-400/60">
-                Not in any model&rsquo;s top 3
-              </p>
+              <p className="mt-1 text-[14px] text-amber-400/60">Not in any model&rsquo;s top 3</p>
               <div className="mt-4 h-2 rounded-full bg-amber-400/10">
                 <div className="h-2 w-[8%] rounded-full bg-amber-400/40" />
               </div>
@@ -236,38 +215,27 @@ export default async function HomePage() {
             This is the AI visibility gap.
           </p>
 
-          <a
-            href="/audit"
-            className="mt-8 inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90"
-          >
+          <a href="/audit" className="mt-6 inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90">
             See Where Your Brand Stands
           </a>
         </div>
-      </ScrollFade>
+      </section>
 
       {/* Active reports */}
       {categories.length > 0 && (
-        <ScrollFade className="border-t border-white/5">
-          <div className="mx-auto max-w-3xl px-6 py-20">
-            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
-              Active Reports
-            </p>
-            <div className="mt-8 space-y-3">
+        <section className="border-t border-white/5">
+          <div className="mx-auto max-w-3xl px-6 py-14">
+            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">Active Reports</p>
+            <div className="mt-6 space-y-3">
               {categories.map((cat) => (
-                <a
-                  key={cat.slug}
-                  href={`/tracker/${cat.tracker_type}/${cat.slug}`}
-                  className="glow-card block rounded-xl border border-white/10 bg-surface px-6 py-5"
-                >
+                <a key={cat.slug} href={`/tracker/${cat.tracker_type}/${cat.slug}`} className="glow-card block rounded-xl border border-white/10 bg-surface px-6 py-5">
                   <div className="flex items-center justify-between">
                     <div>
                       <span className="flex items-center gap-3">
                         <span className="text-[15px] font-semibold text-white">{cat.name}</span>
                         <span className="rounded-full bg-cyan/10 px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-cyan">Live</span>
                       </span>
-                      {cat.latest_summary && (
-                        <p className="mt-1 text-[13px] text-white/40">{cat.latest_summary}</p>
-                      )}
+                      {cat.latest_summary && <p className="mt-1 text-[13px] text-white/40">{cat.latest_summary}</p>}
                     </div>
                     <span className="text-[13px] text-white/20">&rarr;</span>
                   </div>
@@ -275,11 +243,11 @@ export default async function HomePage() {
               ))}
             </div>
           </div>
-        </ScrollFade>
+        </section>
       )}
 
       {/* CTA */}
-      <section className="mx-auto max-w-3xl px-6 pb-24 pt-4">
+      <section className="mx-auto max-w-3xl px-6 pb-16 pt-4">
         <CTABox ctaLocation="homepage_bottom" />
       </section>
     </div>
