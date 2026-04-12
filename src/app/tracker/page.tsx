@@ -3,8 +3,8 @@ import { ScrollFade } from "@/components/home/ScrollFade";
 import { getCategoriesWithSchedule } from "@/lib/queries";
 
 export const metadata: Metadata = {
-  title: "AI Recommendation Reports",
-  description: "Browse AI recommendation benchmark reports across consumer categories.",
+  title: "AI Recommendation Reports by Category",
+  description: "Weekly and monthly reports tracking which brands AI models recommend across office chairs, running shoes, protein powder & more.",
 };
 
 export const dynamic = "force-dynamic";

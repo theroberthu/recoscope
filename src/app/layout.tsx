@@ -6,10 +6,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: {
     template: "%s — RecoScope",
-    default: "RecoScope — AI Recommendation Benchmarks for Consumer Brands",
+    default: "RecoScope — AI Brand Recommendation Tracker",
   },
   description:
-    "Track which brands AI models recommend. RecoScope benchmarks product recommendations across ChatGPT, Claude, Gemini, and Perplexity so brands can see where they stand.",
+    "See which brands ChatGPT, Claude, Gemini & Perplexity recommend. Free AI visibility reports for consumer product categories.",
   metadataBase: new URL("https://getrecoscope.com"),
   icons: {
     icon: [

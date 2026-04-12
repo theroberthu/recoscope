@@ -310,11 +310,12 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { type, slug } = await params;
   const label = slug.replace(/-/g, " ");
+  const cadence = type === "seasonal" ? "weekly" : "monthly";
   return {
-    title: `${label} AI Benchmark`,
-    description: `See which brands AI models recommend for ${label}. Benchmark data from ChatGPT, Claude, Gemini, and more.`,
+    title: `AI Recommendations for ${label}`,
+    description: `Which ${label} brands do AI models recommend most? Rankings from ChatGPT, Claude, Gemini & Perplexity, updated ${cadence}.`,
   };
 }
 

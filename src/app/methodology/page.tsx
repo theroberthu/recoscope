@@ -27,9 +27,9 @@ const FAQ_ITEMS = [
 ];
 
 export const metadata: Metadata = {
-  title: "Methodology",
+  title: "How RecoScope Tracks AI Recommendations",
   description:
-    "How RecoScope collects, normalizes, and scores AI recommendation data across models and categories.",
+    "Our methodology for benchmarking brand recommendations across ChatGPT, Claude, Gemini & Perplexity. Data collection, scoring & cadence.",
 };
 
 // ---------------------------------------------------------------------------
