@@ -59,6 +59,21 @@ export default async function AuditPage() {
         </p>
       </section>
 
+      {/* Why not DIY */}
+      <section className="mx-auto max-w-3xl px-6 pb-10 pt-6">
+        <div className="rounded-xl border border-white/5 bg-surface px-6 py-5">
+          <p className="text-[14px] font-semibold text-white/70">
+            Why not just ask ChatGPT yourself?
+          </p>
+          <p className="mt-2 text-[13px] leading-[1.7] text-white/40">
+            We run standardized buyer persona prompts &mdash; not casual questions &mdash; across
+            all four models simultaneously. Results are normalized and scored so you can compare
+            your brand&rsquo;s position across ChatGPT, Claude, Gemini, and Perplexity in one view.
+            You get a competitive breakdown, not just a single answer.
+          </p>
+        </div>
+      </section>
+
       {/* Form + Value Prop */}
       <section className="border-t border-white/5">
         <div className="mx-auto max-w-3xl px-6 py-20">
