@@ -173,6 +173,53 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* How AI models think differently */}
+      <section className="border-t border-white/5">
+        <div className="mx-auto max-w-3xl px-6 py-14">
+          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/50">
+            How AI Models Think Differently
+          </p>
+          <p className="mt-3 text-[14px] text-white/40">
+            Each model has a distinct recommendation bias. We track these patterns so you know where your brand fits.
+          </p>
+          <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="rounded-xl border border-white/5 bg-surface p-5">
+              <p className="font-mono text-[12px] font-semibold text-white/60">ChatGPT</p>
+              <p className="mt-2 text-[13px] leading-[1.7] text-white/35">
+                Favors widely available retail brands with broad name recognition.
+                Recommendations skew toward products with strong Amazon presence and high review volume.
+              </p>
+            </div>
+            <div className="rounded-xl border border-white/5 bg-surface p-5">
+              <p className="font-mono text-[12px] font-semibold text-white/60">Claude</p>
+              <p className="mt-2 text-[13px] leading-[1.7] text-white/35">
+                Emphasizes product quality and specialist brands. More likely to recommend organic,
+                science-backed, or category-specific options over mass-market leaders.
+              </p>
+            </div>
+            <div className="rounded-xl border border-white/5 bg-surface p-5">
+              <p className="font-mono text-[12px] font-semibold text-white/60">Gemini</p>
+              <p className="mt-2 text-[13px] leading-[1.7] text-white/35">
+                Splits between premium and budget picks. Often includes Google Shopping-integrated
+                brands and provides more price-conscious recommendations than other models.
+              </p>
+            </div>
+            <div className="rounded-xl border border-white/5 bg-surface p-5">
+              <p className="font-mono text-[12px] font-semibold text-white/60">Perplexity</p>
+              <p className="mt-2 text-[13px] leading-[1.7] text-white/35">
+                Aggregates from review sites and forums. Surfaces niche brands that rank well on
+                Reddit, Wirecutter, and specialist review sites but may lack mainstream visibility.
+              </p>
+            </div>
+          </div>
+          <p className="mt-6 text-center">
+            <a href="/tracker/seasonal/lawn-fertilizer" className="font-mono text-[12px] font-medium text-cyan/60 transition-colors hover:text-cyan">
+              See the full analysis &rarr;
+            </a>
+          </p>
+        </div>
+      </section>
+
       {/* AI Visibility Gap */}
       <section className="border-t border-white/5">
         <div className="mx-auto max-w-3xl px-6 py-14">
