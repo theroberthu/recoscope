@@ -15,23 +15,6 @@ function formatDate(dateStr: string | null): string {
   return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
-function getNextReport(trackerType: string, lastRunDate: string | null): string {
-  const now = new Date();
-
-  if (trackerType === "seasonal") {
-    // Next Monday
-    const dayOfWeek = now.getDay();
-    const daysUntilMonday = dayOfWeek === 0 ? 1 : 8 - dayOfWeek;
-    const next = new Date(now);
-    next.setDate(now.getDate() + daysUntilMonday);
-    return next.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-  }
-
-  // Evergreen: first of next month
-  const next = new Date(now.getFullYear(), now.getMonth() + 1, 1);
-  return next.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-}
-
 export default async function TrackerIndexPage() {
   let categories: { name: string; slug: string; tracker_type: string; last_run_date: string | null }[] = [];
 
@@ -61,10 +44,7 @@ export default async function TrackerIndexPage() {
       {categories.length > 0 && (
         <ScrollFade className="mx-auto max-w-3xl px-6 py-20">
           <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/50">
-            Report Schedule
-          </p>
-          <p className="mt-2 text-[14px] text-white/40">
-            When to expect new data.
+            Reports
           </p>
 
           {/* Desktop table */}
@@ -79,13 +59,7 @@ export default async function TrackerIndexPage() {
                     Type
                   </th>
                   <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/25">
-                    Cadence
-                  </th>
-                  <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/25">
                     Last Published
-                  </th>
-                  <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-cyan/40">
-                    Next Report
                   </th>
                 </tr>
               </thead>
@@ -121,14 +95,8 @@ export default async function TrackerIndexPage() {
                         {cat.tracker_type}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-[13px] text-white/40">
-                      {cat.tracker_type === "seasonal" ? "Weekly" : "Monthly"}
-                    </td>
                     <td className="px-6 py-4 font-mono text-[13px] text-white/40">
                       {cat.last_run_date ? formatDate(cat.last_run_date) : "—"}
-                    </td>
-                    <td className="px-6 py-4 font-mono text-[13px] font-medium text-cyan">
-                      {cat.last_run_date ? getNextReport(cat.tracker_type, cat.last_run_date) : "TBD"}
                     </td>
                   </tr>
                 ))}
@@ -163,23 +131,25 @@ export default async function TrackerIndexPage() {
                     {cat.tracker_type}
                   </span>
                 </div>
-                <div className="mt-3 flex gap-6 font-mono text-[12px]">
-                  <div>
-                    <span className="text-white/25">Last: </span>
-                    <span className="text-white/40">{cat.last_run_date ? formatDate(cat.last_run_date) : "—"}</span>
-                  </div>
-                  <div>
-                    <span className="text-white/25">Next: </span>
-                    <span className="font-medium text-cyan">{cat.last_run_date ? getNextReport(cat.tracker_type, cat.last_run_date) : "TBD"}</span>
-                  </div>
+                <div className="mt-3 font-mono text-[12px]">
+                  <span className="text-white/25">Last: </span>
+                  <span className="text-white/40">{cat.last_run_date ? formatDate(cat.last_run_date) : "—"}</span>
                 </div>
               </a>
             ))}
           </div>
+
+          <p className="mt-6 text-[13px] text-white/30">
+            Reports are updated on a rolling basis.{" "}
+            <a href="/subscribe" className="text-cyan/60 underline underline-offset-2 transition-colors hover:text-cyan">
+              Subscribe
+            </a>
+            {" "}to get notified when new data drops.
+          </p>
         </ScrollFade>
       )}
 
-      {/* Item 6: Missing category callout */}
+      {/* Missing category callout */}
       <section className="mx-auto max-w-3xl px-6 pb-24 pt-4">
         <div className="rounded-xl border border-white/10 bg-surface px-8 py-8 sm:flex sm:items-start sm:justify-between sm:gap-8">
           <div>
