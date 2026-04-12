@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { ArticleSchema } from "@/components/seo/JsonLd";
 import {
   getCategoryBySlug, getLatestRun, getBrandMentions, getRunInsight,
   getPreviousRun, getAllSeasonalRuns, getBrandRankingsForRuns,
@@ -479,9 +480,15 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
 
   return (
     <article className="bg-dot-grid mx-auto min-h-screen max-w-3xl px-6 py-24">
+      <ArticleSchema
+        headline={`${categoryRow.name} AI Benchmark — ${periodLabel}`}
+        description={`See which brands AI models recommend for ${categoryRow.name}. Benchmark data from ChatGPT, Claude, Gemini, and Perplexity.`}
+        datePublished={run.run_date}
+        url={`https://getrecoscope.com/tracker/${type}/${slug}`}
+      />
       <ReportViewTracker slug={slug} />
 
-      {/* Week nav (seasonal only, 2+ runs) */}
+      {/* Period nav */}
       {periodNavItems.length > 1 && (
         <WeekNav weeks={periodNavItems} currentWeek={periodLabel} />
       )}

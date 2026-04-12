@@ -2,6 +2,7 @@ import { getCategoriesWithRuns, getTopBrandsForHero, getAuditStats } from "@/lib
 import { BarRace } from "@/components/home/BarRace";
 import { ScrollFade } from "@/components/home/ScrollFade";
 import { CTABox } from "@/components/tracker";
+import { OrganizationSchema } from "@/components/seo/JsonLd";
 
 const SAMPLE_TABLE = [
   { agent: "ChatGPT", picks: ["Scotts Turf Builder", "Jonathan Green", "The Andersons"] },
@@ -27,6 +28,8 @@ export default async function HomePage() {
 
   return (
     <div className="bg-dot-grid">
+      <OrganizationSchema />
+
       {/* Hero */}
       <section className="mx-auto max-w-3xl px-6 pb-6 pt-16">
         <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/60">

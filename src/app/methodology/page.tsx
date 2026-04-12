@@ -1,6 +1,30 @@
 import type { Metadata } from "next";
 import { ScrollFade } from "@/components/home/ScrollFade";
 import { CTABox } from "@/components/tracker";
+import { FAQSchema } from "@/components/seo/JsonLd";
+
+const FAQ_ITEMS = [
+  {
+    question: "Which AI models does RecoScope track?",
+    answer: "RecoScope benchmarks four AI models: ChatGPT (OpenAI), Claude (Anthropic), Gemini (Google), and Perplexity. We classify them into three tiers based on commercial integration: independent AI, search-grounded AI, and commerce-influenced AI.",
+  },
+  {
+    question: "How often is data updated?",
+    answer: "Evergreen categories like office chairs and running shoes are benchmarked monthly. Seasonal categories like lawn fertilizer are benchmarked weekly during active periods. Reports are updated on a rolling basis.",
+  },
+  {
+    question: "How are brand recommendations measured?",
+    answer: "We run three standardized prompts per category across all four models. Every response is parsed for brand mentions, rank position, and frequency. Brands are scored by total mentions, first-mention rate, top-3 rate, and cross-model consensus.",
+  },
+  {
+    question: "What is the three-tier model classification?",
+    answer: "We classify AI models by commercial interest. Independent AI (Claude) has no advertising or shopping integrations. Search-grounded AI (Perplexity) retrieves from the live web. Commerce-influenced AI (ChatGPT, Gemini) has active or announced commercial integrations that may affect recommendations.",
+  },
+  {
+    question: "Does RecoScope accept payment from brands to influence rankings?",
+    answer: "No. RecoScope does not accept payment from brands to influence their ranking or visibility in reports. All benchmark data reflects organic AI model behavior at the time of testing.",
+  },
+];
 
 export const metadata: Metadata = {
   title: "Methodology",
@@ -66,6 +90,8 @@ const METRICS = [
 export default function MethodologyPage() {
   return (
     <div className="bg-dot-grid min-h-screen">
+      <FAQSchema items={FAQ_ITEMS} />
+
       {/* Hero */}
       <section className="mx-auto max-w-3xl px-6 pb-8 pt-24">
         <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/60">
