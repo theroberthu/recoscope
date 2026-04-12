@@ -119,11 +119,29 @@ export default async function SubscribePage() {
                 </p>
                 <p className="mt-2 text-[13px] leading-relaxed text-white/40">
                   We&rsquo;re finalizing pricing based on early user feedback.
-                  Want early access rates?
                 </p>
+                <p className="mt-3 text-[12px] font-medium text-white/30">Paid plans will include:</p>
+                <ul className="mt-2 space-y-1.5 text-[13px] leading-relaxed text-white/40">
+                  <li className="flex items-start gap-2">
+                    <span className="mt-[6px] block h-1 w-1 shrink-0 rounded-full bg-cyan/40" />
+                    Custom category tracking for your specific market
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-[6px] block h-1 w-1 shrink-0 rounded-full bg-cyan/40" />
+                    Historical trend data &mdash; see how your brand&rsquo;s AI visibility changes over time
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-[6px] block h-1 w-1 shrink-0 rounded-full bg-cyan/40" />
+                    Alerts when your brand enters or drops from AI recommendations
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-[6px] block h-1 w-1 shrink-0 rounded-full bg-cyan/40" />
+                    Competitive brand monitoring across all four models
+                  </li>
+                </ul>
                 <a
                   href="/audit"
-                  className="mt-3 inline-block font-mono text-[12px] font-medium text-cyan/60 transition-colors hover:text-cyan"
+                  className="mt-4 inline-block font-mono text-[12px] font-medium text-cyan/60 transition-colors hover:text-cyan"
                 >
                   Request Early Access &rarr;
                 </a>
