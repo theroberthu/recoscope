@@ -406,8 +406,7 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
   }
 
   if (isSeasonal && run) {
-
-    // Movement: compare to previous run
+    // Movement: compare to previous run (seasonal only)
     const prevRun = await getPreviousRun(categoryRow.id, run.period_label);
     if (prevRun) {
       const prevMentions = await getBrandMentions(prevRun.id);
@@ -417,9 +416,10 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
       movementMap = result.movements;
       droppedBrands = result.droppedBrands;
     }
+  }
 
-    // Trend: need 3+ runs
-    if (allRuns.length >= 3) {
+  // Trend chart: show for any type with 2+ runs
+  if (allRuns.length >= 2) {
       const runIds = allRuns.map((r) => Number(r.id));
       const rankings = await getBrandRankingsForRuns(runIds);
 
@@ -457,7 +457,6 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
           .filter((p): p is { week: string; rank: number } => p !== null),
       }));
     }
-  }
 
   // Apply movements to brands
   const brandsWithMovement = topBrands.map((b) => ({
@@ -508,8 +507,8 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
         <KeyTakeawayPanel takeaway={takeaway} />
       </section>
 
-      {/* Trend chart (seasonal only, 3+ runs) */}
-      {isSeasonal && trendLines.length > 0 && trendWeeks.length >= 3 && (
+      {/* Trend chart (any type, 2+ runs) */}
+      {trendLines.length > 0 && trendWeeks.length >= 2 && (
         <ScrollFade className="mt-20">
           <TrendChart lines={trendLines} weeks={trendWeeks} />
         </ScrollFade>
