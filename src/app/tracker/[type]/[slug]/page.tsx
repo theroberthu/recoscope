@@ -431,13 +431,15 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
       // Group by run_id, then assign ranks by mention count
       const byRun = new Map<number, { brand: string; mentions: number }[]>();
       for (const row of rankings) {
-        const list = byRun.get(row.run_id) ?? [];
+        const rid = Number(row.run_id);
+        const list = byRun.get(rid) ?? [];
         list.push(row);
-        byRun.set(row.run_id, list);
+        byRun.set(rid, list);
       }
       for (const [runId, brands] of byRun) {
         brands.sort((a, b) => b.mentions - a.mentions);
-        const rankMap = runRankings.get(runId)!;
+        const rankMap = runRankings.get(runId);
+        if (!rankMap) continue;
         brands.forEach((b, i) => rankMap.set(b.brand, i + 1));
       }
 
