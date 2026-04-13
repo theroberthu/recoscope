@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import Link from "next/link";
 import { PostHogProvider } from "@/lib/posthog";
 import "./globals.css";
 
@@ -51,35 +52,26 @@ export default function RootLayout({
       <body className="min-h-screen bg-void font-sans text-white antialiased">
         <header className="relative z-50 border-b border-white/5">
           <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-            <a href="/" className="block">
-              {/* Full logo on desktop, icon-only on mobile */}
-              <img
-                src="/logo.svg"
-                alt="RecoScope"
-                className="hidden h-10 w-auto sm:block"
-              />
-              <img
-                src="/icon.svg"
-                alt="RecoScope"
-                className="block h-8 w-8 sm:hidden"
-              />
-            </a>
+            <Link href="/" className="block">
+              <img src="/logo.svg" alt="RecoScope" className="hidden h-10 w-auto sm:block" />
+              <img src="/icon.svg" alt="RecoScope" className="block h-8 w-8 sm:hidden" />
+            </Link>
             <div className="flex items-center gap-8 text-[13px] font-medium text-white/40">
-              <a href="/tracker" className="transition-colors hover:text-white">
+              <Link href="/tracker" className="transition-colors hover:text-white">
                 Tracker
-              </a>
-              <a href="/methodology" className="transition-colors hover:text-white">
+              </Link>
+              <Link href="/methodology" className="transition-colors hover:text-white">
                 Methodology
-              </a>
-              <a href="/subscribe" className="transition-colors hover:text-white">
+              </Link>
+              <Link href="/subscribe" className="transition-colors hover:text-white">
                 Subscribe
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/audit"
                 className="rounded-full border border-cyan/30 bg-cyan/10 px-4 py-1.5 text-cyan transition-all hover:bg-cyan/20"
               >
                 Audit
-              </a>
+              </Link>
             </div>
           </nav>
         </header>
@@ -90,9 +82,9 @@ export default function RootLayout({
           <div className="flex justify-center gap-4 text-[12px] text-white/20">
             <a href="https://x.com/recoscope" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white/40">@recoscope</a>
             <span className="text-white/10">&middot;</span>
-            <a href="/terms" className="transition-colors hover:text-white/40">Terms</a>
+            <Link href="/terms" className="transition-colors hover:text-white/40">Terms</Link>
             <span className="text-white/10">&middot;</span>
-            <a href="/privacy" className="transition-colors hover:text-white/40">Privacy</a>
+            <Link href="/privacy" className="transition-colors hover:text-white/40">Privacy</Link>
           </div>
           <p className="mt-3 text-[12px] text-white/20">
             Built by{" "}
