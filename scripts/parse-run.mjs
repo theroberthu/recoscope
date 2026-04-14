@@ -76,16 +76,49 @@ function loadApiKey() {
 }
 
 // ---------------------------------------------------------------------------
-// Parse input file
+// Parse input file — supports two formats:
+//
+// Format A (old):
+//   ---
+//   MODEL: chatgpt
+//   PROMPT: 1
+//   PROMPT_TEXT: What are the best...
+//   ---
+//   [response text]
+//
+// Format B (Cowork output):
+//   MODEL: ChatGPT
+//   PROMPT: P1
+//   FULL PROMPT TEXT: [prompt text]
+//   RESPONSE:
+//   [response text]
+//   ---
 // ---------------------------------------------------------------------------
+
+const MODEL_NORMALIZE = {
+  chatgpt: "chatgpt",
+  claude: "claude",
+  gemini: "gemini",
+  perplexity: "perplexity",
+};
 
 function parseInputFile(filePath) {
   const raw = readFileSync(filePath, "utf-8");
+  const lines = raw.split("\n");
 
-  // Split by --- delimiters, filter empty/comment blocks
+  // Detect format: if we see "RESPONSE:" on its own line, it's Format B
+  const isFormatB = lines.some((l) => /^RESPONSE:\s*$/i.test(l.trim()));
+
+  if (isFormatB) {
+    return parseFormatB(lines);
+  }
+  return parseFormatA(raw);
+}
+
+/** Format A: paired --- delimited blocks */
+function parseFormatA(raw) {
   const blocks = raw.split(/^---$/m).filter((b) => b.trim() && !b.trim().startsWith("#"));
 
-  // Pair headers with response bodies
   const sections = [];
   for (let i = 0; i < blocks.length; i += 2) {
     const header = blocks[i]?.trim();
@@ -117,8 +150,100 @@ function parseInputFile(filePath) {
 
   if (sections.length !== EXPECTED_SECTIONS) {
     console.error(
-      `Error: Expected ${EXPECTED_SECTIONS} sections, found ${sections.length}. ` +
-        `Check input file format.`,
+      `Error: Expected ${EXPECTED_SECTIONS} sections, found ${sections.length}. Check input file format.`,
+    );
+    process.exit(1);
+  }
+
+  return sections;
+}
+
+/** Format B: MODEL/PROMPT/FULL PROMPT TEXT/RESPONSE blocks separated by --- */
+function parseFormatB(lines) {
+  const sections = [];
+  let i = 0;
+
+  // Skip header lines (DATE, CATEGORY, PERSONA, etc.) until first MODEL:
+  while (i < lines.length && !/^MODEL:\s*/i.test(lines[i].trim())) {
+    i++;
+  }
+
+  while (i < lines.length) {
+    const line = lines[i].trim();
+
+    // Look for MODEL: line
+    const modelMatch = line.match(/^MODEL:\s*(.+)$/i);
+    if (!modelMatch) {
+      i++;
+      continue;
+    }
+
+    const rawModel = modelMatch[1].trim().toLowerCase();
+    const model = MODEL_NORMALIZE[rawModel];
+    if (!model) {
+      console.error(`Error: Unrecognized model "${modelMatch[1].trim()}". Must be one of: ${[...VALID_MODELS].join(", ")}`);
+      process.exit(1);
+    }
+    i++;
+
+    // PROMPT: P1 / P2 / P3 or just 1 / 2 / 3
+    let promptNumber = 0;
+    if (i < lines.length) {
+      const promptMatch = lines[i].trim().match(/^PROMPT:\s*P?(\d+)/i);
+      if (promptMatch) {
+        promptNumber = parseInt(promptMatch[1], 10);
+        i++;
+      }
+    }
+
+    // FULL PROMPT TEXT: ... (may span multiple lines until RESPONSE:)
+    let promptText = "";
+    if (i < lines.length) {
+      const promptTextMatch = lines[i].trim().match(/^(?:FULL\s+)?PROMPT[\s_]*TEXT:\s*(.*)/i);
+      if (promptTextMatch) {
+        promptText = promptTextMatch[1].trim();
+        i++;
+        // Collect continuation lines until RESPONSE:
+        while (i < lines.length && !/^RESPONSE:\s*$/i.test(lines[i].trim())) {
+          if (/^MODEL:\s*/i.test(lines[i].trim())) break;
+          promptText += " " + lines[i].trim();
+          i++;
+        }
+        promptText = promptText.trim();
+      }
+    }
+
+    // RESPONSE: line
+    if (i < lines.length && /^RESPONSE:\s*$/i.test(lines[i].trim())) {
+      i++;
+    }
+
+    // Collect response text until next --- or MODEL: or EOF
+    const responseLines = [];
+    while (i < lines.length) {
+      const l = lines[i].trim();
+      if (l === "---" || /^MODEL:\s*/i.test(l)) break;
+      responseLines.push(lines[i]);
+      i++;
+    }
+
+    // Skip the --- separator if present
+    if (i < lines.length && lines[i].trim() === "---") {
+      i++;
+    }
+
+    const response = responseLines.join("\n").trim();
+    if (!response) {
+      console.warn(`Warning: Empty response for ${model} prompt ${promptNumber}, skipping.`);
+      continue;
+    }
+
+    sections.push({ model, promptNumber, promptText, response });
+  }
+
+  if (sections.length !== EXPECTED_SECTIONS) {
+    console.error(
+      `Error: Expected ${EXPECTED_SECTIONS} sections, found ${sections.length}. Check input file format.`,
     );
     process.exit(1);
   }

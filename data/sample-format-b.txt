@@ -1,0 +1,30 @@
+# RecoScope Cowork Output — Sample Format B
+# The parser also supports the older Format A (paired --- blocks)
+
+DATE: 2026-04-15
+CATEGORY: Lawn Fertilizer
+PERSONA: Homeowner in the Midwest starting spring lawn care
+
+MODEL: ChatGPT
+PROMPT: P1
+FULL PROMPT TEXT: What are the best lawn fertilizers to buy right now?
+RESPONSE:
+Here are some of the best lawn fertilizers you can buy right now:
+
+1. **Scotts Turf Builder** — A classic choice for most lawn types.
+2. **Milorganite** — An organic, slow-release fertilizer.
+3. **The Andersons PGF Complete** — A professional-grade fertilizer.
+
+---
+
+MODEL: Claude
+PROMPT: P1
+FULL PROMPT TEXT: What are the best lawn fertilizers to buy right now?
+RESPONSE:
+Based on current options, here are the best lawn fertilizers:
+
+- **The Andersons PGF Complete** is widely regarded as one of the best.
+- **Milorganite** remains a top organic choice.
+- **Scotts Turf Builder** is the most accessible option.
+
+---
