@@ -12,6 +12,7 @@ import { ScrollFade } from "@/components/home/ScrollFade";
 import { TrendChart } from "@/components/seasonal/TrendChart";
 import { WeekNav } from "@/components/seasonal/WeekNav";
 import type { Movement } from "@/components/tracker/TopBrandsList";
+import { PromptBreakdown } from "@/components/tracker/PromptBreakdown";
 import {
   SectionHeader,
   KeyTakeawayPanel,
@@ -470,6 +471,44 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
     .filter((b) => b.neverTopPicked)
     .map((b) => ({ name: b.name, mentionCount: b.mentionCount }));
 
+  // --- Per-prompt breakdown data ---
+  const promptBreakdownData = prompts.map((p) => {
+    const promptMentions = mentions.filter((m) => Number(m.prompt_number) === p.prompt_number);
+    // Best rank per brand per agent for this prompt
+    const agentMap = new Map<string, Map<string, number>>();
+    for (const m of promptMentions) {
+      const brandMap = agentMap.get(m.agent_name) ?? new Map<string, number>();
+      const rank = Number(m.mention_rank);
+      const cur = brandMap.get(m.brand_name_normalized);
+      if (cur === undefined || rank < cur) brandMap.set(m.brand_name_normalized, rank);
+      agentMap.set(m.agent_name, brandMap);
+    }
+    return {
+      promptNumber: p.prompt_number,
+      promptText: p.prompt_text,
+      agentBrands: Array.from(agentMap.entries()).map(([agent, brandMap]) => ({
+        agent,
+        brands: Array.from(brandMap.entries()).sort((a, b) => a[1] - b[1]).slice(0, 3).map(([b]) => b),
+      })),
+    };
+  });
+
+  // Budget insights: compare prompt 1+3 vs prompt 2
+  let budgetInsights: { budgetOnly: string[]; disappearUnderBudget: string[] } | null = null;
+  if (promptBreakdownData.length >= 3) {
+    const brandsInBroad = new Set(promptBreakdownData[0]?.agentBrands.flatMap((r) => r.brands) ?? []);
+    const brandsInComp = new Set(promptBreakdownData[2]?.agentBrands.flatMap((r) => r.brands) ?? []);
+    const brandsInBudget = new Set(promptBreakdownData[1]?.agentBrands.flatMap((r) => r.brands) ?? []);
+    const nonBudget = new Set([...brandsInBroad, ...brandsInComp]);
+
+    const budgetOnly = [...brandsInBudget].filter((b) => !nonBudget.has(b)).slice(0, 5);
+    const disappearUnderBudget = [...nonBudget].filter((b) => !brandsInBudget.has(b)).slice(0, 5);
+
+    if (budgetOnly.length > 0 || disappearUnderBudget.length > 0) {
+      budgetInsights = { budgetOnly, disappearUnderBudget };
+    }
+  }
+
   const clean = {
     keyTakeaway: cleanText(insight?.key_takeaway),
     auditAngle: cleanText(insight?.audit_angle),
@@ -530,6 +569,12 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
           notableAbsents={notableAbsents.length > 0 ? notableAbsents : undefined}
         />
       </ScrollFade>
+
+      {promptBreakdownData.length > 0 && (
+        <section className="mt-14">
+          <PromptBreakdown prompts={promptBreakdownData} budgetInsights={budgetInsights} />
+        </section>
+      )}
 
       {channelSplit.hasData && (
         <ScrollFade className="mt-20">
