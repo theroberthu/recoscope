@@ -45,8 +45,23 @@ export default async function AuditPage() {
 
   return (
     <div className="bg-dot-grid">
+      {/* Redirect banner */}
+      <section className="mx-auto max-w-3xl px-6 pt-10">
+        <div className="rounded-lg border border-cyan/20 bg-cyan/5 px-5 py-3 text-center text-[13px] text-white/50">
+          AI Visibility Audits are now conducted through Robert Hu Consulting.{" "}
+          <a
+            href="https://theroberthu.com/geo-audit"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-cyan underline underline-offset-2 hover:text-cyan/80"
+          >
+            Book your audit here &rarr;
+          </a>
+        </div>
+      </section>
+
       {/* Hero */}
-      <section className="mx-auto max-w-3xl px-6 pb-8 pt-10">
+      <section className="mx-auto max-w-3xl px-6 pb-8 pt-6">
         <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/60">
           Free Audit
         </p>

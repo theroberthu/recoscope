@@ -12,9 +12,9 @@ interface CTABoxProps {
 
 export function CTABox({
   heading = "Your competitors are showing up in AI results. Are you?",
-  description = "Get a free AI Visibility Audit \u2014 see exactly how ChatGPT, Claude, and Gemini talk about your brand, and where you\u2019re missing.",
-  buttonText = "Request Your Free Audit",
-  href = "/audit",
+  description = "Get a free AI Visibility Audit \u2014 see exactly how ChatGPT, Claude, and Gemini talk about your brand, and where you\u2019re missing. Conducted personally by Robert Hu.",
+  buttonText = "Book Your Free Audit",
+  href = "https://theroberthu.com/geo-audit",
   ctaLocation = "report_bottom",
 }: CTABoxProps) {
   return (
@@ -27,6 +27,8 @@ export function CTABox({
       </p>
       <a
         href={href}
+        target="_blank"
+        rel="noopener noreferrer"
         onClick={() => trackPostHog("cta_clicked", { cta_location: ctaLocation, cta_type: "audit" })}
         className="mt-10 inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90"
       >
