@@ -571,7 +571,7 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
       </ScrollFade>
 
       {promptBreakdownData.length > 0 && (
-        <section className="mt-14">
+        <section className="premium-content mt-14">
           <PromptBreakdown prompts={promptBreakdownData} budgetInsights={budgetInsights} />
         </section>
       )}
