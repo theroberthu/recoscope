@@ -11,10 +11,11 @@ export function AuditRequestForm({ categories }: AuditRequestFormProps) {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [showOtherCategory, setShowOtherCategory] = useState(false);
+  const [submittedEmail, setSubmittedEmail] = useState("");
 
   if (status === "success") {
     return (
-      <div className="rounded-xl border border-cyan/20 bg-surface p-8 text-center">
+      <div className="rounded-xl border border-cyan/20 bg-surface p-8">
         <div className="mb-4 flex justify-center">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-cyan/10">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -22,21 +23,35 @@ export function AuditRequestForm({ categories }: AuditRequestFormProps) {
             </svg>
           </div>
         </div>
-        <p className="text-lg font-semibold text-white">Got it.</p>
-        <p className="mt-2 text-[14px] leading-relaxed text-[#c8ccd0]">
-          Your audit will be emailed to you within 48 hours.
+        <p className="text-center text-lg font-semibold text-white">
+          Thanks &mdash; your audit is being prepared.
         </p>
-        <p className="mt-4 text-[13px] leading-relaxed text-white/30">
-          Want to discuss the findings and fix the gaps?{" "}
-          <a
-            href="https://theroberthu.com/free-strategy-session"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-cyan/60 underline underline-offset-2 hover:text-cyan"
-          >
-            Book a free 15-minute strategy session
-          </a>
+        <p className="mt-4 text-[14px] leading-relaxed text-[#c8ccd0]">
+          We&rsquo;ll email your full AI visibility report within 48 hours. It includes:
         </p>
+        <ul className="mt-3 space-y-1.5 text-[13px] leading-relaxed text-white/40">
+          <li className="flex items-start gap-2">
+            <span className="mt-[6px] block h-1 w-1 shrink-0 rounded-full bg-cyan/40" />
+            How often AI models mention your brand across ChatGPT, Claude, Gemini, and Perplexity
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="mt-[6px] block h-1 w-1 shrink-0 rounded-full bg-cyan/40" />
+            Your rank position compared to competitors
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="mt-[6px] block h-1 w-1 shrink-0 rounded-full bg-cyan/40" />
+            Specific content gaps holding your brand back
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="mt-[6px] block h-1 w-1 shrink-0 rounded-full bg-cyan/40" />
+            Actionable recommendations for improvement
+          </li>
+        </ul>
+        {submittedEmail && (
+          <p className="mt-5 text-center text-[13px] text-white/25">
+            Check your inbox at <span className="text-white/40">{submittedEmail}</span> soon.
+          </p>
+        )}
       </div>
     );
   }
@@ -50,10 +65,11 @@ export function AuditRequestForm({ categories }: AuditRequestFormProps) {
     const categorySelect = fd.get("category_interest") as string;
     const categoryOther = fd.get("category_other") as string;
     const category = categorySelect === "Other" ? (categoryOther || "Other") : categorySelect;
+    const email = fd.get("email") as string;
 
     const payload = {
       name: fd.get("name"),
-      email: fd.get("email"),
+      email,
       brand_name: fd.get("brand_name"),
       website: fd.get("product_url") || null,
       category_interest: category || null,
@@ -76,6 +92,7 @@ export function AuditRequestForm({ categories }: AuditRequestFormProps) {
       }
 
       trackEvent("audit_form_submit");
+      setSubmittedEmail(email);
       setStatus("success");
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Try again.");

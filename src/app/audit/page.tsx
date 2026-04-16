@@ -45,23 +45,8 @@ export default async function AuditPage() {
 
   return (
     <div className="bg-dot-grid">
-      {/* Redirect banner */}
-      <section className="mx-auto max-w-3xl px-6 pt-10">
-        <div className="rounded-lg border border-cyan/20 bg-cyan/5 px-5 py-3 text-center text-[13px] text-white/50">
-          AI Visibility Audits are now conducted through Robert Hu Consulting.{" "}
-          <a
-            href="https://theroberthu.com/geo-audit"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-semibold text-cyan underline underline-offset-2 hover:text-cyan/80"
-          >
-            Book your audit here &rarr;
-          </a>
-        </div>
-      </section>
-
       {/* Hero */}
-      <section className="mx-auto max-w-3xl px-6 pb-8 pt-6">
+      <section className="mx-auto max-w-3xl px-6 pb-8 pt-10">
         <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/60">
           Free Audit
         </p>
@@ -111,13 +96,6 @@ export default async function AuditPage() {
                 <p>Side-by-side: are you visible in independent AI vs commerce-influenced AI?</p>
                 <p>Which buyer prompts surface your competitors instead of you.</p>
                 <p>Actionable recommendations to improve your AI visibility.</p>
-                <p>
-                  A recommended next step &mdash; whether that&rsquo;s a{" "}
-                  <a href="https://theroberthu.com/free-strategy-session" target="_blank" rel="noopener noreferrer" className="text-cyan/60 underline underline-offset-2 hover:text-cyan">
-                    free strategy session
-                  </a>
-                  {" "}with Robert Hu to plan implementation, or tactical fixes you can do yourself.
-                </p>
               </div>
               <p className="mt-8 text-[13px] leading-relaxed text-white/30">
                 The audit is free. No call required. Delivered to your inbox within 48 hours.
