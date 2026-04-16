@@ -52,7 +52,7 @@ export default async function HomePage() {
         <BarRace brands={heroBrands} />
 
         <div className="mt-8 flex flex-wrap gap-4">
-          <a href="https://theroberthu.com/geo-audit" target="_blank" rel="noopener noreferrer" className="inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90">
+          <a href="/audit" className="inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90">
             Get a Free AI Visibility Audit
           </a>
           <a href="/tracker" className="inline-block rounded-full border border-cyan/30 bg-cyan/10 px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-cyan transition-all hover:bg-cyan/20 hover:shadow-[0_0_20px_rgba(0,212,170,0.2)]">
@@ -266,7 +266,7 @@ export default async function HomePage() {
             This is the AI visibility gap.
           </p>
 
-          <a href="https://theroberthu.com/geo-audit" target="_blank" rel="noopener noreferrer" className="mt-6 inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90">
+          <a href="/audit" className="mt-6 inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90">
             See Where Your Brand Stands
           </a>
         </div>

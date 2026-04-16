@@ -66,14 +66,12 @@ export default function RootLayout({
               <Link href="/subscribe" className="transition-colors hover:text-white">
                 Subscribe
               </Link>
-              <a
-                href="https://theroberthu.com/geo-audit"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/audit"
                 className="rounded-full border border-cyan/30 bg-cyan/10 px-4 py-1.5 text-cyan transition-all hover:bg-cyan/20"
               >
                 Audit
-              </a>
+              </Link>
             </div>
           </nav>
         </header>
