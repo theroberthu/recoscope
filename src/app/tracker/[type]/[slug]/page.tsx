@@ -646,6 +646,17 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
 
       <ScrollFade className="mt-24">
         <CTABox description={clean.auditAngle ?? undefined} ctaLocation="report_bottom" />
+        <p className="mt-6 text-center text-[12px] text-white/20">
+          Need help getting your brand into these AI recommendations?{" "}
+          <a
+            href="https://theroberthu.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white/30 underline underline-offset-2 hover:text-white/50"
+          >
+            Robert Hu offers strategic consulting for e-commerce brands
+          </a>
+        </p>
       </ScrollFade>
     </article>
   );

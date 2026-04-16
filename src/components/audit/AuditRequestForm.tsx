@@ -24,7 +24,18 @@ export function AuditRequestForm({ categories }: AuditRequestFormProps) {
         </div>
         <p className="text-lg font-semibold text-white">Got it.</p>
         <p className="mt-2 text-[14px] leading-relaxed text-[#c8ccd0]">
-          You&rsquo;ll receive your brand&rsquo;s AI visibility snapshot within 48 hours.
+          Your audit will be emailed to you within 48 hours.
+        </p>
+        <p className="mt-4 text-[13px] leading-relaxed text-white/30">
+          Want to discuss the findings and fix the gaps?{" "}
+          <a
+            href="https://theroberthu.com/free-strategy-session"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-cyan/60 underline underline-offset-2 hover:text-cyan"
+          >
+            Book a free 15-minute strategy session
+          </a>
         </p>
       </div>
     );

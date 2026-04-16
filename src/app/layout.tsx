@@ -89,7 +89,7 @@ export default function RootLayout({
             <Link href="/privacy" className="transition-colors hover:text-white/40">Privacy</Link>
           </div>
           <p className="mt-3 text-[12px] text-white/20">
-            Built by{" "}
+            An independent benchmark published by{" "}
             <a
               href="https://theroberthu.com"
               target="_blank"
@@ -98,6 +98,7 @@ export default function RootLayout({
             >
               Robert Hu
             </a>
+            , e-commerce strategist
           </p>
         </footer>
       </body>

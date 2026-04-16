@@ -36,16 +36,17 @@ export default async function HomePage() {
           AI Recommendation Intelligence
         </p>
         <p className="mt-2 font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-white/25">
-          For Consumer Brands &middot; DTC &middot; Amazon Sellers &middot; Agencies
+          For E-Commerce Brands &middot; DTC &middot; Amazon Sellers &middot; Agencies
         </p>
 
         <h1 className="mt-4 bg-gradient-to-r from-white to-cyan/70 bg-clip-text text-5xl font-bold leading-[1.1] tracking-tight text-transparent sm:text-6xl">
           AI is choosing winners in your category. Do you know who?
         </h1>
         <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/40">
-          When someone asks ChatGPT, Claude, or Gemini for a product recommendation,
-          certain brands consistently appear at the top. Others don&rsquo;t appear at all.
-          We reveal which &mdash; and why.
+          RecoScope tracks what AI models recommend so e-commerce brand owners know
+          where they stand &mdash; and what to fix. When someone asks ChatGPT, Claude,
+          or Gemini for a product recommendation, certain brands consistently appear
+          at the top. Others don&rsquo;t appear at all.
         </p>
 
         <BarRace brands={heroBrands} />

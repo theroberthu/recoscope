@@ -111,6 +111,13 @@ export default async function AuditPage() {
                 <p>Side-by-side: are you visible in independent AI vs commerce-influenced AI?</p>
                 <p>Which buyer prompts surface your competitors instead of you.</p>
                 <p>Actionable recommendations to improve your AI visibility.</p>
+                <p>
+                  A recommended next step &mdash; whether that&rsquo;s a{" "}
+                  <a href="https://theroberthu.com/free-strategy-session" target="_blank" rel="noopener noreferrer" className="text-cyan/60 underline underline-offset-2 hover:text-cyan">
+                    free strategy session
+                  </a>
+                  {" "}with Robert Hu to plan implementation, or tactical fixes you can do yourself.
+                </p>
               </div>
               <p className="mt-8 text-[13px] leading-relaxed text-white/30">
                 The audit is free. No call required. Delivered to your inbox within 48 hours.
