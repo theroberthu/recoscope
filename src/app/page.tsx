@@ -4,6 +4,8 @@ import { ScrollFade } from "@/components/home/ScrollFade";
 import { CTABox } from "@/components/tracker";
 import { OrganizationSchema } from "@/components/seo/JsonLd";
 
+export const dynamic = "force-dynamic";
+
 const SAMPLE_TABLE = [
   { agent: "ChatGPT", picks: ["Scotts Turf Builder", "Jonathan Green", "The Andersons"] },
   { agent: "Claude", picks: ["Scotts Turf Builder", "Lesco", "Milorganite"] },
@@ -65,7 +67,7 @@ export default async function HomePage() {
       <section className="mx-auto max-w-3xl px-6 py-8">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           <div className="rounded-lg border border-white/5 bg-surface px-4 py-3 text-center">
-            <p className="font-mono text-2xl font-bold text-cyan">{stats.brandsTracked || "75"}+</p>
+            <p className="font-mono text-2xl font-bold text-cyan">{stats.brandsTracked}</p>
             <p className="mt-1 text-[11px] text-white/25">Brands Tracked</p>
           </div>
           <div className="rounded-lg border border-white/5 bg-surface px-4 py-3 text-center">
@@ -73,11 +75,11 @@ export default async function HomePage() {
             <p className="mt-1 text-[11px] text-white/25">AI Models</p>
           </div>
           <div className="rounded-lg border border-white/5 bg-surface px-4 py-3 text-center">
-            <p className="font-mono text-2xl font-bold text-cyan">{stats.categoriesActive || "3"}</p>
+            <p className="font-mono text-2xl font-bold text-cyan">{stats.categoriesActive}</p>
             <p className="mt-1 text-[11px] text-white/25">Categories</p>
           </div>
           <div className="rounded-lg border border-white/5 bg-surface px-4 py-3 text-center">
-            <p className="font-mono text-2xl font-bold text-cyan">{stats.runsCompleted || "6"}</p>
+            <p className="font-mono text-2xl font-bold text-cyan">{stats.runsCompleted}</p>
             <p className="mt-1 text-[11px] text-white/25">Benchmark Runs</p>
           </div>
         </div>
