@@ -285,15 +285,25 @@ export async function getAuditStats(): Promise<{
   runsCompleted: number;
 }> {
   const sql = getDb();
-  const [brands, cats, runs] = await Promise.all([
+  const [brands, cats, runs] = await Promise.allSettled([
     sql`SELECT COUNT(DISTINCT brand_name_normalized)::int AS c FROM brand_mentions`,
     sql`SELECT COUNT(DISTINCT c.id)::int AS c FROM categories c JOIN runs r ON r.category_id = c.id WHERE c.is_active = true`,
     sql`SELECT COUNT(*)::int AS c FROM runs`,
   ]);
+
+  const getCount = (r: PromiseSettledResult<unknown>): number => {
+    if (r.status !== "fulfilled") {
+      console.error("[getAuditStats] sub-query failed:", r.reason);
+      return 0;
+    }
+    const rows = r.value as { c: number }[];
+    return rows[0]?.c ?? 0;
+  };
+
   return {
-    brandsTracked: (brands[0] as { c: number }).c,
-    categoriesActive: (cats[0] as { c: number }).c,
-    runsCompleted: (runs[0] as { c: number }).c,
+    brandsTracked: getCount(brands),
+    categoriesActive: getCount(cats),
+    runsCompleted: getCount(runs),
   };
 }
 

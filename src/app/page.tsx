@@ -18,15 +18,21 @@ export default async function HomePage() {
   let heroBrands: { brand: string; mentions: number }[] = [];
   let stats = { brandsTracked: 0, categoriesActive: 0, runsCompleted: 0 };
 
-  try {
-    [categories, heroBrands, stats] = await Promise.all([
-      getCategoriesWithRuns(),
-      getTopBrandsForHero(10),
-      getAuditStats(),
-    ]);
-  } catch {
-    // DB unavailable
-  }
+  // Run each query independently so a single failure doesn't zero out everything
+  const [catsResult, brandsResult, statsResult] = await Promise.allSettled([
+    getCategoriesWithRuns(),
+    getTopBrandsForHero(10),
+    getAuditStats(),
+  ]);
+
+  if (catsResult.status === "fulfilled") categories = catsResult.value;
+  else console.error("[homepage] getCategoriesWithRuns failed:", catsResult.reason);
+
+  if (brandsResult.status === "fulfilled") heroBrands = brandsResult.value;
+  else console.error("[homepage] getTopBrandsForHero failed:", brandsResult.reason);
+
+  if (statsResult.status === "fulfilled") stats = statsResult.value;
+  else console.error("[homepage] getAuditStats failed:", statsResult.reason);
 
   return (
     <div className="bg-dot-grid">
