@@ -390,7 +390,7 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
 
   // --- Period navigation (all report types) ---
   const isSeasonal = trackerType === "seasonal";
-  let periodNavItems: { label: string; href: string }[] = [];
+  let periodNavItems: { label: string; displayLabel: string; href: string }[] = [];
   let movementMap: Map<string, Movement> | null = null;
   let droppedBrands: { name: string; previousRank: number }[] = [];
   let allRuns: Run[] = [];
@@ -400,10 +400,15 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
   if (run) {
     // Get all runs for period navigation
     allRuns = await getAllRunsForCategory(categoryRow.id);
-    periodNavItems = allRuns.map((r) => ({
-      label: r.period_label,
-      href: `/tracker/${type}/${slug}/${r.period_label}`,
-    }));
+    periodNavItems = allRuns.map((r) => {
+      const d = new Date(r.run_date + "T00:00:00");
+      const display = `${d.getMonth() + 1}-${d.getDate()}-${String(d.getFullYear()).slice(2)}`;
+      return {
+        label: r.period_label,
+        displayLabel: display,
+        href: `/tracker/${type}/${slug}/${r.period_label}`,
+      };
+    });
   }
 
   if (isSeasonal && run) {

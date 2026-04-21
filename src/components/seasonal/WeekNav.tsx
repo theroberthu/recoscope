@@ -1,5 +1,5 @@
 interface WeekNavProps {
-  weeks: { label: string; href: string }[];
+  weeks: { label: string; displayLabel: string; href: string }[];
   currentWeek: string;
 }
 
@@ -20,7 +20,7 @@ export function WeekNav({ weeks, currentWeek }: WeekNavProps) {
                 : "text-white/30 hover:bg-white/5 hover:text-white/50"
             }`}
           >
-            {w.label}
+            {w.displayLabel}
           </a>
         );
       })}
