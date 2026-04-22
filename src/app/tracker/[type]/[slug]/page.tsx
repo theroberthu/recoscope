@@ -401,8 +401,12 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
     // Get all runs for period navigation
     allRuns = await getAllRunsForCategory(categoryRow.id);
     periodNavItems = allRuns.map((r) => {
-      const d = new Date(r.run_date + "T00:00:00");
-      const display = `${d.getMonth() + 1}-${d.getDate()}-${String(d.getFullYear()).slice(2)}`;
+      // run_date is a DATE column — could be "2026-04-01" or Date object
+      const dateStr = String(r.run_date);
+      const parts = dateStr.match(/(\d{4})-(\d{2})-(\d{2})/);
+      const display = parts
+        ? `${parseInt(parts[2])}-${parseInt(parts[3])}-${parts[1].slice(2)}`
+        : r.period_label;
       return {
         label: r.period_label,
         displayLabel: display,
