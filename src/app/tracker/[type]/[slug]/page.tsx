@@ -53,6 +53,16 @@ function toBullets(text: string | null | undefined): string[] | undefined {
   return [trimmed];
 }
 
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+function formatRunDate(runDate: string): string {
+  const parts = String(runDate).match(/(\d{4})-(\d{2})-(\d{2})/);
+  if (!parts) return String(runDate);
+  const month = MONTHS[parseInt(parts[2], 10) - 1] ?? parts[2];
+  const day = parseInt(parts[3], 10);
+  return `${month} ${day}`;
+}
+
 const VALID_TYPES = new Set<string>(["evergreen", "seasonal"]);
 
 export const dynamic = "force-dynamic";
@@ -370,6 +380,7 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
   let mentions: BrandMention[] = [];
   let insight: RunInsight | null = null;
   let periodLabel = "—";
+  let periodDisplay = "—";
   let prompts: { prompt_number: number; prompt_text: string }[] = [];
 
   if (run) {
@@ -381,6 +392,7 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
     mentions = realMentions;
     insight = realInsight;
     periodLabel = run.period_label;
+    periodDisplay = formatRunDate(run.run_date);
     prompts = runPrompts;
   }
 
@@ -400,19 +412,11 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
   if (run) {
     // Get all runs for period navigation
     allRuns = await getAllRunsForCategory(categoryRow.id);
-    periodNavItems = allRuns.map((r) => {
-      // run_date is a DATE column — could be "2026-04-01" or Date object
-      const dateStr = String(r.run_date);
-      const parts = dateStr.match(/(\d{4})-(\d{2})-(\d{2})/);
-      const display = parts
-        ? `${parseInt(parts[2])}-${parseInt(parts[3])}-${parts[1].slice(2)}`
-        : r.period_label;
-      return {
-        label: r.period_label,
-        displayLabel: display,
-        href: `/tracker/${type}/${slug}/${r.period_label}`,
-      };
-    });
+    periodNavItems = allRuns.map((r) => ({
+      label: r.period_label,
+      displayLabel: formatRunDate(r.run_date),
+      href: `/tracker/${type}/${slug}/${r.period_label}`,
+    }));
   }
 
   if (isSeasonal && run) {
@@ -453,7 +457,7 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
         brands.forEach((b, i) => rankMap.set(b.brand, i + 1));
       }
 
-      trendWeeks = allRuns.map((r) => r.period_label);
+      trendWeeks = allRuns.map((r) => formatRunDate(r.run_date));
 
       // Get top 5 brands from most recent run
       const top5Names = topBrands.slice(0, 5).map((b) => b.name);
@@ -462,7 +466,7 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
         points: allRuns
           .map((r) => {
             const rank = runRankings.get(Number(r.id))?.get(brand);
-            return rank !== undefined ? { week: r.period_label, rank } : null;
+            return rank !== undefined ? { week: formatRunDate(r.run_date), rank } : null;
           })
           .filter((p): p is { week: string; rank: number } => p !== null),
       }));
@@ -531,7 +535,7 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
   return (
     <article className="bg-dot-grid mx-auto min-h-screen max-w-3xl px-6 py-24">
       <ArticleSchema
-        headline={`${categoryRow.name} AI Benchmark — ${periodLabel}`}
+        headline={`${categoryRow.name} AI Benchmark — ${periodDisplay}`}
         description={`See which brands AI models recommend for ${categoryRow.name}. Benchmark data from ChatGPT, Claude, Gemini, and Perplexity.`}
         datePublished={run.run_date}
         url={`https://getrecoscope.com/tracker/${type}/${slug}`}
@@ -545,8 +549,8 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
 
       <SectionHeader
         title={categoryRow.name}
-        subtitle={`${TYPE_LABELS[trackerType] ?? trackerType} \u2014 ${periodLabel}`}
-        badge={run ? (periodLabel !== "—" ? periodLabel : "Live Report") : "No data yet"}
+        subtitle={`${TYPE_LABELS[trackerType] ?? trackerType} \u2014 ${periodDisplay}`}
+        badge={run ? (periodDisplay !== "—" ? periodDisplay : "Live Report") : "No data yet"}
       />
 
       <PromptsUsed prompts={prompts} />
