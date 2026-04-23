@@ -55,12 +55,23 @@ function toBullets(text: string | null | undefined): string[] | undefined {
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-function formatRunDate(runDate: string): string {
-  const parts = String(runDate).match(/(\d{4})-(\d{2})-(\d{2})/);
-  if (!parts) return String(runDate);
-  const month = MONTHS[parseInt(parts[2], 10) - 1] ?? parts[2];
-  const day = parseInt(parts[3], 10);
-  return `${month} ${day}`;
+function formatRunDate(runDate: unknown): string {
+  // Handle Date objects from Neon
+  if (runDate instanceof Date) {
+    return `${MONTHS[runDate.getUTCMonth()]} ${runDate.getUTCDate()}`;
+  }
+  // Handle "YYYY-MM-DD" strings
+  const str = String(runDate);
+  const parts = str.match(/(\d{4})-(\d{2})-(\d{2})/);
+  if (parts) {
+    return `${MONTHS[parseInt(parts[2], 10) - 1]} ${parseInt(parts[3], 10)}`;
+  }
+  // Handle full date strings like "Wed Mar 25 2026 00:00:00 GMT..."
+  const d = new Date(str);
+  if (!isNaN(d.getTime())) {
+    return `${MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}`;
+  }
+  return str;
 }
 
 const VALID_TYPES = new Set<string>(["evergreen", "seasonal"]);
