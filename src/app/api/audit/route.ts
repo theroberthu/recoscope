@@ -6,7 +6,7 @@ const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
   : null;
 
-const NOTIFY_EMAIL = "roberthu83@gmail.com";
+const NOTIFY_EMAIL = "robert@theroberthu.com";
 
 const VALID_LEAD_TYPES = new Set(["audit", "free_monthly_signup", "waitlist"]);
 
@@ -96,7 +96,8 @@ export async function POST(req: NextRequest) {
 
       resend.emails
         .send({
-          from: "RecoScope <notifications@getrecoscope.com>",
+          from: "RecoScope <alerts@getrecoscope.com>",
+          replyTo: "contact@getrecoscope.com",
           to: NOTIFY_EMAIL,
           subject: subjects[resolvedLeadType] ?? `New RecoScope Lead: ${email}`,
           text: bodies[resolvedLeadType] ?? `Email: ${email}\nType: ${resolvedLeadType}`,
