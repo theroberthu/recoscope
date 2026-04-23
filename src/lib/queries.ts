@@ -22,6 +22,16 @@ export async function getActiveCategories(): Promise<Category[]> {
   return rows as Category[];
 }
 
+export async function getUpcomingCategories(): Promise<Category[]> {
+  const sql = getDb();
+  const rows = await sql`
+    SELECT * FROM categories
+    WHERE is_active = false
+    ORDER BY name
+  `;
+  return rows as Category[];
+}
+
 export async function getCategoryBySlug(
   slug: string,
   trackerType: TrackerType,

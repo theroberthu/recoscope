@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ScrollFade } from "@/components/home/ScrollFade";
-import { getCategoriesWithSchedule } from "@/lib/queries";
+import { getCategoriesWithSchedule, getUpcomingCategories } from "@/lib/queries";
+import type { Category } from "@/lib/types";
 
 export const metadata: Metadata = {
   title: "AI Recommendation Reports by Category",
@@ -17,9 +18,13 @@ function formatDate(dateStr: string | null): string {
 
 export default async function TrackerIndexPage() {
   let categories: { name: string; slug: string; tracker_type: string; last_run_date: string | null }[] = [];
+  let upcoming: Category[] = [];
 
   try {
-    categories = await getCategoriesWithSchedule();
+    [categories, upcoming] = await Promise.all([
+      getCategoriesWithSchedule(),
+      getUpcomingCategories(),
+    ]);
   } catch {
     // DB unavailable
   }
@@ -166,15 +171,16 @@ export default async function TrackerIndexPage() {
               Request a Category
             </a>
           </div>
-          <div className="mt-6 sm:mt-0 sm:shrink-0">
-            {/* TODO: update with real roadmap */}
-            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-white/20">
-              Coming Soon
-            </p>
-            <p className="mt-2 text-[13px] leading-relaxed text-white/30">
-              Skincare &middot; Supplements &middot; Pet Food &middot; Coffee &middot; Wireless Earbuds
-            </p>
-          </div>
+          {upcoming.length > 0 && (
+            <div className="mt-6 sm:mt-0 sm:shrink-0">
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-white/20">
+                Coming Soon
+              </p>
+              <p className="mt-2 text-[13px] leading-relaxed text-white/30">
+                {upcoming.map((c) => c.name).join(" · ")}
+              </p>
+            </div>
+          )}
         </div>
       </section>
     </div>
