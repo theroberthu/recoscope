@@ -423,6 +423,7 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
   if (run) {
     // Get all runs for period navigation
     allRuns = await getAllRunsForCategory(categoryRow.id);
+    console.log(`[report] ${slug}: categoryId=${categoryRow.id}, allRuns=${allRuns.length}, periods=${allRuns.map(r => r.period_label).join(",")}`);
     periodNavItems = allRuns.map((r) => ({
       label: r.period_label,
       displayLabel: formatRunDate(r.run_date),

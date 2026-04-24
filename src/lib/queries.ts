@@ -244,10 +244,11 @@ export async function getAllRunsForCategory(
   categoryId: number,
 ): Promise<Run[]> {
   const sql = getDb();
+  const id = Number(categoryId);
   const rows = await sql`
     SELECT * FROM runs
-    WHERE category_id = ${categoryId}
-    ORDER BY period_label ASC
+    WHERE category_id = ${id}
+    ORDER BY run_date ASC
   `;
   return rows as Run[];
 }
