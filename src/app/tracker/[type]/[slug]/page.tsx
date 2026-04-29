@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ArticleSchema } from "@/components/seo/JsonLd";
+import { ArticleSchema, FAQSchema, BreadcrumbSchema } from "@/components/seo/JsonLd";
 import {
   getCategoryBySlug, getLatestRun, getBrandMentions, getRunInsight,
   getPreviousRun, getAllSeasonalRuns, getBrandRankingsForRuns,
@@ -335,10 +335,34 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { type, slug } = await params;
   const label = slug.replace(/-/g, " ");
   const cadence = type === "seasonal" ? "weekly" : "monthly";
-  return {
-    title: `AI Recommendations for ${label}`,
-    description: `Which ${label} brands do AI models recommend most? Rankings from ChatGPT, Claude, Gemini & Perplexity, updated ${cadence}.`,
-  };
+
+  // Try to get top brands for richer meta
+  let brandNames = "";
+  try {
+    const trackerType = type as TrackerType;
+    const cat = await getCategoryBySlug(slug, trackerType);
+    if (cat) {
+      const run = await getLatestRun(cat.id, "published") ?? await getLatestRun(cat.id);
+      if (run) {
+        const mentions = await getBrandMentions(run.id);
+        const counts = new Map<string, number>();
+        for (const m of mentions) {
+          counts.set(m.brand_name_normalized, (counts.get(m.brand_name_normalized) ?? 0) + 1);
+        }
+        const top3 = Array.from(counts.entries()).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([n]) => n);
+        if (top3.length > 0) brandNames = top3.join(", ");
+      }
+    }
+  } catch { /* fallback to generic */ }
+
+  const title = brandNames
+    ? `${label}: ${brandNames} lead AI recommendations`
+    : `AI Recommendations for ${label}`;
+  const description = brandNames
+    ? `${brandNames.split(",")[0].trim()} leads AI recommendations for ${label}. See full rankings from ChatGPT, Claude, Gemini & Perplexity, updated ${cadence}.`
+    : `Which ${label} brands do AI models recommend most? Rankings from ChatGPT, Claude, Gemini & Perplexity, updated ${cadence}.`;
+
+  return { title, description };
 }
 
 // ---------------------------------------------------------------------------
@@ -544,14 +568,41 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
 
   const takeaway = clean.keyTakeaway || synthesizeTakeaway(topBrands, agentRows);
 
+  // --- Dynamic FAQ ---
+  const catName = categoryRow.name;
+  const topBrand = topBrands[0]?.name ?? "the leading brand";
+  const topMentions = topBrands[0]?.mentionCount ?? 0;
+  const budgetBrands = promptBreakdownData.length >= 2
+    ? promptBreakdownData[1]?.agentBrands.flatMap((r) => r.brands).slice(0, 1)[0] ?? "varies by model"
+    : "varies by model";
+
+  const faqItems = [
+    { question: `What ${catName.toLowerCase()} does AI recommend most?`, answer: `${topBrand} leads with ${topMentions} total mentions across ChatGPT, Claude, Gemini, and Perplexity in our latest benchmark.` },
+    { question: `Which ${catName.toLowerCase()} brand ranks #1 across all AI models?`, answer: topBrands.find((b) => b.label === "Overall Leader")?.name ? `${topBrands.find((b) => b.label === "Overall Leader")!.name} is the overall leader by mention frequency.` : `No single brand dominates across all models. ${topBrand} leads in total mentions but different models have different #1 picks.` },
+    { question: `Why does ChatGPT recommend different ${catName.toLowerCase()} than Claude?`, answer: clean.crossAgentDifferences ?? "Each model draws from different training data and commercial integrations, leading to divergent recommendations." },
+    { question: `What ${catName.toLowerCase()} brands are invisible to AI?`, answer: clean.marketGaps ?? "Many popular retail brands don't appear in AI recommendations. Our benchmark identifies which brands are missing and why." },
+    { question: `How often is ${topBrand} recommended by AI?`, answer: `${topBrand} appeared ${topMentions} times across all agent responses in our latest ${catName.toLowerCase()} benchmark.` },
+    { question: `What's the best budget ${catName.toLowerCase()} according to AI?`, answer: `Under budget-constrained prompts, AI models most frequently recommend ${budgetBrands}.` },
+    { question: `Are ${catName.toLowerCase()} AI recommendations biased?`, answer: "We classify AI models by commercial interest: Claude (independent), Perplexity (search-grounded), ChatGPT and Gemini (commerce-influenced). Commerce-influenced models may weight products with advertising or shopping integrations differently." },
+    { question: `How does RecoScope track ${catName.toLowerCase()} recommendations?`, answer: `We run three standardized prompts through ChatGPT, Claude, Gemini, and Perplexity, then parse every response for brand mentions, rank position, and frequency. ${trackerType === "seasonal" ? "Seasonal categories are benchmarked weekly." : "Evergreen categories are benchmarked monthly."}` },
+  ];
+
+  const baseUrl = "https://getrecoscope.com";
+
   return (
     <article className="bg-dot-grid mx-auto min-h-screen max-w-3xl px-6 py-24">
       <ArticleSchema
-        headline={`${categoryRow.name} AI Benchmark — ${periodDisplay}`}
-        description={`See which brands AI models recommend for ${categoryRow.name}. Benchmark data from ChatGPT, Claude, Gemini, and Perplexity.`}
-        datePublished={run.run_date}
-        url={`https://getrecoscope.com/tracker/${type}/${slug}`}
+        headline={`${catName} AI Benchmark — ${periodDisplay}`}
+        description={`See which brands AI models recommend for ${catName}. Benchmark data from ChatGPT, Claude, Gemini, and Perplexity.`}
+        datePublished={String(run.run_date)}
+        url={`${baseUrl}/tracker/${type}/${slug}`}
       />
+      <FAQSchema items={faqItems} />
+      <BreadcrumbSchema items={[
+        { name: "Home", url: baseUrl },
+        { name: "Tracker", url: `${baseUrl}/tracker` },
+        { name: catName, url: `${baseUrl}/tracker/${type}/${slug}` },
+      ]} />
       <ReportViewTracker slug={slug} />
 
       {/* Period nav */}
@@ -643,6 +694,26 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
           </div>
         </ScrollFade>
       )}
+
+      {/* FAQ section */}
+      <section className="mt-20">
+        <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+          Frequently Asked Questions
+        </p>
+        <div className="mt-6 space-y-2">
+          {faqItems.map((faq) => (
+            <details key={faq.question} className="group rounded-lg border border-white/5">
+              <summary className="flex cursor-pointer items-center justify-between px-5 py-3 font-mono text-[13px] font-medium text-white/50 hover:text-white/70">
+                {faq.question}
+                <span className="text-white/20 transition-transform group-open:rotate-180">&#9662;</span>
+              </summary>
+              <div className="border-t border-white/5 px-5 py-4 text-[13px] leading-[1.7] text-white/35">
+                {faq.answer}
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
 
       <ScrollFade className="mt-24">
         <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/20">
