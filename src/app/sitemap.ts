@@ -16,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const categories = await getCategoriesWithRuns();
     categoryPages = categories.map((cat) => ({
-      url: `${baseUrl}/tracker/${cat.tracker_type}/${cat.slug}`,
+      url: `${baseUrl}/tracker/${cat.slug}`,
       changeFrequency: cat.tracker_type === "seasonal" ? "weekly" as const : "monthly" as const,
       priority: 0.8,
     }));

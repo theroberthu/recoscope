@@ -178,7 +178,7 @@ export default async function HomePage() {
             Lawn Fertilizer &middot; Week of Apr 8, 2026
           </p>
           <p className="mt-2 text-center">
-            <a href="/tracker/seasonal/lawn-fertilizer" className="font-mono text-[12px] font-medium text-cyan/60 transition-colors hover:text-cyan">
+            <a href="/tracker/lawn-fertilizer" className="font-mono text-[12px] font-medium text-cyan/60 transition-colors hover:text-cyan">
               See the full report &rarr;
             </a>
           </p>
@@ -225,7 +225,7 @@ export default async function HomePage() {
             </div>
           </div>
           <p className="mt-6 text-center">
-            <a href="/tracker/seasonal/lawn-fertilizer" className="font-mono text-[12px] font-medium text-cyan/60 transition-colors hover:text-cyan">
+            <a href="/tracker/lawn-fertilizer" className="font-mono text-[12px] font-medium text-cyan/60 transition-colors hover:text-cyan">
               See the full analysis &rarr;
             </a>
           </p>
@@ -287,7 +287,7 @@ export default async function HomePage() {
             <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">Active Reports</p>
             <div className="mt-6 space-y-3">
               {categories.map((cat) => (
-                <a key={cat.slug} href={`/tracker/${cat.tracker_type}/${cat.slug}`} className="glow-card block rounded-xl border border-white/10 bg-surface px-6 py-5">
+                <a key={cat.slug} href={`/tracker/${cat.slug}`} className="glow-card block rounded-xl border border-white/10 bg-surface px-6 py-5">
                   <div className="flex items-center justify-between">
                     <div>
                       <span className="flex items-center gap-3">

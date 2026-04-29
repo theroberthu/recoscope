@@ -78,7 +78,7 @@ export default async function TrackerIndexPage() {
                   >
                     <td className="px-6 py-4">
                       <a
-                        href={`/tracker/${cat.tracker_type}/${cat.slug}`}
+                        href={`/tracker/${cat.slug}`}
                         className="text-[14px] font-semibold text-white transition-colors hover:text-cyan"
                       >
                         {cat.name}
@@ -114,7 +114,7 @@ export default async function TrackerIndexPage() {
             {categories.map((cat) => (
               <a
                 key={cat.slug}
-                href={`/tracker/${cat.tracker_type}/${cat.slug}`}
+                href={`/tracker/${cat.slug}`}
                 className="glow-card block rounded-xl border border-white/10 bg-surface p-5"
               >
                 <div className="flex items-center justify-between">

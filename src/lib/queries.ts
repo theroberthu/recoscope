@@ -34,15 +34,20 @@ export async function getUpcomingCategories(): Promise<Category[]> {
 
 export async function getCategoryBySlug(
   slug: string,
-  trackerType: TrackerType,
+  trackerType?: TrackerType,
 ): Promise<Category | null> {
   const sql = getDb();
-  const rows = await sql`
-    SELECT * FROM categories
-    WHERE slug = ${slug}
-      AND tracker_type = ${trackerType}
-    LIMIT 1
-  `;
+  const rows = trackerType
+    ? await sql`
+        SELECT * FROM categories
+        WHERE slug = ${slug} AND tracker_type = ${trackerType}
+        LIMIT 1
+      `
+    : await sql`
+        SELECT * FROM categories
+        WHERE slug = ${slug}
+        LIMIT 1
+      `;
   return (rows[0] as Category) ?? null;
 }
 

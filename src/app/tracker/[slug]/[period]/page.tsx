@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
 
 interface Props {
-  params: Promise<{ type: string; slug: string; period: string }>;
+  params: Promise<{ slug: string; period: string }>;
 }
 
-export default async function OldPeriodRedirect({ params }: Props) {
+export default async function PeriodReportPage({ params }: Props) {
   const { slug, period } = await params;
   redirect(`/tracker/${slug}?period=${encodeURIComponent(period)}`);
 }
