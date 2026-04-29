@@ -28,7 +28,7 @@ const LINE_COLORS = [
 export function TrendChart({ lines, weeks }: TrendChartProps) {
   const [hoveredBrand, setHoveredBrand] = useState<string | null>(null);
 
-  if (lines.length === 0 || weeks.length < 3) return null;
+  if (lines.length === 0 || weeks.length < 2) return null;
 
   const maxRank = 10;
   const chartW = 600;
