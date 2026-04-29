@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "Weekly and monthly reports tracking which brands AI models recommend across office chairs, running shoes, protein powder & more.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 function formatDate(dateStr: string | null): string {
   if (!dateStr) return "—";

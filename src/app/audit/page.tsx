@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "We'll run your brand through ChatGPT, Claude, Gemini, and Perplexity and show you exactly where you stand — free.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export default async function AuditPage() {
   let categories: { name: string; slug: string }[] = [];

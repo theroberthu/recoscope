@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "Free monthly AI recommendation benchmarks delivered to your inbox.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export default async function SubscribePage() {
   let categories: { name: string; slug: string }[] = [];

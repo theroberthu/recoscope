@@ -4,7 +4,7 @@ import { ScrollFade } from "@/components/home/ScrollFade";
 import { CTABox } from "@/components/tracker";
 import { OrganizationSchema } from "@/components/seo/JsonLd";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300; // revalidate every 5 minutes
 
 const SAMPLE_TABLE = [
   { agent: "ChatGPT", picks: ["Scotts Turf Builder", "Jonathan Green", "The Andersons"] },
