@@ -62,6 +62,7 @@ export async function getCategoriesWithRuns(): Promise<
     JOIN LATERAL (
       SELECT summary FROM runs
       WHERE category_id = c.id
+        AND is_public = true
       ORDER BY run_date DESC
       LIMIT 1
     ) r ON true
@@ -85,12 +86,14 @@ export async function getLatestRun(
         SELECT * FROM runs
         WHERE category_id = ${categoryId}
           AND status = ${statusFilter}
+          AND is_public = true
         ORDER BY run_date DESC
         LIMIT 1
       `
     : await sql`
         SELECT * FROM runs
         WHERE category_id = ${categoryId}
+          AND is_public = true
         ORDER BY run_date DESC
         LIMIT 1
       `;
@@ -106,6 +109,7 @@ export async function getRunByPeriod(
     SELECT * FROM runs
     WHERE category_id = ${categoryId}
       AND period_label = ${periodLabel}
+      AND is_public = true
     LIMIT 1
   `;
   return (rows[0] as Run) ?? null;
@@ -191,6 +195,7 @@ export async function getCrossAgentPreview(): Promise<
       SELECT r.id FROM runs r
       JOIN categories c ON c.id = r.category_id
       WHERE c.is_active = true
+        AND r.is_public = true
       ORDER BY r.run_date DESC
       LIMIT 1
     )
@@ -211,6 +216,7 @@ export async function getCategoriesWithSchedule(): Promise<
     LEFT JOIN LATERAL (
       SELECT run_date FROM runs
       WHERE category_id = c.id
+        AND is_public = true
       ORDER BY run_date DESC
       LIMIT 1
     ) r ON true
@@ -238,6 +244,7 @@ export async function getPreviousRun(
     WHERE category_id = ${categoryId}
       AND tracker_type = 'seasonal'
       AND period_label < ${currentPeriodLabel}
+      AND is_public = true
     ORDER BY period_label DESC
     LIMIT 1
   `;
@@ -253,6 +260,7 @@ export async function getAllRunsForCategory(
   const rows = await sql`
     SELECT * FROM runs
     WHERE category_id = ${id}
+      AND is_public = true
     ORDER BY run_date ASC
   `;
   return rows as Run[];
@@ -267,6 +275,7 @@ export async function getAllSeasonalRuns(
     SELECT * FROM runs
     WHERE category_id = ${categoryId}
       AND tracker_type = 'seasonal'
+      AND is_public = true
     ORDER BY period_label ASC
   `;
   return rows as Run[];
@@ -303,8 +312,8 @@ export async function getAuditStats(): Promise<{
   const sql = getDb();
   const [brands, cats, runs] = await Promise.allSettled([
     sql`SELECT COUNT(DISTINCT brand_name_normalized)::int AS c FROM brand_mentions`,
-    sql`SELECT COUNT(DISTINCT c.id)::int AS c FROM categories c JOIN runs r ON r.category_id = c.id WHERE c.is_active = true`,
-    sql`SELECT COUNT(*)::int AS c FROM runs`,
+    sql`SELECT COUNT(DISTINCT c.id)::int AS c FROM categories c JOIN runs r ON r.category_id = c.id WHERE c.is_active = true AND r.is_public = true`,
+    sql`SELECT COUNT(*)::int AS c FROM runs WHERE is_public = true`,
   ]);
 
   const getCount = (r: PromiseSettledResult<unknown>): number => {

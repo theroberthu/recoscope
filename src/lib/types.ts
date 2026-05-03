@@ -19,6 +19,8 @@ export interface Run {
   tracker_type: TrackerType;
   status: RunStatus;
   summary: string | null;
+  client_id: string | null;
+  is_public: boolean;
   created_at: string;
 }
 
