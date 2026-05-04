@@ -333,6 +333,23 @@ export async function getAuditStats(): Promise<{
 }
 
 // ---------------------------------------------------------------------------
+// Prospect (private) queries
+// ---------------------------------------------------------------------------
+
+export async function getProspectRuns(clientId: string): Promise<(Run & { category_name: string; category_slug: string })[]> {
+  const sql = getDb();
+  const rows = await sql`
+    SELECT r.*, c.name AS category_name, c.slug AS category_slug
+    FROM runs r
+    JOIN categories c ON c.id = r.category_id
+    WHERE r.client_id = ${clientId}
+      AND r.is_public = false
+    ORDER BY r.run_date DESC
+  `;
+  return rows as (Run & { category_name: string; category_slug: string })[];
+}
+
+// ---------------------------------------------------------------------------
 // Insights
 // ---------------------------------------------------------------------------
 
