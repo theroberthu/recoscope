@@ -349,6 +349,25 @@ export async function getProspectRuns(clientId: string): Promise<(Run & { catego
   return rows as (Run & { category_name: string; category_slug: string })[];
 }
 
+export async function getProspectDayCount(clientId: string): Promise<{ dayCount: number; firstDate: string | null; lastDate: string | null }> {
+  const sql = getDb();
+  const rows = await sql`
+    SELECT
+      COUNT(DISTINCT run_date)::int AS day_count,
+      MIN(run_date)::text AS first_date,
+      MAX(run_date)::text AS last_date
+    FROM runs
+    WHERE client_id = ${clientId}
+      AND is_public = false
+  `;
+  const row = rows[0] as { day_count: number; first_date: string | null; last_date: string | null } | undefined;
+  return {
+    dayCount: row?.day_count ?? 0,
+    firstDate: row?.first_date ?? null,
+    lastDate: row?.last_date ?? null,
+  };
+}
+
 // ---------------------------------------------------------------------------
 // Insights
 // ---------------------------------------------------------------------------

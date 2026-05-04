@@ -12,7 +12,7 @@ import {
 import type { BrandMention } from "@/lib/types";
 
 export const metadata: Metadata = {
-  title: "Prospect Dashboard — RecoScope",
+  title: "AI Visibility Report — RecoScope",
   robots: { index: false, follow: false },
 };
 
@@ -163,7 +163,6 @@ async function loginAction(formData: FormData) {
   "use server";
   const password = formData.get("password") as string;
   const clientId = formData.get("clientId") as string;
-  const returnTo = formData.get("returnTo") as string;
   if (password === process.env.PROSPECT_DASHBOARD_PASSWORD) {
     const cookieStore = await cookies();
     cookieStore.set(COOKIE_NAME, password, {
@@ -173,13 +172,13 @@ async function loginAction(formData: FormData) {
       maxAge: 60 * 60 * 24 * 7,
       path: "/",
     });
-    redirect(returnTo || `/admin/prospect/${clientId}`);
+    redirect(`/report/${clientId}`);
   }
-  redirect(`${returnTo || `/admin/prospect/${clientId}`}?error=1`);
+  redirect(`/report/${clientId}?error=1`);
 }
 
 // ---------------------------------------------------------------------------
-// Page (exported for reuse by /report/[clientId])
+// Page
 // ---------------------------------------------------------------------------
 
 interface Props {
@@ -187,13 +186,41 @@ interface Props {
   searchParams: Promise<{ error?: string }>;
 }
 
-export default async function ProspectDashboard({ params, searchParams }: Props) {
+export default async function ReportPage({ params, searchParams }: Props) {
   const { clientId } = await params;
   const { error } = await searchParams;
   const cookieStore = await cookies();
 
   if (!isAuthed(cookieStore)) {
-    return <LoginPage clientId={clientId} error={error} />;
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-void px-6">
+        <div className="w-full max-w-sm">
+          <h1 className="text-center text-2xl font-bold text-white">AI Visibility Report</h1>
+          <p className="mt-2 text-center text-[13px] text-white/40">Enter the access password to view your report.</p>
+          {error && (
+            <p className="mt-4 rounded-lg bg-red-500/10 px-4 py-2 text-center text-[13px] text-red-400">
+              Invalid password. Please try again.
+            </p>
+          )}
+          <form action={loginAction} className="mt-6">
+            <input type="hidden" name="clientId" value={clientId} />
+            <input
+              type="password"
+              name="password"
+              placeholder="Access password"
+              autoFocus
+              className="w-full rounded-lg border border-white/10 bg-surface px-4 py-3 text-[14px] text-white placeholder-white/20 outline-none focus:border-cyan/50"
+            />
+            <button
+              type="submit"
+              className="mt-3 w-full rounded-lg bg-cyan px-4 py-3 font-mono text-[13px] font-bold text-void transition-colors hover:bg-cyan/90"
+            >
+              View Report
+            </button>
+          </form>
+        </div>
+      </div>
+    );
   }
 
   const [runs, dayInfo] = await Promise.all([
@@ -231,7 +258,7 @@ export default async function ProspectDashboard({ params, searchParams }: Props)
         <div className="flex items-center justify-between">
           <div>
             <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/60">
-              Private Report
+              AI Visibility Report
             </p>
             <h1 className="mt-2 text-3xl font-bold text-white">
               {clientId.charAt(0).toUpperCase() + clientId.slice(1)} — AI Visibility Report
@@ -247,7 +274,6 @@ export default async function ProspectDashboard({ params, searchParams }: Props)
 
         {runData.map(({ run, mentions, responses, insight, prompts, visibility, rankings }) => (
           <section key={run.id} className="mt-16">
-            {/* Run header */}
             <div className="flex items-baseline justify-between border-b border-white/10 pb-4">
               <div>
                 <h2 className="text-xl font-semibold text-white">{run.category_name}</h2>
@@ -264,7 +290,7 @@ export default async function ProspectDashboard({ params, searchParams }: Props)
               </span>
             </div>
 
-            {/* 1. Visibility Scorecard */}
+            {/* Visibility Scorecard */}
             <div className="mt-8">
               <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
                 Visibility Scorecard
@@ -291,7 +317,7 @@ export default async function ProspectDashboard({ params, searchParams }: Props)
               </div>
             </div>
 
-            {/* 2. Strategy insight (promoted) */}
+            {/* Strategy insight (promoted) */}
             {insight?.audit_angle && (
               <div className="mt-8 rounded-xl border-l-4 border-cyan/40 bg-surface p-6">
                 <p className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-cyan/60">
@@ -303,7 +329,7 @@ export default async function ProspectDashboard({ params, searchParams }: Props)
               </div>
             )}
 
-            {/* 3. Per-Agent Breakdown */}
+            {/* Per-Agent Breakdown */}
             <div className="mt-10">
               <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
                 Per-Agent Breakdown
@@ -338,7 +364,7 @@ export default async function ProspectDashboard({ params, searchParams }: Props)
               </div>
             </div>
 
-            {/* 4. Competitive Landscape */}
+            {/* Competitive Landscape */}
             <div className="mt-10">
               <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
                 Competitive Landscape
@@ -382,7 +408,7 @@ export default async function ProspectDashboard({ params, searchParams }: Props)
               </div>
             </div>
 
-            {/* 5. Per-Prompt Results */}
+            {/* Per-Prompt Results */}
             {prompts.length > 0 && (
               <div className="mt-10">
                 <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
@@ -443,7 +469,7 @@ export default async function ProspectDashboard({ params, searchParams }: Props)
               </div>
             )}
 
-            {/* 6. Trend placeholder */}
+            {/* Trend placeholder */}
             <div className="mt-10">
               <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
                 Trend Across Collection Window
@@ -461,7 +487,7 @@ export default async function ProspectDashboard({ params, searchParams }: Props)
               </div>
             </div>
 
-            {/* 7. Insights (without audit_angle, which is promoted above) */}
+            {/* Insights (without audit_angle) */}
             {insight && (insight.key_takeaway || insight.common_traits || insight.cross_agent_differences || insight.market_gaps) && (
               <div className="mt-10">
                 <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
@@ -484,7 +510,7 @@ export default async function ProspectDashboard({ params, searchParams }: Props)
               </div>
             )}
 
-            {/* 8. Raw Responses */}
+            {/* Raw Responses */}
             {responses.length > 0 && (
               <details className="mt-10 group">
                 <summary className="flex cursor-pointer items-center gap-2 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30 hover:text-white/50">
@@ -528,43 +554,6 @@ export default async function ProspectDashboard({ params, searchParams }: Props)
         <p className="mt-8 text-center text-[11px] text-white/15">
           This is a confidential report prepared by RecoScope. Do not distribute.
         </p>
-      </div>
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Login page
-// ---------------------------------------------------------------------------
-
-function LoginPage({ clientId, error }: { clientId: string; error?: string }) {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-void px-6">
-      <div className="w-full max-w-sm">
-        <h1 className="text-center text-2xl font-bold text-white">Prospect Dashboard</h1>
-        <p className="mt-2 text-center text-[13px] text-white/40">Enter the access password to continue.</p>
-        {error && (
-          <p className="mt-4 rounded-lg bg-red-500/10 px-4 py-2 text-center text-[13px] text-red-400">
-            Invalid password. Please try again.
-          </p>
-        )}
-        <form action={loginAction} className="mt-6">
-          <input type="hidden" name="clientId" value={clientId} />
-          <input type="hidden" name="returnTo" value="" />
-          <input
-            type="password"
-            name="password"
-            placeholder="Access password"
-            autoFocus
-            className="w-full rounded-lg border border-white/10 bg-surface px-4 py-3 text-[14px] text-white placeholder-white/20 outline-none focus:border-cyan/50"
-          />
-          <button
-            type="submit"
-            className="mt-3 w-full rounded-lg bg-cyan px-4 py-3 font-mono text-[13px] font-bold text-void transition-colors hover:bg-cyan/90"
-          >
-            Access Dashboard
-          </button>
-        </form>
       </div>
     </div>
   );
