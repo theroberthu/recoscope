@@ -23,7 +23,7 @@ import Anthropic from "@anthropic-ai/sdk";
 // ---------------------------------------------------------------------------
 
 const VALID_MODELS = new Set(["chatgpt", "claude", "gemini", "perplexity"]);
-const EXPECTED_SECTIONS = 12; // 4 models × 3 prompts
+let EXPECTED_SECTIONS = 12; // default: 4 models × 3 prompts
 const MODEL_ID = "claude-sonnet-4-20250514";
 
 // ---------------------------------------------------------------------------
@@ -41,9 +41,14 @@ function parseArgs() {
 
   if (!parsed.input || !parsed["run-id"] || !parsed.category) {
     console.error(
-      "Usage: node scripts/parse-run.mjs --input <file> --run-id <id> --category <name>",
+      "Usage: node scripts/parse-run.mjs --input <file> --run-id <id> --category <name> [--sections <num>]",
     );
     process.exit(1);
+  }
+
+  // Allow overriding expected section count (default 12 = 4 models × 3 prompts)
+  if (parsed.sections) {
+    EXPECTED_SECTIONS = parseInt(parsed.sections, 10);
   }
 
   return {
