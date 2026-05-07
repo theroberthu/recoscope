@@ -1,4 +1,11 @@
 User-agent: *
+Disallow: /admin/
+Disallow: /prospect/
+Disallow: /report/
+Disallow: /test-db
+Allow: /demo
+Allow: /tracker/
+Allow: /methodology
 Allow: /
 
-Sitemap: https://getrecoscope.com/sitemap.xml
+Sitemap: https://www.getrecoscope.com/sitemap.xml
