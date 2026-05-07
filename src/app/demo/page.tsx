@@ -9,6 +9,7 @@ import {
   getPromptsForRun,
 } from "@/lib/queries";
 import type { BrandMention } from "@/lib/types";
+import { ExpandableRankingsTable } from "@/components/demo/ExpandableRankingsTable";
 
 export const metadata: Metadata = {
   title: "Demo AI Visibility Report — CeraVe | RecoScope",
@@ -348,37 +349,10 @@ export default async function DemoPage() {
           <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
             Competitive Landscape
           </p>
-          <div className="mt-4 overflow-x-auto rounded-xl border border-white/10 bg-surface">
-            <table className="w-full text-[13px]">
-              <thead>
-                <tr className="border-b border-white/5">
-                  <Th>#</Th>
-                  <Th>Brand</Th>
-                  <Th>Mentions</Th>
-                  <Th>Top-3</Th>
-                  <Th>First Picks</Th>
-                </tr>
-              </thead>
-              <tbody>
-                {rankings.map((r, i) => {
-                  const isClient = isBrand(r.brand);
-                  return (
-                    <tr
-                      key={r.brand}
-                      className={`border-b border-white/5 last:border-0 ${isClient ? "bg-cyan/[0.08]" : ""}`}
-                    >
-                      <td className={`px-5 py-3 font-mono ${isClient ? "text-cyan/50" : "text-white/30"}`}>{i + 1}</td>
-                      <td className={`px-5 py-3 font-medium ${isClient ? "text-cyan" : "text-white/60"}`}>
-                        {r.brand}
-                      </td>
-                      <td className={`px-5 py-3 font-mono tabular-nums ${isClient ? "text-cyan/60" : "text-white/40"}`}>{r.mentions}</td>
-                      <td className={`px-5 py-3 font-mono tabular-nums ${isClient ? "text-cyan/60" : "text-white/40"}`}>{r.top3}</td>
-                      <td className={`px-5 py-3 font-mono tabular-nums ${isClient ? "text-cyan/60" : "text-white/40"}`}>{r.firstPicks}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+          <div className="mt-4">
+            <ExpandableRankingsTable
+              rankings={rankings.map((r) => ({ ...r, isClient: isBrand(r.brand) }))}
+            />
           </div>
         </div>
 
