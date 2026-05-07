@@ -175,17 +175,13 @@ export default async function ProspectPage({ params, searchParams }: Props) {
   }
 
   // Auth: check URL token, then cookie
+  // Note: cookies cannot be set inside a Server Component render — only via
+  // Server Actions or Route Handlers. So when key matches, we just authenticate
+  // for this request. The cookie is set only when the user submits the password
+  // form (loginAction below).
   let authed = false;
   if (profile) {
     if (key === profile.password) {
-      // Token in URL — set cookie and strip key from URL
-      cookieStore.set(getCookieName(clientId), "1", {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        maxAge: 60 * 60 * 24 * 30,
-        path: "/",
-      });
       authed = true;
     } else if (cookieStore.get(getCookieName(clientId))?.value === "1") {
       authed = true;
