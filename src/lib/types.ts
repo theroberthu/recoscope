@@ -60,3 +60,15 @@ export interface RunInsight {
   reviewed_by_human: boolean;
   created_at: string;
 }
+
+export interface ProspectProfile {
+  client_id: string;
+  prospect_name: string;
+  brand_name: string;
+  password: string;
+  personal_note: string | null;
+  recommendation_1: string | null;
+  recommendation_2: string | null;
+  recommendation_3: string | null;
+  created_at: string;
+}

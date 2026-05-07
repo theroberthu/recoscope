@@ -3,6 +3,7 @@ import type {
   AgentResponse,
   BrandMention,
   Category,
+  ProspectProfile,
   Run,
   RunInsight,
   TrackerType,
@@ -366,6 +367,35 @@ export async function getProspectDayCount(clientId: string): Promise<{ dayCount:
     firstDate: row?.first_date ?? null,
     lastDate: row?.last_date ?? null,
   };
+}
+
+// ---------------------------------------------------------------------------
+// Prospect profiles
+// ---------------------------------------------------------------------------
+
+export async function getProspectProfile(clientId: string): Promise<ProspectProfile | null> {
+  const sql = getDb();
+  const rows = await sql`
+    SELECT * FROM prospect_profiles
+    WHERE client_id = ${clientId}
+    LIMIT 1
+  `;
+  return (rows[0] as ProspectProfile) ?? null;
+}
+
+export async function updateProspectProfile(
+  clientId: string,
+  fields: { personal_note?: string; recommendation_1?: string; recommendation_2?: string; recommendation_3?: string },
+): Promise<void> {
+  const sql = getDb();
+  await sql`
+    UPDATE prospect_profiles
+    SET personal_note = ${fields.personal_note ?? null},
+        recommendation_1 = ${fields.recommendation_1 ?? null},
+        recommendation_2 = ${fields.recommendation_2 ?? null},
+        recommendation_3 = ${fields.recommendation_3 ?? null}
+    WHERE client_id = ${clientId}
+  `;
 }
 
 // ---------------------------------------------------------------------------
