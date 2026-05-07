@@ -123,23 +123,6 @@ function buildRankings(mentions: BrandMention[]): { brand: string; mentions: num
     .sort((a, b) => b.mentions - a.mentions);
 }
 
-function buildDiagnosis(brandName: string, mentionRate: number, agentCount: number, rankings: { brand: string; mentions: number }[]): string {
-  const pct = Math.round(mentionRate * 100);
-  const top = rankings[0];
-  if (!top || isClientBrand(top.brand, brandName.toLowerCase())) {
-    const runner = rankings[1];
-    if (runner) {
-      const totalPrompts = rankings.reduce((s, r) => s + r.mentions, 0) / rankings.length || 1;
-      const runnerPct = Math.round((runner.mentions / (totalPrompts)) * 100);
-      return `${brandName} leads AI search visibility at ${pct}% across ${agentCount} models, ahead of ${runner.brand} at ${runnerPct}%.`;
-    }
-    return `${brandName} appears in ${pct}% of relevant AI searches across ${agentCount} models.`;
-  }
-  const topTotal = new Set(rankings.flatMap(() => [])).size || 6;
-  const topPct = Math.round((top.mentions / (new Set([]).size || 6)) * 100);
-  return `${brandName} appears in ${pct}% of relevant AI searches across ${agentCount} models, versus ${top.brand} at ${topPct}%.`;
-}
-
 // ---------------------------------------------------------------------------
 // Auth
 // ---------------------------------------------------------------------------
@@ -162,7 +145,7 @@ async function loginAction(formData: FormData) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 7,
+      maxAge: 60 * 60 * 24 * 30,
       path: "/",
     });
     redirect(`/prospect/${clientId}`);
@@ -184,7 +167,12 @@ export default async function ProspectPage({ params, searchParams }: Props) {
   const { key, error } = await searchParams;
   const cookieStore = await cookies();
 
-  const profile = await getProspectProfile(clientId);
+  let profile;
+  try {
+    profile = await getProspectProfile(clientId);
+  } catch {
+    // Table may not exist yet — show password form (will fail gracefully)
+  }
 
   // Auth: check URL token, then cookie
   let authed = false;
@@ -195,7 +183,7 @@ export default async function ProspectPage({ params, searchParams }: Props) {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
-        maxAge: 60 * 60 * 24 * 7,
+        maxAge: 60 * 60 * 24 * 30,
         path: "/",
       });
       authed = true;
