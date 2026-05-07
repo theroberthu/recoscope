@@ -60,8 +60,11 @@ function isClientBrand(brand: string, clientId: string): boolean {
 
 interface ScoreData {
   totalMentions: number;
-  totalResponses: number;
+  totalSlots: number;
   mentionRate: number;
+  discoveryRate: number;
+  consistencyRate: number;
+  rankScore: number;
   top3Count: number;
   firstPickCount: number;
   avgRank: number | null;
@@ -72,21 +75,59 @@ interface ScoreData {
 
 function computeScore(mentions: BrandMention[], clientId: string): ScoreData {
   const allAgents = new Set(mentions.map((m) => m.agent_name));
-  const allPrompts = new Set(mentions.map((m) => `${m.agent_name}:${m.prompt_number}`));
-  const totalResponses = allPrompts.size;
-  const totalPrompts = new Set(mentions.map((m) => m.prompt_number)).size || 6;
+
+  // Total response slots = unique (run_id, agent_name, prompt_number) tuples
+  const totalSlots = new Set(
+    mentions.map((m) => `${m.run_id}:${m.agent_name}:${m.prompt_number}`),
+  ).size || 1;
 
   const clientMentions = mentions.filter((m) => isClientBrand(m.brand_name_normalized, clientId));
   const totalMentions = clientMentions.length;
+
+  // Client slots = unique response slots where client brand appears
+  const clientSlots = new Set(
+    clientMentions.map((m) => `${m.run_id}:${m.agent_name}:${m.prompt_number}`),
+  ).size;
+
   const top3Count = clientMentions.filter((m) => toBool(m.is_top_3) || Number(m.mention_rank) <= 3).length;
   const firstPickCount = clientMentions.filter((m) => toBool(m.is_first)).length;
   const ranks = clientMentions.map((m) => Number(m.mention_rank)).filter((r) => r > 0);
   const avgRank = ranks.length > 0 ? ranks.reduce((a, b) => a + b, 0) / ranks.length : null;
 
-  const mentionRate = Math.min(totalMentions / totalPrompts, 1);
-  const top3Rate = Math.min(top3Count / totalPrompts, 1);
-  const firstPickRate = Math.min(firstPickCount / totalPrompts, 1);
-  const aiScore = Math.round((mentionRate * 40) + (top3Rate * 40) + (firstPickRate * 20));
+  // Mention rate: fraction of response slots where client appears
+  const mentionRate = clientSlots / totalSlots;
+
+  // Discovery presence: does client appear in broad/discovery prompts?
+  // Convention: the final prompt is typically direct comparison; earlier prompts are discovery
+  const promptNumbers = Array.from(new Set(mentions.map((m) => Number(m.prompt_number)))).sort((a, b) => a - b);
+  const maxPrompt = promptNumbers[promptNumbers.length - 1] ?? 0;
+  const discoveryMentions = mentions.filter((m) => Number(m.prompt_number) < maxPrompt);
+  const discoverySlots = new Set(
+    discoveryMentions.map((m) => `${m.run_id}:${m.agent_name}:${m.prompt_number}`),
+  ).size || 1;
+  const clientDiscoverySlots = new Set(
+    clientMentions
+      .filter((m) => Number(m.prompt_number) < maxPrompt)
+      .map((m) => `${m.run_id}:${m.agent_name}:${m.prompt_number}`),
+  ).size;
+  const discoveryRate = promptNumbers.length > 1 ? clientDiscoverySlots / discoverySlots : mentionRate;
+
+  // Consistency: fraction of runs where client appears at least once
+  const allRuns = new Set(mentions.map((m) => m.run_id));
+  const runsWithClient = new Set(clientMentions.map((m) => m.run_id));
+  const consistencyRate = allRuns.size > 0 ? runsWithClient.size / allRuns.size : 0;
+
+  // Rank quality: when mentioned, how good is the ranking? (lower = better)
+  // rank 1 → 1.0, rank 3 → 0.7, rank 5 → 0.5, rank 10+ → 0
+  const rankScore = avgRank !== null ? Math.max(0, Math.min(1, (10 - avgRank) / 9)) : 0;
+
+  // Composite: mention_rate(40) + discovery(30) + consistency(15) + rank_quality(15)
+  const aiScore = Math.round(
+    (mentionRate * 40) +
+    (discoveryRate * 30) +
+    (consistencyRate * 15) +
+    (rankScore * 15),
+  );
 
   let grade = "F";
   if (aiScore >= 90) grade = "A";
@@ -104,7 +145,7 @@ function computeScore(mentions: BrandMention[], clientId: string): ScoreData {
     };
   });
 
-  return { totalMentions, totalResponses, mentionRate, top3Count, firstPickCount, avgRank, aiScore, grade, agentBreakdown };
+  return { totalMentions, totalSlots, mentionRate, discoveryRate, consistencyRate, rankScore, top3Count, firstPickCount, avgRank, aiScore, grade, agentBreakdown };
 }
 
 function buildRankings(mentions: BrandMention[]): { brand: string; mentions: number; top3: number; firstPicks: number }[] {
@@ -273,17 +314,27 @@ export default async function ProspectPage({ params, searchParams }: Props) {
   const rankings = buildRankings(allMentions);
   const agentCount = score.agentBreakdown.length;
 
-  // Diagnosis sentence
-  const totalPrompts = new Set(allMentions.map((m) => m.prompt_number)).size || 6;
+  // Diagnosis: use slot-based rates for both client and competitor
   const mentionPct = Math.round(score.mentionRate * 100);
   const topCompetitor = rankings.find((r) => !isClientBrand(r.brand, clientId));
-  const divisor = totalPrompts * (agentCount || 1);
-  const topCompPct = topCompetitor ? Math.round((topCompetitor.mentions / divisor) * 100) : 0;
-  const diagnosis = allMentions.length === 0
-    ? `Data collection is in progress for ${profile.brand_name}.`
-    : topCompetitor
-      ? `${profile.brand_name} appears in ${mentionPct}% of relevant AI searches across ${agentCount} models, versus ${topCompetitor.brand} at ${topCompPct}%.`
-      : `${profile.brand_name} appears in ${mentionPct}% of relevant AI searches across ${agentCount} models.`;
+  let diagnosis: string;
+  if (allMentions.length === 0) {
+    diagnosis = `Data collection is in progress for ${profile.brand_name}.`;
+  } else if (topCompetitor) {
+    const compSlots = new Set(
+      allMentions
+        .filter((m) => m.brand_name_normalized === topCompetitor.brand)
+        .map((m) => `${m.run_id}:${m.agent_name}:${m.prompt_number}`),
+    ).size;
+    const compPct = Math.round((compSlots / score.totalSlots) * 100);
+    if (compPct > mentionPct) {
+      diagnosis = `${profile.brand_name} appears in ${mentionPct}% of AI responses across ${agentCount} models. ${topCompetitor.brand} leads at ${compPct}%.`;
+    } else {
+      diagnosis = `${profile.brand_name} appears in ${mentionPct}% of AI responses across ${agentCount} models, ahead of ${topCompetitor.brand} at ${compPct}%.`;
+    }
+  } else {
+    diagnosis = `${profile.brand_name} appears in ${mentionPct}% of AI responses across ${agentCount} models.`;
+  }
 
   // Strategy text from first insight with audit_angle
   const strategyText = allData.find((d) => d.insight?.audit_angle)?.insight?.audit_angle ?? null;
@@ -325,14 +376,13 @@ export default async function ProspectPage({ params, searchParams }: Props) {
       <div className="mx-auto max-w-3xl px-6 py-16">
 
         {/* ── 1. Personal note ── */}
-        {profile.personal_note && (
-          <div className="mb-12 rounded-xl border border-white/10 bg-surface p-6">
-            <p className="text-[15px] leading-relaxed text-white/60">
-              {profile.personal_note}
-            </p>
-            <p className="mt-4 text-[13px] text-white/30">— Robert</p>
-          </div>
-        )}
+        <div className="mb-12 rounded-xl border border-white/10 bg-surface p-6">
+          <p className="text-[15px] leading-relaxed text-white/60">
+            {profile.personal_note
+              || `${profile.prospect_name} — this report is your private snapshot of how AI search is treating ${profile.brand_name} right now. I tracked your brand across ChatGPT and Claude over ${dayInfo.dayCount} day${dayInfo.dayCount !== 1 ? "s" : ""}. Findings below.`}
+          </p>
+          <p className="mt-4 text-[13px] text-white/30">— Robert</p>
+        </div>
 
         {/* ── 2. Header ── */}
         <div className="text-center">
