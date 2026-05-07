@@ -227,24 +227,50 @@ export default async function ProspectPage({ params, searchParams }: Props) {
   if (!profile) notFound();
 
   // Load data
-  const [runs, dayInfo] = await Promise.all([
-    getProspectRuns(clientId),
-    getProspectDayCount(clientId),
-  ]);
-  if (runs.length === 0) notFound();
+  let runs: Awaited<ReturnType<typeof getProspectRuns>> = [];
+  let dayInfo = { dayCount: 0, firstDate: null as string | null, lastDate: null as string | null };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let allData: { run: any; mentions: BrandMention[]; responses: any[]; insight: any; prompts: any[] }[] = [];
 
-  // Aggregate all mentions across all runs for consolidated view
-  const allData = await Promise.all(
-    runs.map(async (run) => {
-      const [mentions, responses, insight, prompts] = await Promise.all([
-        getBrandMentions(run.id),
-        getAgentResponses(run.id),
-        getRunInsight(run.id),
-        getPromptsForRun(run.id),
-      ]);
-      return { run, mentions, responses, insight, prompts };
-    }),
-  );
+  try {
+    [runs, dayInfo] = await Promise.all([
+      getProspectRuns(clientId),
+      getProspectDayCount(clientId),
+    ]);
+  } catch (e) {
+    console.error("[prospect] failed to load runs:", e);
+    runs = [];
+    dayInfo = { dayCount: 0, firstDate: null, lastDate: null };
+  }
+
+  if (runs.length === 0) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-void px-6">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-white">{profile.brand_name}</h1>
+          <p className="mt-4 text-[14px] text-white/40">
+            Your report is being prepared. Data collection is in progress — check back soon.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  try {
+    allData = await Promise.all(
+      runs.map(async (run) => {
+        const [mentions, responses, insight, prompts] = await Promise.all([
+          getBrandMentions(run.id),
+          getAgentResponses(run.id),
+          getRunInsight(run.id),
+          getPromptsForRun(run.id),
+        ]);
+        return { run, mentions, responses, insight, prompts };
+      }),
+    );
+  } catch (e) {
+    console.error("[prospect] failed to load run data:", e);
+  }
 
   const allMentions = allData.flatMap((d) => d.mentions);
   const score = computeScore(allMentions, clientId);
@@ -255,10 +281,13 @@ export default async function ProspectPage({ params, searchParams }: Props) {
   const totalPrompts = new Set(allMentions.map((m) => m.prompt_number)).size || 6;
   const mentionPct = Math.round(score.mentionRate * 100);
   const topCompetitor = rankings.find((r) => !isClientBrand(r.brand, clientId));
-  const topCompPct = topCompetitor ? Math.round((topCompetitor.mentions / (totalPrompts * agentCount)) * 100) : 0;
-  const diagnosis = topCompetitor
-    ? `${profile.brand_name} appears in ${mentionPct}% of relevant AI searches across ${agentCount} models, versus ${topCompetitor.brand} at ${topCompPct}%.`
-    : `${profile.brand_name} appears in ${mentionPct}% of relevant AI searches across ${agentCount} models.`;
+  const divisor = totalPrompts * (agentCount || 1);
+  const topCompPct = topCompetitor ? Math.round((topCompetitor.mentions / divisor) * 100) : 0;
+  const diagnosis = allMentions.length === 0
+    ? `Data collection is in progress for ${profile.brand_name}.`
+    : topCompetitor
+      ? `${profile.brand_name} appears in ${mentionPct}% of relevant AI searches across ${agentCount} models, versus ${topCompetitor.brand} at ${topCompPct}%.`
+      : `${profile.brand_name} appears in ${mentionPct}% of relevant AI searches across ${agentCount} models.`;
 
   // Strategy text from first insight with audit_angle
   const strategyText = allData.find((d) => d.insight?.audit_angle)?.insight?.audit_angle ?? null;
