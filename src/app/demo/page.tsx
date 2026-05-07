@@ -370,11 +370,6 @@ export default async function DemoPage() {
                       <td className={`px-5 py-3 font-mono ${isClient ? "text-cyan/50" : "text-white/30"}`}>{i + 1}</td>
                       <td className={`px-5 py-3 font-medium ${isClient ? "text-cyan" : "text-white/60"}`}>
                         {r.brand}
-                        {isClient && (
-                          <span className="ml-2 rounded bg-cyan/15 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase text-cyan">
-                            Demo Brand
-                          </span>
-                        )}
                       </td>
                       <td className={`px-5 py-3 font-mono tabular-nums ${isClient ? "text-cyan/60" : "text-white/40"}`}>{r.mentions}</td>
                       <td className={`px-5 py-3 font-mono tabular-nums ${isClient ? "text-cyan/60" : "text-white/40"}`}>{r.top3}</td>
