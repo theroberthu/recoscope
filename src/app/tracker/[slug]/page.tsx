@@ -614,16 +614,16 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
 
       <PromptsUsed prompts={prompts} />
 
-      <section className="mt-8">
-        <KeyTakeawayPanel takeaway={takeaway} />
-      </section>
-
       {/* Trend chart (any type, 2+ runs) */}
       {trendLines.length > 0 && trendWeeks.length >= 2 && (
-        <ScrollFade className="mt-20">
+        <ScrollFade className="mt-12">
           <TrendChart lines={trendLines} weeks={trendWeeks} />
         </ScrollFade>
       )}
+
+      <section className="mt-12">
+        <KeyTakeawayPanel takeaway={takeaway} />
+      </section>
 
       <ScrollFade className="mt-20">
         <TopBrandsList
