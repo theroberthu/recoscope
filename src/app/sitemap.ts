@@ -2,11 +2,12 @@ import type { MetadataRoute } from "next";
 import { getCategoriesWithRuns } from "@/lib/queries";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://getrecoscope.com";
+  const baseUrl = "https://www.getrecoscope.com";
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: baseUrl, changeFrequency: "weekly", priority: 1.0 },
     { url: `${baseUrl}/tracker`, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${baseUrl}/demo`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${baseUrl}/methodology`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${baseUrl}/audit`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${baseUrl}/subscribe`, changeFrequency: "monthly", priority: 0.6 },
