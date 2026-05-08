@@ -211,15 +211,11 @@ export default async function ProspectPage({ params, searchParams }: Props) {
   let profile;
   try {
     profile = await getProspectProfile(clientId);
-  } catch {
-    // Table may not exist yet — show password form (will fail gracefully)
+  } catch (e) {
+    console.error("[prospect] getProspectProfile failed:", clientId, e);
   }
 
   // Auth: check URL token, then cookie
-  // Note: cookies cannot be set inside a Server Component render — only via
-  // Server Actions or Route Handlers. So when key matches, we just authenticate
-  // for this request. The cookie is set only when the user submits the password
-  // form (loginAction below).
   let authed = false;
   if (profile) {
     if (key === profile.password) {
@@ -227,6 +223,17 @@ export default async function ProspectPage({ params, searchParams }: Props) {
     } else if (cookieStore.get(getCookieName(clientId))?.value === "1") {
       authed = true;
     }
+    console.log("[prospect] auth debug:", {
+      clientId,
+      hasProfile: !!profile,
+      keyProvided: key ?? "(none)",
+      passwordInDb: profile.password,
+      keyMatch: key === profile.password,
+      hasCookie: !!cookieStore.get(getCookieName(clientId))?.value,
+      authed,
+    });
+  } else {
+    console.log("[prospect] no profile found for:", clientId);
   }
 
   if (!authed) {
