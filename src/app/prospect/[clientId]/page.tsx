@@ -177,10 +177,10 @@ function getCookieName(clientId: string): string {
 async function loginAction(formData: FormData) {
   "use server";
   const password = formData.get("password") as string;
-  const clientId = formData.get("clientId") as string;
+  const clientId = (formData.get("clientId") as string).toLowerCase();
   const { getProspectProfile: getProfile } = await import("@/lib/queries");
   const profile = await getProfile(clientId);
-  if (profile && password === profile.password) {
+  if (profile && password.toLowerCase() === profile.password.toLowerCase()) {
     const cookieStore = await cookies();
     cookieStore.set(getCookieName(clientId), "1", {
       httpOnly: true,
@@ -204,7 +204,8 @@ interface Props {
 }
 
 export default async function ProspectPage({ params, searchParams }: Props) {
-  const { clientId } = await params;
+  const { clientId: rawClientId } = await params;
+  const clientId = rawClientId.toLowerCase();
   const { key, error } = await searchParams;
   const cookieStore = await cookies();
 
@@ -218,22 +219,11 @@ export default async function ProspectPage({ params, searchParams }: Props) {
   // Auth: check URL token, then cookie
   let authed = false;
   if (profile) {
-    if (key === profile.password) {
+    if (key && key.toLowerCase() === profile.password.toLowerCase()) {
       authed = true;
     } else if (cookieStore.get(getCookieName(clientId))?.value === "1") {
       authed = true;
     }
-    console.log("[prospect] auth debug:", {
-      clientId,
-      hasProfile: !!profile,
-      keyProvided: key ?? "(none)",
-      passwordInDb: profile.password,
-      keyMatch: key === profile.password,
-      hasCookie: !!cookieStore.get(getCookieName(clientId))?.value,
-      authed,
-    });
-  } else {
-    console.log("[prospect] no profile found for:", clientId);
   }
 
   if (!authed) {
