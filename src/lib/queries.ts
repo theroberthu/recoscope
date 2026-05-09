@@ -425,12 +425,13 @@ export async function getProspectProfile(clientId: string): Promise<ProspectProf
 
 export async function updateProspectProfile(
   clientId: string,
-  fields: { personal_note?: string; recommendation_1?: string; recommendation_2?: string; recommendation_3?: string },
+  fields: { personal_note?: string; strategy_text?: string; recommendation_1?: string; recommendation_2?: string; recommendation_3?: string },
 ): Promise<void> {
   const sql = getDb();
   await sql`
     UPDATE prospect_profiles
     SET personal_note = ${fields.personal_note ?? null},
+        strategy_text = ${fields.strategy_text ?? null},
         recommendation_1 = ${fields.recommendation_1 ?? null},
         recommendation_2 = ${fields.recommendation_2 ?? null},
         recommendation_3 = ${fields.recommendation_3 ?? null}
