@@ -5,6 +5,8 @@ import {
   getProspectProfile,
   getProspectRuns,
   getProspectDayCount,
+  getDemoRuns,
+  getDemoDayCount,
   getBrandMentions,
   getAgentResponses,
   getRunInsight,
@@ -260,18 +262,29 @@ export default async function ProspectPage({ params, searchParams }: Props) {
 
   if (!profile) notFound();
 
-  // Load data — use data_source if set (allows sharing runs across prospects)
-  const dataClientId = profile.data_source || clientId;
+  // Load data — data_source controls where runs come from:
+  // null/undefined: use own client_id (private runs)
+  // "public": pull from public benchmark runs where brand appears
+  // other string: use that client_id's private runs (data sharing)
+  const usePublicData = profile.data_source === "public";
+  const dataClientId = (!usePublicData && profile.data_source) || clientId;
   let runs: Awaited<ReturnType<typeof getProspectRuns>> = [];
   let dayInfo = { dayCount: 0, firstDate: null as string | null, lastDate: null as string | null };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let allData: { run: any; mentions: BrandMention[]; responses: any[]; insight: any; prompts: any[] }[] = [];
 
   try {
-    [runs, dayInfo] = await Promise.all([
-      getProspectRuns(dataClientId),
-      getProspectDayCount(dataClientId),
-    ]);
+    if (usePublicData) {
+      [runs, dayInfo] = await Promise.all([
+        getDemoRuns(profile.brand_name),
+        getDemoDayCount(profile.brand_name),
+      ]);
+    } else {
+      [runs, dayInfo] = await Promise.all([
+        getProspectRuns(dataClientId),
+        getProspectDayCount(dataClientId),
+      ]);
+    }
   } catch (e) {
     console.error("[prospect] failed to load runs:", e);
     runs = [];
