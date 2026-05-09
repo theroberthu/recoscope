@@ -21,7 +21,7 @@ export const dynamic = "force-dynamic";
 
 const DEMO_CLIENT_ID = "demo";
 const DEMO_BRAND = "CeraVe";
-const CTA_URL = "https://theroberthu.com/free-strategy-session";
+const CTA_URL = "https://theroberthu.com/free-strategy-session?brand=CeraVe&website=cerave.com&category=skincare&source=demo";
 
 // ---------------------------------------------------------------------------
 // Helpers
