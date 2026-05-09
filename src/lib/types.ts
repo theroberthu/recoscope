@@ -74,5 +74,6 @@ export interface ProspectProfile {
   strategy_text: string | null;
   website: string | null;
   category_slug: string | null;
+  tested_prompts: { persona: string; prompts: string[] } | null;
   created_at: string;
 }

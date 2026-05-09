@@ -473,28 +473,60 @@ export default async function ProspectPage({ params, searchParams }: Props) {
 
         {/* ── 6. Prompts We Tested ── */}
         {(() => {
+          const tp = profile.tested_prompts as { persona: string; prompts: string[] } | null;
+          if (tp && tp.prompts.length > 0) {
+            return (
+              <div className="mt-16">
+                <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+                  Prompts We Tested
+                </p>
+                <p className="mt-3 text-[13px] leading-relaxed text-white/35">
+                  These are the actual buyer-style queries we ran through ChatGPT and Claude during the tracking period.
+                </p>
+                <div className="mt-4 rounded-lg border border-white/5 bg-surface px-5 py-3">
+                  <p className="text-[12px] text-white/25">
+                    <span className="font-mono font-bold text-white/35">Tested as</span>{" "}
+                    {tp.persona}
+                  </p>
+                </div>
+                <ol className="mt-3 space-y-2">
+                  {tp.prompts.map((text, i) => (
+                    <li key={i} className="flex gap-3 rounded-lg border border-white/5 bg-surface px-5 py-3">
+                      <span className="shrink-0 font-mono text-[12px] text-white/20">{i + 1}.</span>
+                      <span className="text-[13px] leading-relaxed text-white/50">&ldquo;{text}&rdquo;</span>
+                    </li>
+                  ))}
+                </ol>
+                <p className="mt-4 text-[12px] italic text-white/25">
+                  If these prompts don&rsquo;t match how your buyers actually search, that&rsquo;s worth a conversation. We can adjust the test set.
+                </p>
+              </div>
+            );
+          }
+          // Fallback: show data_source category prompts with disclaimer
           const seen = new Set<string>();
-          const uniquePrompts: string[] = [];
+          const fallbackPrompts: string[] = [];
           for (const d of allData) {
             for (const p of d.prompts) {
               const text = (p.prompt_text as string)?.trim();
               if (text && !seen.has(text.toLowerCase())) {
                 seen.add(text.toLowerCase());
-                uniquePrompts.push(text);
+                fallbackPrompts.push(text);
               }
             }
           }
-          if (uniquePrompts.length === 0) return null;
+          if (fallbackPrompts.length === 0) return null;
+          const categoryName = runs[0]?.category_name ?? "this";
           return (
             <div className="mt-16">
               <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
                 Prompts We Tested
               </p>
               <p className="mt-3 text-[13px] leading-relaxed text-white/35">
-                These are the actual buyer-style queries we ran through ChatGPT and Claude during the tracking period. Results above reflect what AI recommended in response to these specific prompts.
+                Tested across our {categoryName} category benchmark. Custom buyer-persona prompts available on request.
               </p>
               <ol className="mt-4 space-y-2">
-                {uniquePrompts.slice(0, 8).map((text, i) => (
+                {fallbackPrompts.slice(0, 8).map((text, i) => (
                   <li key={i} className="flex gap-3 rounded-lg border border-white/5 bg-surface px-5 py-3">
                     <span className="shrink-0 font-mono text-[12px] text-white/20">{i + 1}.</span>
                     <span className="text-[13px] leading-relaxed text-white/50">&ldquo;{text}&rdquo;</span>
