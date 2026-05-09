@@ -7,6 +7,8 @@ import {
   getProspectDayCount,
   getDemoRuns,
   getDemoDayCount,
+  getPublicRunsByCategory,
+  getPublicDayCountByCategory,
   getBrandMentions,
   getAgentResponses,
   getRunInsight,
@@ -264,7 +266,7 @@ export default async function ProspectPage({ params, searchParams }: Props) {
 
   // Load data — data_source controls where runs come from:
   // null/undefined: use own client_id (private runs)
-  // "public": pull from public benchmark runs where brand appears
+  // "public": pull from public benchmark runs (by brand, then fallback to category)
   // other string: use that client_id's private runs (data sharing)
   const usePublicData = profile.data_source === "public";
   const dataClientId = (!usePublicData && profile.data_source) || clientId;
@@ -275,10 +277,17 @@ export default async function ProspectPage({ params, searchParams }: Props) {
 
   try {
     if (usePublicData) {
+      // Try brand-specific first, then fall back to category-wide (for zero-mention brands)
       [runs, dayInfo] = await Promise.all([
         getDemoRuns(profile.brand_name),
         getDemoDayCount(profile.brand_name),
       ]);
+      if (runs.length === 0 && profile.category_slug) {
+        [runs, dayInfo] = await Promise.all([
+          getPublicRunsByCategory(profile.category_slug),
+          getPublicDayCountByCategory(profile.category_slug),
+        ]);
+      }
     } else {
       [runs, dayInfo] = await Promise.all([
         getProspectRuns(dataClientId),
@@ -324,30 +333,44 @@ export default async function ProspectPage({ params, searchParams }: Props) {
   const score = computeScore(allMentions, clientId);
   const rankings = buildRankings(allMentions);
   const agentCount = score.agentBreakdown.length;
+  const isZeroState = score.totalMentions === 0;
 
-  // Diagnosis: use slot-based rates for both client and competitor
+  // Diagnosis
   const mentionPct = Math.round(score.mentionRate * 100);
-  const topCompetitor = rankings.find((r) => !isClientBrand(r.brand, clientId));
   let diagnosis: string;
-  if (allMentions.length === 0) {
-    diagnosis = `Data collection is in progress for ${profile.brand_name}.`;
-  } else if (topCompetitor) {
-    const compSlots = new Set(
-      allMentions
-        .filter((m) => m.brand_name_normalized === topCompetitor.brand)
-        .map((m) => `${m.run_id}:${m.agent_name}:${m.prompt_number}`),
-    ).size;
-    const compPct = Math.round((compSlots / score.totalSlots) * 100);
-    if (compPct > mentionPct) {
-      diagnosis = `${profile.brand_name} appears in ${mentionPct}% of AI responses across ${agentCount} models. ${topCompetitor.brand} leads at ${compPct}%.`;
-    } else {
-      diagnosis = `${profile.brand_name} appears in ${mentionPct}% of AI responses across ${agentCount} models, ahead of ${topCompetitor.brand} at ${compPct}%.`;
-    }
+  if (isZeroState) {
+    // Zero-state: show top 2 competitors with their rates
+    const top2 = rankings.slice(0, 2);
+    const compParts = top2.map((r) => {
+      const slots = new Set(
+        allMentions
+          .filter((m) => m.brand_name_normalized === r.brand)
+          .map((m) => `${m.run_id}:${m.agent_name}:${m.prompt_number}`),
+      ).size;
+      const pct = Math.round((slots / (score.totalSlots || 1)) * 100);
+      return `${r.brand} appears in ${pct}%`;
+    });
+    diagnosis = `${profile.brand_name} does not appear in any AI recommendation we tracked. ${compParts.join(". ")}.`;
   } else {
-    diagnosis = `${profile.brand_name} appears in ${mentionPct}% of AI responses across ${agentCount} models.`;
+    const topCompetitor = rankings.find((r) => !isClientBrand(r.brand, clientId));
+    if (topCompetitor) {
+      const compSlots = new Set(
+        allMentions
+          .filter((m) => m.brand_name_normalized === topCompetitor.brand)
+          .map((m) => `${m.run_id}:${m.agent_name}:${m.prompt_number}`),
+      ).size;
+      const compPct = Math.round((compSlots / score.totalSlots) * 100);
+      if (compPct > mentionPct) {
+        diagnosis = `${profile.brand_name} appears in ${mentionPct}% of AI responses across ${agentCount} models. ${topCompetitor.brand} leads at ${compPct}%.`;
+      } else {
+        diagnosis = `${profile.brand_name} appears in ${mentionPct}% of AI responses across ${agentCount} models, ahead of ${topCompetitor.brand} at ${compPct}%.`;
+      }
+    } else {
+      diagnosis = `${profile.brand_name} appears in ${mentionPct}% of AI responses across ${agentCount} models.`;
+    }
   }
 
-  // Strategy text: profile override takes precedence over auto-generated
+  // Strategy text: profile override takes precedence
   const strategyText = profile.strategy_text
     ?? allData.find((d) => d.insight?.audit_angle)?.insight?.audit_angle
     ?? null;
@@ -359,7 +382,7 @@ export default async function ProspectPage({ params, searchParams }: Props) {
     ? `${fmtDate(dayInfo.firstDate)}, ${dayInfo.dayCount} day of tracking`
     : `${firstDate}–${lastDate}, ${dayInfo.dayCount} days of tracking`;
 
-  // Score color
+  // Score color — zero state always red
   const scoreColor = score.aiScore <= 40
     ? "text-red-400"
     : score.aiScore <= 70
@@ -382,7 +405,7 @@ export default async function ProspectPage({ params, searchParams }: Props) {
     profile.recommendation_3,
   ].filter(Boolean) as string[];
 
-  const category = runs[0]?.category_slug ?? "";
+  const category = runs[0]?.category_slug ?? profile.category_slug ?? "";
   const ctaParams = new URLSearchParams({
     brand: profile.brand_name,
     ...(profile.website ? { website: profile.website } : {}),
@@ -465,6 +488,11 @@ export default async function ProspectPage({ params, searchParams }: Props) {
           <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
             Competitive Landscape
           </p>
+          {isZeroState && (
+            <p className="mt-3 rounded-lg border border-red-400/10 bg-red-400/5 px-5 py-3 text-[13px] text-red-400/70">
+              {profile.brand_name} is not present in this competitive landscape. The brands below are what AI recommends instead.
+            </p>
+          )}
           <div className="mt-4 overflow-x-auto rounded-xl border border-white/10 bg-surface">
             <table className="w-full text-[13px]">
               <thead>
@@ -478,7 +506,7 @@ export default async function ProspectPage({ params, searchParams }: Props) {
               </thead>
               <tbody>
                 {rankings.map((r, i) => {
-                  const isClient = isClientBrand(r.brand, clientId);
+                  const isClient = !isZeroState && isClientBrand(r.brand, clientId);
                   return (
                     <tr
                       key={r.brand}
@@ -534,7 +562,7 @@ export default async function ProspectPage({ params, searchParams }: Props) {
             <StatCard label="Total Mentions" value={String(score.totalMentions)} />
             <StatCard label="Mention Rate" value={`${mentionPct}%`} />
             <StatCard label="Top-3 Appearances" value={String(score.top3Count)} />
-            <StatCard label="Avg Rank" value={score.avgRank ? `#${score.avgRank.toFixed(1)}` : "—"} />
+            <StatCard label="Avg Rank" value={score.avgRank ? `#${score.avgRank.toFixed(1)}` : isZeroState ? "Not ranked" : "—"} />
           </div>
 
           {/* Per-agent breakdown */}

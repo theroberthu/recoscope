@@ -73,5 +73,6 @@ export interface ProspectProfile {
   data_source: string | null;
   strategy_text: string | null;
   website: string | null;
+  category_slug: string | null;
   created_at: string;
 }
