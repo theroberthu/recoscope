@@ -369,7 +369,14 @@ export default async function ProspectPage({ params, searchParams }: Props) {
     profile.recommendation_3,
   ].filter(Boolean) as string[];
 
-  const ctaUrl = "https://theroberthu.com/free-strategy-session";
+  const category = runs[0]?.category_slug ?? "";
+  const ctaParams = new URLSearchParams({
+    brand: profile.brand_name,
+    ...(profile.website ? { website: profile.website } : {}),
+    ...(category ? { category } : {}),
+    source: `prospect-${clientId}`,
+  });
+  const ctaUrl = `https://theroberthu.com/free-strategy-session?${ctaParams.toString()}`;
 
   return (
     <div className="min-h-screen bg-void">
