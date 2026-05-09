@@ -473,7 +473,13 @@ export default async function ProspectPage({ params, searchParams }: Props) {
 
         {/* ── 6. Prompts We Tested ── */}
         {(() => {
-          const tp = profile.tested_prompts as { persona: string; prompts: string[] } | null;
+          // Parse tested_prompts — Neon may return JSONB as a string
+          let tp: { persona: string; prompts: string[] } | null = null;
+          if (profile.tested_prompts) {
+            tp = typeof profile.tested_prompts === "string"
+              ? JSON.parse(profile.tested_prompts)
+              : profile.tested_prompts as { persona: string; prompts: string[] };
+          }
           if (tp && tp.prompts.length > 0) {
             return (
               <div className="mt-16">
@@ -506,11 +512,12 @@ export default async function ProspectPage({ params, searchParams }: Props) {
           // Fallback: show data_source category prompts with disclaimer
           const seen = new Set<string>();
           const fallbackPrompts: string[] = [];
+          const normalize = (s: string) => s.toLowerCase().replace(/[—–-]+/g, "-");
           for (const d of allData) {
             for (const p of d.prompts) {
               const text = (p.prompt_text as string)?.trim();
-              if (text && !seen.has(text.toLowerCase())) {
-                seen.add(text.toLowerCase());
+              if (text && !seen.has(normalize(text))) {
+                seen.add(normalize(text));
                 fallbackPrompts.push(text);
               }
             }
