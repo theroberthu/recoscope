@@ -409,6 +409,39 @@ export async function getDemoDayCount(brandName: string): Promise<{ dayCount: nu
   };
 }
 
+export async function getPublicRunsByCategory(categorySlug: string): Promise<(Run & { category_name: string; category_slug: string })[]> {
+  const sql = getDb();
+  const rows = await sql`
+    SELECT r.*, c.name AS category_name, c.slug AS category_slug
+    FROM runs r
+    JOIN categories c ON c.id = r.category_id
+    WHERE c.slug = ${categorySlug}
+      AND r.is_public = true
+    ORDER BY r.run_date DESC
+  `;
+  return rows as (Run & { category_name: string; category_slug: string })[];
+}
+
+export async function getPublicDayCountByCategory(categorySlug: string): Promise<{ dayCount: number; firstDate: string | null; lastDate: string | null }> {
+  const sql = getDb();
+  const rows = await sql`
+    SELECT
+      COUNT(DISTINCT r.run_date)::int AS day_count,
+      MIN(r.run_date)::text AS first_date,
+      MAX(r.run_date)::text AS last_date
+    FROM runs r
+    JOIN categories c ON c.id = r.category_id
+    WHERE c.slug = ${categorySlug}
+      AND r.is_public = true
+  `;
+  const row = rows[0] as { day_count: number; first_date: string | null; last_date: string | null } | undefined;
+  return {
+    dayCount: row?.day_count ?? 0,
+    firstDate: row?.first_date ?? null,
+    lastDate: row?.last_date ?? null,
+  };
+}
+
 // ---------------------------------------------------------------------------
 // Prospect profiles
 // ---------------------------------------------------------------------------
