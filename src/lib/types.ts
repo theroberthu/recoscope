@@ -70,5 +70,7 @@ export interface ProspectProfile {
   recommendation_1: string | null;
   recommendation_2: string | null;
   recommendation_3: string | null;
+  data_source: string | null;
+  strategy_text: string | null;
   created_at: string;
 }

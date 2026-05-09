@@ -260,7 +260,8 @@ export default async function ProspectPage({ params, searchParams }: Props) {
 
   if (!profile) notFound();
 
-  // Load data
+  // Load data — use data_source if set (allows sharing runs across prospects)
+  const dataClientId = profile.data_source || clientId;
   let runs: Awaited<ReturnType<typeof getProspectRuns>> = [];
   let dayInfo = { dayCount: 0, firstDate: null as string | null, lastDate: null as string | null };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -268,8 +269,8 @@ export default async function ProspectPage({ params, searchParams }: Props) {
 
   try {
     [runs, dayInfo] = await Promise.all([
-      getProspectRuns(clientId),
-      getProspectDayCount(clientId),
+      getProspectRuns(dataClientId),
+      getProspectDayCount(dataClientId),
     ]);
   } catch (e) {
     console.error("[prospect] failed to load runs:", e);
@@ -333,8 +334,10 @@ export default async function ProspectPage({ params, searchParams }: Props) {
     diagnosis = `${profile.brand_name} appears in ${mentionPct}% of AI responses across ${agentCount} models.`;
   }
 
-  // Strategy text from first insight with audit_angle
-  const strategyText = allData.find((d) => d.insight?.audit_angle)?.insight?.audit_angle ?? null;
+  // Strategy text: profile override takes precedence over auto-generated
+  const strategyText = profile.strategy_text
+    ?? allData.find((d) => d.insight?.audit_angle)?.insight?.audit_angle
+    ?? null;
 
   // Date range
   const firstDate = fmtShort(dayInfo.firstDate);

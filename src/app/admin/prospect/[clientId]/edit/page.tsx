@@ -29,6 +29,7 @@ async function saveAction(formData: FormData) {
 
   await updateProspectProfile(clientId, {
     personal_note: (formData.get("personal_note") as string) || undefined,
+    strategy_text: (formData.get("strategy_text") as string) || undefined,
     recommendation_1: (formData.get("recommendation_1") as string) || undefined,
     recommendation_2: (formData.get("recommendation_2") as string) || undefined,
     recommendation_3: (formData.get("recommendation_3") as string) || undefined,
@@ -119,6 +120,22 @@ export default async function EditProspectPage({ params, searchParams }: Props) 
               rows={4}
               defaultValue={profile.personal_note ?? ""}
               placeholder={`${profile.prospect_name} - this report is your private snapshot of how AI search is treating ${profile.brand_name} right now. I tracked your brand across ChatGPT and Claude over 5 days. Findings below.`}
+              className="mt-2 w-full rounded-lg border border-white/10 bg-surface px-4 py-3 text-[14px] text-white placeholder-white/15 outline-none focus:border-cyan/50"
+            />
+          </div>
+
+          <div>
+            <label className="font-mono text-[11px] font-bold uppercase tracking-wider text-white/30">
+              Strategy Text (Section 6)
+            </label>
+            <p className="mt-1 text-[11px] text-white/20">
+              Overrides the auto-generated strategy from run insights. Leave blank to use auto-generated.
+            </p>
+            <textarea
+              name="strategy_text"
+              rows={4}
+              defaultValue={profile.strategy_text ?? ""}
+              placeholder="Custom strategy paragraph..."
               className="mt-2 w-full rounded-lg border border-white/10 bg-surface px-4 py-3 text-[14px] text-white placeholder-white/15 outline-none focus:border-cyan/50"
             />
           </div>
