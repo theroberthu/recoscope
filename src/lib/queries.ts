@@ -224,7 +224,7 @@ export async function getCategoriesWithSchedule(): Promise<
     WHERE c.is_active = true
     ORDER BY
       CASE WHEN r.run_date IS NULL THEN 1 ELSE 0 END,
-      CASE WHEN c.tracker_type = 'seasonal' THEN 0 ELSE 1 END,
+      r.run_date DESC NULLS LAST,
       c.name
   `;
   return rows as { name: string; slug: string; tracker_type: string; last_run_date: string | null }[];
