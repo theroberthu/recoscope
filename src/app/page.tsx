@@ -1,11 +1,8 @@
 import { getCategoriesWithRuns, getTopBrandsForHero, getAuditStats } from "@/lib/queries";
 import { BarRace } from "@/components/home/BarRace";
-import { ScrollFade } from "@/components/home/ScrollFade";
 import { OrganizationSchema } from "@/components/seo/JsonLd";
 
 export const revalidate = 300; // revalidate every 5 minutes
-
-const CTA_HREF = "https://theroberthu.com/free-strategy-session";
 
 const SAMPLE_TABLE = [
   { agent: "ChatGPT", picks: ["Scotts Turf Builder", "Jonathan Green", "The Andersons"] },
@@ -49,22 +46,22 @@ export default async function HomePage() {
         </h1>
         <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/40">
           When buyers ask AI what to buy in your category, a different list comes up.
-          RecoScope shows you where you stand across ChatGPT, Claude, Gemini, and Perplexity.
-          A free 15-minute strategy session shows you what to do about it.
+          We&rsquo;ll run your brand through ChatGPT, Claude, Gemini, and Perplexity
+          and show you exactly where you stand. Free, delivered in 48 hours, no call required.
         </p>
 
         <BarRace brands={heroBrands} />
 
         <div className="mt-8 flex flex-wrap gap-4">
-          <a href={CTA_HREF} target="_blank" rel="noopener noreferrer" className="inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90">
-            Book a Free Strategy Session
+          <a href="/audit" className="inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90">
+            Get Your Free Audit
           </a>
           <a href="#sample-benchmark" className="inline-block rounded-full border border-cyan/30 bg-cyan/10 px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-cyan transition-all hover:bg-cyan/20 hover:shadow-[0_0_20px_rgba(0,212,170,0.2)]">
             See a sample benchmark &rarr;
           </a>
         </div>
         <p className="mt-4 text-[12px] text-white/25">
-          15 minutes. No pitch. Run personally by Robert Hu.
+          Run personally by Robert Hu.
         </p>
       </section>
 
@@ -273,8 +270,8 @@ export default async function HomePage() {
             This is the AI visibility gap.
           </p>
 
-          <a href={CTA_HREF} target="_blank" rel="noopener noreferrer" className="mt-6 inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90">
-            Book a Free Strategy Session
+          <a href="/audit" className="mt-6 inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90">
+            Get Your Free Audit
           </a>
         </div>
       </section>
@@ -290,8 +287,8 @@ export default async function HomePage() {
               We benchmark Amazon and Walmart brands across categories. Yours is probably here.
             </h2>
             <p className="mt-4 text-[14px] leading-relaxed text-white/40">
-              We&rsquo;ve run AI visibility benchmarks across {stats.categoriesActive} categories,
-              tracking {stats.brandsTracked} brands across ChatGPT, Claude, Gemini, and Perplexity.
+              We&rsquo;ve run AI visibility benchmarks across multiple categories,
+              tracking hundreds of brands across ChatGPT, Claude, Gemini, and Perplexity.
               If your category is on the list, we have data on you whether you&rsquo;ve asked for it or not.
             </p>
             <p className="mt-2 text-[14px] text-white/40">
@@ -314,7 +311,7 @@ export default async function HomePage() {
               ))}
             </div>
             <p className="mt-6 text-[13px]">
-              <a href="mailto:robert@theroberthu.com?subject=RecoScope%20category%20request" className="text-cyan/60 transition-colors hover:text-cyan">
+              <a href="/audit" className="text-cyan/60 transition-colors hover:text-cyan">
                 Don&rsquo;t see your category? Request it &rarr;
               </a>
             </p>
@@ -329,18 +326,16 @@ export default async function HomePage() {
       <section className="mx-auto max-w-3xl px-6 pb-16 pt-4">
         <div className="animate-pulse_glow rounded-2xl border border-cyan/20 bg-surface px-8 py-16 text-center sm:px-12">
           <p className="mx-auto max-w-lg text-[28px] font-bold leading-[1.2] tracking-tight text-white">
-            Let&rsquo;s talk about your AI visibility
+            Find out where you stand
           </p>
           <p className="mx-auto mt-5 max-w-sm text-[14px] leading-relaxed text-white/40">
-            15 minutes. No pitch. Just honest strategy for your brand.
+            Free. Delivered to your inbox in 48 hours. No call required.
           </p>
           <a
-            href={CTA_HREF}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/audit"
             className="mt-10 inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90"
           >
-            Book a Free Strategy Session
+            Get Your Free Audit
           </a>
         </div>
       </section>
