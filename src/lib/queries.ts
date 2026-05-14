@@ -176,6 +176,7 @@ export async function getTopBrandsForHero(limit = 10): Promise<
     JOIN runs r ON r.id = bm.run_id
     JOIN categories c ON c.id = r.category_id
     WHERE c.is_active = true
+    GROUP BY brand_name_normalized
     ORDER BY mentions DESC
     LIMIT ${limit}
   `;
