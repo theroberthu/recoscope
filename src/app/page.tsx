@@ -1,10 +1,11 @@
 import { getCategoriesWithRuns, getTopBrandsForHero, getAuditStats } from "@/lib/queries";
 import { BarRace } from "@/components/home/BarRace";
 import { ScrollFade } from "@/components/home/ScrollFade";
-import { CTABox } from "@/components/tracker";
 import { OrganizationSchema } from "@/components/seo/JsonLd";
 
 export const revalidate = 300; // revalidate every 5 minutes
+
+const CTA_HREF = "https://theroberthu.com/free-strategy-session";
 
 const SAMPLE_TABLE = [
   { agent: "ChatGPT", picks: ["Scotts Turf Builder", "Jonathan Green", "The Andersons"] },
@@ -18,7 +19,6 @@ export default async function HomePage() {
   let heroBrands: { brand: string; mentions: number }[] = [];
   let stats = { brandsTracked: 0, categoriesActive: 0, runsCompleted: 0 };
 
-  // Run each query independently so a single failure doesn't zero out everything
   const [catsResult, brandsResult, statsResult] = await Promise.allSettled([
     getCategoriesWithRuns(),
     getTopBrandsForHero(10),
@@ -43,30 +43,29 @@ export default async function HomePage() {
         <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/60">
           AI Recommendation Intelligence
         </p>
-        <p className="mt-2 font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-white/25">
-          For E-Commerce Brands &middot; DTC &middot; Amazon Sellers &middot; Agencies
-        </p>
 
         <h1 className="mt-4 bg-gradient-to-r from-white to-cyan/70 bg-clip-text text-5xl font-bold leading-[1.1] tracking-tight text-transparent sm:text-6xl">
-          AI is choosing winners in your category. Do you know who?
+          Your Amazon BSR doesn&rsquo;t mean anything to ChatGPT.
         </h1>
         <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/40">
-          RecoScope tracks what AI models recommend so e-commerce brand owners know
-          where they stand &mdash; and what to fix. When someone asks ChatGPT, Claude,
-          or Gemini for a product recommendation, certain brands consistently appear
-          at the top. Others don&rsquo;t appear at all.
+          When buyers ask AI what to buy in your category, a different list comes up.
+          RecoScope shows you where you stand across ChatGPT, Claude, Gemini, and Perplexity.
+          A free 15-minute strategy session shows you what to do about it.
         </p>
 
         <BarRace brands={heroBrands} />
 
         <div className="mt-8 flex flex-wrap gap-4">
-          <a href="/audit" className="inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90">
-            Get a Free AI Visibility Audit
+          <a href={CTA_HREF} target="_blank" rel="noopener noreferrer" className="inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90">
+            Book a Free Strategy Session
           </a>
-          <a href="/tracker" className="inline-block rounded-full border border-cyan/30 bg-cyan/10 px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-cyan transition-all hover:bg-cyan/20 hover:shadow-[0_0_20px_rgba(0,212,170,0.2)]">
-            View the Reports
+          <a href="#sample-benchmark" className="inline-block rounded-full border border-cyan/30 bg-cyan/10 px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-cyan transition-all hover:bg-cyan/20 hover:shadow-[0_0_20px_rgba(0,212,170,0.2)]">
+            See a sample benchmark &rarr;
           </a>
         </div>
+        <p className="mt-4 text-[12px] text-white/25">
+          15 minutes. No pitch. Run personally by Robert Hu.
+        </p>
       </section>
 
       {/* Stats bar */}
@@ -144,13 +143,13 @@ export default async function HomePage() {
       </section>
 
       {/* Data preview table */}
-      <section className="border-t border-white/5">
+      <section id="sample-benchmark" className="border-t border-white/5">
         <div className="mx-auto max-w-3xl px-6 py-14">
           <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/50">
             See the Data We Produce
           </p>
           <p className="mt-3 text-[14px] text-white/40">
-            A sample from our latest benchmark &mdash; delivered monthly to subscribers.
+            A sample from our latest benchmark, delivered monthly to subscribers.
           </p>
           <div className="mt-6 overflow-x-auto rounded-xl border border-cyan/15 bg-surface shadow-[0_0_30px_rgba(0,212,170,0.06)]">
             <table className="w-full">
@@ -270,12 +269,12 @@ export default async function HomePage() {
           <p className="mt-6 text-[13px] leading-relaxed text-white/30">
             In our running shoes benchmark, Nike leads in total mentions (11) but
             zero AI models rank it in their top 3 recommendations. Meanwhile, brands like
-            ASICS and Brooks — with smaller market share — dominate AI picks.
+            ASICS and Brooks (with smaller market share) dominate AI picks.
             This is the AI visibility gap.
           </p>
 
-          <a href="/audit" className="mt-6 inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90">
-            See Where Your Brand Stands
+          <a href={CTA_HREF} target="_blank" rel="noopener noreferrer" className="mt-6 inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90">
+            Book a Free Strategy Session
           </a>
         </div>
       </section>
@@ -284,7 +283,20 @@ export default async function HomePage() {
       {categories.length > 0 && (
         <section className="border-t border-white/5">
           <div className="mx-auto max-w-3xl px-6 py-14">
-            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">Active Reports</p>
+            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+              Active Reports
+            </p>
+            <h2 className="mt-4 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+              We benchmark Amazon and Walmart brands across categories. Yours is probably here.
+            </h2>
+            <p className="mt-4 text-[14px] leading-relaxed text-white/40">
+              We&rsquo;ve run AI visibility benchmarks across {stats.categoriesActive} categories,
+              tracking {stats.brandsTracked} brands across ChatGPT, Claude, Gemini, and Perplexity.
+              If your category is on the list, we have data on you whether you&rsquo;ve asked for it or not.
+            </p>
+            <p className="mt-2 text-[14px] text-white/40">
+              If it&rsquo;s not, request it. New categories take 14 days.
+            </p>
             <div className="mt-6 space-y-3">
               {categories.map((cat) => (
                 <a key={cat.slug} href={`/tracker/${cat.slug}`} className="glow-card block rounded-xl border border-white/10 bg-surface px-6 py-5">
@@ -301,13 +313,36 @@ export default async function HomePage() {
                 </a>
               ))}
             </div>
+            <p className="mt-6 text-[13px]">
+              <a href="mailto:robert@theroberthu.com?subject=RecoScope%20category%20request" className="text-cyan/60 transition-colors hover:text-cyan">
+                Don&rsquo;t see your category? Request it &rarr;
+              </a>
+            </p>
+            <p className="mt-2 text-[12px] italic text-white/25">
+              Built for Amazon and Walmart brands doing $500K to $5M in revenue.
+            </p>
           </div>
         </section>
       )}
 
-      {/* CTA */}
+      {/* Bottom CTA */}
       <section className="mx-auto max-w-3xl px-6 pb-16 pt-4">
-        <CTABox ctaLocation="homepage_bottom" />
+        <div className="animate-pulse_glow rounded-2xl border border-cyan/20 bg-surface px-8 py-16 text-center sm:px-12">
+          <p className="mx-auto max-w-lg text-[28px] font-bold leading-[1.2] tracking-tight text-white">
+            Let&rsquo;s talk about your AI visibility
+          </p>
+          <p className="mx-auto mt-5 max-w-sm text-[14px] leading-relaxed text-white/40">
+            15 minutes. No pitch. Just honest strategy for your brand.
+          </p>
+          <a
+            href={CTA_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-10 inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90"
+          >
+            Book a Free Strategy Session
+          </a>
+        </div>
       </section>
     </div>
   );
