@@ -56,14 +56,14 @@ export default function RootLayout({
               <img src="/logo.svg" alt="RecoScope" className="hidden h-10 w-auto sm:block" />
               <img src="/icon.svg" alt="RecoScope" className="block h-8 w-8 sm:hidden" />
             </Link>
-            <div className="flex items-center gap-8 text-[13px] font-medium text-white/40">
+            <div className="flex items-center gap-3 text-[13px] font-medium text-white/40 sm:gap-8">
               <Link href="/tracker" className="transition-colors hover:text-white">
                 Tracker
               </Link>
-              <Link href="/methodology" className="transition-colors hover:text-white">
+              <Link href="/methodology" className="hidden transition-colors hover:text-white sm:block">
                 Methodology
               </Link>
-              <Link href="/subscribe" className="transition-colors hover:text-white">
+              <Link href="/subscribe" className="hidden transition-colors hover:text-white sm:block">
                 Subscribe
               </Link>
               <Link

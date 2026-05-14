@@ -52,11 +52,11 @@ export default async function HomePage() {
           </p>
         </div>
 
-        <div className="mt-10 flex flex-wrap items-center gap-4">
-          <a href="/audit" className="inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90">
+        <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+          <a href="/audit" className="inline-block rounded-full bg-cyan px-8 py-3.5 text-center font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90">
             Get Your Free Audit
           </a>
-          <a href="#sample-benchmark" className="inline-block rounded-full border border-cyan/30 bg-cyan/10 px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-cyan transition-all hover:bg-cyan/20 hover:shadow-[0_0_20px_rgba(0,212,170,0.2)]">
+          <a href="#sample-benchmark" className="inline-block rounded-full border border-cyan/30 bg-cyan/10 px-8 py-3.5 text-center font-mono text-[13px] font-bold tracking-tight text-cyan transition-all hover:bg-cyan/20 hover:shadow-[0_0_20px_rgba(0,212,170,0.2)]">
             See a sample benchmark &rarr;
           </a>
         </div>
@@ -173,18 +173,18 @@ export default async function HomePage() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-white/5">
-                      <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/25">Agent</th>
-                      <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-cyan/40">#1</th>
-                      <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/20">#2</th>
-                      <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/20">#3</th>
+                      <th className="px-3 py-3 text-left font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-white/25 sm:px-6 sm:py-4 sm:text-[11px]">Agent</th>
+                      <th className="px-3 py-3 text-left font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-cyan/40 sm:px-6 sm:py-4 sm:text-[11px]">#1</th>
+                      <th className="px-3 py-3 text-left font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-white/20 sm:px-6 sm:py-4 sm:text-[11px]">#2</th>
+                      <th className="px-3 py-3 text-left font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-white/20 sm:px-6 sm:py-4 sm:text-[11px]">#3</th>
                     </tr>
                   </thead>
                   <tbody>
                     {SAMPLE_TABLE.map((row, i) => (
                       <tr key={row.agent} className={i < SAMPLE_TABLE.length - 1 ? "border-b border-white/5" : ""}>
-                        <td className="px-6 py-4 font-mono text-[13px] font-semibold text-white/60">{row.agent}</td>
+                        <td className="px-3 py-3 font-mono text-[11px] font-semibold text-white/60 sm:px-6 sm:py-4 sm:text-[13px]">{row.agent}</td>
                         {row.picks.map((brand, idx) => (
-                          <td key={idx} className={`px-6 py-4 text-[13px] ${idx === 0 ? "font-medium text-white/70" : "text-white/30"}`}>{brand}</td>
+                          <td key={idx} className={`px-3 py-3 text-[11px] sm:px-6 sm:py-4 sm:text-[13px] ${idx === 0 ? "font-medium text-white/70" : "text-white/30"}`}>{brand}</td>
                         ))}
                       </tr>
                     ))}
@@ -330,8 +330,8 @@ export default async function HomePage() {
 
       {/* Bottom CTA */}
       <section className="mx-auto max-w-5xl px-6 pb-20 pt-4">
-        <div className="animate-pulse_glow rounded-2xl border border-cyan/20 bg-surface px-8 py-20 text-center sm:px-16">
-          <p className="mx-auto max-w-lg text-[28px] font-bold leading-[1.2] tracking-tight text-white sm:text-[32px]">
+        <div className="animate-pulse_glow rounded-2xl border border-cyan/20 bg-surface px-6 py-14 text-center sm:px-16 sm:py-20">
+          <p className="mx-auto max-w-lg text-[24px] font-bold leading-[1.2] tracking-tight text-white sm:text-[32px]">
             Find out where you stand
           </p>
           <p className="mx-auto mt-5 max-w-md text-[15px] leading-relaxed text-white/40">
