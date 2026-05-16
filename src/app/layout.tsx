@@ -63,6 +63,9 @@ export default function RootLayout({
               <Link href="/methodology" className="hidden transition-colors hover:text-white sm:block">
                 Methodology
               </Link>
+              <Link href="/blog" className="hidden transition-colors hover:text-white sm:block">
+                Blog
+              </Link>
               <Link href="/subscribe" className="hidden transition-colors hover:text-white sm:block">
                 Subscribe
               </Link>

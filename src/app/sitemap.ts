@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getCategoriesWithRuns } from "@/lib/queries";
+import { getAllPosts } from "@/lib/blog";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.getrecoscope.com";
@@ -8,6 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: baseUrl, changeFrequency: "weekly", priority: 1.0 },
     { url: `${baseUrl}/tracker`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${baseUrl}/demo`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${baseUrl}/blog`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${baseUrl}/methodology`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${baseUrl}/audit`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${baseUrl}/subscribe`, changeFrequency: "monthly", priority: 0.6 },
@@ -25,5 +27,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // DB unavailable
   }
 
-  return [...staticPages, ...categoryPages];
+  const blogPages: MetadataRoute.Sitemap = getAllPosts().map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...categoryPages, ...blogPages];
 }
