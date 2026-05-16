@@ -1,0 +1,68 @@
+---
+title: "What we learned tracking 15 product categories across 4 AI models"
+slug: "cross-model-ai-recommendation-patterns"
+publish_date: "2026-05-16"
+excerpt: "Over two months, we tracked which brands ChatGPT, Claude, Gemini, and Perplexity recommend across 15 consumer product categories. Three findings worth sharing."
+author: "RecoScope"
+tags: ["AI visibility", "research", "methodology"]
+---
+
+## The setup
+
+RecoScope tracks AI recommendations the way SEO platforms track search rankings. Five days a week, we run the same set of buyer-persona prompts across ChatGPT, Claude, Gemini, and Perplexity, parse the responses, and record which brands each model surfaces.
+
+Over two months, we accumulated data across 15 product categories spanning office furniture, supplements, sleep aids, consumer electronics, home goods, and personal care. The dataset now includes roughly 3,100 brand mentions across 4 AI models.
+
+The original goal was simple: track which brands win and lose AI recommendations over time. But once we had cross-model data at scale, a more interesting question surfaced.
+
+**Do the AI models actually behave differently from each other?**
+
+If ChatGPT, Claude, Gemini, and Perplexity all recommend the same brands in the same order, the "AI visibility" framing is mostly noise. You just need one strategy that wins everywhere. But if they behave differently in measurable ways, brands need to think about AI recommendations the way they think about Google rankings: as a multi-platform problem with platform-specific tactics.
+
+We pulled the data. They behave differently. Three findings.
+
+## Finding 1: ChatGPT has the widest brand surface. Perplexity has the narrowest.
+
+Across the 15 categories, ChatGPT mentioned an average of **12.9 unique brands per category**. Perplexity mentioned **10.8**. That's a ~19% wider surface area on ChatGPT.
+
+But the raw breadth understates the gap. Looking at "exclusive picks" (brands one model surfaces that none of the others mention), ChatGPT had **57**. Claude had only **25**. That's **2.3x more long-tail brand recommendations on ChatGPT versus Claude**.
+
+The practical implication: if a brand appears only in ChatGPT and nowhere else, that's not a meaningful AI authority signal. ChatGPT's bar for inclusion is the lowest of the four. The valuable inverse signal is a brand appearing only in Claude or Perplexity. Those models filter harder, so showing up there means more.
+
+## Finding 2: Perplexity is the consensus model. Half of every Perplexity recommendation is something all four models agree on.
+
+**50.3% of the brands Perplexity surfaces are also surfaced by the other three models.** Claude is similar at 48.3%. ChatGPT is the outlier in the opposite direction: only 40.9% of its mentions are universal consensus.
+
+This pattern reverses an assumption we previously held. We initially characterized Perplexity as "niche-DTC-focused" because it occasionally surfaces obscure brands in deeper rankings (Utzy Naturals in sleep supplements, Sennheiser in earbuds, etc.). The clean data shows the opposite: those single-model picks are rare exceptions. Most of what Perplexity surfaces is the same set of brands every other model surfaces.
+
+If you're a brand trying to break into AI recommendations, Perplexity is the model where "everyone already agrees" carries the most weight. Establishing authority elsewhere increases your odds with Perplexity. The reverse isn't necessarily true.
+
+## Finding 3: Only about 5 brands per category have universal AI authority.
+
+This is the finding we did not expect.
+
+Across 15 categories, only **85 distinct brand+category combinations achieved universal cross-model recommendation**, appearing in ChatGPT, Claude, Gemini, and Perplexity simultaneously.
+
+Distributed across 15 categories, that averages out to roughly **5-6 brands per product category** that have AI authority across every major model.
+
+Some categories are more concentrated than others. Electric Shavers sits as a near-pure Big Three oligopoly: Braun, Panasonic, and Philips Norelco occupy more than 90% of all model mentions, and mid-tier challenger brands (Manscaped, Meridian, Skull Shaver) have zero cross-model AI presence. Office Chairs is similarly locked into Steelcase, Herman Miller, and Branch at the top. In other categories (Mattress Toppers, Wireless Earbuds) the universal tier is slightly broader but still capped at five or six brands.
+
+What this means for brand operators: if your brand isn't one of the ~5 universal-tier names in your category, you're not "doing AI visibility wrong." You're competing in a structurally fragmented market where most brands have model-specific visibility at best. The question is which models you have, which you're missing, and whether your missing models are fixable or structural.
+
+## What this changes about how we think about AI recommendations
+
+Three takeaways worth taking forward.
+
+**First, "AI visibility" isn't a single thing.** It's a multi-model problem with different tactics per model. A brand winning in ChatGPT and missing in Perplexity needs a different consulting engagement than a brand winning in Claude but missing in Gemini.
+
+**Second, the universal-consensus tier is real and small.** Roughly 5 brands per category make the cut. Most brands operate in the 1-3 model tier with structural gaps. That's the actual competitive landscape.
+
+**Third, the data is moving.** Some brands are gaining cross-model authority. We've watched Adidas Adizero Evo SL cross into universal coverage in running shoes during our tracking period. Others are losing it: iRobot is consistently framed as "trusted but outpaced by Roborock, Dreame, and Eufy" by every model. AI training data updates, model behavior shifts, and the rankings move. Brands that aren't measuring don't know where they sit.
+
+## How we measured this
+
+The data behind this post comes from RecoScope's daily benchmark runs. We test 15 evergreen and seasonal product categories Monday through Friday, running the same buyer-persona prompts across ChatGPT, Claude, Gemini, and Perplexity. Responses are parsed for brand mentions, normalized to parent brands, and tracked over time. [Methodology details are here](/methodology).
+
+If your brand is one we track and you want to know exactly where you sit across the four models, [our category trackers are here](/tracker).
+
+If your brand isn't one we track and you want a model-by-model audit, [that's what we do](/audit).
