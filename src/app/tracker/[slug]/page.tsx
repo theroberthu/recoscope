@@ -18,7 +18,6 @@ import {
   KeyTakeawayPanel,
   TopBrandsList,
   CrossAgentTable,
-  CTABox,
 } from "@/components/tracker";
 import { ReportViewTracker } from "@/components/tracker/ReportViewTracker";
 import { PromptsUsed } from "@/components/tracker/PromptsUsed";
@@ -625,15 +624,38 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
         <KeyTakeawayPanel takeaway={takeaway} />
       </section>
 
+      {/* 3. Top Brands */}
       <ScrollFade className="mt-20">
         <TopBrandsList
           brands={brandsWithMovement}
-          whyTheseWin={toBullets(clean.commonTraits)}
           droppedBrands={isSeasonal && droppedBrands.length > 0 ? droppedBrands : undefined}
           category={slug}
         />
       </ScrollFade>
 
+      {/* 4. Opportunity for Brands (moved up) */}
+      {clean.marketGaps && (
+        <ScrollFade className="mt-20">
+          <div className="border-l-2 border-cyan/30 py-1 pl-8">
+            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+              Opportunity for Brands
+            </p>
+            <ul className="mt-4 space-y-3">
+              {(toBullets(clean.marketGaps) ?? []).map((point) => (
+                <li
+                  key={point}
+                  className="flex items-start gap-3 text-[14px] leading-[1.7] text-white/50"
+                >
+                  <span className="mt-[9px] block h-[3px] w-[3px] shrink-0 rounded-full bg-cyan" />
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </ScrollFade>
+      )}
+
+      {/* 5. Cross-Agent Comparison */}
       <ScrollFade className="mt-20">
         <CrossAgentTable
           rows={agentRows}
@@ -641,6 +663,28 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
           notableAbsents={notableAbsents.length > 0 ? notableAbsents : undefined}
         />
       </ScrollFade>
+
+      {/* 6. Why These Brands Win (moved down) */}
+      {toBullets(clean.commonTraits) && (toBullets(clean.commonTraits) ?? []).length > 0 && (
+        <ScrollFade className="mt-20">
+          <div className="border-l-2 border-cyan/20 pl-6">
+            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+              Why These Brands Win
+            </p>
+            <ul className="mt-4 space-y-2.5">
+              {(toBullets(clean.commonTraits) ?? []).map((point) => (
+                <li
+                  key={point}
+                  className="flex items-start gap-3 text-[13px] leading-relaxed text-white/40"
+                >
+                  <span className="mt-[7px] block h-[3px] w-[3px] shrink-0 rounded-full bg-cyan/40" />
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </ScrollFade>
+      )}
 
       {promptBreakdownData.length > 0 && (
         <section className="premium-content mt-14">
@@ -667,27 +711,6 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
               while AI models prioritize editorial authority and product depth.
             </p>
           )}
-        </ScrollFade>
-      )}
-
-      {clean.marketGaps && (
-        <ScrollFade className="mt-20">
-          <div className="border-l-2 border-cyan/30 py-1 pl-8">
-            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
-              Opportunity for Brands
-            </p>
-            <ul className="mt-4 space-y-3">
-              {(toBullets(clean.marketGaps) ?? []).map((point) => (
-                <li
-                  key={point}
-                  className="flex items-start gap-3 text-[14px] leading-[1.7] text-white/50"
-                >
-                  <span className="mt-[9px] block h-[3px] w-[3px] shrink-0 rounded-full bg-cyan" />
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </div>
         </ScrollFade>
       )}
 
@@ -737,7 +760,28 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
       </ScrollFade>
 
       <ScrollFade className="mt-24">
-        <CTABox description={clean.auditAngle ?? undefined} ctaLocation="report_bottom" />
+        <div className="animate-pulse_glow rounded-2xl border border-cyan/20 bg-surface px-8 py-16 text-center sm:px-12">
+          <p className="mx-auto max-w-lg text-[28px] font-bold leading-[1.2] tracking-tight text-white">
+            Your competitors are showing up in AI results. Are you?
+          </p>
+          <div className="mx-auto mt-5 max-w-sm space-y-3 text-[14px] leading-relaxed text-white/40">
+            <p>
+              Get a free AI Visibility Audit. See exactly how ChatGPT, Claude, and Gemini talk about your brand, and where you&rsquo;re missing.
+            </p>
+            <p>
+              Delivered to your inbox in 48 hours. No call required.
+            </p>
+            <p>
+              Conducted personally by Robert Hu.
+            </p>
+          </div>
+          <a
+            href="/audit"
+            className="mt-10 inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90"
+          >
+            Get Your Free Audit
+          </a>
+        </div>
         <p className="mt-6 text-center text-[12px] text-white/20">
           Need help getting your brand into these AI recommendations?{" "}
           <a
