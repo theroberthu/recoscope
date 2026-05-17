@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
-import { getCategoriesWithRuns } from "@/lib/queries";
+import { getCategoriesWithRuns, getAllPublishedPrompts } from "@/lib/queries";
 import { getAllPosts } from "@/lib/blog";
+import { promptToSlug } from "@/lib/prompt-seo";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.getrecoscope.com";
@@ -8,6 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
     { url: baseUrl, changeFrequency: "weekly", priority: 1.0 },
     { url: `${baseUrl}/tracker`, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${baseUrl}/prompts`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${baseUrl}/demo`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${baseUrl}/blog`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${baseUrl}/methodology`, changeFrequency: "monthly", priority: 0.7 },
@@ -16,6 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   let categoryPages: MetadataRoute.Sitemap = [];
+  let promptPages: MetadataRoute.Sitemap = [];
   try {
     const categories = await getCategoriesWithRuns();
     categoryPages = categories.map((cat) => ({
@@ -23,6 +26,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: cat.tracker_type === "seasonal" ? "weekly" as const : "monthly" as const,
       priority: 0.8,
     }));
+
+    const prompts = await getAllPublishedPrompts();
+    const seen = new Set<string>();
+    promptPages = prompts
+      .filter((p) => {
+        const slug = promptToSlug(p.prompt_text);
+        if (seen.has(slug)) return false;
+        seen.add(slug);
+        return true;
+      })
+      .map((p) => ({
+        url: `${baseUrl}/prompts/${promptToSlug(p.prompt_text)}`,
+        changeFrequency: "weekly" as const,
+        priority: 0.7,
+      }));
   } catch {
     // DB unavailable
   }
@@ -33,5 +51,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...categoryPages, ...blogPages];
+  return [...staticPages, ...categoryPages, ...promptPages, ...blogPages];
 }
