@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { promptToSlug } from "@/lib/prompt-seo";
 
 const PROMPT_LABELS: Record<number, string> = {
   1: "Broad Discovery",
@@ -40,9 +42,12 @@ export function PromptsUsed({ prompts }: PromptsUsedProps) {
                 <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.1em] text-white/25">
                   Prompt {p.prompt_number} &mdash; {PROMPT_LABELS[p.prompt_number] ?? `Prompt ${p.prompt_number}`}
                 </p>
-                <p className="mt-1.5 font-mono text-[13px] leading-relaxed text-white/40">
+                <Link
+                  href={`/prompts/${promptToSlug(p.prompt_text)}`}
+                  className="mt-1.5 block font-mono text-[13px] leading-relaxed text-white/40 transition-colors hover:text-cyan/60"
+                >
                   {p.prompt_text}
-                </p>
+                </Link>
               </div>
             ))}
           </div>

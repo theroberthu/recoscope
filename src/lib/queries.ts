@@ -371,6 +371,144 @@ export async function getProspectDayCount(clientId: string): Promise<{ dayCount:
 }
 
 // ---------------------------------------------------------------------------
+// Prompt pages (SEO landing pages)
+// ---------------------------------------------------------------------------
+
+export interface PromptPageData {
+  prompt_text: string;
+  category_name: string;
+  category_slug: string;
+  run_count: number;
+  response_count: number;
+}
+
+export async function getAllPublishedPrompts(): Promise<PromptPageData[]> {
+  const sql = getDb();
+  const rows = await sql`
+    SELECT
+      ar.prompt_text,
+      c.name AS category_name,
+      c.slug AS category_slug,
+      COUNT(DISTINCT r.id)::int AS run_count,
+      COUNT(ar.id)::int AS response_count
+    FROM agent_responses ar
+    JOIN runs r ON r.id = ar.run_id
+    JOIN categories c ON c.id = r.category_id
+    WHERE r.status = 'published'
+      AND r.is_public = true
+      AND c.is_active = true
+    GROUP BY ar.prompt_text, c.name, c.slug
+    HAVING COUNT(ar.id) >= 3
+    ORDER BY c.name, ar.prompt_text
+  `;
+  return rows as PromptPageData[];
+}
+
+export async function getPromptDetail(promptText: string): Promise<{
+  prompt_text: string;
+  category_name: string;
+  category_slug: string;
+  brands: { brand: string; mentions: number; top3: number; first_picks: number }[];
+  agent_breakdown: { agent_name: string; brands: string[] }[];
+  insight: { top_brands_summary: string | null; key_takeaway: string | null } | null;
+  run_dates: string[];
+} | null> {
+  const sql = getDb();
+
+  const meta = await sql`
+    SELECT DISTINCT c.name AS category_name, c.slug AS category_slug
+    FROM agent_responses ar
+    JOIN runs r ON r.id = ar.run_id
+    JOIN categories c ON c.id = r.category_id
+    WHERE ar.prompt_text = ${promptText}
+      AND r.status = 'published'
+      AND r.is_public = true
+    LIMIT 1
+  `;
+  if (meta.length === 0) return null;
+  const { category_name, category_slug } = meta[0] as { category_name: string; category_slug: string };
+
+  const brands = await sql`
+    SELECT
+      bm.brand_name_normalized AS brand,
+      COUNT(*)::int AS mentions,
+      COUNT(*) FILTER (WHERE bm.mention_rank <= 3)::int AS top3,
+      COUNT(*) FILTER (WHERE bm.is_first = true)::int AS first_picks
+    FROM brand_mentions bm
+    JOIN agent_responses ar ON ar.run_id = bm.run_id
+      AND ar.agent_name = bm.agent_name
+      AND ar.prompt_number = bm.prompt_number
+    JOIN runs r ON r.id = ar.run_id
+    WHERE ar.prompt_text = ${promptText}
+      AND r.status = 'published'
+      AND r.is_public = true
+    GROUP BY bm.brand_name_normalized
+    ORDER BY mentions DESC
+  `;
+
+  const agents = await sql`
+    SELECT
+      bm.agent_name,
+      bm.brand_name_normalized AS brand
+    FROM brand_mentions bm
+    JOIN agent_responses ar ON ar.run_id = bm.run_id
+      AND ar.agent_name = bm.agent_name
+      AND ar.prompt_number = bm.prompt_number
+    JOIN runs r ON r.id = ar.run_id
+    WHERE ar.prompt_text = ${promptText}
+      AND r.status = 'published'
+      AND r.is_public = true
+      AND bm.mention_rank <= 5
+    ORDER BY bm.agent_name, bm.mention_rank
+  `;
+
+  const agentMap = new Map<string, string[]>();
+  for (const row of agents) {
+    const r = row as { agent_name: string; brand: string };
+    const list = agentMap.get(r.agent_name) ?? [];
+    if (!list.includes(r.brand)) list.push(r.brand);
+    agentMap.set(r.agent_name, list);
+  }
+
+  const runDates = await sql`
+    SELECT DISTINCT r.run_date::text AS run_date
+    FROM agent_responses ar
+    JOIN runs r ON r.id = ar.run_id
+    WHERE ar.prompt_text = ${promptText}
+      AND r.status = 'published'
+      AND r.is_public = true
+    ORDER BY run_date DESC
+  `;
+
+  const insightRows = await sql`
+    SELECT ri.top_brands_summary, ri.key_takeaway
+    FROM run_insights ri
+    JOIN runs r ON r.id = ri.run_id
+    JOIN categories c ON c.id = r.category_id
+    WHERE c.slug = ${category_slug}
+      AND r.status = 'published'
+      AND r.is_public = true
+    ORDER BY r.run_date DESC
+    LIMIT 1
+  `;
+
+  return {
+    prompt_text: promptText,
+    category_name,
+    category_slug,
+    brands: brands as { brand: string; mentions: number; top3: number; first_picks: number }[],
+    agent_breakdown: Array.from(agentMap.entries()).map(([agent_name, brandList]) => ({
+      agent_name,
+      brands: brandList,
+    })),
+    insight: insightRows.length > 0
+      ? insightRows[0] as { top_brands_summary: string | null; key_takeaway: string | null }
+      : null,
+    run_dates: (runDates as { run_date: string }[]).map((r) => r.run_date),
+  };
+}
+
+// ---------------------------------------------------------------------------
 // Demo queries (pull brand data from public runs)
 // ---------------------------------------------------------------------------
 
