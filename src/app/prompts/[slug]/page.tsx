@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getAllPublishedPrompts, getPromptDetail } from "@/lib/queries";
-import { promptToSlug, promptToTitle, promptToDescription } from "@/lib/prompt-seo";
+import { promptToSlug, promptToOldSlug, promptToTitle, promptToDescription } from "@/lib/prompt-seo";
 
 export const dynamic = "force-dynamic";
 
@@ -18,21 +18,26 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-async function findPromptBySlug(slug: string): Promise<string | null> {
+async function findPromptBySlug(slug: string): Promise<{ promptText: string; canonicalSlug: string } | null> {
   const all = await getAllPublishedPrompts();
-  const match = all.find((p) => promptToSlug(p.prompt_text) === slug);
-  return match?.prompt_text ?? null;
+  // Try new slug format first
+  const exact = all.find((p) => promptToSlug(p.prompt_text) === slug);
+  if (exact) return { promptText: exact.prompt_text, canonicalSlug: slug };
+  // Fall back to old slug format (for 301 redirects from previous URL scheme)
+  const legacy = all.find((p) => promptToOldSlug(p.prompt_text) === slug);
+  if (legacy) return { promptText: legacy.prompt_text, canonicalSlug: promptToSlug(legacy.prompt_text) };
+  return null;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const promptText = await findPromptBySlug(slug);
-  if (!promptText) return { title: "Not Found" };
-  const detail = await getPromptDetail(promptText);
+  const found = await findPromptBySlug(slug);
+  if (!found) return { title: "Not Found" };
+  const detail = await getPromptDetail(found.promptText);
   if (!detail) return { title: "Not Found" };
 
-  const title = promptToTitle(promptText, detail.category_name);
-  const description = promptToDescription(promptText, detail.category_name, detail.brands.slice(0, 3).map((b) => b.brand));
+  const title = promptToTitle(found.promptText, detail.category_name);
+  const description = promptToDescription(found.promptText, detail.category_name, detail.brands.slice(0, 3).map((b) => b.brand));
 
   return {
     title,
@@ -47,9 +52,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PromptDetailPage({ params }: Props) {
   const { slug } = await params;
-  const promptText = await findPromptBySlug(slug);
-  if (!promptText) notFound();
+  const found = await findPromptBySlug(slug);
+  if (!found) notFound();
+  // 301 redirect from old slug format to new canonical slug
+  if (found.canonicalSlug !== slug) {
+    redirect(`/prompts/${found.canonicalSlug}`);
+  }
 
+  const promptText = found.promptText;
   const detail = await getPromptDetail(promptText);
   if (!detail) notFound();
 
