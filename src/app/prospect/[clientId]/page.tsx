@@ -553,9 +553,11 @@ export default async function ProspectPage({ params, searchParams }: Props) {
             <p className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-cyan/60">
               Recommended Strategy
             </p>
-            <p className="mt-3 text-[15px] leading-relaxed text-white/60">
-              {strategyText}
-            </p>
+            {strategyText.split(/\n\n+/).map((para: string, i: number) => (
+              <p key={i} className={`text-[15px] leading-relaxed text-white/60 ${i > 0 ? "mt-4" : "mt-3"}`}>
+                {para.trim()}
+              </p>
+            ))}
           </div>
         )}
 
