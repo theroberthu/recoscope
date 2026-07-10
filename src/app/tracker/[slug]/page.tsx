@@ -374,14 +374,16 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
   if (!categoryRow) notFound();
   const trackerType = categoryRow.tracker_type as TrackerType;
 
-  // Load a specific period if requested, otherwise latest
+  // Load a specific period if requested, otherwise latest.
+  // Public tracker only ever shows published public runs. A category with
+  // no published run falls through to the no-data / Coming Soon state below —
+  // it must never fall back to a draft or reviewed run.
   let run = period
     ? await getRunByPeriod(categoryRow.id, period)
     : null;
   if (!run) run = await getLatestRun(categoryRow.id, "published");
-  if (!run) run = await getLatestRun(categoryRow.id);
 
-  // No runs at all — show coming soon state
+  // No published run — show coming soon state
   if (!run) {
     return (
       <article className="bg-dot-grid mx-auto min-h-[60vh] max-w-3xl px-6 py-24">
