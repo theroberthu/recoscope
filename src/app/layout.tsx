@@ -56,15 +56,21 @@ export default function RootLayout({
               <img src="/logo.svg" alt="RecoScope" className="hidden h-10 w-auto sm:block" />
               <img src="/icon.svg" alt="RecoScope" className="block h-8 w-8 sm:hidden" />
             </Link>
-            <div className="flex items-center gap-4 text-[13px] font-medium text-white/40 sm:gap-8">
+            <div className="flex items-center gap-4 text-[13px] font-medium text-white/40 sm:gap-6">
+              <Link href="/platform" className="transition-colors hover:text-white">
+                Platform
+              </Link>
+              <Link href="/methodology" className="hidden transition-colors hover:text-white sm:block">
+                Methodology
+              </Link>
+              <Link href="/blog" className="hidden transition-colors hover:text-white sm:block">
+                Research
+              </Link>
               <Link href="/tracker" className="transition-colors hover:text-white">
                 Tracker
               </Link>
-              <Link href="/methodology" className="transition-colors hover:text-white">
-                Methodology
-              </Link>
-              <Link href="/blog" className="transition-colors hover:text-white">
-                Research
+              <Link href="/about" className="transition-colors hover:text-white">
+                About
               </Link>
             </div>
           </nav>
@@ -96,9 +102,11 @@ export default function RootLayout({
               <div>
                 <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-white/20">Explore</p>
                 <ul className="mt-3 space-y-2 text-[12px] text-white/30">
+                  <li><Link href="/platform" className="transition-colors hover:text-white/60">Platform</Link></li>
                   <li><Link href="/tracker" className="transition-colors hover:text-white/60">Tracker</Link></li>
                   <li><Link href="/methodology" className="transition-colors hover:text-white/60">Methodology</Link></li>
                   <li><Link href="/blog" className="transition-colors hover:text-white/60">Research</Link></li>
+                  <li><Link href="/about" className="transition-colors hover:text-white/60">About</Link></li>
                   <li><Link href="/subscribe" className="transition-colors hover:text-white/60">Subscribe</Link></li>
                 </ul>
               </div>

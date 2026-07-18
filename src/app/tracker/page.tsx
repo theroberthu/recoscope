@@ -38,6 +38,11 @@ export default async function TrackerIndexPage() {
           We run the same buying prompts through ChatGPT, Claude, Gemini, and Perplexity
           every month &mdash; and track which brands AI recommends. Pick a category to see the data.
         </p>
+        <p className="mt-4 text-[13px]">
+          <a href="/platform" className="text-cyan/60 transition-colors hover:text-cyan">
+            See how these reports are produced &rarr;
+          </a>
+        </p>
       </section>
 
       {/* Report Schedule */}

@@ -29,7 +29,11 @@ export default function BlogIndexPage() {
         </h1>
         <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-white/40">
           Analysis drawn from the RecoScope benchmark dataset: cross-model patterns, recommendation
-          shifts, and what the longitudinal data reveals about how AI recommends products.
+          shifts, and what the longitudinal data reveals about how AI recommends products.{" "}
+          <a href="/platform" className="text-cyan/60 underline underline-offset-2 transition-colors hover:text-cyan">
+            See how the data is produced
+          </a>
+          .
         </p>
       </section>
 

@@ -119,6 +119,11 @@ export default async function HomePage() {
               </p>
             </div>
           </div>
+          <p className="mt-8 text-[13px]">
+            <a href="/platform" className="text-cyan/60 transition-colors hover:text-cyan">
+              Explore the platform &rarr;
+            </a>
+          </p>
         </div>
       </section>
 
@@ -229,6 +234,7 @@ export default async function HomePage() {
               <p className="mt-4 max-w-xl text-[14px] leading-relaxed text-white/40">
                 Each category is benchmarked on a recurring schedule across ChatGPT, Claude, Gemini,
                 and Perplexity, so the data shows how recommendations move, not just where they stand today.
+                The tracker, research, and prompt pages are all outputs of the same shared longitudinal system.
               </p>
               <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {categories.map((cat) => (
@@ -307,12 +313,10 @@ export default async function HomePage() {
             From system design and data architecture through methodology and published findings.
           </p>
           <a
-            href="https://theroberthu.com"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/about"
             className="mt-8 inline-block rounded-full border border-cyan/30 bg-cyan/10 px-8 py-3 font-mono text-[13px] font-bold tracking-tight text-cyan transition-all hover:bg-cyan/20"
           >
-            About Robert Hu
+            Why I built RecoScope
           </a>
         </div>
       </section>

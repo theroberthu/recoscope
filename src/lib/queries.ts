@@ -345,6 +345,47 @@ export async function getAuditStats(): Promise<{
 }
 
 // ---------------------------------------------------------------------------
+// Platform page stats (published + public only; read-only, resilient)
+// ---------------------------------------------------------------------------
+
+export async function getPlatformStats(): Promise<{
+  categories: number;
+  publishedRuns: number;
+  brands: number;
+  mentions: number;
+  firstRunDate: string | null;
+}> {
+  const sql = getDb();
+  const [cats, runs, brands, mentions, first] = await Promise.allSettled([
+    sql`SELECT COUNT(DISTINCT c.id)::int AS c FROM categories c JOIN runs r ON r.category_id = c.id WHERE c.is_active = true AND r.is_public = true AND r.status = 'published'`,
+    sql`SELECT COUNT(*)::int AS c FROM runs WHERE is_public = true AND status = 'published'`,
+    sql`SELECT COUNT(DISTINCT bm.brand_name_normalized)::int AS c FROM brand_mentions bm JOIN runs r ON r.id = bm.run_id WHERE r.is_public = true AND r.status = 'published'`,
+    sql`SELECT COUNT(*)::int AS c FROM brand_mentions bm JOIN runs r ON r.id = bm.run_id WHERE r.is_public = true AND r.status = 'published'`,
+    sql`SELECT MIN(run_date)::text AS d FROM runs WHERE is_public = true AND status = 'published'`,
+  ]);
+
+  const num = (r: PromiseSettledResult<unknown>): number => {
+    if (r.status !== "fulfilled") {
+      console.error("[getPlatformStats] sub-query failed:", r.reason);
+      return 0;
+    }
+    return (r.value as { c: number }[])[0]?.c ?? 0;
+  };
+
+  const firstDate = first.status === "fulfilled"
+    ? (first.value as { d: string | null }[])[0]?.d ?? null
+    : null;
+
+  return {
+    categories: num(cats),
+    publishedRuns: num(runs),
+    brands: num(brands),
+    mentions: num(mentions),
+    firstRunDate: firstDate,
+  };
+}
+
+// ---------------------------------------------------------------------------
 // Prospect (private) queries
 // ---------------------------------------------------------------------------
 

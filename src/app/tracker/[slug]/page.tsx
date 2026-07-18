@@ -800,7 +800,11 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
             <a href="/methodology" className="text-cyan/60 underline underline-offset-2 transition-colors hover:text-cyan">
               methodology
             </a>
-            .
+            , and the{" "}
+            <a href="/platform" className="text-cyan/60 underline underline-offset-2 transition-colors hover:text-cyan">
+              platform
+            </a>
+            {" "}page explains how the system is built and operated.
           </p>
         </div>
         <p className="mt-6 text-center text-[12px] text-white/20">
