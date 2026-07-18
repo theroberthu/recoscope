@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { ScrollFade } from "@/components/home/ScrollFade";
-import { CTABox } from "@/components/tracker";
 import { FAQSchema } from "@/components/seo/JsonLd";
 
 const FAQ_ITEMS = [
@@ -321,14 +320,29 @@ export default function MethodologyPage() {
         </div>
       </ScrollFade>
 
-      {/* CTA */}
+      {/* Explore the data */}
       <ScrollFade className="mx-auto max-w-3xl px-6 pb-24 pt-4">
-        <CTABox
-          heading="Want to see how your brand performs?"
-          description="Get a free AI Visibility Audit. See exactly how AI models rank your brand, what they recommend instead, and where you can improve."
-          buttonText="Request Your Free Audit"
-          href="/audit"
-        />
+        <div className="rounded-2xl border border-white/10 bg-surface px-8 py-12 text-center">
+          <p className="mx-auto max-w-lg text-[20px] font-semibold leading-[1.3] tracking-tight text-white/80">
+            This methodology runs live across every category we track.
+          </p>
+          <p className="mx-auto mt-3 max-w-md text-[14px] leading-relaxed text-white/40">
+            See it running live across every category, or read how the full system is built and operated.
+          </p>
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
+            <a href="/tracker" className="inline-block rounded-full bg-cyan px-8 py-3 text-center font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90">
+              Explore the Benchmark
+            </a>
+            <a href="/platform" className="inline-block rounded-full border border-cyan/30 bg-cyan/10 px-8 py-3 text-center font-mono text-[13px] font-bold tracking-tight text-cyan transition-all hover:bg-cyan/20">
+              See the Platform
+            </a>
+          </div>
+          <p className="mt-5 text-[12px]">
+            <a href="/blog" className="text-cyan/60 transition-colors hover:text-cyan">
+              Read the research &rarr;
+            </a>
+          </p>
+        </div>
       </ScrollFade>
     </div>
   );

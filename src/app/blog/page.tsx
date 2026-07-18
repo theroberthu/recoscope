@@ -3,8 +3,8 @@ import Link from "next/link";
 import { getAllPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
-  title: "Blog",
-  description: "Insights on AI-driven product recommendations, brand visibility, and e-commerce strategy from RecoScope.",
+  title: "Research",
+  description: "Findings from the RecoScope dataset: how ChatGPT, Claude, Gemini, and Perplexity recommend products across categories, and how those recommendations change over time.",
 };
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -22,13 +22,18 @@ export default function BlogIndexPage() {
     <div className="bg-dot-grid min-h-screen">
       <section className="mx-auto max-w-3xl px-6 pb-8 pt-20">
         <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/60">
-          Blog
+          Research
         </p>
         <h1 className="mt-4 text-4xl font-bold tracking-tight text-white">
-          Insights
+          Findings
         </h1>
-        <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-white/40">
-          How AI models recommend products, which brands are winning, and what e-commerce sellers can do about it.
+        <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-white/40">
+          Analysis drawn from the RecoScope benchmark dataset: cross-model patterns, recommendation
+          shifts, and what the longitudinal data reveals about how AI recommends products.{" "}
+          <a href="/platform" className="text-cyan/60 underline underline-offset-2 transition-colors hover:text-cyan">
+            See how the data is produced
+          </a>
+          .
         </p>
       </section>
 

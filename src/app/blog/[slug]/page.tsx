@@ -184,7 +184,7 @@ export default async function BlogPostPage({ params }: Props) {
       <BreadcrumbSchema
         items={[
           { name: "Home", url: baseUrl },
-          { name: "Blog", url: `${baseUrl}/blog` },
+          { name: "Research", url: `${baseUrl}/blog` },
           { name: post.title, url: `${baseUrl}/blog/${post.slug}` },
         ]}
       />
@@ -206,7 +206,7 @@ export default async function BlogPostPage({ params }: Props) {
             href="/blog"
             className="font-mono text-[12px] font-medium text-cyan/60 transition-colors hover:text-cyan"
           >
-            &larr; All posts
+            &larr; All research
           </a>
         </div>
       </article>

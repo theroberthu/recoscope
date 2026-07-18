@@ -64,6 +64,7 @@ export async function getCategoriesWithRuns(): Promise<
       SELECT summary FROM runs
       WHERE category_id = c.id
         AND is_public = true
+        AND status = 'published'
       ORDER BY run_date DESC
       LIMIT 1
     ) r ON true
@@ -95,6 +96,7 @@ export async function getLatestRun(
         SELECT * FROM runs
         WHERE category_id = ${categoryId}
           AND is_public = true
+          AND status = 'published'
         ORDER BY run_date DESC
         LIMIT 1
       `;
@@ -111,6 +113,7 @@ export async function getRunByPeriod(
     WHERE category_id = ${categoryId}
       AND period_label = ${periodLabel}
       AND is_public = true
+      AND status = 'published'
     LIMIT 1
   `;
   return (rows[0] as Run) ?? null;
@@ -176,6 +179,8 @@ export async function getTopBrandsForHero(limit = 10): Promise<
     JOIN runs r ON r.id = bm.run_id
     JOIN categories c ON c.id = r.category_id
     WHERE c.is_active = true
+      AND r.is_public = true
+      AND r.status = 'published'
     GROUP BY brand_name_normalized
     ORDER BY mentions DESC
     LIMIT ${limit}
@@ -198,6 +203,7 @@ export async function getCrossAgentPreview(): Promise<
       JOIN categories c ON c.id = r.category_id
       WHERE c.is_active = true
         AND r.is_public = true
+        AND r.status = 'published'
       ORDER BY r.run_date DESC
       LIMIT 1
     )
@@ -219,6 +225,7 @@ export async function getCategoriesWithSchedule(): Promise<
       SELECT run_date FROM runs
       WHERE category_id = c.id
         AND is_public = true
+        AND status = 'published'
       ORDER BY run_date DESC
       LIMIT 1
     ) r ON true
@@ -247,6 +254,7 @@ export async function getPreviousRun(
       AND tracker_type = 'seasonal'
       AND period_label < ${currentPeriodLabel}
       AND is_public = true
+      AND status = 'published'
     ORDER BY period_label DESC
     LIMIT 1
   `;
@@ -263,6 +271,7 @@ export async function getAllRunsForCategory(
     SELECT * FROM runs
     WHERE category_id = ${id}
       AND is_public = true
+      AND status = 'published'
     ORDER BY run_date ASC
   `;
   return rows as Run[];
@@ -278,6 +287,7 @@ export async function getAllSeasonalRuns(
     WHERE category_id = ${categoryId}
       AND tracker_type = 'seasonal'
       AND is_public = true
+      AND status = 'published'
     ORDER BY period_label ASC
   `;
   return rows as Run[];
@@ -313,9 +323,9 @@ export async function getAuditStats(): Promise<{
 }> {
   const sql = getDb();
   const [brands, cats, runs] = await Promise.allSettled([
-    sql`SELECT COUNT(DISTINCT brand_name_normalized)::int AS c FROM brand_mentions`,
-    sql`SELECT COUNT(DISTINCT c.id)::int AS c FROM categories c JOIN runs r ON r.category_id = c.id WHERE c.is_active = true AND r.is_public = true`,
-    sql`SELECT COUNT(*)::int AS c FROM runs WHERE is_public = true`,
+    sql`SELECT COUNT(DISTINCT bm.brand_name_normalized)::int AS c FROM brand_mentions bm JOIN runs r ON r.id = bm.run_id WHERE r.is_public = true AND r.status = 'published'`,
+    sql`SELECT COUNT(DISTINCT c.id)::int AS c FROM categories c JOIN runs r ON r.category_id = c.id WHERE c.is_active = true AND r.is_public = true AND r.status = 'published'`,
+    sql`SELECT COUNT(*)::int AS c FROM runs WHERE is_public = true AND status = 'published'`,
   ]);
 
   const getCount = (r: PromiseSettledResult<unknown>): number => {
@@ -331,6 +341,47 @@ export async function getAuditStats(): Promise<{
     brandsTracked: getCount(brands),
     categoriesActive: getCount(cats),
     runsCompleted: getCount(runs),
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Platform page stats (published + public only; read-only, resilient)
+// ---------------------------------------------------------------------------
+
+export async function getPlatformStats(): Promise<{
+  categories: number;
+  publishedRuns: number;
+  brands: number;
+  mentions: number;
+  firstRunDate: string | null;
+}> {
+  const sql = getDb();
+  const [cats, runs, brands, mentions, first] = await Promise.allSettled([
+    sql`SELECT COUNT(DISTINCT c.id)::int AS c FROM categories c JOIN runs r ON r.category_id = c.id WHERE c.is_active = true AND r.is_public = true AND r.status = 'published'`,
+    sql`SELECT COUNT(*)::int AS c FROM runs WHERE is_public = true AND status = 'published'`,
+    sql`SELECT COUNT(DISTINCT bm.brand_name_normalized)::int AS c FROM brand_mentions bm JOIN runs r ON r.id = bm.run_id WHERE r.is_public = true AND r.status = 'published'`,
+    sql`SELECT COUNT(*)::int AS c FROM brand_mentions bm JOIN runs r ON r.id = bm.run_id WHERE r.is_public = true AND r.status = 'published'`,
+    sql`SELECT MIN(run_date)::text AS d FROM runs WHERE is_public = true AND status = 'published'`,
+  ]);
+
+  const num = (r: PromiseSettledResult<unknown>): number => {
+    if (r.status !== "fulfilled") {
+      console.error("[getPlatformStats] sub-query failed:", r.reason);
+      return 0;
+    }
+    return (r.value as { c: number }[])[0]?.c ?? 0;
+  };
+
+  const firstDate = first.status === "fulfilled"
+    ? (first.value as { d: string | null }[])[0]?.d ?? null
+    : null;
+
+  return {
+    categories: num(cats),
+    publishedRuns: num(runs),
+    brands: num(brands),
+    mentions: num(mentions),
+    firstRunDate: firstDate,
   };
 }
 
@@ -522,6 +573,7 @@ export async function getDemoRuns(brandName: string): Promise<(Run & { category_
     JOIN brand_mentions bm ON bm.run_id = r.id
     WHERE bm.brand_name_normalized ILIKE ${pattern}
       AND r.is_public = true
+      AND r.status = 'published'
     ORDER BY r.id, r.run_date DESC
   `;
   return rows as (Run & { category_name: string; category_slug: string })[];
@@ -539,6 +591,7 @@ export async function getDemoDayCount(brandName: string): Promise<{ dayCount: nu
     JOIN brand_mentions bm ON bm.run_id = r.id
     WHERE bm.brand_name_normalized ILIKE ${pattern}
       AND r.is_public = true
+      AND r.status = 'published'
   `;
   const row = rows[0] as { day_count: number; first_date: string | null; last_date: string | null } | undefined;
   return {
@@ -556,6 +609,7 @@ export async function getPublicRunsByCategory(categorySlug: string): Promise<(Ru
     JOIN categories c ON c.id = r.category_id
     WHERE c.slug = ${categorySlug}
       AND r.is_public = true
+      AND r.status = 'published'
     ORDER BY r.run_date DESC
   `;
   return rows as (Run & { category_name: string; category_slug: string })[];
@@ -572,6 +626,7 @@ export async function getPublicDayCountByCategory(categorySlug: string): Promise
     JOIN categories c ON c.id = r.category_id
     WHERE c.slug = ${categorySlug}
       AND r.is_public = true
+      AND r.status = 'published'
   `;
   const row = rows[0] as { day_count: number; first_date: string | null; last_date: string | null } | undefined;
   return {

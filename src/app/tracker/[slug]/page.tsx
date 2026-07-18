@@ -374,14 +374,16 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
   if (!categoryRow) notFound();
   const trackerType = categoryRow.tracker_type as TrackerType;
 
-  // Load a specific period if requested, otherwise latest
+  // Load a specific period if requested, otherwise latest.
+  // Public tracker only ever shows published public runs. A category with
+  // no published run falls through to the no-data / Coming Soon state below —
+  // it must never fall back to a draft or reviewed run.
   let run = period
     ? await getRunByPeriod(categoryRow.id, period)
     : null;
   if (!run) run = await getLatestRun(categoryRow.id, "published");
-  if (!run) run = await getLatestRun(categoryRow.id);
 
-  // No runs at all — show coming soon state
+  // No published run — show coming soon state
   if (!run) {
     return (
       <article className="bg-dot-grid mx-auto min-h-[60vh] max-w-3xl px-6 py-24">
@@ -584,6 +586,12 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
 
   const baseUrl = "https://getrecoscope.com";
 
+  // Provenance data for the "How this report was produced" block.
+  const aiModelsIncluded = Array.from(new Set(agentRows.map((r) => r.agentName))).filter((a) => AI_AGENTS.has(a));
+  const aiModelLabel = aiModelsIncluded.length > 0
+    ? aiModelsIncluded.join(", ")
+    : "ChatGPT, Claude, Gemini, Perplexity";
+
   return (
     <article className="bg-dot-grid mx-auto min-h-screen max-w-3xl px-6 py-24">
       <ArticleSchema
@@ -759,38 +767,50 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
         </div>
       </ScrollFade>
 
+      {/* How this report was produced */}
       <ScrollFade className="mt-24">
-        <div className="animate-pulse_glow rounded-2xl border border-cyan/20 bg-surface px-8 py-16 text-center sm:px-12">
-          <p className="mx-auto max-w-lg text-[28px] font-bold leading-[1.2] tracking-tight text-white">
-            Your competitors are showing up in AI results. Are you?
+        <div className="rounded-2xl border border-white/10 bg-surface px-8 py-10">
+          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+            How this report was produced
           </p>
-          <div className="mx-auto mt-5 max-w-sm space-y-3 text-[14px] leading-relaxed text-white/40">
-            <p>
-              Get a free AI Visibility Audit. See exactly how ChatGPT, Claude, and Gemini talk about your brand, and where you&rsquo;re missing.
-            </p>
-            <p>
-              Delivered to your inbox in 48 hours. No call required.
-            </p>
-            <p>
-              Conducted personally by Robert Hu.
-            </p>
-          </div>
-          <a
-            href="/audit"
-            className="mt-10 inline-block rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90"
-          >
-            Get Your Free Audit
-          </a>
+          <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
+            <div className="flex items-baseline justify-between border-b border-white/5 pb-3">
+              <dt className="text-[13px] text-white/40">Evaluation period</dt>
+              <dd className="font-mono text-[13px] text-white/60">{periodDisplay}</dd>
+            </div>
+            <div className="flex items-baseline justify-between border-b border-white/5 pb-3">
+              <dt className="text-[13px] text-white/40">Cadence</dt>
+              <dd className="font-mono text-[13px] text-white/60">{trackerType === "seasonal" ? "Weekly" : "Monthly"}</dd>
+            </div>
+            <div className="flex items-baseline justify-between border-b border-white/5 pb-3">
+              <dt className="text-[13px] text-white/40">Prompts evaluated</dt>
+              <dd className="font-mono text-[13px] text-white/60">{prompts.length}</dd>
+            </div>
+            <div className="flex items-baseline justify-between border-b border-white/5 pb-3">
+              <dt className="text-[13px] text-white/40">Review status</dt>
+              <dd className="font-mono text-[13px] text-white/60">Published after human review</dd>
+            </div>
+            <div className="flex items-baseline justify-between border-b border-white/5 pb-3 sm:col-span-2">
+              <dt className="text-[13px] text-white/40">Models included</dt>
+              <dd className="font-mono text-[13px] text-white/60">{aiModelLabel}</dd>
+            </div>
+          </dl>
+          <p className="mt-6 text-[13px] leading-relaxed text-white/30">
+            Full details of how prompts are run, parsed, normalized, and scored are in the{" "}
+            <a href="/methodology" className="text-cyan/60 underline underline-offset-2 transition-colors hover:text-cyan">
+              methodology
+            </a>
+            , and the{" "}
+            <a href="/platform" className="text-cyan/60 underline underline-offset-2 transition-colors hover:text-cyan">
+              platform
+            </a>
+            {" "}page explains how the system is built and operated.
+          </p>
         </div>
         <p className="mt-6 text-center text-[12px] text-white/20">
-          Need help getting your brand into these AI recommendations?{" "}
-          <a
-            href="https://theroberthu.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white/30 underline underline-offset-2 hover:text-white/50"
-          >
-            Robert Hu offers strategic consulting for e-commerce brands
+          Are you a brand in this category?{" "}
+          <a href="/audit" className="text-white/30 underline underline-offset-2 hover:text-white/50">
+            Request a private analysis
           </a>
         </p>
       </ScrollFade>

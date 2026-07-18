@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     default: "RecoScope — AI Brand Recommendation Tracker",
   },
   description:
-    "See which brands ChatGPT, Claude, Gemini & Perplexity recommend. Free AI visibility reports for consumer product categories.",
+    "RecoScope is a live AI recommendation intelligence system that benchmarks how ChatGPT, Claude, Gemini, and Perplexity recommend products across consumer categories, and tracks how visibility changes over time.",
   metadataBase: new URL("https://getrecoscope.com"),
   icons: {
     icon: [
@@ -56,24 +56,21 @@ export default function RootLayout({
               <img src="/logo.svg" alt="RecoScope" className="hidden h-10 w-auto sm:block" />
               <img src="/icon.svg" alt="RecoScope" className="block h-8 w-8 sm:hidden" />
             </Link>
-            <div className="flex items-center gap-3 text-[13px] font-medium text-white/40 sm:gap-8">
-              <Link href="/tracker" className="transition-colors hover:text-white">
-                Tracker
+            <div className="flex items-center gap-4 text-[13px] font-medium text-white/40 sm:gap-6">
+              <Link href="/platform" className="transition-colors hover:text-white">
+                Platform
               </Link>
               <Link href="/methodology" className="hidden transition-colors hover:text-white sm:block">
                 Methodology
               </Link>
               <Link href="/blog" className="hidden transition-colors hover:text-white sm:block">
-                Blog
+                Research
               </Link>
-              <Link href="/subscribe" className="hidden transition-colors hover:text-white sm:block">
-                Subscribe
+              <Link href="/tracker" className="transition-colors hover:text-white">
+                Tracker
               </Link>
-              <Link
-                href="/audit"
-                className="rounded-full border border-cyan/30 bg-cyan/10 px-4 py-1.5 text-cyan transition-all hover:bg-cyan/20"
-              >
-                Audit
+              <Link href="/about" className="transition-colors hover:text-white">
+                About
               </Link>
             </div>
           </nav>
@@ -81,26 +78,59 @@ export default function RootLayout({
         <PostHogProvider>
           <main>{children}</main>
         </PostHogProvider>
-        <footer className="border-t border-white/5 py-8 text-center">
-          <div className="flex justify-center gap-4 text-[12px] text-white/20">
-            <a href="https://x.com/recoscope" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white/40">@recoscope</a>
-            <span className="text-white/10">&middot;</span>
-            <Link href="/terms" className="transition-colors hover:text-white/40">Terms</Link>
-            <span className="text-white/10">&middot;</span>
-            <Link href="/privacy" className="transition-colors hover:text-white/40">Privacy</Link>
+        <footer className="border-t border-white/5">
+          <div className="mx-auto max-w-5xl px-6 py-12">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
+              {/* Identity */}
+              <div className="sm:col-span-1">
+                <p className="text-[13px] font-semibold text-white/60">RecoScope</p>
+                <p className="mt-2 max-w-xs text-[12px] leading-relaxed text-white/30">
+                  An independent AI commerce benchmark designed, built, and operated by{" "}
+                  <a
+                    href="https://theroberthu.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/40 transition-colors hover:text-white/60"
+                  >
+                    Robert Hu
+                  </a>
+                  .
+                </p>
+              </div>
+
+              {/* Explore */}
+              <div>
+                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-white/20">Explore</p>
+                <ul className="mt-3 space-y-2 text-[12px] text-white/30">
+                  <li><Link href="/platform" className="transition-colors hover:text-white/60">Platform</Link></li>
+                  <li><Link href="/tracker" className="transition-colors hover:text-white/60">Tracker</Link></li>
+                  <li><Link href="/methodology" className="transition-colors hover:text-white/60">Methodology</Link></li>
+                  <li><Link href="/blog" className="transition-colors hover:text-white/60">Research</Link></li>
+                  <li><Link href="/about" className="transition-colors hover:text-white/60">About</Link></li>
+                  <li><Link href="/subscribe" className="transition-colors hover:text-white/60">Subscribe</Link></li>
+                </ul>
+              </div>
+
+              {/* For brands */}
+              <div>
+                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-white/20">For brands</p>
+                <ul className="mt-3 space-y-2 text-[12px] text-white/30">
+                  <li><Link href="/audit" className="transition-colors hover:text-white/60">Request a private analysis</Link></li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-6 text-[12px] text-white/20">
+              <div className="flex items-center gap-4">
+                <a href="https://x.com/recoscope" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white/40">@recoscope</a>
+                <span className="text-white/10">&middot;</span>
+                <Link href="/terms" className="transition-colors hover:text-white/40">Terms</Link>
+                <span className="text-white/10">&middot;</span>
+                <Link href="/privacy" className="transition-colors hover:text-white/40">Privacy</Link>
+              </div>
+              <p className="text-white/20">Built and operated by Robert Hu.</p>
+            </div>
           </div>
-          <p className="mt-3 text-[12px] text-white/20">
-            An independent benchmark published by{" "}
-            <a
-              href="https://theroberthu.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/30 transition-colors hover:text-white/50"
-            >
-              Robert Hu
-            </a>
-            , e-commerce strategist
-          </p>
         </footer>
       </body>
     </html>
