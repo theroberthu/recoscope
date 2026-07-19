@@ -12,7 +12,7 @@ export function SectionHeader({ title, subtitle, badge }: SectionHeaderProps) {
           {subtitle}
         </p>
       )}
-      <h1 className="bg-gradient-to-r from-white to-cyan/70 bg-clip-text text-5xl font-bold leading-[1.1] tracking-tight text-transparent">
+      <h1 className="bg-gradient-to-r from-white to-cyan/70 bg-clip-text text-4xl font-bold leading-[1.1] tracking-tight text-transparent sm:text-5xl">
         {title}
       </h1>
       {badge && (
