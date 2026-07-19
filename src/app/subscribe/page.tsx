@@ -59,7 +59,7 @@ export default async function SubscribePage() {
         <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/60">
           Free Reports
         </p>
-        <h1 className="mt-4 bg-gradient-to-r from-white to-cyan/70 bg-clip-text text-5xl font-bold leading-[1.1] tracking-tight text-transparent">
+        <h1 className="mt-4 bg-gradient-to-r from-white to-cyan/70 bg-clip-text text-4xl font-bold sm:text-5xl leading-[1.1] tracking-tight text-transparent">
           Get the Reports
         </h1>
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/40">
