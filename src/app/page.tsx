@@ -60,8 +60,12 @@ export default async function HomePage() {
             Read the Methodology
           </a>
         </div>
-        <p className="mt-3 text-[12px] text-white/25">
-          Designed, built, and operated by Robert Hu.
+        <p className="mt-4 text-[13px] text-white/40">
+          Designed, built, and operated by{" "}
+          <a href="/about" className="text-cyan/60 underline underline-offset-2 transition-colors hover:text-cyan">
+            Robert Hu
+          </a>
+          .
         </p>
       </section>
 
