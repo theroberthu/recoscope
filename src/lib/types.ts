@@ -41,7 +41,7 @@ export interface BrandMention {
   prompt_number: number;
   brand_name_raw: string;
   brand_name_normalized: string;
-  mention_rank: number;
+  mention_rank: number | null;
   is_top_3: boolean;
   is_first: boolean;
   mentioned: boolean;
