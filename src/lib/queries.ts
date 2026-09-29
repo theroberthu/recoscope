@@ -58,7 +58,7 @@ export async function getCategoriesWithRuns(): Promise<
 > {
   const sql = getDb();
   const rows = await sql`
-    SELECT c.*, r.summary AS latest_summary
+    SELECT c.*, rtrim(split_part(r.summary, 'COLLECTION_METADATA_JSON:', 1)) AS latest_summary
     FROM categories c
     JOIN LATERAL (
       SELECT summary FROM runs
