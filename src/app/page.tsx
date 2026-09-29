@@ -116,10 +116,10 @@ export default async function HomePage() {
             </div>
             <div className="glow-card rounded-xl border border-white/10 bg-surface p-6">
               <p className="font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-cyan/60">Analyze</p>
-              <p className="mt-3 text-[14px] font-semibold text-white">Longitudinal, human-reviewed findings</p>
+              <p className="mt-3 text-[14px] font-semibold text-white">Longitudinal findings with review context</p>
               <p className="mt-2 text-[13px] leading-[1.7] text-white/40">
                 Longitudinal patterns, model differences, and recommendation changes are published
-                through human-reviewed reports.
+                with review status stated on each report.
               </p>
             </div>
           </div>
@@ -294,7 +294,7 @@ export default async function HomePage() {
               </div>
               <p className="text-[14px] font-semibold text-white">Independent and integrity-first</p>
               <p className="mt-2 text-[13px] leading-[1.7] text-white/40">
-                No brand pays to influence rankings. Reports are published only after human review,
+                No brand pays to influence rankings. Each report states whether human review was recorded,
                 and reflect organic model behavior at the time of testing.
               </p>
             </div>

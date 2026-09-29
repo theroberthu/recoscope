@@ -93,16 +93,16 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands, category }: 
       </p>
       <p className="mt-2 text-[13px] text-white/30">
         Mention frequency counts how many times a brand appeared across all AI responses.
-        This differs from top-pick rank, which reflects each model&rsquo;s #1 choice.
+        Numbered comparison slots use mention order, not endorsement or product quality. Unranked mentions still count toward frequency.
       </p>
 
       {hasLabels && (
         <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-[11px] text-white/25">
           <span><span className="font-semibold text-cyan/50">Overall Leader</span> = most total mentions</span>
           <span><span className="font-semibold text-white/40">Tied #1</span> = tied for most mentions</span>
-          <span><span className="font-semibold text-white/40">High Consensus</span> = top 3 in 3+ models</span>
-          <span><span className="font-semibold text-white/40">Top in [Model]</span> = #1 pick by that model only</span>
-          <span><span className="font-semibold text-amber-400/60">Never Top-Picked</span> = high mentions but not in any model&rsquo;s top 3</span>
+          <span><span className="font-semibold text-white/40">Early across models</span> = early mentions across models</span>
+          <span><span className="font-semibold text-white/40">Early in [Model]</span> = earliest slot in that model&rsquo;s comparison</span>
+          <span><span className="font-semibold text-amber-400/60">Outside early mentions</span> = not in the displayed early mentions</span>
         </div>
       )}
 

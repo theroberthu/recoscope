@@ -46,11 +46,11 @@ export function CrossAgentTable({ rows, whatThisMeans, notableAbsents }: CrossAg
             Cross-Agent Comparison
           </p>
           <p className="mt-1 text-[14px] text-white/40">
-            How {rows.length} AI models rank the same category. Hover a brand to trace it across models.
+            Earliest recorded brand mentions across prompts for {rows.length} models. Unranked mentions are excluded; these positions are not endorsements.
           </p>
         </div>
         <p className="hidden font-mono text-[10px] text-white/20 sm:block">
-          {rows.length} agents &middot; top 3 each
+          {rows.length} agents &middot; up to 3 brands each
         </p>
       </div>
 
@@ -64,7 +64,7 @@ export function CrossAgentTable({ rows, whatThisMeans, notableAbsents }: CrossAg
                 {" "}leads in total mentions ({b.mentionCount}) but doesn&rsquo;t appear below.
               </span>
             ))}{" "}
-            High mention volume doesn&rsquo;t always equal top-pick authority.
+            Mention frequency and mention order measure different things.
           </p>
         </div>
       )}
@@ -152,9 +152,9 @@ export function CrossAgentTable({ rows, whatThisMeans, notableAbsents }: CrossAg
         <div className="mt-4 flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full bg-cyan" />
           <p className="text-[13px] text-white/40">
-            All {rows.length} models agree on{" "}
+            All {rows.length} models list{" "}
             <span className="font-semibold text-cyan">{firstPicks[0]}</span>{" "}
-            as the top pick
+            in the first displayed slot
           </p>
         </div>
       )}
