@@ -1,12 +1,13 @@
+import { validRank, buildPromptBreakdown, reviewStatus } from "@/lib/report-ranking.mjs";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArticleSchema, FAQSchema, BreadcrumbSchema } from "@/components/seo/JsonLd";
 import {
   getCategoryBySlug, getLatestRun, getBrandMentions, getRunInsight,
   getPreviousRun, getAllSeasonalRuns, getBrandRankingsForRuns,
-  getAllRunsForCategory, getRunByPeriod, getPromptsForRun,
+  getAllRunsForCategory, getRunByPeriod, getPromptsForRun, getAgentResponses,
 } from "@/lib/queries";
-import type { BrandMention, RunInsight, TrackerType, Run } from "@/lib/types";
+import type { BrandMention, RunInsight, TrackerType, Run, AgentResponse } from "@/lib/types";
 import { cleanText } from "@/lib/clean-text";
 import { ScrollFade } from "@/components/home/ScrollFade";
 import { TrendChart } from "@/components/seasonal/TrendChart";
@@ -131,16 +132,16 @@ function buildTopBrands(
     const firstPickAgents = brandFirstPickAgents.get(brand.name) ?? [];
 
     if (brand.mentionCount === topCount && tiedAtTop.length === 1 && inTop3Count === 0) {
-      label = "Most Mentioned, Never Top-Picked";
+      label = "Most Mentioned";
     } else if (brand.mentionCount === topCount && tiedAtTop.length === 1) {
       label = "Overall Leader";
     } else if (brand.mentionCount === topCount && tiedAtTop.length > 1) {
       label = "Tied #1";
     } else if (inTop3Count >= Math.max(totalAgents - 1, 2)) {
-      label = "High Consensus";
+      label = "Early across models";
     } else if (firstPickAgents.length === 1) {
       const displayName = firstPickAgents[0].charAt(0).toUpperCase() + firstPickAgents[0].slice(1);
-      label = `Top in ${displayName}`;
+      label = `Early in ${displayName}`;
     }
     return { name: brand.name, mentionCount: brand.mentionCount, label, neverTopPicked: inTop3Count === 0 };
   });
@@ -151,11 +152,10 @@ function buildAgentRows(mentions: BrandMention[]) {
   const agentBrandRank = new Map<string, Map<string, number>>();
 
   for (const m of mentions) {
-    const isTop3 = toBool(m.is_top_3) || Number(m.mention_rank) <= 3;
-    if (!isTop3) continue;
+    const rank = validRank(m.mention_rank);
+    if (rank === null || rank > 3) continue;
 
     const brandMap = agentBrandRank.get(m.agent_name) ?? new Map<string, number>();
-    const rank = Number(m.mention_rank);
     const current = brandMap.get(m.brand_name_normalized);
 
     if (current === undefined || rank < current) {
@@ -410,18 +410,21 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
   }
 
   let mentions: BrandMention[] = [];
+  let responses: AgentResponse[] = [];
   let insight: RunInsight | null = null;
   let periodLabel = "—";
   let periodDisplay = "—";
   let prompts: { prompt_number: number; prompt_text: string }[] = [];
 
   if (run) {
-    const [realMentions, realInsight, runPrompts] = await Promise.all([
+    const [realMentions, realInsight, runPrompts, runResponses] = await Promise.all([
       getBrandMentions(run.id),
       getRunInsight(run.id),
       getPromptsForRun(run.id),
+      getAgentResponses(run.id),
     ]);
     mentions = realMentions;
+    responses = runResponses;
     insight = realInsight;
     periodLabel = run.period_label;
     periodDisplay = formatRunDate(run.run_date);
@@ -518,26 +521,7 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
     .map((b) => ({ name: b.name, mentionCount: b.mentionCount }));
 
   // --- Per-prompt breakdown data ---
-  const promptBreakdownData = prompts.map((p) => {
-    const promptMentions = mentions.filter((m) => Number(m.prompt_number) === p.prompt_number);
-    // Best rank per brand per agent for this prompt
-    const agentMap = new Map<string, Map<string, number>>();
-    for (const m of promptMentions) {
-      const brandMap = agentMap.get(m.agent_name) ?? new Map<string, number>();
-      const rank = Number(m.mention_rank);
-      const cur = brandMap.get(m.brand_name_normalized);
-      if (cur === undefined || rank < cur) brandMap.set(m.brand_name_normalized, rank);
-      agentMap.set(m.agent_name, brandMap);
-    }
-    return {
-      promptNumber: p.prompt_number,
-      promptText: p.prompt_text,
-      agentBrands: Array.from(agentMap.entries()).map(([agent, brandMap]) => ({
-        agent,
-        brands: Array.from(brandMap.entries()).sort((a, b) => a[1] - b[1]).slice(0, 3).map(([b]) => b),
-      })),
-    };
-  });
+  const promptBreakdownData = buildPromptBreakdown(prompts, mentions, responses);
 
   // Budget insights: compare prompt 1+3 vs prompt 2
   let budgetInsights: { budgetOnly: string[]; disappearUnderBudget: string[] } | null = null;
@@ -575,7 +559,7 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
 
   const faqItems = [
     { question: `What ${catName.toLowerCase()} does AI recommend most?`, answer: `${topBrand} leads with ${topMentions} total mentions across ChatGPT, Claude, Gemini, and Perplexity in our latest benchmark.` },
-    { question: `Which ${catName.toLowerCase()} brand ranks #1 across all AI models?`, answer: topBrands.find((b) => b.label === "Overall Leader")?.name ? `${topBrands.find((b) => b.label === "Overall Leader")!.name} is the overall leader by mention frequency.` : `No single brand dominates across all models. ${topBrand} leads in total mentions but different models have different #1 picks.` },
+    { question: `Which ${catName.toLowerCase()} brand ranks #1 across all AI models?`, answer: topBrands.find((b) => b.label === "Overall Leader")?.name ? `${topBrands.find((b) => b.label === "Overall Leader")!.name} is the overall leader by mention frequency.` : `No single brand dominates across all models. ${topBrand} leads in total mentions but different models have different early mentions.` },
     { question: `Why does ChatGPT recommend different ${catName.toLowerCase()} than Claude?`, answer: clean.crossAgentDifferences ?? "Each model draws from different training data and commercial integrations, leading to divergent recommendations." },
     { question: `What ${catName.toLowerCase()} brands are invisible to AI?`, answer: clean.marketGaps ?? "Many popular retail brands don't appear in AI recommendations. Our benchmark identifies which brands are missing and why." },
     { question: `How often is ${topBrand} recommended by AI?`, answer: `${topBrand} appeared ${topMentions} times across all agent responses in our latest ${catName.toLowerCase()} benchmark.` },
@@ -788,7 +772,7 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
             </div>
             <div className="flex items-baseline justify-between border-b border-white/5 pb-3">
               <dt className="text-[13px] text-white/40">Review status</dt>
-              <dd className="font-mono text-[13px] text-white/60">Published after human review</dd>
+              <dd className="font-mono text-[13px] text-white/60">{reviewStatus(insight?.reviewed_by_human)}</dd>
             </div>
             <div className="flex items-baseline justify-between border-b border-white/5 pb-3 sm:col-span-2">
               <dt className="text-[13px] text-white/40">Models included</dt>

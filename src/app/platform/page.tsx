@@ -106,7 +106,7 @@ export default async function PlatformPage() {
           </h1>
           <p className="mt-6 max-w-2xl text-[17px] leading-relaxed text-white/40">
             RecoScope evaluates how leading AI systems recommend products, converts unstructured
-            responses into normalized longitudinal data, and publishes human-reviewed evidence about
+            responses into normalized longitudinal data, and publishes evidence with report-level review status about
             AI-driven product discovery.
           </p>
         </div>

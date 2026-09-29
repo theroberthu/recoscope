@@ -51,10 +51,10 @@ export function TrendChart({ lines, weeks }: TrendChartProps) {
   return (
     <div>
       <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/50">
-        Rank Trend
+        Mention Frequency Trend
       </p>
       <p className="mt-1 text-[14px] text-white/40">
-        How top brands moved week over week. Rank 1 is the top position.
+        Brands ordered by mention count in each run. Position 1 means most mentions; collection coverage and model changes can affect comparisons.
       </p>
 
       <div className="mt-6 overflow-x-auto rounded-xl border border-white/10 bg-surface p-4">

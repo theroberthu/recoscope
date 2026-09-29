@@ -6,7 +6,7 @@ interface PromptBreakdownProps {
   prompts: {
     promptNumber: number;
     promptText: string;
-    agentBrands: { agent: string; brands: string[] }[];
+    agentBrands: { agent: string; brands: string[]; status?: string | null }[];
   }[];
   budgetInsights: {
     budgetOnly: string[];
@@ -42,7 +42,7 @@ export function PromptBreakdown({ prompts, budgetInsights }: PromptBreakdownProp
               Results by prompt type
             </p>
             <p className="mt-1 text-[13px] text-white/25">
-              AI models recommend different brands depending on how the question is asked.
+              First-mention order within each response, not an endorsement ranking. Unranked mentions are excluded from numbered slots.
             </p>
           </div>
 
@@ -69,7 +69,7 @@ export function PromptBreakdown({ prompts, budgetInsights }: PromptBreakdownProp
                     {p.agentBrands.map((row, i) => (
                       <tr key={row.agent} className={i < p.agentBrands.length - 1 ? "border-b border-white/[0.03]" : ""}>
                         <td className="px-4 py-2.5 font-mono text-[12px] font-semibold text-white/40">{row.agent}</td>
-                        {[0, 1, 2].map((idx) => (
+                        {row.status ? <td colSpan={3} className="px-4 py-2.5 text-[12px] text-white/50">{row.status}</td> : [0, 1, 2].map((idx) => (
                           <td key={idx} className={`px-4 py-2.5 text-[12px] ${idx === 0 ? "text-white/50" : "text-white/25"}`}>
                             {row.brands[idx] ?? "\u2014"}
                           </td>
@@ -85,13 +85,13 @@ export function PromptBreakdown({ prompts, budgetInsights }: PromptBreakdownProp
                 <div className="mt-3 space-y-1.5 text-[12px]">
                   {budgetInsights.budgetOnly.length > 0 && (
                     <p className="text-cyan/40">
-                      Only under budget constraints:{" "}
+                      Only in budget top mentions:{" "}
                       <span className="text-cyan/60">{budgetInsights.budgetOnly.join(", ")}</span>
                     </p>
                   )}
                   {budgetInsights.disappearUnderBudget.length > 0 && (
                     <p className="text-amber-400/40">
-                      Disappear under budget constraints:{" "}
+                      Outside budget top mentions:{" "}
                       <span className="text-amber-400/60">{budgetInsights.disappearUnderBudget.join(", ")}</span>
                     </p>
                   )}
