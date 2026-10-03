@@ -61,7 +61,7 @@ export function CrossAgentTable({ rows, whatThisMeans, notableAbsents }: CrossAg
             {notableAbsents.map((b) => (
               <span key={b.name}>
                 <span className="font-semibold text-amber-400/80">{b.name}</span>
-                {" "}leads in total mentions ({b.mentionCount}) but doesn&rsquo;t appear below.
+                {" "}has a mention count of {b.mentionCount} but is outside the displayed comparison.
               </span>
             ))}{" "}
             Mention frequency and mention order measure different things.
@@ -136,7 +136,7 @@ export function CrossAgentTable({ rows, whatThisMeans, notableAbsents }: CrossAg
                       <span key={b.name} className="flex items-center gap-1.5 text-amber-400/50">
                         <span className="font-mono font-semibold">{b.name}</span>
                         <span className="text-white/20">&middot;</span>
-                        <span className="text-white/25">{b.mentionCount} mentions, outside top 3 for all models</span>
+                        <span className="text-white/25">{b.mentionCount} mentions, outside the displayed comparison</span>
                       </span>
                     ))}
                   </div>
