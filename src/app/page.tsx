@@ -279,19 +279,19 @@ export default async function HomePage() {
             How the models are evaluated
           </p>
           <p className="mt-3 max-w-xl text-[14px] text-white/60">
-            Each model is classified by commercial interest, so the data shows not just what AI
-            recommends, but why different models diverge.
+            Each assistant is measured separately. The benchmark shows where their answers differ;
+            it does not establish the hidden causes of those differences.
           </p>
           <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div className="glow-card rounded-xl border border-white/10 bg-surface p-6">
               <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-cyan/10 text-cyan">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.5"/><path d="M10 6v4l2.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
               </div>
-              <p className="text-[14px] font-semibold text-white">Classified by commercial interest</p>
+              <p className="text-[14px] font-semibold text-white">Models compared separately</p>
               <p className="mt-2 text-[13px] leading-[1.7] text-white/60">
-                Independent models (Claude), search-grounded models (Perplexity), and
-                commerce-influenced models (ChatGPT, Gemini) are separated to reveal how commercial
-                integrations shift what gets recommended.
+                ChatGPT, Claude, Gemini, and Perplexity are recorded separately, with model,
+                tier, and response context retained. Differences are observations, not proof that
+                commercial integrations caused a recommendation.
               </p>
             </div>
             <div className="glow-card rounded-xl border border-white/10 bg-surface p-6">
@@ -301,7 +301,8 @@ export default async function HomePage() {
               <p className="text-[14px] font-semibold text-white">Standardized and comparable</p>
               <p className="mt-2 text-[13px] leading-[1.7] text-white/60">
                 The same prompts run across every model on a recurring schedule. Responses are parsed
-                for brand mentions, rank position, and frequency to build comparable datasets over time.
+                for brand mentions and explicitly supported ranks. Collection and model changes
+                are recorded so readers can assess comparisons over time.
               </p>
             </div>
             <div className="glow-card rounded-xl border border-white/10 bg-surface p-6">
@@ -311,7 +312,7 @@ export default async function HomePage() {
               <p className="text-[14px] font-semibold text-white">Independent and integrity-first</p>
               <p className="mt-2 text-[13px] leading-[1.7] text-white/60">
                 No brand pays to influence rankings. Each report states whether human review was recorded,
-                and reflect organic model behavior at the time of testing.
+                and results reflect observed model behavior at the time of testing.
               </p>
             </div>
           </div>
