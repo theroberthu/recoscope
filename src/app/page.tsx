@@ -38,14 +38,14 @@ export default async function HomePage() {
       {/* 1. Hero — what RecoScope is */}
       <section className="mx-auto max-w-5xl px-6 pb-8 pt-20 sm:pt-28">
         <div className="max-w-3xl">
-          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/60">
+          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/70">
             Independent AI Commerce Research Platform
           </p>
 
           <h1 className="mt-5 bg-gradient-to-r from-white to-cyan/70 bg-clip-text text-4xl font-bold leading-[1.15] tracking-tight text-transparent sm:text-5xl lg:text-6xl">
             See How AI Models Recommend Products
           </h1>
-          <p className="mt-6 max-w-2xl text-[17px] leading-relaxed text-white/40">
+          <p className="mt-6 max-w-2xl text-[17px] leading-relaxed text-white/60">
             RecoScope is a live recommendation intelligence system that benchmarks product
             recommendations across ChatGPT, Claude, Gemini, and Perplexity, normalizes the
             results, and tracks how visibility changes over time.
@@ -56,16 +56,16 @@ export default async function HomePage() {
           <a href="/tracker" className="inline-block rounded-full bg-cyan px-8 py-3.5 text-center font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90">
             Explore the Benchmark
           </a>
-          <a href="/methodology" className="inline-block rounded-full border border-cyan/30 bg-cyan/10 px-8 py-3.5 text-center font-mono text-[13px] font-bold tracking-tight text-cyan transition-all hover:bg-cyan/20 hover:shadow-[0_0_20px_rgba(0,212,170,0.2)]">
-            Read the Methodology
+          <a href="/platform" className="inline-block rounded-full border border-cyan/30 bg-cyan/10 px-8 py-3.5 text-center font-mono text-[13px] font-bold tracking-tight text-cyan transition-all hover:bg-cyan/20 hover:shadow-[0_0_20px_rgba(0,212,170,0.2)]">
+            See How I Built It
           </a>
         </div>
-        <p className="mt-4 text-[13px] text-white/40">
+        <p className="mt-4 text-[13px] text-white/60">
           Designed, built, and operated by{" "}
-          <a href="/about" className="text-cyan/60 underline underline-offset-2 transition-colors hover:text-cyan">
+          <a href="/about" className="text-cyan/70 underline underline-offset-2 transition-colors hover:text-cyan">
             Robert Hu
           </a>
-          .
+          . More than 20 years in commerce, applied to AI product discovery.
         </p>
       </section>
 
@@ -74,19 +74,35 @@ export default async function HomePage() {
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
           <div className="rounded-xl border border-white/5 bg-surface px-5 py-4 text-center">
             <p className="font-mono text-2xl font-bold text-cyan">{stats.brandsTracked}</p>
-            <p className="mt-1 text-[11px] text-white/25">Brands Tracked</p>
+            <p className="mt-1 text-[11px] text-white/50">Brands Tracked</p>
           </div>
           <div className="rounded-xl border border-white/5 bg-surface px-5 py-4 text-center">
             <p className="font-mono text-2xl font-bold text-cyan">4</p>
-            <p className="mt-1 text-[11px] text-white/25">AI Models</p>
+            <p className="mt-1 text-[11px] text-white/50">AI Models</p>
           </div>
           <div className="rounded-xl border border-white/5 bg-surface px-5 py-4 text-center">
             <p className="font-mono text-2xl font-bold text-cyan">{stats.categoriesActive}</p>
-            <p className="mt-1 text-[11px] text-white/25">Categories</p>
+            <p className="mt-1 text-[11px] text-white/50">Categories</p>
           </div>
           <div className="rounded-xl border border-white/5 bg-surface px-5 py-4 text-center">
             <p className="font-mono text-2xl font-bold text-cyan">{stats.runsCompleted}</p>
-            <p className="mt-1 text-[11px] text-white/25">Benchmark Runs</p>
+            <p className="mt-1 text-[11px] text-white/50">Benchmark Runs</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-5xl px-6 pb-12">
+        <div className="rounded-2xl border border-cyan/20 bg-cyan/5 p-6 sm:p-8">
+          <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-cyan/70">The person behind the benchmark</p>
+          <h2 className="mt-3 text-2xl font-bold tracking-tight text-white">Commerce experience. A working AI research product.</h2>
+          <p className="mt-4 max-w-2xl text-[15px] leading-[1.8] text-white/60">
+            I am Robert Hu. I built RecoScope to turn questions about AI product discovery into
+            evidence that brands, retailers, and technology teams can inspect. I am exploring
+            AI commerce, strategy, and partnerships roles.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-[14px] font-medium text-cyan">
+            <a href="/about" className="underline underline-offset-4 hover:text-white">My background & contribution &rarr;</a>
+            <a href="https://www.linkedin.com/in/theroberthu" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-white">Connect on LinkedIn &rarr;</a>
           </div>
         </div>
       </section>
@@ -94,37 +110,37 @@ export default async function HomePage() {
       {/* 3. How the system works — Collect / Normalize / Analyze */}
       <section className="border-t border-white/5">
         <div className="mx-auto max-w-5xl px-6 py-16">
-          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/50">
             How the system works
           </p>
           <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div className="glow-card rounded-xl border border-white/10 bg-surface p-6">
-              <p className="font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-cyan/60">Collect</p>
+              <p className="font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-cyan/70">Collect</p>
               <p className="mt-3 text-[14px] font-semibold text-white">The same prompts, across every model</p>
-              <p className="mt-2 text-[13px] leading-[1.7] text-white/40">
+              <p className="mt-2 text-[13px] leading-[1.7] text-white/60">
                 The same commercial-intent prompts are evaluated across multiple AI systems, in the
                 same time window, so results are comparable rather than anecdotal.
               </p>
             </div>
             <div className="glow-card rounded-xl border border-white/10 bg-surface p-6">
-              <p className="font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-cyan/60">Normalize</p>
+              <p className="font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-cyan/70">Normalize</p>
               <p className="mt-3 text-[14px] font-semibold text-white">Raw responses become structured data</p>
-              <p className="mt-2 text-[13px] leading-[1.7] text-white/40">
+              <p className="mt-2 text-[13px] leading-[1.7] text-white/60">
                 Raw recommendations are transformed into consistent brand, ranking, and category
                 data, with brand names normalized so the same brand is counted as one.
               </p>
             </div>
             <div className="glow-card rounded-xl border border-white/10 bg-surface p-6">
-              <p className="font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-cyan/60">Analyze</p>
+              <p className="font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-cyan/70">Analyze</p>
               <p className="mt-3 text-[14px] font-semibold text-white">Longitudinal findings with review context</p>
-              <p className="mt-2 text-[13px] leading-[1.7] text-white/40">
+              <p className="mt-2 text-[13px] leading-[1.7] text-white/60">
                 Longitudinal patterns, model differences, and recommendation changes are published
                 with review status stated on each report.
               </p>
             </div>
           </div>
           <p className="mt-8 text-[13px]">
-            <a href="/platform" className="text-cyan/60 transition-colors hover:text-cyan">
+            <a href="/platform" className="text-cyan/70 transition-colors hover:text-cyan">
               Explore the platform &rarr;
             </a>
           </p>
@@ -142,17 +158,17 @@ export default async function HomePage() {
               <h2 className="mt-4 text-2xl font-bold tracking-tight text-white sm:text-3xl">
                 Frequent mentions do not guarantee a top recommendation
               </h2>
-              <p className="mt-4 text-[14px] leading-relaxed text-white/40">
+              <p className="mt-4 text-[14px] leading-relaxed text-white/60">
                 A model can mention a brand as an alternative, a comparison, or a poor fit.
                 Counting those mentions tells us how visible the brand is; it does not tell us
                 whether the model recommends it first.
               </p>
-              <p className="mt-4 text-[13px] leading-relaxed text-white/30">
+              <p className="mt-4 text-[13px] leading-relaxed text-white/50">
                 RecoScope reports mention frequency alongside response-level rankings. Compare
                 the broad discovery, budget, and brand-comparison prompts separately, and check
                 each report&rsquo;s collection and review notes before interpreting a change.
               </p>
-              <a href="/tracker/running-shoes" className="mt-6 inline-block font-mono text-[12px] font-medium text-cyan/60 transition-colors hover:text-cyan">
+              <a href="/tracker/running-shoes" className="mt-6 inline-block font-mono text-[12px] font-medium text-cyan/70 transition-colors hover:text-cyan">
                 Explore the latest running shoes benchmark &rarr;
               </a>
             </div>
@@ -185,7 +201,7 @@ export default async function HomePage() {
           {/* Live data + sample */}
           <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
             <div>
-              <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+              <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/50">
                 Top brands by AI mention volume
               </p>
               <BarRace brands={heroBrands} />
@@ -194,7 +210,7 @@ export default async function HomePage() {
               <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/50">
                 Sample benchmark output
               </p>
-              <p className="mt-3 text-[13px] leading-relaxed text-white/40">
+              <p className="mt-3 text-[13px] leading-relaxed text-white/60">
                 Each report captures what every model recommended, in order, for the same set of
                 prompts. Lawn Fertilizer, week of Apr 8, 2026.
               </p>
@@ -202,7 +218,7 @@ export default async function HomePage() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-white/5">
-                      <th className="px-3 py-3 text-left font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-white/25 sm:px-6 sm:py-4 sm:text-[11px]">Agent</th>
+                      <th className="px-3 py-3 text-left font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-white/50 sm:px-6 sm:py-4 sm:text-[11px]">Agent</th>
                       <th className="px-3 py-3 text-left font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-cyan/40 sm:px-6 sm:py-4 sm:text-[11px]">#1</th>
                       <th className="px-3 py-3 text-left font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-white/20 sm:px-6 sm:py-4 sm:text-[11px]">#2</th>
                       <th className="px-3 py-3 text-left font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-white/20 sm:px-6 sm:py-4 sm:text-[11px]">#3</th>
@@ -213,14 +229,14 @@ export default async function HomePage() {
                       <tr key={row.agent} className={i < SAMPLE_TABLE.length - 1 ? "border-b border-white/5" : ""}>
                         <td className="px-3 py-3 font-mono text-[11px] font-semibold text-white/60 sm:px-6 sm:py-4 sm:text-[13px]">{row.agent}</td>
                         {row.picks.map((brand, idx) => (
-                          <td key={idx} className={`px-3 py-3 text-[11px] sm:px-6 sm:py-4 sm:text-[13px] ${idx === 0 ? "font-medium text-white/70" : "text-white/30"}`}>{brand}</td>
+                          <td key={idx} className={`px-3 py-3 text-[11px] sm:px-6 sm:py-4 sm:text-[13px] ${idx === 0 ? "font-medium text-white/70" : "text-white/50"}`}>{brand}</td>
                         ))}
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-              <a href="/tracker/lawn-fertilizer" className="mt-4 inline-block font-mono text-[12px] font-medium text-cyan/60 transition-colors hover:text-cyan">
+              <a href="/tracker/lawn-fertilizer" className="mt-4 inline-block font-mono text-[12px] font-medium text-cyan/70 transition-colors hover:text-cyan">
                 See the full report &rarr;
               </a>
             </div>
@@ -229,13 +245,13 @@ export default async function HomePage() {
           {/* Category directory */}
           {categories.length > 0 && (
             <div className="mt-16">
-              <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+              <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/50">
                 Live Benchmarks
               </p>
               <h2 className="mt-4 max-w-2xl text-2xl font-bold tracking-tight text-white sm:text-3xl">
                 Every category is tracked over time, not measured once
               </h2>
-              <p className="mt-4 max-w-xl text-[14px] leading-relaxed text-white/40">
+              <p className="mt-4 max-w-xl text-[14px] leading-relaxed text-white/60">
                 Each category is benchmarked on a recurring schedule across ChatGPT, Claude, Gemini,
                 and Perplexity, so the data shows how recommendations move, not just where they stand today.
                 The tracker, research, and prompt pages are all outputs of the same shared longitudinal system.
@@ -259,10 +275,10 @@ export default async function HomePage() {
       {/* 6. Methodology and integrity */}
       <section className="border-t border-white/5">
         <div className="mx-auto max-w-5xl px-6 py-16">
-          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/50">
             How the models are evaluated
           </p>
-          <p className="mt-3 max-w-xl text-[14px] text-white/40">
+          <p className="mt-3 max-w-xl text-[14px] text-white/60">
             Each model is classified by commercial interest, so the data shows not just what AI
             recommends, but why different models diverge.
           </p>
@@ -272,7 +288,7 @@ export default async function HomePage() {
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.5"/><path d="M10 6v4l2.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
               </div>
               <p className="text-[14px] font-semibold text-white">Classified by commercial interest</p>
-              <p className="mt-2 text-[13px] leading-[1.7] text-white/40">
+              <p className="mt-2 text-[13px] leading-[1.7] text-white/60">
                 Independent models (Claude), search-grounded models (Perplexity), and
                 commerce-influenced models (ChatGPT, Gemini) are separated to reveal how commercial
                 integrations shift what gets recommended.
@@ -283,7 +299,7 @@ export default async function HomePage() {
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="8" width="3" height="9" rx="1" fill="currentColor" opacity="0.5"/><rect x="8.5" y="5" width="3" height="12" rx="1" fill="currentColor" opacity="0.7"/><rect x="14" y="3" width="3" height="14" rx="1" fill="currentColor"/></svg>
               </div>
               <p className="text-[14px] font-semibold text-white">Standardized and comparable</p>
-              <p className="mt-2 text-[13px] leading-[1.7] text-white/40">
+              <p className="mt-2 text-[13px] leading-[1.7] text-white/60">
                 The same prompts run across every model on a recurring schedule. Responses are parsed
                 for brand mentions, rank position, and frequency to build comparable datasets over time.
               </p>
@@ -293,14 +309,14 @@ export default async function HomePage() {
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3"/><path d="M7 10h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
               </div>
               <p className="text-[14px] font-semibold text-white">Independent and integrity-first</p>
-              <p className="mt-2 text-[13px] leading-[1.7] text-white/40">
+              <p className="mt-2 text-[13px] leading-[1.7] text-white/60">
                 No brand pays to influence rankings. Each report states whether human review was recorded,
                 and reflect organic model behavior at the time of testing.
               </p>
             </div>
           </div>
           <p className="mt-8 text-[13px]">
-            <a href="/methodology" className="text-cyan/60 transition-colors hover:text-cyan">
+            <a href="/methodology" className="text-cyan/70 transition-colors hover:text-cyan">
               Read the full methodology &rarr;
             </a>
           </p>
@@ -313,7 +329,7 @@ export default async function HomePage() {
           <p className="mx-auto max-w-2xl text-[20px] font-semibold leading-[1.4] tracking-tight text-white/80 sm:text-[24px]">
             RecoScope is an independent AI commerce benchmark designed, built, and operated by Robert Hu.
           </p>
-          <p className="mx-auto mt-4 max-w-md text-[14px] leading-relaxed text-white/40">
+          <p className="mx-auto mt-4 max-w-md text-[14px] leading-relaxed text-white/60">
             From system design and data architecture through methodology and published findings.
           </p>
           <a
