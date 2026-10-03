@@ -56,8 +56,8 @@ export default async function HomePage() {
           <a href="/tracker" className="inline-block rounded-full bg-cyan px-8 py-3.5 text-center font-mono text-[13px] font-bold tracking-tight text-void transition-colors hover:bg-cyan/90">
             Explore the Benchmark
           </a>
-          <a href="/methodology" className="inline-block rounded-full border border-cyan/30 bg-cyan/10 px-8 py-3.5 text-center font-mono text-[13px] font-bold tracking-tight text-cyan transition-all hover:bg-cyan/20 hover:shadow-[0_0_20px_rgba(0,212,170,0.2)]">
-            Read the Methodology
+          <a href="/platform" className="inline-block rounded-full border border-cyan/30 bg-cyan/10 px-8 py-3.5 text-center font-mono text-[13px] font-bold tracking-tight text-cyan transition-all hover:bg-cyan/20 hover:shadow-[0_0_20px_rgba(0,212,170,0.2)]">
+            See How I Built It
           </a>
         </div>
         <p className="mt-4 text-[13px] text-white/40">
@@ -65,7 +65,7 @@ export default async function HomePage() {
           <a href="/about" className="text-cyan/60 underline underline-offset-2 transition-colors hover:text-cyan">
             Robert Hu
           </a>
-          .
+          . More than 20 years in commerce, applied to AI product discovery.
         </p>
       </section>
 
@@ -87,6 +87,22 @@ export default async function HomePage() {
           <div className="rounded-xl border border-white/5 bg-surface px-5 py-4 text-center">
             <p className="font-mono text-2xl font-bold text-cyan">{stats.runsCompleted}</p>
             <p className="mt-1 text-[11px] text-white/25">Benchmark Runs</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-5xl px-6 pb-12">
+        <div className="rounded-2xl border border-cyan/20 bg-cyan/5 p-6 sm:p-8">
+          <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-cyan/70">The person behind the benchmark</p>
+          <h2 className="mt-3 text-2xl font-bold tracking-tight text-white">Commerce experience. A working AI research product.</h2>
+          <p className="mt-4 max-w-2xl text-[15px] leading-[1.8] text-white/60">
+            I am Robert Hu. I built RecoScope to turn questions about AI product discovery into
+            evidence that brands, retailers, and technology teams can inspect. I am exploring
+            AI commerce, strategy, and partnerships roles.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-[14px] font-medium text-cyan">
+            <a href="/about" className="underline underline-offset-4 hover:text-white">My background & contribution &rarr;</a>
+            <a href="https://www.linkedin.com/in/theroberthu" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-white">Connect on LinkedIn &rarr;</a>
           </div>
         </div>
       </section>
