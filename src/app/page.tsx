@@ -131,48 +131,48 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 4. A current finding */}
+      {/* 4. How to read the benchmark */}
       <section className="border-t border-white/5">
         <div className="mx-auto max-w-5xl px-6 py-16">
           <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
             <div>
               <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-amber-400/60">
-                A Finding From The Data
+                Reading The Benchmark
               </p>
               <h2 className="mt-4 text-2xl font-bold tracking-tight text-white sm:text-3xl">
-                Marketplace rank does not predict AI visibility
+                Frequent mentions do not guarantee a top recommendation
               </h2>
               <p className="mt-4 text-[14px] leading-relaxed text-white/40">
-                AI models recommend brands based on different signals than marketplace search.
-                A category-leading product can be almost entirely absent from AI recommendations.
+                A model can mention a brand as an alternative, a comparison, or a poor fit.
+                Counting those mentions tells us how visible the brand is; it does not tell us
+                whether the model recommends it first.
               </p>
               <p className="mt-4 text-[13px] leading-relaxed text-white/30">
-                In the running shoes benchmark, Nike leads in total mentions but no model ranks it
-                in its top 3. Meanwhile ASICS and Brooks, with smaller marketplace share, dominate
-                the AI picks. That gap is what the platform is built to measure.
+                RecoScope reports mention frequency alongside response-level rankings. Compare
+                the broad discovery, budget, and brand-comparison prompts separately, and check
+                each report&rsquo;s collection and review notes before interpreting a change.
               </p>
               <a href="/tracker/running-shoes" className="mt-6 inline-block font-mono text-[12px] font-medium text-cyan/60 transition-colors hover:text-cyan">
-                See the running shoes benchmark &rarr;
+                Explore the latest running shoes benchmark &rarr;
               </a>
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-1">
               <div className="rounded-xl border border-green-500/20 bg-green-500/5 p-6">
-                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-green-400/60">Marketplace Best Sellers</p>
-                <p className="mt-4 text-3xl font-bold text-green-400">Nike</p>
-                <p className="mt-1 text-[14px] text-green-400/60">#1 in Running Shoes</p>
-                <div className="mt-4 h-2 rounded-full bg-green-400/10">
-                  <div className="h-2 w-full rounded-full bg-green-400/40" />
-                </div>
-                <p className="mt-2 text-[12px] text-green-400/40">Marketplace visibility: dominant</p>
+                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-green-400/60">Mention Frequency</p>
+                <p className="mt-4 text-3xl font-bold text-green-400">How often?</p>
+                <p className="mt-2 text-[14px] leading-relaxed text-green-400/60">
+                  How many responses include a brand, including comparisons and unranked mentions.
+                </p>
+                <p className="mt-4 text-[12px] text-green-400/40">Measures presence across responses</p>
               </div>
               <div className="rounded-xl border border-amber-400/20 bg-amber-400/5 p-6">
-                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-amber-400/60">AI Recommendations</p>
-                <p className="mt-4 text-3xl font-bold text-amber-400">Nike</p>
-                <p className="mt-1 text-[14px] text-amber-400/60">Not in any model&rsquo;s top 3</p>
-                <div className="mt-4 h-2 rounded-full bg-amber-400/10">
-                  <div className="h-2 w-[8%] rounded-full bg-amber-400/40" />
-                </div>
-                <p className="mt-2 text-[12px] text-amber-400/40">AI visibility: nearly invisible</p>
+                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-amber-400/60">Response-Level Rank</p>
+                <p className="mt-4 text-3xl font-bold text-amber-400">Which position?</p>
+                <p className="mt-2 text-[14px] leading-relaxed text-amber-400/60">
+                  A brand&rsquo;s recorded position within an individual response. Unranked mentions
+                  contribute to frequency without receiving a numbered slot.
+                </p>
+                <p className="mt-4 text-[12px] text-amber-400/40">Check the prompt and ranking context</p>
               </div>
             </div>
           </div>
