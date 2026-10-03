@@ -95,13 +95,13 @@ export default async function PlatformPage() {
       {/* 1. Hero */}
       <section className="mx-auto max-w-5xl px-6 pb-8 pt-20 sm:pt-28">
         <div className="max-w-3xl">
-          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/60">
+          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/70">
             Project Case Study · Built and Operated by Robert Hu
           </p>
           <h1 className="mt-5 bg-gradient-to-r from-white to-cyan/70 bg-clip-text text-4xl font-bold leading-[1.15] tracking-tight text-transparent sm:text-5xl">
             From a commerce question to a working AI benchmark
           </h1>
-          <p className="mt-6 max-w-2xl text-[17px] leading-relaxed text-white/40">
+          <p className="mt-6 max-w-2xl text-[17px] leading-relaxed text-white/60">
             Which brands do AI assistants recommend, for which shopper needs, and how does that
             change? I built RecoScope to investigate those questions with repeated prompts,
             structured data, and public reports that people can inspect.
@@ -121,18 +121,18 @@ export default async function PlatformPage() {
       {metrics.length > 1 && (
         <section className="border-t border-white/5">
           <div className="mx-auto max-w-5xl px-6 py-16">
-            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/50">
               Operating scale
             </p>
             <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
               {metrics.map((m) => (
                 <div key={m.label} className="rounded-xl border border-white/5 bg-surface px-4 py-5 text-center">
                   <p className="font-mono text-xl font-bold text-cyan sm:text-2xl">{m.value}</p>
-                  <p className="mt-1.5 text-[11px] leading-tight text-white/25">{m.label}</p>
+                  <p className="mt-1.5 text-[11px] leading-tight text-white/50">{m.label}</p>
                 </div>
               ))}
             </div>
-            <p className="mt-6 text-[12px] text-white/25">
+            <p className="mt-6 text-[12px] text-white/50">
               Figures come from published, public benchmark records. They measure the research corpus, not users, customers, or commercial impact.
             </p>
           </div>
@@ -142,18 +142,18 @@ export default async function PlatformPage() {
       {/* 2. System overview */}
       <section className="border-t border-white/5">
         <div className="mx-auto max-w-5xl px-6 py-16">
-          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/50">
             How the system works
           </p>
           <div className="mt-8 space-y-3">
             {FLOW.map((f, i) => (
               <div key={f.step} className="flex gap-5 rounded-xl border border-white/10 bg-surface p-5 sm:gap-6 sm:p-6">
                 <div className="flex shrink-0 flex-col items-center">
-                  <span className="font-mono text-[11px] font-bold text-cyan/60">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="font-mono text-[11px] font-bold text-cyan/70">{String(i + 1).padStart(2, "0")}</span>
                 </div>
                 <div>
                   <p className="text-[15px] font-semibold text-white">{f.step}</p>
-                  <p className="mt-1.5 text-[13px] leading-[1.7] text-white/40">{f.body}</p>
+                  <p className="mt-1.5 text-[13px] leading-[1.7] text-white/60">{f.body}</p>
                 </div>
               </div>
             ))}
@@ -189,10 +189,10 @@ export default async function PlatformPage() {
       {/* 4. Data model */}
       <section className="border-t border-white/5">
         <div className="mx-auto max-w-5xl px-6 py-16">
-          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/50">
             The data model
           </p>
-          <p className="mt-3 max-w-xl text-[14px] text-white/40">
+          <p className="mt-3 max-w-xl text-[14px] text-white/60">
             Every public output is derived from one normalized model. Each entity connects to the next,
             so a single benchmark run is fully traceable from raw response to published finding.
           </p>
@@ -200,10 +200,10 @@ export default async function PlatformPage() {
             {DATA_MODEL.map((d, i) => (
               <div key={d.entity} className="rounded-xl border border-white/10 bg-surface p-5">
                 <div className="flex items-baseline gap-3">
-                  <span className="font-mono text-[11px] text-white/25">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="font-mono text-[11px] text-white/50">{String(i + 1).padStart(2, "0")}</span>
                   <p className="font-mono text-[13px] font-semibold text-cyan/70">{d.entity}</p>
                 </div>
-                <p className="mt-2 pl-8 text-[13px] leading-[1.7] text-white/40">{d.body}</p>
+                <p className="mt-2 pl-8 text-[13px] leading-[1.7] text-white/60">{d.body}</p>
                 {i < DATA_MODEL.length - 1 && (
                   <p className="mt-3 pl-8 font-mono text-[11px] text-white/20">↓</p>
                 )}
@@ -216,10 +216,10 @@ export default async function PlatformPage() {
       {/* 5. Product decisions */}
       <section className="border-t border-white/5">
         <div className="mx-auto max-w-5xl px-6 py-16">
-          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/50">
             Decisions behind the platform
           </p>
-          <p className="mt-3 max-w-xl text-[14px] text-white/40">
+          <p className="mt-3 max-w-xl text-[14px] text-white/60">
             The system reflects a series of product and operating decisions, each made to keep the
             evidence comparable, auditable, and honest.
           </p>
@@ -227,7 +227,7 @@ export default async function PlatformPage() {
             {DECISIONS.map((d) => (
               <div key={d.title} className="glow-card rounded-xl border border-white/10 bg-surface p-6">
                 <p className="text-[14px] font-semibold text-white">{d.title}</p>
-                <p className="mt-2 text-[13px] leading-[1.7] text-white/40">{d.body}</p>
+                <p className="mt-2 text-[13px] leading-[1.7] text-white/60">{d.body}</p>
               </div>
             ))}
           </div>
@@ -237,28 +237,28 @@ export default async function PlatformPage() {
       {/* 6. Platform outputs */}
       <section className="border-t border-white/5">
         <div className="mx-auto max-w-5xl px-6 py-16">
-          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/50">
             What the system produces
           </p>
-          <p className="mt-3 max-w-xl text-[14px] text-white/40">
+          <p className="mt-3 max-w-xl text-[14px] text-white/60">
             Public research and an example brand analysis, supported by the same measurement system.
           </p>
           <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <Link href="/tracker" className="glow-card block rounded-xl border border-white/10 bg-surface p-6">
               <p className="text-[15px] font-semibold text-white">Tracker &rarr;</p>
-              <p className="mt-2 text-[13px] leading-[1.7] text-white/40">Live category benchmarks with cross-model rankings, trend data, and movement over time.</p>
+              <p className="mt-2 text-[13px] leading-[1.7] text-white/60">Live category benchmarks with cross-model rankings, trend data, and movement over time.</p>
             </Link>
             <Link href="/blog" className="glow-card block rounded-xl border border-white/10 bg-surface p-6">
               <p className="text-[15px] font-semibold text-white">Research &rarr;</p>
-              <p className="mt-2 text-[13px] leading-[1.7] text-white/40">Findings drawn from the dataset: cross-model patterns and how recommendations shift.</p>
+              <p className="mt-2 text-[13px] leading-[1.7] text-white/60">Findings drawn from the dataset: cross-model patterns and how recommendations shift.</p>
             </Link>
             <Link href="/methodology" className="glow-card block rounded-xl border border-white/10 bg-surface p-6">
               <p className="text-[15px] font-semibold text-white">Methodology &rarr;</p>
-              <p className="mt-2 text-[13px] leading-[1.7] text-white/40">How prompts are run, parsed, normalized, and scored, and how models are classified.</p>
+              <p className="mt-2 text-[13px] leading-[1.7] text-white/60">How prompts are run, parsed, normalized, and scored, and how models are classified.</p>
             </Link>
             <Link href="/demo" className="glow-card block rounded-xl border border-white/10 bg-surface p-6">
               <p className="text-[15px] font-semibold text-white">Private analysis &rarr;</p>
-              <p className="mt-2 text-[13px] leading-[1.7] text-white/40">A per-brand visibility report, scored from the same data. See an example output.</p>
+              <p className="mt-2 text-[13px] leading-[1.7] text-white/60">A per-brand visibility report, scored from the same data. See an example output.</p>
             </Link>
           </div>
         </div>
@@ -284,7 +284,7 @@ export default async function PlatformPage() {
       <section className="border-t border-white/5">
         <div className="mx-auto max-w-5xl px-6 py-16">
           <div className="max-w-3xl border-l-2 border-white/10 pl-8">
-            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
+            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/50">
               What RecoScope does not claim
             </p>
             <p className="mt-4 text-[15px] leading-relaxed text-white/50">
