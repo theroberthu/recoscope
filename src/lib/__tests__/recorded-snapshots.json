@@ -1,0 +1,1110 @@
+{
+  "air-purifiers": {
+    "responses": [
+      {
+        "agent_name": "claude",
+        "prompt_number": 1,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 1,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 1,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 2,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 2,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 3,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 2,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 2,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 3,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "raw_response": "[CAPTURED]"
+      }
+    ],
+    "mentions": [
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 1,
+        "brand_name_normalized": "Winix",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 1,
+        "brand_name_normalized": "Blueair",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 1,
+        "brand_name_normalized": "Coway",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 1,
+        "brand_name_normalized": "Levoit",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 1,
+        "brand_name_normalized": "Levoit",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 1,
+        "brand_name_normalized": "Coway",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 1,
+        "brand_name_normalized": "Blueair",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "brand_name_normalized": "Coway",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "brand_name_normalized": "Levoit",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "brand_name_normalized": "Blueair",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 1,
+        "brand_name_normalized": "Coway",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 1,
+        "brand_name_normalized": "Levoit",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 1,
+        "brand_name_normalized": "Dreo",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 1,
+        "brand_name_normalized": "Winix",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 2,
+        "brand_name_normalized": "Levoit",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 2,
+        "brand_name_normalized": "Coway",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 2,
+        "brand_name_normalized": "Winix",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 2,
+        "brand_name_normalized": "Coway",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 2,
+        "brand_name_normalized": "Levoit",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 2,
+        "brand_name_normalized": "Winix",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 2,
+        "brand_name_normalized": "Coway",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 2,
+        "brand_name_normalized": "Levoit",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 2,
+        "brand_name_normalized": "Winix",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 2,
+        "brand_name_normalized": "Levoit",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 2,
+        "brand_name_normalized": "Coway",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "Blueair",
+        "mention_rank": 1,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "Levoit",
+        "mention_rank": 2,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "Coway",
+        "mention_rank": 3,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "Winix",
+        "mention_rank": 4,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "Honeywell",
+        "mention_rank": 5,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 3,
+        "brand_name_normalized": "Levoit",
+        "mention_rank": 1,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 3,
+        "brand_name_normalized": "Blueair",
+        "mention_rank": 2,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 3,
+        "brand_name_normalized": "Coway",
+        "mention_rank": 3,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 3,
+        "brand_name_normalized": "Coway",
+        "mention_rank": 1,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 3,
+        "brand_name_normalized": "Winix",
+        "mention_rank": 2,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 3,
+        "brand_name_normalized": "Levoit",
+        "mention_rank": 3,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 3,
+        "brand_name_normalized": "Blueair",
+        "mention_rank": 4,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 3,
+        "brand_name_normalized": "Dyson",
+        "mention_rank": 5,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "brand_name_normalized": "Coway",
+        "mention_rank": 1,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "brand_name_normalized": "Levoit",
+        "mention_rank": 2,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "brand_name_normalized": "Blueair",
+        "mention_rank": 3,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "brand_name_normalized": "Winix",
+        "mention_rank": 4,
+        "mentioned": true
+      }
+    ]
+  },
+  "standing-desks": {
+    "responses": [
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 1,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 1,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 1,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "raw_response": "[UNAVAILABLE]"
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 2,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 2,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 2,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 2,
+        "raw_response": "[UNAVAILABLE]"
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 3,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 3,
+        "raw_response": "[UNAVAILABLE]"
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "raw_response": "[CAPTURED]"
+      }
+    ],
+    "mentions": [
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 1,
+        "brand_name_normalized": "UPLIFT",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 1,
+        "brand_name_normalized": "Vari",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 1,
+        "brand_name_normalized": "FlexiSpot",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 1,
+        "brand_name_normalized": "UPLIFT",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 1,
+        "brand_name_normalized": "Jarvis",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 1,
+        "brand_name_normalized": "Vari",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 1,
+        "brand_name_normalized": "UPLIFT",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 1,
+        "brand_name_normalized": "Vari",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 1,
+        "brand_name_normalized": "Jarvis",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 2,
+        "brand_name_normalized": "FlexiSpot",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 2,
+        "brand_name_normalized": "UPLIFT",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 2,
+        "brand_name_normalized": "FlexiSpot",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 2,
+        "brand_name_normalized": "UPLIFT",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 2,
+        "brand_name_normalized": "Branch",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 2,
+        "brand_name_normalized": "FlexiSpot",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 2,
+        "brand_name_normalized": "VIVO",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "UPLIFT",
+        "mention_rank": 1,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "FlexiSpot",
+        "mention_rank": 2,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "Vari",
+        "mention_rank": 3,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "Branch",
+        "mention_rank": 4,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "Jarvis",
+        "mention_rank": 5,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 3,
+        "brand_name_normalized": "UPLIFT",
+        "mention_rank": 1,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 3,
+        "brand_name_normalized": "FlexiSpot",
+        "mention_rank": 2,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 3,
+        "brand_name_normalized": "Jarvis",
+        "mention_rank": 3,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "brand_name_normalized": "UPLIFT",
+        "mention_rank": 1,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "brand_name_normalized": "Vari",
+        "mention_rank": 2,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "brand_name_normalized": "Branch",
+        "mention_rank": 3,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "brand_name_normalized": "FlexiSpot",
+        "mention_rank": 4,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "brand_name_normalized": "FEZIBO",
+        "mention_rank": 5,
+        "mentioned": true
+      }
+    ]
+  },
+  "skincare": {
+    "responses": [
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 1,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 1,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 1,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 2,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 2,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 2,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 2,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 3,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 3,
+        "raw_response": "[CAPTURED]"
+      }
+    ],
+    "mentions": [
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 1,
+        "brand_name_normalized": "CeraVe",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 1,
+        "brand_name_normalized": "La Roche-Posay",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 1,
+        "brand_name_normalized": "Differin",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 1,
+        "brand_name_normalized": "Vanicream",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 1,
+        "brand_name_normalized": "The Ordinary",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 1,
+        "brand_name_normalized": "CeraVe",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 1,
+        "brand_name_normalized": "La Roche-Posay",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 1,
+        "brand_name_normalized": "Vanicream",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 1,
+        "brand_name_normalized": "Differin",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 1,
+        "brand_name_normalized": "Neutrogena",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 1,
+        "brand_name_normalized": "EltaMD",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "brand_name_normalized": "La Roche-Posay",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "brand_name_normalized": "CeraVe",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "brand_name_normalized": "Timeless",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "brand_name_normalized": "Maelove",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "brand_name_normalized": "EltaMD",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "brand_name_normalized": "Beauty of Joseon",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "brand_name_normalized": "Differin",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "brand_name_normalized": "Geek & Gorgeous",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "brand_name_normalized": "Neutrogena",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "brand_name_normalized": "Paula's Choice",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 2,
+        "brand_name_normalized": "CeraVe",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 2,
+        "brand_name_normalized": "Vanicream",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 2,
+        "brand_name_normalized": "The Ordinary",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 2,
+        "brand_name_normalized": "CeraVe",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 2,
+        "brand_name_normalized": "La Roche-Posay",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 2,
+        "brand_name_normalized": "Neutrogena",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 2,
+        "brand_name_normalized": "Paula's Choice",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 2,
+        "brand_name_normalized": "CeraVe",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 2,
+        "brand_name_normalized": "Neutrogena",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 2,
+        "brand_name_normalized": "La Roche-Posay",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 2,
+        "brand_name_normalized": "The Ordinary",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 2,
+        "brand_name_normalized": "Differin",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 2,
+        "brand_name_normalized": "CeraVe",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 2,
+        "brand_name_normalized": "Vanicream",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 2,
+        "brand_name_normalized": "Skin Aqua",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 2,
+        "brand_name_normalized": "The Ordinary",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 2,
+        "brand_name_normalized": "Timeless",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 2,
+        "brand_name_normalized": "Trader Joes",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "CeraVe",
+        "mention_rank": 1,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "La Roche-Posay",
+        "mention_rank": 2,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "The Ordinary",
+        "mention_rank": 3,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "Vanicream",
+        "mention_rank": 4,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "Paula's Choice",
+        "mention_rank": 5,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "Cetaphil",
+        "mention_rank": 6,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "Neutrogena",
+        "mention_rank": 7,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 3,
+        "brand_name_normalized": "CeraVe",
+        "mention_rank": 1,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 3,
+        "brand_name_normalized": "La Roche-Posay",
+        "mention_rank": 2,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 3,
+        "brand_name_normalized": "The Ordinary",
+        "mention_rank": 3,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "brand_name_normalized": "CeraVe",
+        "mention_rank": 1,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "brand_name_normalized": "La Roche-Posay",
+        "mention_rank": 2,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "brand_name_normalized": "Paula's Choice",
+        "mention_rank": 3,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "brand_name_normalized": "The Ordinary",
+        "mention_rank": 4,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "brand_name_normalized": "Vanicream",
+        "mention_rank": 5,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 3,
+        "brand_name_normalized": "La Roche-Posay",
+        "mention_rank": 1,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 3,
+        "brand_name_normalized": "Paula's Choice",
+        "mention_rank": 2,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 3,
+        "brand_name_normalized": "CeraVe",
+        "mention_rank": 3,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 3,
+        "brand_name_normalized": "SkinCeuticals",
+        "mention_rank": 4,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 3,
+        "brand_name_normalized": "The Ordinary",
+        "mention_rank": 5,
+        "mentioned": true
+      }
+    ]
+  }
+}
