@@ -1,4 +1,5 @@
 import { getDb } from "./db";
+import { eligibleMentions, mentionCounts, responseCoverage, snapshotFinding } from "./report-ranking.mjs";
 import type {
   AgentResponse,
   BrandMention,
@@ -52,26 +53,38 @@ export async function getCategoryBySlug(
   return (rows[0] as Category) ?? null;
 }
 
-/** Categories that have at least one run, with the latest run's summary. */
-export async function getCategoriesWithRuns(): Promise<
-  (Category & { latest_summary: string | null; tracker_type: string })[]
-> {
+/** Only compact, data-derived findings reach the homepage; collection logs stay internal. */
+export async function getCategoriesWithRuns() {
   const sql = getDb();
-  const rows = await sql`
-    SELECT c.*, rtrim(split_part(r.summary, 'COLLECTION_METADATA_JSON:', 1)) AS latest_summary
+  const categories = await sql`
+    SELECT c.*, r.id AS latest_run_id, r.run_date::text AS latest_run_date
     FROM categories c
     JOIN LATERAL (
-      SELECT summary FROM runs
-      WHERE category_id = c.id
-        AND is_public = true
-        AND status = 'published'
-      ORDER BY run_date DESC
-      LIMIT 1
+      SELECT id, run_date FROM runs
+      WHERE category_id = c.id AND is_public = true AND status = 'published'
+      ORDER BY run_date DESC, id DESC LIMIT 1
     ) r ON true
-    WHERE c.is_active = true
-    ORDER BY c.name
-  `;
-  return rows as (Category & { latest_summary: string | null })[];
+    WHERE c.is_active = true ORDER BY c.name
+  ` as (Category & {latest_run_id: number; latest_run_date: string})[];
+  if (!categories.length) return [];
+  const runIds = categories.map(c => c.latest_run_id);
+  const [mentions, responses] = await Promise.all([
+    sql`SELECT bm.* FROM brand_mentions bm JOIN runs r ON r.id = bm.run_id
+        WHERE r.id = ANY(${runIds}::int[]) AND r.is_public = true AND r.status = 'published'`,
+    // The cards need eligibility, not the contents of private collection notes or raw answers.
+    sql`SELECT ar.id, ar.run_id, ar.agent_name, ar.prompt_number,
+          CASE WHEN raw_response IS NULL OR btrim(raw_response) = ''
+                 OR upper(ltrim(raw_response)) LIKE '[UNAVAILABLE%' OR upper(ltrim(raw_response)) LIKE '[EXCLUDED%'
+               THEN '[UNAVAILABLE]' ELSE '[CAPTURED]' END AS raw_response
+        FROM agent_responses ar JOIN runs r ON r.id = ar.run_id
+        WHERE r.id = ANY(${runIds}::int[]) AND r.is_public = true AND r.status = 'published'`,
+  ]);
+  return categories.map(cat => {
+    const cells = (responses as AgentResponse[]).filter(r => Number(r.run_id) === Number(cat.latest_run_id));
+    const brands = eligibleMentions((mentions as BrandMention[]).filter(m => Number(m.run_id) === Number(cat.latest_run_id)), cells);
+    const coverage = responseCoverage(cells);
+    return {...cat, coverage, finding: snapshotFinding(mentionCounts(brands), coverage)};
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -192,19 +205,24 @@ export async function getCrossAgentPreview(): Promise<
   { agent_name: string; brand: string; rank: number }[]
 > {
   const sql = getDb();
-  // Get all brand mentions from the most recent run for preview
+  // Use only recorded top-three ranks from the comparative prompt in the latest public run.
   const rows = await sql`
     SELECT bm.agent_name,
            bm.brand_name_normalized AS brand,
            bm.mention_rank AS rank
     FROM brand_mentions bm
-    WHERE bm.run_id = (
+    WHERE bm.prompt_number = 3 AND bm.mention_rank BETWEEN 1 AND 3
+      AND bm.mentioned = true
+      AND NOT EXISTS (SELECT 1 FROM agent_responses ar WHERE ar.run_id = bm.run_id
+        AND lower(ar.agent_name) = lower(bm.agent_name) AND ar.prompt_number = bm.prompt_number
+        AND (ar.raw_response IS NULL OR btrim(ar.raw_response) = '' OR upper(ltrim(ar.raw_response)) LIKE '[UNAVAILABLE%' OR upper(ltrim(ar.raw_response)) LIKE '[EXCLUDED%'))
+      AND bm.run_id = (
       SELECT r.id FROM runs r
       JOIN categories c ON c.id = r.category_id
       WHERE c.is_active = true
         AND r.is_public = true
         AND r.status = 'published'
-      ORDER BY r.run_date DESC
+      ORDER BY r.run_date DESC, r.id DESC
       LIMIT 1
     )
     ORDER BY bm.agent_name, bm.mention_rank
@@ -300,14 +318,16 @@ export async function getBrandRankingsForRuns(
   if (runIds.length === 0) return [];
   const sql = getDb();
   const rows = await sql`
-    SELECT
-      run_id,
-      brand_name_normalized AS brand,
-      COUNT(*)::int AS mentions
-    FROM brand_mentions
-    WHERE run_id = ANY(${runIds})
-    GROUP BY run_id, brand_name_normalized
-    ORDER BY run_id, mentions DESC
+    SELECT bm.run_id, bm.brand_name_normalized AS brand,
+      COUNT(DISTINCT (lower(bm.agent_name), bm.prompt_number))::int AS mentions
+    FROM brand_mentions bm JOIN runs r ON r.id = bm.run_id
+    WHERE bm.run_id = ANY(${runIds}::int[]) AND bm.mentioned = true
+      AND r.is_public = true AND r.status = 'published'
+      AND NOT EXISTS (SELECT 1 FROM agent_responses ar WHERE ar.run_id = bm.run_id
+        AND lower(ar.agent_name) = lower(bm.agent_name) AND ar.prompt_number = bm.prompt_number
+        AND (ar.raw_response IS NULL OR btrim(ar.raw_response) = ''
+          OR upper(ltrim(ar.raw_response)) LIKE '[UNAVAILABLE%' OR upper(ltrim(ar.raw_response)) LIKE '[EXCLUDED%'))
+    GROUP BY bm.run_id, bm.brand_name_normalized ORDER BY bm.run_id, mentions DESC
   `;
   return rows as { run_id: number; brand: string; mentions: number }[];
 }
