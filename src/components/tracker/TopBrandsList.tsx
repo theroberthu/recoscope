@@ -136,7 +136,7 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands, category, el
                           : "text-white/20"
                     }`}
                   >
-                    {i + 1}
+                    {brands.findIndex(b => b.mentionCount === brand.mentionCount) + 1}
                   </span>
                   <span
                     className={`${
