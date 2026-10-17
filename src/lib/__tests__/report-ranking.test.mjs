@@ -22,7 +22,7 @@ test('review wording follows the stored flag, including database string booleans
 });
 
 import { readFileSync } from 'node:fs';
-import { eligibleMentions, responseCoverage, mentionCounts, buildBudgetInsights, rankSlots, snapshotFinding } from '../report-ranking.mjs';
+import { applyRecordedExclusions, eligibleMentions, responseCoverage, mentionCounts, buildBudgetInsights, rankSlots, snapshotFinding } from '../report-ranking.mjs';
 const recorded = JSON.parse(readFileSync(new URL('./recorded-snapshots.json', import.meta.url)));
 const threePrompts = [1,2,3].map(prompt_number => ({prompt_number, prompt_text: `Prompt ${prompt_number}`}));
 
@@ -44,7 +44,7 @@ test('Air Purifiers: unranked budget brands are visible and not falsely absent',
 test('Standing Desks: failed Gemini answers do not inflate coverage or imply brand absence', () => {
   const {responses, mentions} = recorded['standing-desks'];
   const coverage = responseCoverage(responses);
-  assert.deepEqual(coverage, {captured:12, eligible:9, models:['ChatGPT','Claude','Perplexity'], unavailableModels:['Gemini']});
+  assert.deepEqual(coverage, {captured:12, eligible:9, models:['ChatGPT','Claude','Perplexity'], unavailableModels:['Gemini'], excludedModels:[]});
   const withStaleMention = [...mentions, {agent_name:'gemini', prompt_number:2, brand_name_normalized:'Bogus', mention_rank:1}];
   assert.ok(!eligibleMentions(withStaleMention, responses).some(m => m.brand_name_normalized === 'Bogus'));
   const prompts = buildPromptBreakdown(threePrompts, mentions, responses);
@@ -80,4 +80,19 @@ test('duplicate mentions, negative mentioned flags and case variants do not infl
   const responses = [{agent_name:'ChatGPT',prompt_number:1,raw_response:'A'}];
   const m = {agent_name:'chatgpt',prompt_number:1,brand_name_normalized:'A',mention_rank:null};
   assert.equal(eligibleMentions([m,{...m,agent_name:'ChatGPT'},{...m,brand_name_normalized:'B',mentioned:false}], responses).length, 1);
+});
+
+
+test('archived exclusions preserve original answers and the ten-answer denominator', () => {
+  const {responses:original, mentions} = recorded['lawn-fertilizer'];
+  const responses = applyRecordedExclusions(original, 154);
+  assert.equal(responseCoverage(responses).eligible, 10);
+  assert.equal(responseCoverage(responses).models.length, 4);
+  assert.deepEqual(responseCoverage(responses).excludedModels, ['ChatGPT','Gemini']);
+  assert.ok(original.every(r => !r.analysis_exclusion_reason && r.raw_response === '[CAPTURED]'));
+  assert.ok(responses.every(r => r.raw_response === '[CAPTURED]'));
+  const prompts = buildPromptBreakdown(threePrompts, mentions, responses);
+  assert.equal(prompts[2].agentBrands.find(r => r.agent === 'gemini').status, 'Excluded from analysis');
+  const budget = buildBudgetInsights(prompts);
+  assert.equal(budget.modelsCompared, 2);
 });

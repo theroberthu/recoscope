@@ -1106,5 +1106,309 @@
         "mentioned": true
       }
     ]
+  },
+  "lawn-fertilizer": {
+    "responses": [
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 1,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 2,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 1,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 2,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 3,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 2,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 3,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 1,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 2,
+        "raw_response": "[CAPTURED]"
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "raw_response": "[CAPTURED]"
+      }
+    ],
+    "mentions": [
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 1,
+        "brand_name_normalized": "Milorganite",
+        "mention_rank": 3,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 1,
+        "brand_name_normalized": "Scotts",
+        "mention_rank": 2,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 1,
+        "brand_name_normalized": "The Andersons",
+        "mention_rank": 1,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "Jonathan Green",
+        "mention_rank": 4,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "Milorganite",
+        "mention_rank": 3,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "Pennington",
+        "mention_rank": 2,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "Scotts",
+        "mention_rank": 1,
+        "mentioned": true
+      },
+      {
+        "agent_name": "chatgpt",
+        "prompt_number": 3,
+        "brand_name_normalized": "The Andersons",
+        "mention_rank": 5,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 1,
+        "brand_name_normalized": "Milorganite",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 1,
+        "brand_name_normalized": "Scotts",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 1,
+        "brand_name_normalized": "Simple Lawn Solutions",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 1,
+        "brand_name_normalized": "The Andersons",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 2,
+        "brand_name_normalized": "Jonathan Green",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 2,
+        "brand_name_normalized": "Milorganite",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 2,
+        "brand_name_normalized": "Scotts",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 2,
+        "brand_name_normalized": "Simple Lawn Solutions",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 3,
+        "brand_name_normalized": "Milorganite",
+        "mention_rank": 1,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 3,
+        "brand_name_normalized": "Scotts",
+        "mention_rank": 2,
+        "mentioned": true
+      },
+      {
+        "agent_name": "claude",
+        "prompt_number": 3,
+        "brand_name_normalized": "The Andersons",
+        "mention_rank": 3,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "brand_name_normalized": "Milorganite",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "brand_name_normalized": "Scotts",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 1,
+        "brand_name_normalized": "The Andersons",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 2,
+        "brand_name_normalized": "Lesco",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 2,
+        "brand_name_normalized": "Milorganite",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "gemini",
+        "prompt_number": 2,
+        "brand_name_normalized": "Scotts",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 1,
+        "brand_name_normalized": "Scotts",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 2,
+        "brand_name_normalized": "Expert Gardener",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 2,
+        "brand_name_normalized": "Milorganite",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 2,
+        "brand_name_normalized": "Scotts",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 2,
+        "brand_name_normalized": "Sta-Green",
+        "mention_rank": null,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "brand_name_normalized": "Lesco",
+        "mention_rank": 3,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "brand_name_normalized": "Milorganite",
+        "mention_rank": 4,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "brand_name_normalized": "Pennington",
+        "mention_rank": 2,
+        "mentioned": true
+      },
+      {
+        "agent_name": "perplexity",
+        "prompt_number": 3,
+        "brand_name_normalized": "Scotts",
+        "mention_rank": 1,
+        "mentioned": true
+      }
+    ]
   }
 }
