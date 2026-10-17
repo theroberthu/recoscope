@@ -31,6 +31,8 @@ export interface AgentResponse {
   prompt_number: number;
   prompt_text: string;
   raw_response: string;
+  /** Display-only annotation for a documented collection exclusion. */
+  analysis_exclusion_reason?: string;
   created_at: string;
 }
 

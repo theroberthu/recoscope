@@ -5,6 +5,8 @@ import { useState } from "react";
 interface AgentRow {
   agentName: string;
   topBrands: string[];
+  rankSlots?: string[];
+  status?: string | null;
 }
 
 interface NotableAbsent {
@@ -21,9 +23,10 @@ interface CrossAgentTableProps {
 export function CrossAgentTable({ rows, whatThisMeans, notableAbsents }: CrossAgentTableProps) {
   const [hovered, setHovered] = useState<string | null>(null);
 
-  const firstPicks = rows.map((r) => r.topBrands[0]).filter(Boolean);
+  const rankedRows = rows.filter(r => r.topBrands.length > 0);
+  const firstPicks = rankedRows.map(r => r.rankSlots?.[0] || r.topBrands[0]).filter(Boolean);
   const consensus =
-    firstPicks.length > 1 && firstPicks.every((p) => p === firstPicks[0]);
+    firstPicks.length === rankedRows.length && firstPicks.length > 1 && firstPicks.every((p) => p === firstPicks[0]);
 
   // Find brands in all agents
   const brandAgentCount = new Map<string, number>();
@@ -34,7 +37,7 @@ export function CrossAgentTable({ rows, whatThisMeans, notableAbsents }: CrossAg
   }
   const universalBrands = new Set<string>();
   for (const [brand, count] of brandAgentCount) {
-    if (count >= rows.length) universalBrands.add(brand);
+    if (count >= rankedRows.length) universalBrands.add(brand);
   }
 
   return (
@@ -46,11 +49,11 @@ export function CrossAgentTable({ rows, whatThisMeans, notableAbsents }: CrossAg
             Cross-Agent Comparison
           </p>
           <p className="mt-1 text-[14px] text-white/40">
-            Earliest recorded brand mentions across prompts for {rows.length} models. Unranked mentions are excluded; these positions are not endorsements.
+            Recorded ranks from the comparative prompt (Prompt 3). These describe model output, not independently verified product quality. Historical parsing conventions may differ.
           </p>
         </div>
         <p className="hidden font-mono text-[10px] text-white/20 sm:block">
-          {rows.length} agents &middot; up to 3 brands each
+          {rankedRows.length}/{rows.length} models with recorded ranks
         </p>
       </div>
 
@@ -64,7 +67,7 @@ export function CrossAgentTable({ rows, whatThisMeans, notableAbsents }: CrossAg
                 {" "}has a mention count of {b.mentionCount} but is outside the displayed comparison.
               </span>
             ))}{" "}
-            Mention frequency and mention order measure different things.
+            Mention frequency and response rank measure different things.
           </p>
         </div>
       )}
@@ -99,8 +102,8 @@ export function CrossAgentTable({ rows, whatThisMeans, notableAbsents }: CrossAg
                 <td className="px-6 py-4 font-mono text-[13px] font-semibold text-white/60">
                   {row.agentName}
                 </td>
-                {[0, 1, 2].map((idx) => {
-                  const brand = row.topBrands[idx];
+                {row.status ? <td colSpan={3} className="px-6 py-4 text-[13px] text-white/50">{row.status}</td> : [0, 1, 2].map((idx) => {
+                  const brand = row.rankSlots ? row.rankSlots[idx] : row.topBrands[idx];
                   const isHovered = brand && hovered === brand;
                   const isUniversal = brand && universalBrands.has(brand);
                   return (
@@ -118,7 +121,7 @@ export function CrossAgentTable({ rows, whatThisMeans, notableAbsents }: CrossAg
                       onMouseEnter={() => brand && setHovered(brand)}
                       onMouseLeave={() => setHovered(null)}
                     >
-                      {brand ?? "\u2014"}
+                      {brand || "\u2014"}
                     </td>
                   );
                 })}
@@ -152,9 +155,9 @@ export function CrossAgentTable({ rows, whatThisMeans, notableAbsents }: CrossAg
         <div className="mt-4 flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full bg-cyan" />
           <p className="text-[13px] text-white/40">
-            All {rows.length} models list{" "}
+            All {rankedRows.length} ranked comparisons list{" "}
             <span className="font-semibold text-cyan">{firstPicks[0]}</span>{" "}
-            in the first displayed slot
+            at recorded rank #1
           </p>
         </div>
       )}

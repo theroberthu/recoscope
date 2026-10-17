@@ -1,17 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { rankSlots, displayAgent } from "@/lib/report-ranking.mjs";
+import type { PromptResult, BudgetInsights } from "@/lib/report-ranking.mjs";
 
 interface PromptBreakdownProps {
-  prompts: {
-    promptNumber: number;
-    promptText: string;
-    agentBrands: { agent: string; brands: string[]; status?: string | null }[];
-  }[];
-  budgetInsights: {
-    budgetOnly: string[];
-    disappearUnderBudget: string[];
-  } | null;
+  prompts: PromptResult[];
+  budgetInsights: BudgetInsights | null;
 }
 
 const PROMPT_LABELS: Record<number, string> = {
@@ -42,7 +37,7 @@ export function PromptBreakdown({ prompts, budgetInsights }: PromptBreakdownProp
               Results by prompt type
             </p>
             <p className="mt-1 text-[13px] text-white/25">
-              First-mention order within each response, not an endorsement ranking. Unranked mentions are excluded from numbered slots.
+              Numbered slots show recorded response ranks. Ties share a slot; missing ranks stay empty. Unranked brands are listed separately. Historical parsing conventions may differ.
             </p>
           </div>
 
@@ -68,10 +63,10 @@ export function PromptBreakdown({ prompts, budgetInsights }: PromptBreakdownProp
                   <tbody>
                     {p.agentBrands.map((row, i) => (
                       <tr key={row.agent} className={i < p.agentBrands.length - 1 ? "border-b border-white/[0.03]" : ""}>
-                        <td className="px-4 py-2.5 font-mono text-[12px] font-semibold text-white/40">{row.agent}</td>
+                        <td className="px-4 py-2.5 font-mono text-[12px] font-semibold text-white/40">{displayAgent(row.agent)}</td>
                         {row.status ? <td colSpan={3} className="px-4 py-2.5 text-[12px] text-white/50">{row.status}</td> : [0, 1, 2].map((idx) => (
                           <td key={idx} className={`px-4 py-2.5 text-[12px] ${idx === 0 ? "text-white/50" : "text-white/25"}`}>
-                            {row.brands[idx] ?? "\u2014"}
+                            {rankSlots(row.rankedBrands)[idx] || "\u2014"}
                           </td>
                         ))}
                       </tr>
@@ -80,18 +75,26 @@ export function PromptBreakdown({ prompts, budgetInsights }: PromptBreakdownProp
                 </table>
               </div>
 
+              <div className="mt-3 space-y-2 text-[12px] leading-relaxed text-white/50">
+                {p.agentBrands.filter(row => row.allBrands.length > 0).map(row => (
+                  <p key={row.agent}><span className="font-semibold text-white/60">{displayAgent(row.agent)} mentions:</span> {row.allBrands.join(", ")}</p>
+                ))}
+                <p>Mentions include alternatives and criticism; they do not establish product suitability or budget compliance.</p>
+              </div>
+
               {/* Budget insights — show below prompt 2 */}
               {p.promptNumber === 2 && budgetInsights && (
                 <div className="mt-3 space-y-1.5 text-[12px]">
+                  <p className="text-white/50">Compared across {budgetInsights.modelsCompared} models with usable answers to all three prompts.</p>
                   {budgetInsights.budgetOnly.length > 0 && (
                     <p className="text-cyan/40">
-                      Only in budget top mentions:{" "}
+                      Mentioned only in budget answers:{" "}
                       <span className="text-cyan/60">{budgetInsights.budgetOnly.join(", ")}</span>
                     </p>
                   )}
                   {budgetInsights.disappearUnderBudget.length > 0 && (
                     <p className="text-amber-400/40">
-                      Outside budget top mentions:{" "}
+                      Not mentioned in budget answers:{" "}
                       <span className="text-amber-400/60">{budgetInsights.disappearUnderBudget.join(", ")}</span>
                     </p>
                   )}

@@ -23,6 +23,7 @@ interface TopBrandsListProps {
   whyTheseWin?: string[];
   droppedBrands?: DroppedBrand[];
   category?: string;
+  eligibleAnswers?: number;
 }
 
 const COLLAPSED_COUNT = 5;
@@ -54,7 +55,7 @@ function MovementBadge({ movement }: { movement: Movement }) {
   }
 }
 
-export function TopBrandsList({ brands, whyTheseWin, droppedBrands, category }: TopBrandsListProps) {
+export function TopBrandsList({ brands, whyTheseWin, droppedBrands, category, eligibleAnswers }: TopBrandsListProps) {
   const [expanded, setExpanded] = useState(false);
   const droppedRef = useRef<HTMLDivElement>(null);
   const droppedTracked = useRef(false);
@@ -92,17 +93,17 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands, category }: 
         Top Brands by AI Mention Frequency
       </p>
       <p className="mt-2 text-[13px] text-white/30">
-        Mention frequency counts how many times a brand appeared across all AI responses.
-        Numbered comparison slots use mention order, not endorsement or product quality. Unranked mentions still count toward frequency.
+        Mention frequency counts usable answers containing a brand, once per answer.
+        Unranked and critical mentions count as visibility. Recommendation ranks are shown separately below.
       </p>
 
       {hasLabels && (
         <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-[11px] text-white/25">
-          <span><span className="font-semibold text-cyan/50">Overall Leader</span> = most total mentions</span>
+          <span><span className="font-semibold text-cyan/50">Most Mentioned</span> = most answers mentioning a brand</span>
           <span><span className="font-semibold text-white/40">Tied #1</span> = tied for most mentions</span>
-          <span><span className="font-semibold text-white/40">Early across models</span> = early mentions across models</span>
-          <span><span className="font-semibold text-white/40">Early in [Model]</span> = earliest slot in that model&rsquo;s comparison</span>
-          <span><span className="font-semibold text-amber-400/60">Outside early mentions</span> = not in the displayed early mentions</span>
+          <span><span className="font-semibold text-white/40">Top 3 across models</span> = a recorded top-three rank in multiple comparisons</span>
+          <span><span className="font-semibold text-white/40">Ranked #1 in [Model]</span> = first in that comparative answer</span>
+          <span><span className="font-semibold text-amber-400/60">Unranked mentions</span> = visibility without an inferred rank</span>
         </div>
       )}
 
@@ -110,7 +111,8 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands, category }: 
         {visibleBrands.map((brand, i) => {
           const isFirst = i === 0;
           const isTop3 = i < 3;
-          const barPct = Math.max((brand.mentionCount / maxMentions) * 100, 4);
+          const denominator = eligibleAnswers && eligibleAnswers >= maxMentions ? eligibleAnswers : maxMentions;
+          const barPct = Math.min((brand.mentionCount / denominator) * 100, 100);
 
           return (
             <div
@@ -124,7 +126,7 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands, category }: 
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="flex items-center gap-4">
+                <span className="flex min-w-0 flex-wrap items-center gap-2 sm:gap-4">
                   <span
                     className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full font-mono text-[11px] font-bold ${
                       isFirst
@@ -134,7 +136,7 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands, category }: 
                           : "text-white/20"
                     }`}
                   >
-                    {i + 1}
+                    {brands.findIndex(b => b.mentionCount === brand.mentionCount) + 1}
                   </span>
                   <span
                     className={`${
@@ -171,7 +173,7 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands, category }: 
                         : "text-xs text-white/20"
                   }`}
                 >
-                  {brand.mentionCount}
+                  {brand.mentionCount}{eligibleAnswers && eligibleAnswers >= maxMentions ? `/${eligibleAnswers}` : ""}
                 </span>
               </div>
 
@@ -224,7 +226,7 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands, category }: 
                 key={b.name}
                 className="flex items-center justify-between px-6 py-2 text-white/20"
               >
-                <span className="flex items-center gap-4">
+                <span className="flex min-w-0 flex-wrap items-center gap-2 sm:gap-4">
                   <span className="h-7 w-7" />
                   <span className="text-sm line-through">{b.name}</span>
                 </span>

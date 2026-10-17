@@ -12,7 +12,7 @@ const SAMPLE_TABLE = [
 ];
 
 export default async function HomePage() {
-  let categories: { name: string; slug: string; tracker_type: string; latest_summary: string | null }[] = [];
+  let categories: Awaited<ReturnType<typeof getCategoriesWithRuns>> = [];
   let heroBrands: { brand: string; mentions: number }[] = [];
   let stats = { brandsTracked: 0, categoriesActive: 0, runsCompleted: 0 };
 
@@ -263,7 +263,15 @@ export default async function HomePage() {
                       <span className="text-[15px] font-semibold text-white">{cat.name}</span>
                       <span className="rounded-full bg-cyan/10 px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-cyan">Live</span>
                     </span>
-                    {cat.latest_summary && <p className="mt-2 text-[13px] leading-relaxed text-white/35">{cat.latest_summary}</p>}
+                    <p className="mt-3 text-[13px] leading-relaxed text-white/60">{cat.finding}</p>
+                    <p className="mt-4 font-mono text-[11px] text-white/50">
+                      {new Date(`${cat.latest_run_date}T00:00:00Z`).toLocaleDateString("en-US", {month: "short", day: "numeric", year: "numeric", timeZone: "UTC"})}
+                    </p>
+                    <p className="mt-1 text-[12px] text-white/50">
+                      {cat.coverage.eligible}/{cat.coverage.captured} usable answers · {cat.coverage.models.length} models
+                    </p>
+                    {cat.coverage.eligible < cat.coverage.captured && <p className="mt-2 text-[11px] text-amber-400/70">Reduced coverage · see report notes</p>}
+                    <span className="mt-4 inline-block font-mono text-[11px] text-cyan/70">View report &rarr;</span>
                   </a>
                 ))}
               </div>
