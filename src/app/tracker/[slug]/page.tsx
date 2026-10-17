@@ -1,4 +1,4 @@
-import { buildPromptBreakdown, buildBudgetInsights, reviewStatus, eligibleMentions, responseCoverage, mentionCounts, snapshotFinding, rankSlots, displayAgent } from "@/lib/report-ranking.mjs";
+import { applyRecordedExclusions, buildPromptBreakdown, buildBudgetInsights, reviewStatus, eligibleMentions, responseCoverage, mentionCounts, snapshotFinding, rankSlots, displayAgent } from "@/lib/report-ranking.mjs";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArticleSchema, FAQSchema, BreadcrumbSchema } from "@/components/seo/JsonLd";
@@ -229,7 +229,8 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const run = category ? (period ? await getRunByPeriod(category.id, period) : await getLatestRun(category.id, "published")) : null;
   const label = category?.name ?? slug.replace(/-/g, " ");
   if (!run) return {title: `AI visibility for ${label}`, description: `Explore recorded brand mentions and response ranks for ${label}.`};
-  const [mentions, responses] = await Promise.all([getBrandMentions(run.id), getAgentResponses(run.id)]);
+  const [mentions, rawResponses] = await Promise.all([getBrandMentions(run.id), getAgentResponses(run.id)]);
+  const responses = applyRecordedExclusions(rawResponses, run.id);
   const coverage = responseCoverage(responses);
   const brands = mentionCounts(eligibleMentions(mentions, responses));
   return {
@@ -300,8 +301,8 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
       getPromptsForRun(run.id),
       getAgentResponses(run.id),
     ]);
-    mentions = eligibleMentions(realMentions, runResponses);
-    responses = runResponses;
+    responses = applyRecordedExclusions(runResponses, run.id);
+    mentions = eligibleMentions(realMentions, responses);
     insight = realInsight;
     periodLabel = run.period_label;
     periodDisplay = formatRunDate(run.run_date);
@@ -433,7 +434,7 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
     { question: `How often is ${topBrand} mentioned?`, answer: `${topBrand} appeared in ${topMentions} usable answers in this snapshot. A mention is not necessarily a recommendation.` },
     { question: `Which brands appear most in the budget answers?`, answer: budgetLeaders.length ? `${budgetLeaders.join(", ")} appeared in ${mostBudgetMentions} of ${budgetRows.length} usable budget answers${budgetLeaders.length > 1 ? " each" : ""}. This measures mentions, not verified price or budget compliance.` : "No brand mentions were recorded in the usable budget answers. Unavailable answers are excluded." },
     { question: `Does this benchmark prove AI recommendations are biased?`, answer: "No. Differences in answers do not establish bias or prove that advertising or commercial integrations caused a recommendation. Model, tier and collection changes can also affect comparisons." },
-    { question: `How was this ${catName.toLowerCase()} snapshot collected?`, answer: `${prompts.length} prompt types were recorded across the participating services. ${coverage.eligible} of ${coverage.captured} captured response records contain usable answers, from ${aiModelLabel}. Brand mentions and recorded ranks are measured separately. Unavailable answers are excluded from brand analysis.` },
+    { question: `How was this ${catName.toLowerCase()} snapshot collected?`, answer: `${prompts.length} prompt types were recorded across the participating services. ${coverage.eligible} of ${coverage.captured} captured response records contain usable answers, from ${aiModelLabel}. Brand mentions and recorded ranks are measured separately. Unavailable and explicitly excluded answers do not contribute to brand analysis.` },
   ];
 
   const baseUrl = "https://www.getrecoscope.com";
@@ -470,6 +471,7 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
         <p><strong className="text-white/80">{coverage.eligible}/{coverage.captured} usable answers</strong> · {coverage.models.length} models · {prompts.length} prompt types</p>
         <p className="mt-1">Included: {aiModelLabel}</p>
         {coverage.unavailableModels.length > 0 && <p className="mt-2 text-amber-400/80">Unavailable answers from {coverage.unavailableModels.join(", ")} are excluded from mention counts. See the collection notes for coverage limitations.</p>}
+        {responses.some(r => r.analysis_exclusion_reason) && <p className="mt-2 text-amber-400/80">Excluded from analysis: {responses.filter(r => r.analysis_exclusion_reason).map(r => `${displayAgent(r.agent_name)} prompt ${r.prompt_number} (${r.analysis_exclusion_reason})`).join("; ")}. Original answers remain retained.</p>}
       </div>
 
       <PromptsUsed prompts={prompts} />
