@@ -1,5 +1,5 @@
 import { getDb } from "./db";
-import { eligibleMentions, mentionCounts, responseCoverage, snapshotFinding } from "./report-ranking.mjs";
+import { applyRecordedExclusions, eligibleMentions, mentionCounts, responseCoverage, snapshotFinding } from "./report-ranking.mjs";
 import type {
   AgentResponse,
   BrandMention,
@@ -80,7 +80,7 @@ export async function getCategoriesWithRuns() {
         WHERE r.id = ANY(${runIds}::int[]) AND r.is_public = true AND r.status = 'published'`,
   ]);
   return categories.map(cat => {
-    const cells = (responses as AgentResponse[]).filter(r => Number(r.run_id) === Number(cat.latest_run_id));
+    const cells = applyRecordedExclusions((responses as AgentResponse[]).filter(r => Number(r.run_id) === Number(cat.latest_run_id)), cat.latest_run_id);
     const brands = eligibleMentions((mentions as BrandMention[]).filter(m => Number(m.run_id) === Number(cat.latest_run_id)), cells);
     const coverage = responseCoverage(cells);
     return {...cat, coverage, finding: snapshotFinding(mentionCounts(brands), coverage)};

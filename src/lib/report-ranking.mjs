@@ -8,8 +8,20 @@ export function validRank(value) {
 const MODEL_NAMES = { chatgpt: 'ChatGPT', claude: 'Claude', gemini: 'Gemini', perplexity: 'Perplexity', rufus: 'Rufus', sparky: 'Sparky' };
 export function displayAgent(agent) { return MODEL_NAMES[agent.toLowerCase()] ?? agent; }
 const cellKey = (row) => `${row.agent_name.toLowerCase()}:${Number(row.prompt_number)}`;
+// Run 154 predates structured exclusion fields. Its published collection summary
+// explicitly excludes these cells while retaining both full original answers.
+// These annotations affect presentation only; captured evidence is never rewritten.
+export function applyRecordedExclusions(responses, runId) {
+  if (Number(runId) !== 154) return responses;
+  const reasons = {
+    'chatgpt:2': 'Unprompted location personalization',
+    'gemini:3': 'Conflicting comparison rankings',
+  };
+  return responses.map(r => reasons[cellKey(r)] ? {...r, analysis_exclusion_reason: reasons[cellKey(r)]} : r);
+}
+const isExcluded = r => Boolean(r?.analysis_exclusion_reason) || /^\s*\[EXCLUDED\b/i.test(r?.raw_response ?? '');
 export function isEligibleResponse(response) {
-  return Boolean(response?.raw_response?.trim()) && !/^\s*\[(?:UNAVAILABLE|EXCLUDED)\b/i.test(response.raw_response);
+  return !isExcluded(response) && Boolean(response?.raw_response?.trim()) && !/^\s*\[(?:UNAVAILABLE|EXCLUDED)\b/i.test(response.raw_response);
 }
 
 /** Count a brand once per usable response, including unranked/critical mentions. */
@@ -34,7 +46,8 @@ export function responseCoverage(responses) {
     captured: cells.length,
     eligible: eligible.length,
     models: [...new Set(eligible.map(r => displayAgent(r.agent_name)))].sort(),
-    unavailableModels: [...new Set(cells.filter(r => !isEligibleResponse(r)).map(r => displayAgent(r.agent_name)))].sort(),
+    unavailableModels: [...new Set(cells.filter(r => !isEligibleResponse(r) && !isExcluded(r)).map(r => displayAgent(r.agent_name)))].sort(),
+    excludedModels: [...new Set(cells.filter(isExcluded).map(r => displayAgent(r.agent_name)))].sort(),
   };
 }
 
@@ -72,7 +85,7 @@ export function buildPromptBreakdown(prompts, mentions, responses) {
           rankedBrands,
           allBrands: [...new Set(all.map(m => m.brand_name_normalized))].sort(),
           hasResponse: Boolean(response && !unavailable),
-          status: unavailable ? 'Unavailable' : ranked.size ? null : all.length ? 'Unranked — brand mentions retained' : 'No brands recorded',
+          status: isExcluded(response) ? 'Excluded from analysis' : unavailable ? 'Unavailable' : ranked.size ? null : all.length ? 'Unranked — brand mentions retained' : 'No brands recorded',
         };
       }),
     };
