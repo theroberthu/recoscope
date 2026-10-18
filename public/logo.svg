@@ -2,18 +2,18 @@
   <!-- Radar/lens icon — concentric rings with a focus dot -->
   <g transform="translate(60,60)">
     <!-- Outer ring -->
-    <circle cx="0" cy="0" r="44" stroke="#00d4aa" stroke-width="4" fill="none"/>
+    <circle cx="0" cy="0" r="44" stroke="#07685c" stroke-width="4" fill="none"/>
     <!-- Middle ring -->
-    <circle cx="0" cy="0" r="28" stroke="#00d4aa" stroke-width="2" fill="none" opacity="0.5"/>
+    <circle cx="0" cy="0" r="28" stroke="#07685c" stroke-width="2" fill="none" opacity="0.5"/>
     <!-- Inner ring -->
-    <circle cx="0" cy="0" r="14" stroke="#00d4aa" stroke-width="1.5" fill="none" opacity="0.3"/>
+    <circle cx="0" cy="0" r="14" stroke="#07685c" stroke-width="1.5" fill="none" opacity="0.3"/>
     <!-- Focus dot -->
-    <circle cx="0" cy="0" r="4" fill="#00d4aa"/>
+    <circle cx="0" cy="0" r="4" fill="#07685c"/>
     <!-- Radar sweep arc — suggests scanning/analysis -->
-    <path d="M0 0 L0 -44 A44 44 0 0 1 31 -31 Z" fill="#00d4aa" opacity="0.08"/>
+    <path d="M0 0 L0 -44 A44 44 0 0 1 31 -31 Z" fill="#07685c" opacity="0.08"/>
   </g>
   <!-- RECOSCOPE -->
-  <text x="125" y="58" font-family="system-ui, sans-serif" font-weight="700" font-size="42" letter-spacing="3" fill="#00d4aa">RECOSCOPE</text>
+  <text x="125" y="58" font-family="system-ui, sans-serif" font-weight="700" font-size="42" letter-spacing="3" fill="#22312c">RECOSCOPE</text>
   <!-- Tagline -->
-  <text x="127" y="88" font-family="monospace" font-weight="400" font-size="14" letter-spacing="4" fill="#00d4aa" opacity="0.5">AI RECOMMENDATION BENCHMARKS</text>
+  <text x="127" y="88" font-family="monospace" font-weight="400" font-size="14" letter-spacing="4" fill="#596a61">AI RECOMMENDATION BENCHMARKS</text>
 </svg>

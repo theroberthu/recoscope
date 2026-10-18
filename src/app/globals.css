@@ -2,45 +2,105 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;500;600;700&display=swap");
-
 @layer base {
-  html {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
+  :root {
+    color-scheme: light;
+    --ink: #22312c;
+    --secondary: #43564b;
+    --muted: #596a61;
+    --brand: #07594f;
+    --line: #d8e1da;
   }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+  body { font-size: 16px; line-height: 1.65; }
+  ::selection { background: #d2e7de; color: var(--ink); }
+  :focus-visible { outline: 3px solid var(--brand); outline-offset: 4px; }
+  input, textarea, select { color-scheme: light; }
 }
 
-/* Dot grid pattern for dark pages */
-.bg-dot-grid {
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
+/* Keep existing report and form components on the same light palette. Legacy
+   dark-theme utility names map to opaque, readable foregrounds here; new
+   components can use the semantic ink, muted, line and surface tokens. */
+[data-theme="light"] .bg-white\/10 { background-color: #e0e8e2; }
+[data-theme="light"] .bg-white\/5 { background-color: #edf2ee; }
+[data-theme="light"] .bg-white\/\[0\.02\] { background-color: #edf2ee; }
+[data-theme="light"] .border-white\/10 { border-color: var(--line); }
+[data-theme="light"] .border-white\/5 { border-color: var(--line); }
+[data-theme="light"] .border-white\/\[0\.03\] { border-color: var(--line); }
+[data-theme="light"] .hover\:bg-white\/5:hover { background-color: #edf2ee; }
+[data-theme="light"] .hover\:bg-white\/\[0\.02\]:hover { background-color: #edf2ee; }
+[data-theme="light"] .hover\:border-white\/10:hover { border-color: var(--line); }
+[data-theme="light"] .hover\:border-white\/5:hover { border-color: var(--line); }
+[data-theme="light"] .hover\:text-cyan:hover { color: var(--brand); }
+[data-theme="light"] .hover\:text-cyan\/60:hover { color: var(--secondary); }
+[data-theme="light"] .hover\:text-white:hover { color: var(--ink); }
+[data-theme="light"] .hover\:text-white\/40:hover { color: var(--secondary); }
+[data-theme="light"] .hover\:text-white\/50:hover { color: var(--secondary); }
+[data-theme="light"] .hover\:text-white\/60:hover { color: var(--secondary); }
+[data-theme="light"] .hover\:text-white\/70:hover { color: var(--ink); }
+[data-theme="light"] .placeholder\:text-white\/25::placeholder { color: var(--muted); }
+[data-theme="light"] .text-\[\#c8ccd0\] { color: var(--secondary); }
+[data-theme="light"] .text-\[\#c8ccd0\]\/70 { color: var(--secondary); }
+[data-theme="light"] .text-\[\#c8ccd0\]\/80 { color: var(--secondary); }
+[data-theme="light"] .text-amber-400 { color: #815500; }
+[data-theme="light"] .text-amber-400\/40 { color: #815500; }
+[data-theme="light"] .text-amber-400\/50 { color: #815500; }
+[data-theme="light"] .text-amber-400\/60 { color: #815500; }
+[data-theme="light"] .text-amber-400\/70 { color: #815500; }
+[data-theme="light"] .text-amber-400\/80 { color: #815500; }
+[data-theme="light"] .text-coral { color: #b43f52; }
+[data-theme="light"] .text-cyan { color: var(--brand); }
+[data-theme="light"] .text-cyan\/30 { color: var(--secondary); }
+[data-theme="light"] .text-cyan\/40 { color: var(--secondary); }
+[data-theme="light"] .text-cyan\/50 { color: var(--secondary); }
+[data-theme="light"] .text-cyan\/60 { color: var(--secondary); }
+[data-theme="light"] .text-cyan\/70 { color: var(--brand); }
+[data-theme="light"] .text-green-400 { color: #246941; }
+[data-theme="light"] .text-green-400\/40 { color: #246941; }
+[data-theme="light"] .text-green-400\/60 { color: #246941; }
+[data-theme="light"] .text-green-800 { color: #246941; }
+[data-theme="light"] .text-red-400 { color: #b43f52; }
+[data-theme="light"] .text-red-400\/70 { color: #b43f52; }
+[data-theme="light"] .text-red-700 { color: #b43f52; }
+[data-theme="light"] .text-white { color: var(--ink); }
+[data-theme="light"] .text-white\/10 { color: var(--muted); }
+[data-theme="light"] .text-white\/15 { color: var(--muted); }
+[data-theme="light"] .text-white\/20 { color: var(--muted); }
+[data-theme="light"] .text-white\/25 { color: var(--muted); }
+[data-theme="light"] .text-white\/30 { color: var(--muted); }
+[data-theme="light"] .text-white\/35 { color: var(--muted); }
+[data-theme="light"] .text-white\/40 { color: var(--secondary); }
+[data-theme="light"] .text-white\/50 { color: var(--secondary); }
+[data-theme="light"] .text-white\/55 { color: var(--secondary); }
+[data-theme="light"] .text-white\/60 { color: var(--secondary); }
+[data-theme="light"] .text-white\/65 { color: var(--secondary); }
+[data-theme="light"] .text-white\/70 { color: var(--ink); }
+[data-theme="light"] .text-white\/80 { color: var(--ink); }
 
-/* Scroll sections — no animation, always visible */
-.fade-section {
-  /* intentionally empty — content always visible */
+/* A quiet reading surface replaces the decorative dark-page treatments. */
+.bg-dot-grid { background-image: none; }
+[data-theme="light"] [class*="shadow-["],
+[data-theme="light"] .glow-card { box-shadow: none; }
+[data-theme="light"] .glow-card { transition: border-color 160ms ease; }
+[data-theme="light"] .glow-card:hover { transform: none; border-color: #aabeb1; }
+[data-theme="light"] .bg-clip-text { background-image: none; background-clip: border-box; -webkit-text-fill-color: currentColor; color: var(--ink); }
+[data-theme="light"] svg [stroke="#00d4aa"] { stroke: var(--brand); }
+[data-theme="light"] .text-void { color: #ffffff; }
+[data-theme="light"] .text-\[10px\], [data-theme="light"] .text-\[11px\] { font-size: 12px; line-height: 1.5; }
+[data-theme="light"] .text-\[12px\] { font-size: 14px; line-height: 1.55; }
+[data-theme="light"] .text-\[13px\] { font-size: 15px; line-height: 1.6; }
+[data-theme="light"] .text-\[14px\] { font-size: 16px; line-height: 1.7; }
+[data-theme="light"] .text-\[15px\] { font-size: 17px; }
+[data-theme="light"] header { background: #ffffff; }
+[data-theme="light"] footer { background: #edf2ee; }
+[data-theme="light"] input[class], [data-theme="light"] textarea[class], [data-theme="light"] select[class] { background-color: #ffffff; border-color: #7d9184; }
+[data-theme="light"] .overflow-x-auto { scrollbar-color: #aabeb1 #edf2ee; scrollbar-width: thin; }
+[data-theme="light"] .tracking-\[0\.2em\], [data-theme="light"] .tracking-\[0\.15em\] { letter-spacing: 0.08em; }
+@media (max-width: 480px) {
+  [data-theme="light"] header nav { padding-left: 1rem; padding-right: 1rem; }
+  [data-theme="light"] header nav > div { gap: 0.75rem; font-size: 14px; }
+  [data-theme="light"] .fixed.bottom-0 > div { flex-wrap: wrap; }
 }
-
-/* Glow card hover */
-.glow-card {
-  transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
-
-.glow-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 24px rgba(0, 212, 170, 0.15);
-  border-color: rgba(0, 212, 170, 0.3);
-}
-
-/* Bar race animation delay utility */
-.bar-delay-1 { animation-delay: 0.1s; }
-.bar-delay-2 { animation-delay: 0.2s; }
-.bar-delay-3 { animation-delay: 0.3s; }
-.bar-delay-4 { animation-delay: 0.4s; }
-.bar-delay-5 { animation-delay: 0.5s; }
-.bar-delay-6 { animation-delay: 0.6s; }
-.bar-delay-7 { animation-delay: 0.7s; }
-.bar-delay-8 { animation-delay: 0.8s; }
-.bar-delay-9 { animation-delay: 0.9s; }

@@ -5,21 +5,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        void: "#0a0a0f",
-        surface: "#12121a",
-        "surface-light": "#1a1a25",
+        void: "#f5f7f4",
+        surface: "#ffffff",
+        "surface-light": "#edf2ee",
+        ink: "#22312c",
+        muted: "#596a61",
+        line: "#d8e1da",
         cyan: {
-          DEFAULT: "#00d4aa",
-          dim: "#00d4aa80",
+          DEFAULT: "#07685c",
+          dim: "#07685c80",
         },
         coral: {
-          DEFAULT: "#ff4d6a",
-          dim: "#ff4d6a80",
+          DEFAULT: "#b43f52",
+          dim: "#b43f5280",
         },
       },
       fontFamily: {
-        mono: ["'JetBrains Mono'", "monospace"],
-        sans: ["'Outfit'", "system-ui", "sans-serif"],
+        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        sans: ["system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
       },
       keyframes: {
         "bar-grow": {
@@ -31,8 +34,8 @@ const config: Config = {
           to: { opacity: "1", transform: "translateY(0)" },
         },
         pulse_glow: {
-          "0%, 100%": { boxShadow: "0 0 20px #00d4aa40" },
-          "50%": { boxShadow: "0 0 30px #00d4aa60" },
+          "0%, 100%": { boxShadow: "0 0 20px #07685c40" },
+          "50%": { boxShadow: "0 0 30px #07685c60" },
         },
       },
       animation: {
