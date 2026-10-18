@@ -34,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="light">
       <head>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-NWNHPKNGBB"
@@ -49,7 +49,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className="min-h-screen bg-void font-sans text-white antialiased">
+      <body className="min-h-screen bg-void font-sans text-ink antialiased">
         <header className="relative z-50 border-b border-white/5">
           <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
             <Link href="/" className="block">

@@ -16,7 +16,7 @@ export default function OGImage() {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#0a0a0f",
+          backgroundColor: "#f5f7f4",
           fontFamily: "system-ui, sans-serif",
         }}
       >
@@ -24,18 +24,18 @@ export default function OGImage() {
         <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
           {/* Radar/lens icon */}
           <svg width="80" height="80" viewBox="0 0 120 120" fill="none">
-            <circle cx="60" cy="60" r="44" stroke="#00d4aa" strokeWidth="4" fill="none" />
-            <circle cx="60" cy="60" r="28" stroke="#00d4aa" strokeWidth="2" fill="none" opacity="0.5" />
-            <circle cx="60" cy="60" r="14" stroke="#00d4aa" strokeWidth="1.5" fill="none" opacity="0.3" />
-            <circle cx="60" cy="60" r="4" fill="#00d4aa" />
-            <path d="M60 60 L60 16 A44 44 0 0 1 91 29 Z" fill="#00d4aa" opacity="0.1" />
+            <circle cx="60" cy="60" r="44" stroke="#07685c" strokeWidth="4" fill="none" />
+            <circle cx="60" cy="60" r="28" stroke="#07685c" strokeWidth="2" fill="none" opacity="0.5" />
+            <circle cx="60" cy="60" r="14" stroke="#07685c" strokeWidth="1.5" fill="none" opacity="0.3" />
+            <circle cx="60" cy="60" r="4" fill="#07685c" />
+            <path d="M60 60 L60 16 A44 44 0 0 1 91 29 Z" fill="#07685c" opacity="0.1" />
           </svg>
 
           <div
             style={{
               fontSize: 72,
               fontWeight: 700,
-              color: "#00d4aa",
+              color: "#07685c",
               letterSpacing: "0.08em",
             }}
           >
@@ -46,7 +46,7 @@ export default function OGImage() {
         <div
           style={{
             fontSize: 26,
-            color: "rgba(255,255,255,0.45)",
+            color: "#43564b",
             marginTop: 28,
             textAlign: "center",
             lineHeight: 1.4,
@@ -59,7 +59,7 @@ export default function OGImage() {
           style={{
             marginTop: 36,
             fontSize: 15,
-            color: "rgba(255,255,255,0.2)",
+            color: "#596a61",
             letterSpacing: "0.18em",
             textTransform: "uppercase" as const,
           }}
