@@ -65,7 +65,7 @@ export function TrendChart({ lines, weeks }: TrendChartProps) {
             const labelY = labels.get(line.brand)!;
             const path = line.points.map((p,i) => `${i ? "L" : "M"} ${p.x} ${p.y}`).join(" ");
             return <g key={line.brand} onMouseEnter={() => setHoveredBrand(line.brand)} onMouseLeave={() => setHoveredBrand(null)} opacity={opacity}>
-              <title>{line.brand}: {line.observations.map(p => `${p.week}, position ${p.rank}`).join("; ")}</title>
+              <title>{`${line.brand}: ${line.observations.map(p => `${p.week}, position ${p.rank}`).join("; ")}`}</title>
               <path d={path} fill="none" stroke={color} strokeWidth={highlighted ? 3.5 : 2.4} strokeDasharray={dash} strokeLinejoin="round" />
               {line.points.map((p,i) => <circle key={i} cx={p.x} cy={p.y} r={highlighted ? 4.5 : 3.3} fill={color} stroke="white" strokeWidth={1.5} />)}
               <path d={`M ${last.x+5} ${last.y} L ${padL+plotW+12} ${labelY} L ${padL+plotW+20} ${labelY}`} fill="none" stroke={color} strokeWidth={1.2} />
