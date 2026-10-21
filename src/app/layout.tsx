@@ -51,26 +51,29 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-void font-sans text-ink antialiased">
         <header className="relative z-50 border-b border-white/5">
-          <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-            <Link href="/" className="block">
+          <nav aria-label="Main navigation" className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-4 sm:px-6">
+            <Link href="/" className="block shrink-0">
               <img src="/logo.svg" alt="RecoScope" className="hidden h-10 w-auto sm:block" />
               <img src="/icon.svg" alt="RecoScope" className="block h-8 w-8 sm:hidden" />
             </Link>
-            <div className="flex items-center gap-4 text-[13px] font-medium text-white/40 sm:gap-6">
+            <div className="flex items-center gap-3 text-[12px] font-medium text-white/40 sm:gap-4 sm:text-[13px] md:gap-5">
               <Link href="/platform" className="transition-colors hover:text-white">
                 Platform
               </Link>
-              <Link href="/methodology" className="hidden transition-colors hover:text-white sm:block">
+              <Link href="/methodology" className="hidden transition-colors hover:text-white md:block">
                 Methodology
               </Link>
-              <Link href="/blog" className="hidden transition-colors hover:text-white sm:block">
+              <Link href="/blog" className="hidden transition-colors hover:text-white md:block">
                 Research
               </Link>
               <Link href="/tracker" className="transition-colors hover:text-white">
                 Tracker
               </Link>
-              <Link href="/about" className="transition-colors hover:text-white">
+              <Link href="/about" className="hidden transition-colors hover:text-white min-[375px]:block">
                 About
+              </Link>
+              <Link href="/audit" className="inline-flex min-h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-cyan px-3 py-2.5 font-semibold text-void transition-colors hover:bg-cyan/90 sm:px-4">
+                Free Audit
               </Link>
             </div>
           </nav>
