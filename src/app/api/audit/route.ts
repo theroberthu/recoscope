@@ -18,10 +18,34 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const { name, email, brand_name, website, category_interest, notes, lead_type, source_page } = body;
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    return NextResponse.json({ error: "Invalid request." }, { status: 400 });
+  }
 
-  if (!email || typeof email !== "string" || !email.includes("@")) {
+  const text = (value: unknown) => typeof value === "string" ? value.trim() : "";
+  const name = text(body.name);
+  const email = text(body.email).toLowerCase();
+  const brand_name = text(body.brand_name);
+  const category_interest = text(body.category_interest);
+  const notes = text(body.notes);
+  const source_page = text(body.source_page);
+  const lead_type = text(body.lead_type);
+  let website = text(body.website);
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json({ error: "A valid email is required." }, { status: 400 });
+  }
+
+  if (website) {
+    try {
+      const url = new URL(/^[a-z][a-z\d+.-]*:/i.test(website) ? website : `https://${website}`);
+      if (!["https:", "http:"].includes(url.protocol) || !url.hostname.includes(".")) {
+        throw new Error("Invalid website");
+      }
+      website = url.href;
+    } catch {
+      return NextResponse.json({ error: "Enter a valid product website, such as example.com." }, { status: 400 });
+    }
   }
 
   const resolvedLeadType = VALID_LEAD_TYPES.has(lead_type) ? lead_type : "audit";
@@ -38,7 +62,7 @@ export async function POST(req: NextRequest) {
 
     const existing = await sql`
       SELECT id FROM audit_leads
-      WHERE email = ${email} AND lead_type = ${resolvedLeadType}
+      WHERE lower(trim(email)) = ${email} AND lead_type = ${resolvedLeadType}
       LIMIT 1
     `;
 
@@ -52,15 +76,16 @@ export async function POST(req: NextRequest) {
         ${name || ""},
         ${email},
         ${brand_name || ""},
-        ${website ?? null},
-        ${category_interest ?? null},
+        ${website || null},
+        ${category_interest || null},
         ${source_page || "/audit"},
         ${resolvedLeadType},
-        ${notes ?? null}
+        ${notes || null}
       )
     `;
 
-    // Send email notification (non-blocking)
+    // Finish the notification attempt before the serverless request ends.
+    // The saved lead remains successful even when the email provider fails.
     if (resend) {
       const subjects: Record<string, string> = {
         audit: `New Audit Lead: ${brand_name || email}`,
@@ -94,17 +119,22 @@ export async function POST(req: NextRequest) {
         ].join("\n"),
       };
 
-      resend.emails
-        .send({
+      try {
+        const result = await resend.emails.send({
           from: "RecoScope <alerts@getrecoscope.com>",
-          replyTo: "contact@getrecoscope.com",
+          replyTo: email,
           to: NOTIFY_EMAIL,
           subject: subjects[resolvedLeadType] ?? `New RecoScope Lead: ${email}`,
           text: bodies[resolvedLeadType] ?? `Email: ${email}\nType: ${resolvedLeadType}`,
-        })
-        .catch((err) => {
-          console.error("[audit-api] email notification failed:", err);
         });
+        if (result.error) {
+          console.error("[audit-api] email notification rejected:", result.error);
+        }
+      } catch (err) {
+          console.error("[audit-api] email notification failed:", err);
+      }
+    } else {
+      console.error("[audit-api] lead saved but RESEND_API_KEY is not configured");
     }
 
     return NextResponse.json({ ok: true });
