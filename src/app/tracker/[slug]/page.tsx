@@ -441,7 +441,7 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
   const reportUrl = `${baseUrl}/tracker/${slug}?period=${encodeURIComponent(periodLabel)}`;
 
   return (
-    <article className="bg-dot-grid mx-auto min-h-screen max-w-3xl px-6 py-24">
+    <article className="benchmark-report">
       <ArticleSchema
         headline={`${catName} AI Benchmark — ${periodDisplay}`}
         description={`${frequencyFinding} Usable answers from ${aiModelLabel}.`}
@@ -461,46 +461,69 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
         <WeekNav weeks={periodNavItems} currentWeek={periodLabel} />
       )}
 
-      <SectionHeader
-        title={categoryRow.name}
-        subtitle={`${TYPE_LABELS[trackerType] ?? trackerType} \u2014 ${periodDisplay}`}
-        badge={run ? (periodDisplay !== "—" ? periodDisplay : "Live Report") : "No data yet"}
-      />
+      <header className="report-hero">
+        <SectionHeader
+          title={categoryRow.name}
+          subtitle={`${TYPE_LABELS[trackerType] ?? trackerType} — ${periodDisplay}`}
+        />
+        <div className="report-coverage">
+          <dl className="report-stats">
+            <div><dt>Usable answers</dt><dd>{coverage.eligible}<span>/{coverage.captured}</span></dd></div>
+            <div><dt>Models</dt><dd>{coverage.models.length}</dd></div>
+            <div><dt>Prompt types</dt><dd>{prompts.length}</dd></div>
+          </dl>
+          <p className="report-models">Included: {aiModelLabel}</p>
+          {coverage.unavailableModels.length > 0 && <p className="report-warning">Unavailable answers from {coverage.unavailableModels.join(", ")} are excluded from mention counts. See the collection notes for coverage limitations.</p>}
+          {responses.some(r => r.analysis_exclusion_reason) && <p className="report-warning">Excluded from analysis: {responses.filter(r => r.analysis_exclusion_reason).map(r => `${displayAgent(r.agent_name)} prompt ${r.prompt_number} (${r.analysis_exclusion_reason})`).join("; ")}. Original answers remain retained.</p>}
+        </div>
+      </header>
 
-      <div className="mt-6 rounded-xl border border-white/10 bg-surface px-5 py-4 text-[13px] leading-relaxed text-white/60">
-        <p><strong className="text-white/80">{coverage.eligible}/{coverage.captured} usable answers</strong> · {coverage.models.length} models · {prompts.length} prompt types</p>
-        <p className="mt-1">Included: {aiModelLabel}</p>
-        {coverage.unavailableModels.length > 0 && <p className="mt-2 text-amber-400/80">Unavailable answers from {coverage.unavailableModels.join(", ")} are excluded from mention counts. See the collection notes for coverage limitations.</p>}
-        {responses.some(r => r.analysis_exclusion_reason) && <p className="mt-2 text-amber-400/80">Excluded from analysis: {responses.filter(r => r.analysis_exclusion_reason).map(r => `${displayAgent(r.agent_name)} prompt ${r.prompt_number} (${r.analysis_exclusion_reason})`).join("; ")}. Original answers remain retained.</p>}
-      </div>
+      <nav className="report-jump-links" aria-label="Report sections">
+        <a href="#overview">Overview</a>
+        <a href="#brand-visibility">Brand visibility</a>
+        <a href="#model-comparison">Model comparison</a>
+        {promptBreakdownData.length > 0 && <a href="#prompt-details">Prompt details</a>}
+        <a href="#collection-notes">Collection notes</a>
+      </nav>
 
       <PromptsUsed prompts={prompts} />
 
-      {/* Trend chart (any type, 2+ runs) */}
-      {trendLines.length > 0 && trendWeeks.length >= 2 && (
-        <ScrollFade className="mt-12">
-          <TrendChart lines={trendLines} weeks={trendWeeks} />
-        </ScrollFade>
-      )}
+      <div id="overview" className={`report-overview ${trendLines.length > 0 && trendWeeks.length >= 2 ? "" : "report-overview-single"}`}>
+        {trendLines.length > 0 && trendWeeks.length >= 2 && (
+          <section className="report-card report-trend" aria-label="Mention frequency trend">
+            <TrendChart lines={trendLines} weeks={trendWeeks} />
+          </section>
+        )}
+        <section className="report-card report-takeaway" aria-labelledby="takeaway-heading">
+          <h2 id="takeaway-heading" className="report-eyebrow">Key takeaway</h2>
+          <KeyTakeawayPanel takeaway={takeaway} />
+          <a className="report-text-link" href="#model-comparison">Compare the model answers <span aria-hidden="true">↗</span></a>
+        </section>
+      </div>
 
-      <section className="mt-12">
-        <KeyTakeawayPanel takeaway={takeaway} />
-      </section>
+      <div className="report-results-grid">
+        <section id="brand-visibility" className="report-card report-brands" aria-label="Brand mention frequency">
+          <TopBrandsList
+            brands={brandsWithMovement}
+            droppedBrands={isSeasonal && droppedBrands.length > 0 ? droppedBrands : undefined}
+            category={slug}
+            eligibleAnswers={coverage.eligible}
+          />
+        </section>
+        <section id="model-comparison" className="report-card report-comparison" aria-label="Model ranking comparison">
+          <CrossAgentTable
+            rows={agentRows}
+            whatThisMeans={toBullets(clean.crossAgentDifferences)}
+            notableAbsents={notableAbsents.length > 0 ? notableAbsents : undefined}
+          />
+        </section>
+      </div>
 
-      {/* 3. Top Brands */}
-      <ScrollFade className="mt-20">
-        <TopBrandsList
-          brands={brandsWithMovement}
-          droppedBrands={isSeasonal && droppedBrands.length > 0 ? droppedBrands : undefined}
-          category={slug}
-          eligibleAnswers={coverage.eligible}
-        />
-      </ScrollFade>
-
+      <div id="collection-notes" className="report-notes-grid">
       {/* 4. Opportunity for Brands (moved up) */}
       {clean.marketGaps && (
-        <ScrollFade className="mt-20">
-          <div className="border-l-2 border-cyan/30 py-1 pl-8">
+        <ScrollFade className="report-card report-notes">
+          <div>
             <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
               Findings and Limitations
             </p>
@@ -519,19 +542,10 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
         </ScrollFade>
       )}
 
-      {/* 5. Cross-Agent Comparison */}
-      <ScrollFade className="mt-20">
-        <CrossAgentTable
-          rows={agentRows}
-          whatThisMeans={toBullets(clean.crossAgentDifferences)}
-          notableAbsents={notableAbsents.length > 0 ? notableAbsents : undefined}
-        />
-      </ScrollFade>
-
       {/* 6. Why These Brands Win (moved down) */}
       {toBullets(clean.commonTraits) && (toBullets(clean.commonTraits) ?? []).length > 0 && (
-        <ScrollFade className="mt-20">
-          <div className="border-l-2 border-cyan/20 pl-6">
+        <ScrollFade className="report-card report-traits">
+          <div>
             <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
               Why These Brands Win
             </p>
@@ -550,8 +564,10 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
         </ScrollFade>
       )}
 
+      </div>
+
       {promptBreakdownData.length > 0 && (
-        <section className="premium-content mt-14">
+        <section id="prompt-details" className="premium-content report-card report-prompt-details">
           <PromptBreakdown prompts={promptBreakdownData} budgetInsights={budgetInsights} />
         </section>
       )}
@@ -578,8 +594,9 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
         </ScrollFade>
       )}
 
+      <div className="report-reference-grid">
       {/* FAQ section */}
-      <section className="mt-20">
+      <section className="report-card report-faq">
         <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
           Frequently Asked Questions
         </p>
@@ -598,7 +615,8 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
         </div>
       </section>
 
-      <ScrollFade className="mt-24">
+      <div className="report-methods">
+      <ScrollFade className="report-card">
         <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/20">
           How we measure this
         </p>
@@ -622,8 +640,8 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
       </ScrollFade>
 
       {/* How this report was produced */}
-      <ScrollFade className="mt-24">
-        <div className="rounded-2xl border border-white/10 bg-surface px-8 py-10">
+      <ScrollFade className="report-card">
+        <div>
           <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
             How this report was produced
           </p>
@@ -668,6 +686,8 @@ export default async function TrackerReportPage({ params, searchParams }: Props)
           </a>
         </p>
       </ScrollFade>
+      </div>
+      </div>
     </article>
   );
 }
