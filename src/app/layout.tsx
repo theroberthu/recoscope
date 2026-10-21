@@ -69,7 +69,7 @@ export default function RootLayout({
               <Link href="/tracker" className="transition-colors hover:text-white">
                 Tracker
               </Link>
-              <Link href="/about" className="transition-colors hover:text-white">
+              <Link href="/about" className="hidden transition-colors hover:text-white min-[375px]:block">
                 About
               </Link>
               <Link href="/audit" className="inline-flex min-h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-cyan px-3 py-2.5 font-semibold text-void transition-colors hover:bg-cyan/90 sm:px-4">
