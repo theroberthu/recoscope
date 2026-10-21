@@ -8,14 +8,26 @@ interface AuditRequestFormProps {
 }
 
 export function AuditRequestForm({ categories }: AuditRequestFormProps) {
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "duplicate" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [showOtherCategory, setShowOtherCategory] = useState(false);
   const [submittedEmail, setSubmittedEmail] = useState("");
 
+  if (status === "duplicate") {
+    return (
+      <div role="status" className="rounded-xl border border-cyan/20 bg-surface p-8">
+        <p className="text-lg font-semibold text-white">We already have your audit request.</p>
+        <p className="mt-3 text-[14px] leading-relaxed text-white/40">
+          A new request hasn&rsquo;t been added. To update your brand or check on your audit, email{" "}
+          <a href="mailto:contact@getrecoscope.com" className="text-cyan underline underline-offset-2">contact@getrecoscope.com</a>.
+        </p>
+      </div>
+    );
+  }
+
   if (status === "success") {
     return (
-      <div className="rounded-xl border border-cyan/20 bg-surface p-8">
+      <div role="status" className="rounded-xl border border-cyan/20 bg-surface p-8">
         <div className="mb-4 flex justify-center">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-cyan/10">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -24,7 +36,7 @@ export function AuditRequestForm({ categories }: AuditRequestFormProps) {
           </div>
         </div>
         <p className="text-center text-lg font-semibold text-white">
-          Thanks &mdash; your audit is being prepared.
+          Thanks &mdash; your audit request is received.
         </p>
         <p className="mt-4 text-[14px] leading-relaxed text-[#c8ccd0]">
           We&rsquo;ll email your full AI visibility report within 48 hours. It includes:
@@ -65,7 +77,7 @@ export function AuditRequestForm({ categories }: AuditRequestFormProps) {
     const categorySelect = fd.get("category_interest") as string;
     const categoryOther = fd.get("category_other") as string;
     const category = categorySelect === "Other" ? (categoryOther || "Other") : categorySelect;
-    const email = fd.get("email") as string;
+    const email = (fd.get("email") as string).trim();
 
     const payload = {
       name: fd.get("name"),
@@ -91,6 +103,15 @@ export function AuditRequestForm({ categories }: AuditRequestFormProps) {
         throw new Error(data?.error ?? "Submission failed");
       }
 
+      if (data?.duplicate === true) {
+        setStatus("duplicate");
+        return;
+      }
+
+      if (data?.ok !== true) {
+        throw new Error("We couldn’t confirm your request. Please try again.");
+      }
+
       trackEvent("audit_form_submit");
       setSubmittedEmail(email);
       setStatus("success");
@@ -108,22 +129,23 @@ export function AuditRequestForm({ categories }: AuditRequestFormProps) {
     <form onSubmit={handleSubmit} className="space-y-5">
       <div>
         <label htmlFor="name" className={labelCls}>Name *</label>
-        <input id="name" name="name" type="text" required className={inputCls} placeholder="Your name" />
+        <input id="name" name="name" type="text" autoComplete="name" required className={inputCls} placeholder="Your name" />
       </div>
 
       <div>
         <label htmlFor="email" className={labelCls}>Email *</label>
-        <input id="email" name="email" type="email" required className={inputCls} placeholder="you@company.com" />
+        <input id="email" name="email" type="email" autoComplete="email" required className={inputCls} placeholder="you@company.com" />
       </div>
 
       <div>
         <label htmlFor="brand_name" className={labelCls}>Brand Name *</label>
-        <input id="brand_name" name="brand_name" type="text" required className={inputCls} placeholder="Your brand or product name" />
+        <input id="brand_name" name="brand_name" type="text" autoComplete="organization" required className={inputCls} placeholder="Your brand or product name" />
       </div>
 
       <div>
         <label htmlFor="product_url" className={labelCls}>Product URL</label>
-        <input id="product_url" name="product_url" type="url" className={inputCls} placeholder="Amazon storefront, product page, or DTC site" />
+        <input id="product_url" name="product_url" type="text" inputMode="url" autoComplete="url" aria-describedby="product-url-help" className={inputCls} placeholder="example.com or a product page link" />
+        <p id="product-url-help" className="mt-2 text-[12px] text-white/40">A website or product link is optional. You can leave off https://.</p>
       </div>
 
       <div>
@@ -143,8 +165,10 @@ export function AuditRequestForm({ categories }: AuditRequestFormProps) {
         </select>
         {showOtherCategory && (
           <input
+            aria-label="Other product category"
             name="category_other"
             type="text"
+            required
             className={`${inputCls} mt-2`}
             placeholder="What category is your product in?"
           />
@@ -163,7 +187,7 @@ export function AuditRequestForm({ categories }: AuditRequestFormProps) {
       </div>
 
       {status === "error" && (
-        <p className="rounded-lg border border-red-500/20 bg-red-500/10 px-4 py-3 text-[13px] text-red-400">
+        <p role="alert" className="rounded-lg border border-red-500/20 bg-red-500/10 px-4 py-3 text-[13px] text-red-400">
           {errorMsg}
         </p>
       )}
