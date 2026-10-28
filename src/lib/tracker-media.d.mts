@@ -16,4 +16,5 @@ export function snapshotProducts(
   category: string,
   runId: number,
   responses: AgentResponse[],
+  snapshot?: { period: string; runDate: string | Date },
 ): ProductExample[];
