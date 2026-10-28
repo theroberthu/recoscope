@@ -1,4 +1,10 @@
 import {
+  reportUrl as snapshotUrl,
+  CONTENT_UPDATED_AT,
+  isoDate,
+  latestDate,
+} from "@/lib/seo.mjs";
+import {
   applyRecordedExclusions,
   buildPromptBreakdown,
   buildBudgetInsights,
@@ -50,7 +56,7 @@ import {
   CrossAgentTable,
 } from "@/components/tracker";
 import { ReportViewTracker } from "@/components/tracker/ReportViewTracker";
-import { auditHref } from "@/lib/discovery.mjs";
+import { formatSnapshotDate, auditHref } from "@/lib/discovery.mjs";
 import { CapturedAnswers } from "@/components/tracker/CapturedAnswers";
 import { TrackedLink } from "@/components/TrackedLink";
 import { PromptsUsed } from "@/components/tracker/PromptsUsed";
@@ -332,6 +338,7 @@ export async function generateMetadata({
   const label = category?.name ?? slug.replace(/-/g, " ");
   if (!run)
     return {
+      robots: { index: false, follow: true },
       title: `AI visibility for ${label}`,
       description: `Explore recorded brand mentions and response ranks for ${label}.`,
     };
@@ -343,6 +350,7 @@ export async function generateMetadata({
   const coverage = responseCoverage(responses);
   const brands = mentionCounts(eligibleMentions(mentions, responses));
   return {
+    alternates: { canonical: snapshotUrl(slug, run.period_label) },
     title: `${label}: AI mention frequency — ${formatRunDate(run.run_date)}`,
     description: `${snapshotFinding(brands, coverage)} ${coverage.eligible} usable answers from ${coverage.models.join(", ") || "the recorded services"}. View response ranks and collection limitations.`,
   };
@@ -614,14 +622,23 @@ export default async function TrackerReportPage({
   ];
 
   const baseUrl = "https://www.getrecoscope.com";
-  const reportUrl = `${baseUrl}/tracker/${slug}?period=${encodeURIComponent(periodLabel)}`;
+  const reportUrl = snapshotUrl(slug, periodLabel);
 
   return (
     <article className="benchmark-report">
       <ArticleSchema
         headline={`${catName} AI Benchmark — ${periodDisplay}`}
         description={`${frequencyFinding} Usable answers from ${aiModelLabel}.`}
-        datePublished={String(run.run_date)}
+        datePublished={run.run_date}
+        dateModified={latestDate(
+          CONTENT_UPDATED_AT,
+          run.created_at,
+          insight?.created_at,
+          ...responses.map((r) => r.created_at),
+          ...mentions.map((m) => m.created_at),
+          ...allRuns.map((r) => r.created_at),
+        )}
+        authorName="Robert Hu"
         url={reportUrl}
       />
       <FAQSchema items={faqItems} />
@@ -629,7 +646,7 @@ export default async function TrackerReportPage({
         items={[
           { name: "Home", url: baseUrl },
           { name: "Tracker", url: `${baseUrl}/tracker` },
-          { name: catName, url: `${baseUrl}/tracker/${slug}` },
+          { name: catName, url: reportUrl },
         ]}
       />
       <ReportViewTracker slug={slug} />
@@ -639,6 +656,12 @@ export default async function TrackerReportPage({
           title={categoryRow.name}
           subtitle={`${TYPE_LABELS[trackerType] ?? trackerType} — ${periodDisplay}`}
         />
+        <p className="report-models">
+          Research by <a href="/about">Robert Hu</a> · Published by RecoScope ·{" "}
+          <time dateTime={isoDate(run.run_date)}>
+            Collected {formatSnapshotDate(isoDate(run.run_date) ?? "")}
+          </time>
+        </p>
         <div className="report-coverage">
           <dl className="report-stats">
             <div>
