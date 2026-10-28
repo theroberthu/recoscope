@@ -22,7 +22,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid request." }, { status: 400 });
   }
 
-  const text = (value: unknown) => typeof value === "string" ? value.trim() : "";
+  const text = (value: unknown) =>
+    typeof value === "string" ? value.trim() : "";
   const name = text(body.name);
   const email = text(body.email).toLowerCase();
   const brand_name = text(body.brand_name);
@@ -33,26 +34,39 @@ export async function POST(req: NextRequest) {
   let website = text(body.website);
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return NextResponse.json({ error: "A valid email is required." }, { status: 400 });
+    return NextResponse.json(
+      { error: "A valid email is required." },
+      { status: 400 },
+    );
   }
 
   if (website) {
     try {
-      const url = new URL(/^[a-z][a-z\d+.-]*:/i.test(website) ? website : `https://${website}`);
-      if (!["https:", "http:"].includes(url.protocol) || !url.hostname.includes(".")) {
+      const url = new URL(
+        /^[a-z][a-z\d+.-]*:/i.test(website) ? website : `https://${website}`,
+      );
+      if (
+        !["https:", "http:"].includes(url.protocol) ||
+        !url.hostname.includes(".")
+      ) {
         throw new Error("Invalid website");
       }
       website = url.href;
     } catch {
-      return NextResponse.json({ error: "Enter a valid product website, such as example.com." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Enter a valid product website, such as example.com." },
+        { status: 400 },
+      );
     }
   }
 
-  const resolvedLeadType = VALID_LEAD_TYPES.has(lead_type) ? lead_type : "audit";
+  const resolvedLeadType = VALID_LEAD_TYPES.has(lead_type)
+    ? lead_type
+    : "audit";
 
-  if (resolvedLeadType === "audit" && (!name || !brand_name)) {
+  if (resolvedLeadType === "audit" && !brand_name) {
     return NextResponse.json(
-      { error: "Name and brand name are required for audit requests." },
+      { error: "A brand name is required for audit requests." },
       { status: 400 },
     );
   }
@@ -125,16 +139,23 @@ export async function POST(req: NextRequest) {
           replyTo: email,
           to: NOTIFY_EMAIL,
           subject: subjects[resolvedLeadType] ?? `New RecoScope Lead: ${email}`,
-          text: bodies[resolvedLeadType] ?? `Email: ${email}\nType: ${resolvedLeadType}`,
+          text:
+            bodies[resolvedLeadType] ??
+            `Email: ${email}\nType: ${resolvedLeadType}`,
         });
         if (result.error) {
-          console.error("[audit-api] email notification rejected:", result.error);
+          console.error(
+            "[audit-api] email notification rejected:",
+            result.error,
+          );
         }
       } catch (err) {
-          console.error("[audit-api] email notification failed:", err);
+        console.error("[audit-api] email notification failed:", err);
       }
     } else {
-      console.error("[audit-api] lead saved but RESEND_API_KEY is not configured");
+      console.error(
+        "[audit-api] lead saved but RESEND_API_KEY is not configured",
+      );
     }
 
     return NextResponse.json({ ok: true });
