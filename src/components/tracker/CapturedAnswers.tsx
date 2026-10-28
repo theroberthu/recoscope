@@ -54,7 +54,7 @@ export function CapturedAnswers({
                   Excluded: {r.analysis_exclusion_reason}
                 </p>
               )}
-              <AnswerProducts products={products} answerId={r.id} />
+              <AnswerProducts products={products} answerId={Number(r.id)} />
               <pre className="captured-prose">
                 {r.raw_response || "No response text was saved."}
               </pre>
