@@ -1,9 +1,11 @@
+import { ROBERT_HU } from "@/lib/seo.mjs";
 import type { Metadata } from "next";
 import { TrackedLink } from "@/components/TrackedLink";
 import Link from "next/link";
 import { BreadcrumbSchema } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/about" },
   title: { absolute: "Robert Hu | AI Commerce Strategy & RecoScope" },
   description:
     "Robert Hu brings more than 20 years of commerce experience to AI product discovery. Explore RecoScope, his working benchmark, and connect about AI commerce, strategy, and partnerships roles.",
@@ -49,9 +51,7 @@ export default function AboutPage() {
   const baseUrl = "https://www.getrecoscope.com";
   const personSchema = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Robert Hu",
-    url: "https://theroberthu.com",
+    ...ROBERT_HU,
     description:
       "Builder and operator of RecoScope, an independent AI commerce benchmark. More than 20 years in ecommerce, with a focus on AI product discovery, strategy, and evaluation.",
     sameAs: [
