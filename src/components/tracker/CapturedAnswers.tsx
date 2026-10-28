@@ -1,6 +1,14 @@
 import { displayAgent, isEligibleResponse } from "@/lib/report-ranking.mjs";
+import { AnswerProducts } from "./TrackerMedia";
+import type { ProductExample } from "@/lib/tracker-media.mjs";
 import type { AgentResponse } from "@/lib/types";
-export function CapturedAnswers({ responses }: { responses: AgentResponse[] }) {
+export function CapturedAnswers({
+  responses,
+  products = [],
+}: {
+  responses: AgentResponse[];
+  products?: ProductExample[];
+}) {
   if (!responses.length) return null;
   return (
     <section
@@ -46,6 +54,7 @@ export function CapturedAnswers({ responses }: { responses: AgentResponse[] }) {
                   Excluded: {r.analysis_exclusion_reason}
                 </p>
               )}
+              <AnswerProducts products={products} answerId={Number(r.id)} />
               <pre className="captured-prose">
                 {r.raw_response || "No response text was saved."}
               </pre>

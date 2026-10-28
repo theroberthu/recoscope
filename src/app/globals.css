@@ -1426,3 +1426,227 @@ article :is(h2, h3) {
     row-gap: 28px;
   }
 }
+
+/* Product imagery identifies names in the evidence, separately from brand counts. */
+.tracker-brand-mark {
+  display: inline-flex;
+  flex: 0 0 40px;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #fff;
+  overflow: hidden;
+}
+.tracker-brand-mark img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+.tracker-brand-mark > span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+.tracker-brand-mark-dark {
+  background: #18221e;
+}
+.tracker-product-section {
+  scroll-margin-top: 100px;
+  margin-top: 24px;
+}
+.tracker-product-intro {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 24px;
+}
+.tracker-product-intro h2 {
+  font-size: 26px;
+  line-height: 1.25;
+  margin-top: 8px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+.tracker-product-intro > p {
+  max-width: 460px;
+  font-size: 14px;
+  color: var(--secondary);
+}
+.tracker-product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.tracker-product-card {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+}
+.tracker-product-photo {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #f4f7f3;
+}
+.tracker-product-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+.tracker-product-copy {
+  padding: 20px;
+}
+.tracker-product-brand {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--brand);
+}
+.tracker-product-copy h3 {
+  margin-top: 6px;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+  min-height: 48px;
+}
+.tracker-product-source-label {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.tracker-answer-links {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.tracker-answer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 5px 9px;
+  border-radius: 7px;
+  border: 1px solid var(--line);
+  background: #f4f7f3;
+  color: var(--brand);
+  font-size: 12px;
+  font-weight: 500;
+}
+.tracker-answer-links a:hover {
+  background: #e5eee7;
+}
+.tracker-manufacturer-link {
+  display: inline-block;
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 11px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.tracker-product-note {
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--muted);
+  max-width: 900px;
+}
+.tracker-image-fallback {
+  color: var(--muted);
+  font-size: 16px;
+}
+.answer-product-examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0 20px 20px;
+}
+.answer-product-thumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1 1 210px;
+  max-width: 320px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}
+.answer-product-thumb img {
+  width: 48px;
+  height: 54px;
+  object-fit: contain;
+}
+.answer-product-thumb small {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.answer-disclosure {
+  scroll-margin-top: 100px;
+}
+@media (max-width: 900px) {
+  .tracker-product-intro {
+    display: block;
+  }
+  .tracker-product-intro > p {
+    margin-top: 14px;
+  }
+}
+@media (max-width: 600px) {
+  .tracker-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .tracker-product-photo {
+    height: 150px;
+    padding: 12px;
+  }
+  .tracker-product-copy {
+    padding: 14px;
+  }
+  .tracker-product-copy h3 {
+    font-size: 14px;
+    min-height: 60px;
+  }
+  .tracker-product-intro h2 {
+    font-size: 24px;
+  }
+  .tracker-brand-mark {
+    flex-basis: 32px;
+    width: 32px;
+    height: 32px;
+  }
+  .tracker-brand-mark img {
+    width: 26px;
+    height: 26px;
+  }
+}
+@media (max-width: 359px) {
+  .tracker-product-grid {
+    grid-template-columns: 1fr;
+  }
+  .tracker-product-copy h3 {
+    min-height: 0;
+  }
+}
+
+.tracker-brand-row {
+  gap: 12px;
+}
+.tracker-brand-row > span:last-child {
+  flex-shrink: 0;
+}
+.tracker-brand-row > span:first-child {
+  flex: 1;
+  overflow-wrap: anywhere;
+}

@@ -1,0 +1,101 @@
+{
+  "purpose": "Editorial identification of brands and products named in captured AI answers. Images are manufacturer assets, retrieved on 2026-10-28. Packaging may differ by flavor, size, and date.",
+  "assets": [
+    {
+      "file": "public/tracker-media/protein-powder/optimum-nutrition-logo.webp",
+      "image_url": "https://www.optimumnutrition.com/cdn/shop/files/ON-fav-icon-2.png?v=1762357320&width=180",
+      "source_page": "https://www.optimumnutrition.com/en-us/products/gold-standard-100-whey-protein-powder",
+      "retrieved_on": "2026-10-28",
+      "bytes": 4090,
+      "content_type": "image/webp"
+    },
+    {
+      "file": "public/tracker-media/protein-powder/transparent-labs-logo.png",
+      "image_url": "https://www.transparentlabs.com/cdn/shop/files/transparent-logo.png?v=1749757795&width=150",
+      "source_page": "https://www.transparentlabs.com/products/whey-protein-isolate",
+      "retrieved_on": "2026-10-28",
+      "bytes": 881,
+      "content_type": "image/png"
+    },
+    {
+      "file": "public/tracker-media/protein-powder/dymatize-logo.png",
+      "image_url": "https://dymatize.com/apple-touch-icon.png",
+      "source_page": "https://dymatize.com",
+      "retrieved_on": "2026-10-28",
+      "bytes": 2262,
+      "content_type": "image/png"
+    },
+    {
+      "file": "public/tracker-media/protein-powder/momentous-logo.png",
+      "image_url": "https://www.livemomentous.com/cdn/shop/t/1271/assets/apple-touch-icon_small.png?v=14811670991533047571777461329",
+      "source_page": "https://www.livemomentous.com/products/essential-whey-protein",
+      "retrieved_on": "2026-10-28",
+      "bytes": 6900,
+      "content_type": "image/png"
+    },
+    {
+      "file": "public/tracker-media/protein-powder/orgain-logo.png",
+      "image_url": "https://orgain.com/cdn/shop/files/2024-logo-hex268703_O_only_1024x1024_4bcd8473-9b17-4adc-b704-452698b068b1.png?v=1731613857&width=150",
+      "source_page": "https://orgain.com/products/organic-protein-plant-based-protein-powder",
+      "retrieved_on": "2026-10-28",
+      "bytes": 7192,
+      "content_type": "image/png"
+    },
+    {
+      "file": "public/tracker-media/protein-powder/ascent-logo.png",
+      "image_url": "https://www.ascentprotein.com/cdn/shop/files/logo-mobile_bb2a0a34-39a6-49c4-bbb4-44384cf92db8.png?v=1660320272",
+      "source_page": "https://www.ascentprotein.com/collections/whey-protein-powder",
+      "retrieved_on": "2026-10-28",
+      "bytes": 4370,
+      "content_type": "image/png"
+    },
+    {
+      "file": "public/tracker-media/protein-powder/ascent-whey.png",
+      "image_url": "https://www.ascentprotein.com/cdn/shop/products/chocolate-whey-protein-powder-4.png?v=1693320651&width=520",
+      "source_page": "https://www.ascentprotein.com/collections/whey-protein-powder",
+      "retrieved_on": "2026-10-28",
+      "bytes": 403057,
+      "content_type": "image/png"
+    },
+    {
+      "file": "public/tracker-media/protein-powder/dymatize-iso100.jpg",
+      "image_url": "https://dymatize.imgix.net/production/products/dym0001-8_ISO100_20s_PCThumbnail_540x678_GormetChocolate.jpg?auto=compress&fit=max&w=400",
+      "source_page": "https://dymatize.com/iso100",
+      "retrieved_on": "2026-10-28",
+      "bytes": 31230,
+      "content_type": "image/jpeg"
+    },
+    {
+      "file": "public/tracker-media/protein-powder/optimum-whey.png",
+      "image_url": "https://www.optimumnutrition.com/cdn/shop/files/US_GSW_2LB_EXTMLKCHOC_FOP.png?v=1784668210&width=520",
+      "source_page": "https://www.optimumnutrition.com/en-us/products/gold-standard-100-whey-protein-powder",
+      "retrieved_on": "2026-10-28",
+      "bytes": 141308,
+      "content_type": "image/png"
+    },
+    {
+      "file": "public/tracker-media/protein-powder/transparent-labs-whey.png",
+      "image_url": "https://www.transparentlabs.com/cdn/shop/files/01_chocolate.png?v=1778514112&width=520",
+      "source_page": "https://www.transparentlabs.com/products/whey-protein-isolate",
+      "retrieved_on": "2026-10-28",
+      "bytes": 143565,
+      "content_type": "image/png"
+    },
+    {
+      "file": "public/tracker-media/protein-powder/momentous-whey.png",
+      "image_url": "https://www.livemomentous.com/cdn/shop/files/Whey_Protein_25_Chocolate-DTC-ProductHero.png?v=1785171166&width=520",
+      "source_page": "https://www.livemomentous.com/products/essential-whey-protein",
+      "retrieved_on": "2026-10-28",
+      "bytes": 130198,
+      "content_type": "image/png"
+    },
+    {
+      "file": "public/tracker-media/protein-powder/orgain-plant.png",
+      "image_url": "https://orgain.com/cdn/shop/files/851770003179-v13-Orgain-ProteinPowder-2.03lb-Chocolate-20240311-Front-HIRES-web_1200px.webp?v=1729013192&width=520",
+      "source_page": "https://orgain.com/products/organic-protein-plant-based-protein-powder",
+      "retrieved_on": "2026-10-28",
+      "bytes": 147368,
+      "content_type": "image/png"
+    }
+  ]
+}
