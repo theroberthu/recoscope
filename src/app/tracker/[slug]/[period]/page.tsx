@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 
 interface Props {
   params: Promise<{ slug: string; period: string }>;
@@ -6,5 +6,5 @@ interface Props {
 
 export default async function PeriodReportPage({ params }: Props) {
   const { slug, period } = await params;
-  redirect(`/tracker/${slug}?period=${encodeURIComponent(period)}`);
+  permanentRedirect(`/tracker/${slug}?period=${encodeURIComponent(period)}`);
 }
