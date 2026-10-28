@@ -4,6 +4,7 @@ import { getActiveCategories, getLatestPublicSnapshot } from "@/lib/queries";
 import { resolveCategory } from "@/lib/discovery.mjs";
 import { SnapshotPreview } from "@/components/home/SnapshotPreview";
 export const metadata: Metadata = {
+  alternates: { canonical: "/audit" },
   title: "Free AI Visibility Audit",
   description:
     "Request a free, dated comparison of your brand across ChatGPT, Claude, Gemini, and Perplexity. No call required. Delivered by email within 48 hours.",
