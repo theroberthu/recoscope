@@ -1822,3 +1822,98 @@ article :is(h2, h3) {
     transition: none;
   }
 }
+
+/* Snapshot explainer: a deliberately sized, uncropped vertical player. */
+.benchmark-video {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: start;
+  margin-top: 24px;
+  background: #f7faf7;
+}
+.benchmark-video-copy { min-width: 0; }
+.benchmark-video h2 {
+  max-width: 24ch;
+  margin: 12px 0 18px;
+  color: var(--ink);
+  font-size: clamp(24px, 3vw, 32px);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  font-weight: 650;
+}
+.benchmark-video-copy > p:not(.report-eyebrow) {
+  margin-top: 16px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--secondary);
+}
+.benchmark-video-copy strong { color: var(--ink); font-weight: 600; }
+.benchmark-video-context { color: var(--brand) !important; }
+.benchmark-video-limitation {
+  padding: 14px 16px;
+  border-left: 3px solid #b8cdbd;
+  background: #eaf1eb;
+  border-radius: 0 8px 8px 0;
+}
+.benchmark-video-copy > .benchmark-video-caption-note { font-size: 13px !important; }
+.benchmark-video-media { width: 100%; max-width: 320px; justify-self: center; }
+.benchmark-video-frame {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #f3f8f2;
+}
+.benchmark-video-frame video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  aspect-ratio: 9 / 16;
+}
+.benchmark-video-play {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  width: max-content;
+  max-width: calc(100% - 24px);
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: var(--brand);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.benchmark-video-play:hover { background: #124a3e; }
+.benchmark-video-play:focus-visible,
+.benchmark-video-frame video:focus-visible,
+.benchmark-video-transcript summary:focus-visible {
+  outline: 3px solid #357c67;
+  outline-offset: 4px;
+}
+.benchmark-video-transcript { margin-top: 20px; border-top: 1px solid var(--line); }
+.benchmark-video-transcript summary {
+  padding: 16px 0;
+  color: var(--brand);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+.benchmark-video-transcript p { margin: 0 0 14px; font-size: 14px; line-height: 1.7; color: var(--secondary); }
+.benchmark-video-error { margin-top: 12px; font-size: 14px; color: #8a3927; }
+@media (max-width: 767px) {
+  .benchmark-video { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .benchmark-video-copy { display: contents; }
+  .benchmark-video h2 { max-width: none; margin: 0; }
+  .benchmark-video-copy > p:not(.report-eyebrow) { margin-top: 0; }
+  .benchmark-video-media { max-width: min(320px, 100%); grid-row: 4; }
+}
