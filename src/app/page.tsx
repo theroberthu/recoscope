@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import {
   getCategoriesWithRuns,
   getLatestPublicSnapshot,
@@ -8,6 +9,8 @@ import { OrganizationSchema } from "@/components/seo/JsonLd";
 import { CategoryFinder } from "@/components/tracker/CategoryFinder";
 import { SnapshotPreview } from "@/components/home/SnapshotPreview";
 import { TrackedLink } from "@/components/TrackedLink";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export const revalidate = 300;
 export default async function HomePage() {
