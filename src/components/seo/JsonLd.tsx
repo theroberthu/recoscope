@@ -1,38 +1,11 @@
-const PUBLISHER = {
-  "@type": "Organization",
-  name: "RecoScope",
-  url: "https://getrecoscope.com",
-  logo: {
-    "@type": "ImageObject",
-    url: "https://getrecoscope.com/icon.svg",
-  },
-};
+import { articleSchemaData, jsonLd, PUBLISHER, ROBERT_HU } from "@/lib/seo.mjs";
+import type { ArticleDataProps } from "@/lib/seo.mjs";
 
-interface ArticleSchemaProps {
-  headline: string;
-  description: string;
-  datePublished: string;
-  dateModified?: string;
-  url: string;
-}
-
-export function ArticleSchema({ headline, description, datePublished, dateModified, url }: ArticleSchemaProps) {
-  const data = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline,
-    description,
-    datePublished,
-    dateModified: dateModified ?? datePublished,
-    author: { "@type": "Organization", name: "RecoScope" },
-    publisher: PUBLISHER,
-    mainEntityOfPage: { "@type": "WebPage", "@id": url },
-  };
-
+export function ArticleSchema(props: ArticleDataProps) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: jsonLd(articleSchemaData(props)) }}
     />
   );
 }
@@ -40,18 +13,16 @@ export function ArticleSchema({ headline, description, datePublished, dateModifi
 export function OrganizationSchema() {
   const data = {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "RecoScope",
-    url: "https://getrecoscope.com",
-    logo: "https://getrecoscope.com/icon.svg",
-    description: "AI recommendation tracking and benchmarking for consumer brands.",
+    ...PUBLISHER,
+    description:
+      "AI recommendation tracking and benchmarking for consumer brands.",
     sameAs: ["https://x.com/recoscope"],
+    founder: ROBERT_HU,
   };
-
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: jsonLd(data) }}
     />
   );
 }
@@ -78,12 +49,16 @@ export function FAQSchema({ items }: { items: FAQItem[] }) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: jsonLd(data) }}
     />
   );
 }
 
-export function BreadcrumbSchema({ items }: { items: { name: string; url: string }[] }) {
+export function BreadcrumbSchema({
+  items,
+}: {
+  items: { name: string; url: string }[];
+}) {
   const data = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -94,5 +69,10 @@ export function BreadcrumbSchema({ items }: { items: { name: string; url: string
       item: item.url,
     })),
   };
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: jsonLd(data) }}
+    />
+  );
 }
