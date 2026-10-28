@@ -44,6 +44,7 @@ function hasIsPublicTrue(body) {
 // Public-surface queries: must require published + is_public=true.
 const PUBLIC_RUN_QUERIES = [
   "getCategoriesWithRuns",
+  "getLatestPublicSnapshot",
   "getRunByPeriod",
   "getAllRunsForCategory",
   "getPreviousRun",
@@ -61,7 +62,10 @@ const PUBLIC_RUN_QUERIES = [
 for (const name of PUBLIC_RUN_QUERIES) {
   test(`${name} gates on status='published'`, () => {
     const body = extractFunctionBody(source, name);
-    assert.ok(hasPublishedGate(body), `${name} is missing status = 'published'`);
+    assert.ok(
+      hasPublishedGate(body),
+      `${name} is missing status = 'published'`,
+    );
   });
   test(`${name} gates on is_public=true`, () => {
     const body = extractFunctionBody(source, name);
@@ -72,7 +76,10 @@ for (const name of PUBLIC_RUN_QUERIES) {
 // getLatestRun: the default (no statusFilter) branch must require published.
 test("getLatestRun default branch gates on status='published'", () => {
   const body = extractFunctionBody(source, "getLatestRun");
-  assert.ok(hasPublishedGate(body), "getLatestRun is missing status = 'published' in default branch");
+  assert.ok(
+    hasPublishedGate(body),
+    "getLatestRun is missing status = 'published' in default branch",
+  );
   assert.ok(hasIsPublicTrue(body), "getLatestRun is missing is_public = true");
 });
 
@@ -82,15 +89,24 @@ test("getPromptDetail gates every subquery on published + public", () => {
   const publishedCount = (body.match(/status\s*=\s*'published'/g) || []).length;
   const publicCount = (body.match(/is_public\s*=\s*true/g) || []).length;
   // 5 subqueries touch runs (meta, brands, agents, runDates, insight).
-  assert.ok(publishedCount >= 5, `getPromptDetail has only ${publishedCount} published gates, expected >= 5`);
-  assert.ok(publicCount >= 5, `getPromptDetail has only ${publicCount} is_public gates, expected >= 5`);
+  assert.ok(
+    publishedCount >= 5,
+    `getPromptDetail has only ${publishedCount} published gates, expected >= 5`,
+  );
+  assert.ok(
+    publicCount >= 5,
+    `getPromptDetail has only ${publicCount} is_public gates, expected >= 5`,
+  );
 });
 
 // getAuditStats: brand + category + run subqueries must all be gated.
 test("getAuditStats gates brand, category, and run counts on published + public", () => {
   const body = extractFunctionBody(source, "getAuditStats");
   const publishedCount = (body.match(/status\s*=\s*'published'/g) || []).length;
-  assert.ok(publishedCount >= 3, `getAuditStats has only ${publishedCount} published gates, expected >= 3`);
+  assert.ok(
+    publishedCount >= 3,
+    `getAuditStats has only ${publishedCount} published gates, expected >= 3`,
+  );
 });
 
 // Private prospect queries must remain is_public=false and must NOT be
@@ -98,7 +114,13 @@ test("getAuditStats gates brand, category, and run counts on published + public"
 for (const name of ["getProspectRuns", "getProspectDayCount"]) {
   test(`${name} preserves private (is_public=false) behavior`, () => {
     const body = extractFunctionBody(source, name);
-    assert.ok(/is_public\s*=\s*false/.test(body), `${name} must keep is_public = false`);
-    assert.ok(!hasPublishedGate(body), `${name} must NOT gate on published (private runs are draft by design)`);
+    assert.ok(
+      /is_public\s*=\s*false/.test(body),
+      `${name} must keep is_public = false`,
+    );
+    assert.ok(
+      !hasPublishedGate(body),
+      `${name} must NOT gate on published (private runs are draft by design)`,
+    );
   });
 }

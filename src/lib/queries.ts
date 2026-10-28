@@ -1,5 +1,12 @@
 import { getDb } from "./db";
-import { applyRecordedExclusions, eligibleMentions, mentionCounts, responseCoverage, snapshotFinding } from "./report-ranking.mjs";
+import {
+  applyRecordedExclusions,
+  buildPromptBreakdown,
+  eligibleMentions,
+  mentionCounts,
+  responseCoverage,
+  snapshotFinding,
+} from "./report-ranking.mjs";
 import type {
   AgentResponse,
   BrandMention,
@@ -56,7 +63,7 @@ export async function getCategoryBySlug(
 /** Only compact, data-derived findings reach the homepage; collection logs stay internal. */
 export async function getCategoriesWithRuns() {
   const sql = getDb();
-  const categories = await sql`
+  const categories = (await sql`
     SELECT c.*, r.id AS latest_run_id, r.run_date::text AS latest_run_date
     FROM categories c
     JOIN LATERAL (
@@ -65,9 +72,9 @@ export async function getCategoriesWithRuns() {
       ORDER BY run_date DESC, id DESC LIMIT 1
     ) r ON true
     WHERE c.is_active = true ORDER BY c.name
-  ` as (Category & {latest_run_id: number; latest_run_date: string})[];
+  `) as (Category & { latest_run_id: number; latest_run_date: string })[];
   if (!categories.length) return [];
-  const runIds = categories.map(c => c.latest_run_id);
+  const runIds = categories.map((c) => c.latest_run_id);
   const [mentions, responses] = await Promise.all([
     sql`SELECT bm.* FROM brand_mentions bm JOIN runs r ON r.id = bm.run_id
         WHERE r.id = ANY(${runIds}::int[]) AND r.is_public = true AND r.status = 'published'`,
@@ -79,11 +86,25 @@ export async function getCategoriesWithRuns() {
         FROM agent_responses ar JOIN runs r ON r.id = ar.run_id
         WHERE r.id = ANY(${runIds}::int[]) AND r.is_public = true AND r.status = 'published'`,
   ]);
-  return categories.map(cat => {
-    const cells = applyRecordedExclusions((responses as AgentResponse[]).filter(r => Number(r.run_id) === Number(cat.latest_run_id)), cat.latest_run_id);
-    const brands = eligibleMentions((mentions as BrandMention[]).filter(m => Number(m.run_id) === Number(cat.latest_run_id)), cells);
+  return categories.map((cat) => {
+    const cells = applyRecordedExclusions(
+      (responses as AgentResponse[]).filter(
+        (r) => Number(r.run_id) === Number(cat.latest_run_id),
+      ),
+      cat.latest_run_id,
+    );
+    const brands = eligibleMentions(
+      (mentions as BrandMention[]).filter(
+        (m) => Number(m.run_id) === Number(cat.latest_run_id),
+      ),
+      cells,
+    );
     const coverage = responseCoverage(cells);
-    return {...cat, coverage, finding: snapshotFinding(mentionCounts(brands), coverage)};
+    return {
+      ...cat,
+      coverage,
+      finding: snapshotFinding(mentionCounts(brands), coverage),
+    };
   });
 }
 
@@ -114,6 +135,44 @@ export async function getLatestRun(
         LIMIT 1
       `;
   return (rows[0] as Run) ?? null;
+}
+
+/** Shared, explicitly public evidence for the homepage, audit and sample report. */
+export async function getLatestPublicSnapshot() {
+  const categories = await getCategoriesWithRuns();
+  const category = [...categories].sort(
+    (a, b) =>
+      b.latest_run_date.localeCompare(a.latest_run_date) ||
+      Number(b.latest_run_id) - Number(a.latest_run_id),
+  )[0];
+  if (!category) return null;
+  const sql = getDb();
+  const rows = await sql`SELECT * FROM runs WHERE id = ${category.latest_run_id}
+    AND is_public = true AND status = 'published' LIMIT 1`;
+  if (!rows.length) return null;
+  const run = { ...rows[0], run_date: category.latest_run_date } as Run;
+  const [rawResponses, rawMentions, insight, prompts] = await Promise.all([
+    getAgentResponses(run.id),
+    getBrandMentions(run.id),
+    getRunInsight(run.id),
+    getPromptsForRun(run.id),
+  ]);
+  const responses = applyRecordedExclusions(rawResponses, run.id);
+  const mentions = eligibleMentions(rawMentions, responses);
+  return {
+    category,
+    run,
+    insight,
+    prompts,
+    responses,
+    mentions,
+    coverage: responseCoverage(responses),
+    finding: category.finding,
+    comparison:
+      buildPromptBreakdown(prompts, mentions, responses).find(
+        (p) => p.promptNumber === 3,
+      )?.agentBrands ?? [],
+  };
 }
 
 export async function getRunByPeriod(
@@ -152,9 +211,7 @@ export async function getAgentResponses(
 // Brand mentions
 // ---------------------------------------------------------------------------
 
-export async function getBrandMentions(
-  runId: number,
-): Promise<BrandMention[]> {
+export async function getBrandMentions(runId: number): Promise<BrandMention[]> {
   const sql = getDb();
   const rows = await sql`
     SELECT * FROM brand_mentions
@@ -182,9 +239,9 @@ export async function getPromptsForRun(
 // Homepage hero data
 // ---------------------------------------------------------------------------
 
-export async function getTopBrandsForHero(limit = 10): Promise<
-  { brand: string; mentions: number }[]
-> {
+export async function getTopBrandsForHero(
+  limit = 10,
+): Promise<{ brand: string; mentions: number }[]> {
   const sql = getDb();
   const rows = await sql`
     SELECT brand_name_normalized AS brand, COUNT(*)::int AS mentions
@@ -232,7 +289,12 @@ export async function getCrossAgentPreview(): Promise<
 
 /** Active categories with latest run date for the report schedule. */
 export async function getCategoriesWithSchedule(): Promise<
-  { name: string; slug: string; tracker_type: string; last_run_date: string | null }[]
+  {
+    name: string;
+    slug: string;
+    tracker_type: string;
+    last_run_date: string | null;
+  }[]
 > {
   const sql = getDb();
   const rows = await sql`
@@ -253,7 +315,12 @@ export async function getCategoriesWithSchedule(): Promise<
       r.run_date DESC NULLS LAST,
       c.name
   `;
-  return rows as { name: string; slug: string; tracker_type: string; last_run_date: string | null }[];
+  return rows as {
+    name: string;
+    slug: string;
+    tracker_type: string;
+    last_run_date: string | null;
+  }[];
 }
 
 // ---------------------------------------------------------------------------
@@ -296,9 +363,7 @@ export async function getAllRunsForCategory(
 }
 
 /** Get all runs for a seasonal category (for trend chart). */
-export async function getAllSeasonalRuns(
-  categoryId: number,
-): Promise<Run[]> {
+export async function getAllSeasonalRuns(categoryId: number): Promise<Run[]> {
   const sql = getDb();
   const rows = await sql`
     SELECT * FROM runs
@@ -392,9 +457,10 @@ export async function getPlatformStats(): Promise<{
     return (r.value as { c: number }[])[0]?.c ?? 0;
   };
 
-  const firstDate = first.status === "fulfilled"
-    ? (first.value as { d: string | null }[])[0]?.d ?? null
-    : null;
+  const firstDate =
+    first.status === "fulfilled"
+      ? ((first.value as { d: string | null }[])[0]?.d ?? null)
+      : null;
 
   return {
     categories: num(cats),
@@ -409,7 +475,9 @@ export async function getPlatformStats(): Promise<{
 // Prospect (private) queries
 // ---------------------------------------------------------------------------
 
-export async function getProspectRuns(clientId: string): Promise<(Run & { category_name: string; category_slug: string })[]> {
+export async function getProspectRuns(
+  clientId: string,
+): Promise<(Run & { category_name: string; category_slug: string })[]> {
   const sql = getDb();
   const rows = await sql`
     SELECT r.*, c.name AS category_name, c.slug AS category_slug
@@ -422,7 +490,13 @@ export async function getProspectRuns(clientId: string): Promise<(Run & { catego
   return rows as (Run & { category_name: string; category_slug: string })[];
 }
 
-export async function getProspectDayCount(clientId: string): Promise<{ dayCount: number; firstDate: string | null; lastDate: string | null }> {
+export async function getProspectDayCount(
+  clientId: string,
+): Promise<{
+  dayCount: number;
+  firstDate: string | null;
+  lastDate: string | null;
+}> {
   const sql = getDb();
   const rows = await sql`
     SELECT
@@ -433,7 +507,9 @@ export async function getProspectDayCount(clientId: string): Promise<{ dayCount:
     WHERE client_id = ${clientId}
       AND is_public = false
   `;
-  const row = rows[0] as { day_count: number; first_date: string | null; last_date: string | null } | undefined;
+  const row = rows[0] as
+    | { day_count: number; first_date: string | null; last_date: string | null }
+    | undefined;
   return {
     dayCount: row?.day_count ?? 0,
     firstDate: row?.first_date ?? null,
@@ -479,9 +555,17 @@ export async function getPromptDetail(promptText: string): Promise<{
   prompt_text: string;
   category_name: string;
   category_slug: string;
-  brands: { brand: string; mentions: number; top3: number; first_picks: number }[];
+  brands: {
+    brand: string;
+    mentions: number;
+    top3: number;
+    first_picks: number;
+  }[];
   agent_breakdown: { agent_name: string; brands: string[] }[];
-  insight: { top_brands_summary: string | null; key_takeaway: string | null } | null;
+  insight: {
+    top_brands_summary: string | null;
+    key_takeaway: string | null;
+  } | null;
   run_dates: string[];
 } | null> {
   const sql = getDb();
@@ -497,7 +581,10 @@ export async function getPromptDetail(promptText: string): Promise<{
     LIMIT 1
   `;
   if (meta.length === 0) return null;
-  const { category_name, category_slug } = meta[0] as { category_name: string; category_slug: string };
+  const { category_name, category_slug } = meta[0] as {
+    category_name: string;
+    category_slug: string;
+  };
 
   const brands = await sql`
     SELECT
@@ -567,14 +654,25 @@ export async function getPromptDetail(promptText: string): Promise<{
     prompt_text: promptText,
     category_name,
     category_slug,
-    brands: brands as { brand: string; mentions: number; top3: number; first_picks: number }[],
-    agent_breakdown: Array.from(agentMap.entries()).map(([agent_name, brandList]) => ({
-      agent_name,
-      brands: brandList,
-    })),
-    insight: insightRows.length > 0
-      ? insightRows[0] as { top_brands_summary: string | null; key_takeaway: string | null }
-      : null,
+    brands: brands as {
+      brand: string;
+      mentions: number;
+      top3: number;
+      first_picks: number;
+    }[],
+    agent_breakdown: Array.from(agentMap.entries()).map(
+      ([agent_name, brandList]) => ({
+        agent_name,
+        brands: brandList,
+      }),
+    ),
+    insight:
+      insightRows.length > 0
+        ? (insightRows[0] as {
+            top_brands_summary: string | null;
+            key_takeaway: string | null;
+          })
+        : null,
     run_dates: (runDates as { run_date: string }[]).map((r) => r.run_date),
   };
 }
@@ -583,7 +681,9 @@ export async function getPromptDetail(promptText: string): Promise<{
 // Demo queries (pull brand data from public runs)
 // ---------------------------------------------------------------------------
 
-export async function getDemoRuns(brandName: string): Promise<(Run & { category_name: string; category_slug: string })[]> {
+export async function getDemoRuns(
+  brandName: string,
+): Promise<(Run & { category_name: string; category_slug: string })[]> {
   const sql = getDb();
   const pattern = `%${brandName}%`;
   const rows = await sql`
@@ -599,7 +699,13 @@ export async function getDemoRuns(brandName: string): Promise<(Run & { category_
   return rows as (Run & { category_name: string; category_slug: string })[];
 }
 
-export async function getDemoDayCount(brandName: string): Promise<{ dayCount: number; firstDate: string | null; lastDate: string | null }> {
+export async function getDemoDayCount(
+  brandName: string,
+): Promise<{
+  dayCount: number;
+  firstDate: string | null;
+  lastDate: string | null;
+}> {
   const sql = getDb();
   const pattern = `%${brandName}%`;
   const rows = await sql`
@@ -613,7 +719,9 @@ export async function getDemoDayCount(brandName: string): Promise<{ dayCount: nu
       AND r.is_public = true
       AND r.status = 'published'
   `;
-  const row = rows[0] as { day_count: number; first_date: string | null; last_date: string | null } | undefined;
+  const row = rows[0] as
+    | { day_count: number; first_date: string | null; last_date: string | null }
+    | undefined;
   return {
     dayCount: row?.day_count ?? 0,
     firstDate: row?.first_date ?? null,
@@ -621,7 +729,9 @@ export async function getDemoDayCount(brandName: string): Promise<{ dayCount: nu
   };
 }
 
-export async function getPublicRunsByCategory(categorySlug: string): Promise<(Run & { category_name: string; category_slug: string })[]> {
+export async function getPublicRunsByCategory(
+  categorySlug: string,
+): Promise<(Run & { category_name: string; category_slug: string })[]> {
   const sql = getDb();
   const rows = await sql`
     SELECT r.*, c.name AS category_name, c.slug AS category_slug
@@ -635,7 +745,13 @@ export async function getPublicRunsByCategory(categorySlug: string): Promise<(Ru
   return rows as (Run & { category_name: string; category_slug: string })[];
 }
 
-export async function getPublicDayCountByCategory(categorySlug: string): Promise<{ dayCount: number; firstDate: string | null; lastDate: string | null }> {
+export async function getPublicDayCountByCategory(
+  categorySlug: string,
+): Promise<{
+  dayCount: number;
+  firstDate: string | null;
+  lastDate: string | null;
+}> {
   const sql = getDb();
   const rows = await sql`
     SELECT
@@ -648,7 +764,9 @@ export async function getPublicDayCountByCategory(categorySlug: string): Promise
       AND r.is_public = true
       AND r.status = 'published'
   `;
-  const row = rows[0] as { day_count: number; first_date: string | null; last_date: string | null } | undefined;
+  const row = rows[0] as
+    | { day_count: number; first_date: string | null; last_date: string | null }
+    | undefined;
   return {
     dayCount: row?.day_count ?? 0,
     firstDate: row?.first_date ?? null,
@@ -660,7 +778,9 @@ export async function getPublicDayCountByCategory(categorySlug: string): Promise
 // Prospect profiles
 // ---------------------------------------------------------------------------
 
-export async function getProspectProfile(clientId: string): Promise<ProspectProfile | null> {
+export async function getProspectProfile(
+  clientId: string,
+): Promise<ProspectProfile | null> {
   const sql = getDb();
   const rows = await sql`
     SELECT * FROM prospect_profiles
@@ -672,7 +792,13 @@ export async function getProspectProfile(clientId: string): Promise<ProspectProf
 
 export async function updateProspectProfile(
   clientId: string,
-  fields: { personal_note?: string; strategy_text?: string; recommendation_1?: string; recommendation_2?: string; recommendation_3?: string },
+  fields: {
+    personal_note?: string;
+    strategy_text?: string;
+    recommendation_1?: string;
+    recommendation_2?: string;
+    recommendation_3?: string;
+  },
 ): Promise<void> {
   const sql = getDb();
   await sql`
@@ -690,9 +816,7 @@ export async function updateProspectProfile(
 // Insights
 // ---------------------------------------------------------------------------
 
-export async function getRunInsight(
-  runId: number,
-): Promise<RunInsight | null> {
+export async function getRunInsight(runId: number): Promise<RunInsight | null> {
   const sql = getDb();
   const rows = await sql`
     SELECT * FROM run_insights

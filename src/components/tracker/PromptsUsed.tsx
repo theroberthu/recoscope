@@ -22,17 +22,25 @@ export function PromptsUsed({ prompts }: PromptsUsedProps) {
   return (
     <div className="mt-6 rounded-lg border border-white/5">
       <button
+        type="button"
+        aria-expanded={open}
+        aria-controls="prompts-used-content"
         onClick={() => setOpen(!open)}
         className="flex w-full items-center justify-between px-5 py-3 text-left font-mono text-[12px] font-medium text-white/30 transition-colors hover:text-white/50"
       >
-        <span>See the prompts we used</span>
+        <span>
+          {open ? "Hide the prompts we used" : "See the prompts we used"}
+        </span>
         <span className={`transition-transform ${open ? "rotate-180" : ""}`}>
           &#9662;
         </span>
       </button>
 
       {open && (
-        <div className="border-t border-white/5 px-5 pb-5 pt-4">
+        <div
+          id="prompts-used-content"
+          className="border-t border-white/5 px-5 pb-5 pt-4"
+        >
           <p className="mb-4 text-[12px] text-white/20">
             All prompts use a consistent buyer persona for this category.
           </p>
@@ -40,7 +48,9 @@ export function PromptsUsed({ prompts }: PromptsUsedProps) {
             {prompts.map((p) => (
               <div key={p.prompt_number}>
                 <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.1em] text-white/25">
-                  Prompt {p.prompt_number} &mdash; {PROMPT_LABELS[p.prompt_number] ?? `Prompt ${p.prompt_number}`}
+                  Prompt {p.prompt_number} &mdash;{" "}
+                  {PROMPT_LABELS[p.prompt_number] ??
+                    `Prompt ${p.prompt_number}`}
                 </p>
                 <Link
                   href={`/prompts/${promptToSlug(p.prompt_text)}`}

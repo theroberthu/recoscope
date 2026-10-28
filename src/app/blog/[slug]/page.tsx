@@ -3,7 +3,20 @@ import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
 import { ArticleSchema, BreadcrumbSchema } from "@/components/seo/JsonLd";
 
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const MONTHS = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 
 function formatDate(d: string): string {
   const parts = d.match(/(\d{4})-(\d{2})-(\d{2})/);
@@ -36,6 +49,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+function headingId(text: string) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
 function renderMarkdown(content: string) {
   const lines = content.trim().split("\n");
   const elements: React.ReactNode[] = [];
@@ -50,14 +70,22 @@ function renderMarkdown(content: string) {
       i++;
     } else if (line.startsWith("### ")) {
       elements.push(
-        <h3 key={key++} className="mt-10 text-lg font-semibold text-white">
+        <h3
+          id={headingId(line.slice(4))}
+          key={key++}
+          className="mt-10 text-lg font-semibold text-white"
+        >
           {line.slice(4)}
         </h3>,
       );
       i++;
     } else if (line.startsWith("## ")) {
       elements.push(
-        <h2 key={key++} className="mt-12 text-xl font-bold text-white">
+        <h2
+          id={headingId(line.slice(3))}
+          key={key++}
+          className="mt-12 text-xl font-bold text-white"
+        >
           {line.slice(3)}
         </h2>,
       );
@@ -83,7 +111,10 @@ function renderMarkdown(content: string) {
         i++;
       }
       elements.push(
-        <ol key={key++} className="my-4 list-decimal space-y-2 pl-6 text-[#c8ccd0]">
+        <ol
+          key={key++}
+          className="my-4 list-decimal space-y-2 pl-6 text-[#c8ccd0]"
+        >
           {items.map((item, j) => (
             <li key={j}>{renderInline(item)}</li>
           ))}
@@ -91,12 +122,18 @@ function renderMarkdown(content: string) {
       );
     } else if (line.startsWith("- ") || line.startsWith("* ")) {
       const items: string[] = [];
-      while (i < lines.length && (lines[i].startsWith("- ") || lines[i].startsWith("* "))) {
+      while (
+        i < lines.length &&
+        (lines[i].startsWith("- ") || lines[i].startsWith("* "))
+      ) {
         items.push(lines[i].slice(2));
         i++;
       }
       elements.push(
-        <ul key={key++} className="my-4 list-disc space-y-2 pl-6 text-[#c8ccd0]">
+        <ul
+          key={key++}
+          className="my-4 list-disc space-y-2 pl-6 text-[#c8ccd0]"
+        >
           {items.map((item, j) => (
             <li key={j}>{renderInline(item)}</li>
           ))}
@@ -106,7 +143,15 @@ function renderMarkdown(content: string) {
       i++;
     } else {
       const paraLines: string[] = [];
-      while (i < lines.length && lines[i].trim() !== "" && !lines[i].startsWith("#") && !lines[i].startsWith("> ") && !lines[i].startsWith("- ") && !lines[i].startsWith("* ") && !lines[i].match(/^\d+\. /)) {
+      while (
+        i < lines.length &&
+        lines[i].trim() !== "" &&
+        !lines[i].startsWith("#") &&
+        !lines[i].startsWith("> ") &&
+        !lines[i].startsWith("- ") &&
+        !lines[i].startsWith("* ") &&
+        !lines[i].match(/^\d+\. /)
+      ) {
         paraLines.push(lines[i]);
         i++;
       }
@@ -140,7 +185,10 @@ function renderInline(text: string): React.ReactNode {
     const full = match[0];
     if (full.startsWith("`")) {
       result.push(
-        <code key={idx++} className="rounded bg-cyan/10 px-1.5 py-0.5 font-mono text-[13px] text-cyan">
+        <code
+          key={idx++}
+          className="rounded bg-cyan/10 px-1.5 py-0.5 font-mono text-[13px] text-cyan"
+        >
           {full.slice(1, -1)}
         </code>,
       );
@@ -148,14 +196,20 @@ function renderInline(text: string): React.ReactNode {
       const lm = /\[([^\]]+)\]\(([^)]+)\)/.exec(full);
       if (lm) {
         result.push(
-          <a key={idx++} href={lm[2]} className="text-cyan/60 underline underline-offset-2 transition-colors hover:text-cyan">
+          <a
+            key={idx++}
+            href={lm[2]}
+            className="text-cyan/60 underline underline-offset-2 transition-colors hover:text-cyan"
+          >
             {lm[1]}
           </a>,
         );
       }
     } else if (full.startsWith("**")) {
       result.push(
-        <strong key={idx++} className="font-semibold text-white">{full.slice(2, -2)}</strong>,
+        <strong key={idx++} className="font-semibold text-white">
+          {full.slice(2, -2)}
+        </strong>,
       );
     }
     lastIndex = match.index + full.length;
@@ -172,6 +226,13 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post) notFound();
 
   const baseUrl = "https://www.getrecoscope.com";
+  const headings = post.content
+    .split("\n")
+    .filter((line) => line.startsWith("## "))
+    .map((line) => line.slice(3));
+  const category = post.slug.includes("lawn-fertilizer")
+    ? "lawn-fertilizer"
+    : "";
 
   return (
     <div className="bg-dot-grid min-h-screen">
@@ -197,10 +258,49 @@ export default async function BlogPostPage({ params }: Props) {
           {post.title}
         </h1>
 
+        <div className="rule-summary">
+          <p className="eyebrow">At a glance</p>
+          <p>{post.excerpt}</p>
+        </div>
+        {headings.length > 2 && (
+          <details className="contents-disclosure">
+            <summary>In this article</summary>
+            <nav aria-label="Article contents">
+              {headings.map((title) => (
+                <a key={title} href={`#${headingId(title)}`}>
+                  {title}
+                </a>
+              ))}
+            </nav>
+          </details>
+        )}
         <div className="mt-10 space-y-4 text-base leading-[1.8]">
           {renderMarkdown(post.content)}
         </div>
 
+        <aside className="audit-callout mt-12">
+          <div>
+            <h2>Explore the evidence for your category.</h2>
+            <p>Inspect a dated report or get an audit of your own brand.</p>
+            <a
+              href={category ? `/tracker/${category}` : "/tracker"}
+              className="text-link"
+            >
+              Browse supporting reports →
+            </a>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <a href="/audit?source=research" className="button-primary">
+              Get a free brand audit
+            </a>
+            <a
+              href={category ? `/subscribe?category=${category}` : "/subscribe"}
+              className="button-secondary"
+            >
+              Get report updates
+            </a>
+          </div>
+        </aside>
         <div className="mt-16 border-t border-white/5 pt-8">
           <a
             href="/blog"
