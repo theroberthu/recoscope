@@ -1,0 +1,20 @@
+{
+  "Optimum Nutrition": {
+    "src": "/tracker-media/protein-powder/optimum-nutrition-logo.webp"
+  },
+  "Apple": { "src": "/brand-marks/apple.svg" },
+  "Roborock": { "src": "/brand-marks/roborock.svg" },
+  "Brooks": { "src": "/brand-marks/brooks.svg" },
+  "Branch": { "src": "/brand-marks/branch.png", "dark": true },
+  "Purina Pro Plan": { "src": "/brand-marks/purina-pro-plan.webp" },
+  "Neutrogena": { "src": "/brand-marks/neutrogena.svg" },
+  "Coway": { "src": "/brand-marks/coway.svg" },
+  "Levoit": { "src": "/brand-marks/levoit.png" },
+  "CeraVe": { "src": "/brand-marks/cerave.svg" },
+  "UPLIFT": { "src": "/brand-marks/uplift.svg" },
+  "Braun": { "src": "/brand-marks/braun.svg" },
+  "Philips Norelco": { "src": "/brand-marks/philips-norelco.png" },
+  "Thorne": { "src": "/brand-marks/thorne.svg" },
+  "Viviscal": { "src": "/brand-marks/viviscal.png" },
+  "ViscoSoft": { "src": "/brand-marks/viscosoft.png" }
+}

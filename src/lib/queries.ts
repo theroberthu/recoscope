@@ -64,15 +64,19 @@ export async function getCategoryBySlug(
 export async function getCategoriesWithRuns() {
   const sql = getDb();
   const categories = (await sql`
-    SELECT c.*, r.id AS latest_run_id, r.run_date::text AS latest_run_date
+    SELECT c.*, r.id AS latest_run_id, r.run_date::text AS latest_run_date, r.period_label AS latest_period_label
     FROM categories c
     JOIN LATERAL (
-      SELECT id, run_date FROM runs
+      SELECT id, run_date, period_label FROM runs
       WHERE category_id = c.id AND is_public = true AND status = 'published'
       ORDER BY run_date DESC, id DESC LIMIT 1
     ) r ON true
     WHERE c.is_active = true ORDER BY c.name
-  `) as (Category & { latest_run_id: number; latest_run_date: string })[];
+  `) as (Category & {
+    latest_run_id: number;
+    latest_run_date: string;
+    latest_period_label: string;
+  })[];
   if (!categories.length) return [];
   const runIds = categories.map((c) => c.latest_run_id);
   const [mentions, responses] = await Promise.all([
@@ -100,10 +104,14 @@ export async function getCategoriesWithRuns() {
       cells,
     );
     const coverage = responseCoverage(cells);
+    const counts = mentionCounts(brands);
     return {
       ...cat,
       coverage,
-      finding: snapshotFinding(mentionCounts(brands), coverage),
+      finding: snapshotFinding(counts, coverage),
+      leadingBrands: counts.filter(
+        (brand) => brand.mentionCount === counts[0]?.mentionCount,
+      ),
     };
   });
 }
