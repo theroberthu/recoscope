@@ -14,7 +14,7 @@ export function BrandMark({
 }) {
   const mark = brandMark(category, brand);
   const [failed, setFailed] = useState(false);
-  if (category !== "protein-powder") return null;
+  if (!category) return null;
   return (
     <span
       className={`tracker-brand-mark ${mark?.dark && !failed ? "tracker-brand-mark-dark" : ""}`}
@@ -142,9 +142,9 @@ export function ProductGallery({ products }: { products: ProductExample[] }) {
         ))}
       </div>
       <p className="tracker-product-note">
-        Manufacturer photos show example flavors and sizes; these were not
-        necessarily specified in an answer. Images identify products, not
-        verified claims or Recoscope endorsements.
+        Manufacturer photos are reference examples; versions, colors, flavors,
+        packaging and sizes may differ from details unspecified in an answer.
+        Images identify products, not verified claims or Recoscope endorsements.
       </p>
     </section>
   );

@@ -164,7 +164,7 @@ export function TopBrandsList({
               }`}
             >
               <div
-                className={`flex items-center justify-between ${category === "protein-powder" ? "tracker-brand-row" : ""}`}
+                className={`flex items-center justify-between ${category ? "tracker-brand-row" : ""}`}
               >
                 <span className="flex min-w-0 flex-wrap items-center gap-2 sm:gap-4">
                   <span
