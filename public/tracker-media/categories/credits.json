@@ -1,0 +1,935 @@
+{
+  "retrieved": "2026-10-28",
+  "note": "Manufacturer reference images identify product families named in saved Prompt 3 answers. Versions, colors, flavors, packaging and sizes may differ from unspecified answer details. No affiliate links.",
+  "images": [
+    {
+      "i": 0,
+      "id": "wireless-earbuds-apple-airpods-pro-3",
+      "category": "wireless-earbuds",
+      "brand": "Apple",
+      "name": "AirPods Pro 3",
+      "source": "https://www.apple.com/airpods-pro/",
+      "imageUrl": "https://www.apple.com/v/airpods-pro/t/images/overview/welcome/hero_endframe__vzawkxxoc72u_large.jpg",
+      "alt": "Apple AirPods Pro 3, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-26",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "AirPods Pro 3"
+        },
+        {
+          "agent": "claude",
+          "needle": "AirPods Pro 3"
+        },
+        {
+          "agent": "gemini",
+          "needle": "AirPods Pro 3"
+        },
+        {
+          "agent": "perplexity",
+          "needle": "AirPods Pro 3"
+        }
+      ],
+      "image": "/tracker-media/categories/wireless-earbuds-apple-airpods-pro-3.jpg",
+      "bytes": 48008,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 1,
+      "id": "wireless-earbuds-beats-powerbeats-pro-2",
+      "category": "wireless-earbuds",
+      "brand": "Beats",
+      "name": "Powerbeats Pro 2",
+      "source": "https://www.beatsbydre.com/earbuds/powerbeats-pro-2",
+      "imageUrl": "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/powerbeats-pro-2/global/og/powerbeats-pro-2-global-ogimage.jpg",
+      "alt": "Beats Powerbeats Pro 2, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-26",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "Powerbeats Pro 2"
+        },
+        {
+          "agent": "claude",
+          "needle": "Powerbeats Pro 2"
+        },
+        {
+          "agent": "gemini",
+          "needle": "Powerbeats Pro 2"
+        },
+        {
+          "agent": "perplexity",
+          "needle": "Powerbeats Pro 2"
+        }
+      ],
+      "image": "/tracker-media/categories/wireless-earbuds-beats-powerbeats-pro-2.jpg",
+      "bytes": 43999,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 2,
+      "id": "wireless-earbuds-sony-wf-1000xm6",
+      "category": "wireless-earbuds",
+      "brand": "Sony",
+      "name": "WF-1000XM6",
+      "source": "https://electronics.sony.com/audio/headphones/truly-wireless-earbuds/p/wf1000xm6-b",
+      "imageUrl": "https://d1ncau8tqf99kp.cloudfront.net/converted/151997_original_local_1200x1050_v3_converted.webp",
+      "alt": "Sony WF-1000XM6, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-26",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "WF-1000XM6"
+        },
+        {
+          "agent": "claude",
+          "needle": "WF-1000XM6"
+        },
+        {
+          "agent": "gemini",
+          "needle": "WF-1000XM6"
+        },
+        {
+          "agent": "perplexity",
+          "needle": "WF-1000XM6"
+        }
+      ],
+      "image": "/tracker-media/categories/wireless-earbuds-sony-wf-1000xm6.webp",
+      "bytes": 33426,
+      "contentType": "image/webp"
+    },
+    {
+      "i": 3,
+      "id": "robot-vacuums-roborock-saros-10r",
+      "category": "robot-vacuums",
+      "brand": "Roborock",
+      "name": "Saros 10R",
+      "source": "https://us.roborock.com/pages/roborock-saros-10r",
+      "imageUrl": "https://us.roborock.com/cdn/shop/files/Saros_10R_ID.png?v=1758785570&width=520",
+      "alt": "Roborock Saros 10R, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-25",
+      "matches": [
+        {
+          "agent": "perplexity",
+          "needle": "Saros 10R"
+        }
+      ],
+      "image": "/tracker-media/categories/robot-vacuums-roborock-saros-10r.png",
+      "bytes": 135443,
+      "contentType": "image/png"
+    },
+    {
+      "i": 4,
+      "id": "robot-vacuums-dreame-x50-ultra",
+      "category": "robot-vacuums",
+      "brand": "Dreame",
+      "name": "X50 Ultra",
+      "source": "https://www.dreametech.com/products/x50-ultra-robot-vacuum",
+      "imageUrl": "https://www.dreametech.com/cdn/shop/files/X50-W_1_1200x1200.webp?v=1767170718&width=520",
+      "alt": "Dreame X50 Ultra, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-25",
+      "matches": [
+        {
+          "agent": "perplexity",
+          "needle": "X50 Ultra"
+        }
+      ],
+      "image": "/tracker-media/categories/robot-vacuums-dreame-x50-ultra.jpg",
+      "bytes": 57996,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 5,
+      "id": "robot-vacuums-eufy-x10-pro-omni",
+      "category": "robot-vacuums",
+      "brand": "Eufy",
+      "name": "X10 Pro Omni",
+      "source": "https://www.eufy.com/products/T2351111",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0504/7094/4954/files/X10_c566bee6-14bd-4812-bc42-a0ad4f8dee9e.png?v=1709634118&alt=eufy+robotic+vacuum+with+advanced+cleaning+system&width=520",
+      "alt": "Eufy X10 Pro Omni, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-25",
+      "matches": [
+        {
+          "agent": "gemini",
+          "needle": "X10 Pro Omni"
+        }
+      ],
+      "image": "/tracker-media/categories/robot-vacuums-eufy-x10-pro-omni.png",
+      "bytes": 162436,
+      "contentType": "image/png"
+    },
+    {
+      "i": 6,
+      "id": "running-shoes-brooks-ghost-18",
+      "category": "running-shoes",
+      "brand": "Brooks",
+      "name": "Ghost 18",
+      "source": "https://www.brooksrunning.com/en_us/mens/shoes/road-running-shoes/ghost-18/110493.html",
+      "imageUrl": "https://www.brooksrunning.com/dw/image/v2/BGPF_PRD/on/demandware.static/-/Sites-brooks-master-catalog/default/dwc9609644/original/110493/110493-069-l-ghost-18-mens-neutral-cushion-running-shoe.jpg?sw=520&sh=520&sm=fit&sfrm=png&strip=false&bgcolor=F8F8F8",
+      "alt": "Brooks Ghost 18, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-24",
+      "matches": [
+        {
+          "agent": "claude",
+          "needle": "Ghost 18"
+        }
+      ],
+      "image": "/tracker-media/categories/running-shoes-brooks-ghost-18.avif",
+      "bytes": 6805,
+      "contentType": "image/avif"
+    },
+    {
+      "i": 8,
+      "id": "running-shoes-nike-pegasus-42",
+      "category": "running-shoes",
+      "brand": "Nike",
+      "name": "Pegasus 42",
+      "source": "https://about.nike.com/en/newsroom/releases/nike-pegasus-42-official-images",
+      "imageUrl": "https://nmp.about.nike.com/about/prod/3fb714ef-238e-441d-9083-64a70f544953/nike-pegasus-42-hero.jpg?m=eyJlZGl0cyI6eyJqcGVnIjp7InF1YWxpdHkiOjEwMH0sIndlYnAiOnsicXVhbGl0eSI6MTAwfSwiZXh0cmFjdCI6eyJsZWZ0IjowLCJ0b3AiOjAsIndpZHRoIjozMjAwLCJoZWlnaHQiOjIxMzN9LCJyZXNpemUiOnsid2lkdGgiOjkwMH19fQ%3D%3D&s=91dc3d87a6e0cc7c7090b19e0c95c42e4be1fa519344909eaf528283e38e3182",
+      "alt": "Nike Pegasus 42, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-24",
+      "matches": [
+        {
+          "agent": "claude",
+          "needle": "Pegasus 42"
+        }
+      ],
+      "image": "/tracker-media/categories/running-shoes-nike-pegasus-42.jpg",
+      "bytes": 48470,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 9,
+      "id": "office-chairs-branch-ergonomic-chair",
+      "category": "office-chairs",
+      "brand": "Branch",
+      "name": "Ergonomic Chair Pro",
+      "source": "https://www.branchfurniture.com/products/ergonomic-chair-pro",
+      "imageUrl": "https://www.branchfurniture.com/cdn/shop/files/20240805_ErgProChair_Black_Mesh_Front_NoHeadrest_1.png?v=1728583770&width=400",
+      "alt": "Branch Ergonomic Chair Pro, black mesh without headrest",
+      "period": "2026-10-B",
+      "runDate": "2026-10-21",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "Ergonomic Chair Pro"
+        },
+        {
+          "agent": "claude",
+          "needle": "Ergonomic Chair Pro"
+        },
+        {
+          "agent": "perplexity",
+          "needle": "Ergonomic Chair Pro"
+        }
+      ],
+      "image": "/tracker-media/categories/office-chairs-branch-ergonomic-chair-pro.png",
+      "bytes": 197868,
+      "contentType": "image/png"
+    },
+    {
+      "i": 10,
+      "id": "office-chairs-steelcase-leap",
+      "category": "office-chairs",
+      "brand": "Steelcase",
+      "name": "Leap",
+      "source": "https://www.steelcase.com/products/office-chairs/leap/",
+      "imageUrl": "https://images.steelcase.com/image/upload/c_fill,q_auto,f_auto,h_656,w_1166/v1590007512/www.steelcase.com/2020/05/20/20-0140282.jpg",
+      "alt": "Steelcase Leap, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-21",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "Leap"
+        },
+        {
+          "agent": "claude",
+          "needle": "Leap"
+        },
+        {
+          "agent": "gemini",
+          "needle": "Leap"
+        },
+        {
+          "agent": "perplexity",
+          "needle": "Leap"
+        }
+      ],
+      "image": "/tracker-media/categories/office-chairs-steelcase-leap.jpg",
+      "bytes": 55505,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 11,
+      "id": "office-chairs-herman-miller-aeron",
+      "category": "office-chairs",
+      "brand": "Herman Miller",
+      "name": "Aeron",
+      "source": "https://store.hermanmiller.com/office-chairs-aeron/aeron-chair/100249003.html?lang=en_US",
+      "imageUrl": "https://images.hermanmiller.group/asset/459b7045-3f9e-42b2-8ee8-b630c00dc082/W/HM_AER_2195348_100249001_black_black_a.png?w=520",
+      "alt": "Herman Miller Aeron, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-21",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "Aeron"
+        },
+        {
+          "agent": "claude",
+          "needle": "Aeron"
+        },
+        {
+          "agent": "gemini",
+          "needle": "Aeron"
+        },
+        {
+          "agent": "perplexity",
+          "needle": "Aeron"
+        }
+      ],
+      "image": "/tracker-media/categories/office-chairs-herman-miller-aeron.jpg",
+      "bytes": 27259,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 13,
+      "id": "dog-food-hill-s-science-diet-adult-large-breed-chicken-barley",
+      "category": "dog-food",
+      "brand": "Hill\u2019s Science Diet",
+      "name": "Adult Large Breed Chicken & Barley",
+      "source": "https://checkout.shop.hillspet.com/products/adult-large-breed-dog-food",
+      "imageUrl": "https://checkout.shop.hillspet.com/cdn/shop/files/gLqRdbhSl4SiDj58bfAha.jpg?v=1699990100&width=520",
+      "alt": "Hill\u2019s Science Diet Adult Large Breed Chicken & Barley, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-19",
+      "matches": [
+        {
+          "agent": "claude",
+          "needle": "Adult Large Breed"
+        },
+        {
+          "agent": "gemini",
+          "needle": "Adult Large Breed"
+        }
+      ],
+      "image": "/tracker-media/categories/dog-food-hill-s-science-diet-adult-large-breed-chicken-barley.jpg",
+      "bytes": 48254,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 14,
+      "id": "dog-food-royal-canin-large-adult-dry-dog-food",
+      "category": "dog-food",
+      "brand": "Royal Canin",
+      "name": "Large Adult Dry Dog Food",
+      "source": "https://www.royalcanin.com/us/dogs/products/retail-products/large-adult-3007",
+      "imageUrl": "https://marspetcareaprimocdn.petcare.global/effaeb6a-937c-4f79-9327-b313016a889d/effaeb6a-937c-4f79-9327-b313016a889d_DownloadAsJpg.jpg?w=520&width=520&auto=webp&format=jpg&optimize=medium",
+      "alt": "Royal Canin Large Adult Dry Dog Food, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-19",
+      "matches": [
+        {
+          "agent": "claude",
+          "needle": "Large Adult"
+        },
+        {
+          "agent": "gemini",
+          "needle": "Large Adult"
+        },
+        {
+          "agent": "perplexity",
+          "needle": "Large Adult"
+        }
+      ],
+      "image": "/tracker-media/categories/dog-food-royal-canin-large-adult-dry-dog-food.jpg",
+      "bytes": 19142,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 15,
+      "id": "sunscreen-eltamd-uv-sport-spf-50",
+      "category": "sunscreen",
+      "brand": "EltaMD",
+      "name": "UV Sport SPF 50",
+      "source": "https://eltamd.com/collections/oily/products/eltamd-uv-sport-broad-spectrum-spf-50",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0467/8120/2585/files/UV_Sport_SPF_50_both_sizes.jpg?v=1789790002",
+      "alt": "EltaMD UV Sport SPF 50, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-18",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "EltaMD UV Sport SPF 50"
+        },
+        {
+          "agent": "claude",
+          "needle": "EltaMD UV Sport SPF 50"
+        }
+      ],
+      "image": "/tracker-media/categories/sunscreen-eltamd-uv-sport-spf-50.jpg",
+      "bytes": 175524,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 16,
+      "id": "sunscreen-blue-lizard-sport-mineral-spf-50",
+      "category": "sunscreen",
+      "brand": "Blue Lizard",
+      "name": "Sport Mineral SPF 50",
+      "source": "https://bluelizardsunscreen.com/products/sport-mineral-sunscreen-lotion-spf-50",
+      "imageUrl": "https://bluelizardsunscreen.com/cdn/shop/files/Sport_Lotion_3oz_Hero.webp?v=1774457285&width=520",
+      "alt": "Blue Lizard Sport Mineral SPF 50, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-18",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "Blue Lizard Sport Mineral SPF 50"
+        }
+      ],
+      "image": "/tracker-media/categories/sunscreen-blue-lizard-sport-mineral-spf-50.jpg",
+      "bytes": 53282,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 17,
+      "id": "sunscreen-neutrogena-ultra-sheer-dry-touch-spf-55",
+      "category": "sunscreen",
+      "brand": "Neutrogena",
+      "name": "Ultra Sheer Dry-Touch SPF 55",
+      "source": "https://es.neutrogena.com/products/sun/ultra-sheer-dry-touch-sunscreen-broad-spectrum-spf-55/6868790",
+      "imageUrl": "https://images.ctfassets.net/3zfcttr0ztpr/5rWPgt21sJBorQuXFD45Ll/0903299d597dfad615f97d69cce34700/6868790-carousel-1-2023-08",
+      "alt": "Neutrogena Ultra Sheer Dry-Touch SPF 55, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-18",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "Neutrogena Ultra Sheer Dry-Touch SPF 55"
+        },
+        {
+          "agent": "perplexity",
+          "needle": "Neutrogena Ultra Sheer Dry-Touch SPF 55"
+        }
+      ],
+      "image": "/tracker-media/categories/sunscreen-neutrogena-ultra-sheer-dry-touch-spf-55.jpg",
+      "bytes": 19880,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 18,
+      "id": "air-purifiers-blueair-blue-pure-311i-max",
+      "category": "air-purifiers",
+      "brand": "Blueair",
+      "name": "Blue Pure 311i Max",
+      "source": "https://www.blueair.com/products/blue-pure-311i-max",
+      "imageUrl": "https://www.blueair.com/cdn/shop/files/311i_Max_8465bcda-bae8-423b-ba99-e08074cd35ea.png?v=1773086909&width=520",
+      "alt": "Blueair Blue Pure 311i Max, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-17",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "Blueair Blue Pure 311i Max"
+        },
+        {
+          "agent": "gemini",
+          "needle": "Blueair Blue Pure 311i Max"
+        }
+      ],
+      "image": "/tracker-media/categories/air-purifiers-blueair-blue-pure-311i-max.png",
+      "bytes": 90438,
+      "contentType": "image/png"
+    },
+    {
+      "i": 19,
+      "id": "air-purifiers-levoit-vital-200s-p",
+      "category": "air-purifiers",
+      "brand": "Levoit",
+      "name": "Vital 200S-P",
+      "source": "https://levoit.com/products/vital-200s-p-smart-air-purifier",
+      "imageUrl": "https://levoit.com/cdn/shop/products/vital-200s-smart-true-hepa-air-purifier-505236.jpg?v=1762284250&width=520",
+      "alt": "Levoit Vital 200S-P, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-17",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "Levoit Vital 200S-P"
+        },
+        {
+          "agent": "perplexity",
+          "needle": "Levoit Vital 200S-P"
+        }
+      ],
+      "image": "/tracker-media/categories/air-purifiers-levoit-vital-200s-p.jpg",
+      "bytes": 40100,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 20,
+      "id": "air-purifiers-coway-airmega-mighty-ap-1512hh",
+      "category": "air-purifiers",
+      "brand": "Coway",
+      "name": "Airmega Mighty AP-1512HH",
+      "source": "https://cowaymega.com/products/mighty-ap-1512hh",
+      "imageUrl": "https://cowaymega.com/cdn/shop/files/Mighty_white_wirecutterlarge_0ef9d707-e9c7-4b79-9ece-357b7c3f41e8.png?v=1792630105&width=520",
+      "alt": "Coway Airmega Mighty AP-1512HH, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-17",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "Coway Airmega Mighty AP-1512HH"
+        }
+      ],
+      "image": "/tracker-media/categories/air-purifiers-coway-airmega-mighty-ap-1512hh.png",
+      "bytes": 57865,
+      "contentType": "image/png"
+    },
+    {
+      "i": 21,
+      "id": "skincare-cerave-foaming-facial-cleanser",
+      "category": "skincare",
+      "brand": "CeraVe",
+      "name": "Foaming Facial Cleanser",
+      "source": "https://www.cerave.com/skincare/cleansers/foaming-facial-cleanser",
+      "imageUrl": "https://www.cerave.com/-/media/project/loreal/brand-sites/cerave/americas/us/skincare/cleansers/foaming-facial-cleanser/photos/2026/700x785/ffc-atf-1-700x785-v1.jpg?rev=f0923e1e888a44b5ac66d4bb8025218a&w=500&hash=E1773F5946CCF530B72ABB8E0E5939A4",
+      "alt": "CeraVe Foaming Facial Cleanser, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-16",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "Foaming Facial Cleanser"
+        },
+        {
+          "agent": "claude",
+          "needle": "Foaming Facial Cleanser"
+        },
+        {
+          "agent": "gemini",
+          "needle": "Foaming Facial Cleanser"
+        }
+      ],
+      "image": "/tracker-media/categories/skincare-cerave-foaming-facial-cleanser.jpg",
+      "bytes": 20638,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 22,
+      "id": "skincare-la-roche-posay-toleriane-double-repair-matte-face-moisturizer",
+      "category": "skincare",
+      "brand": "La Roche-Posay",
+      "name": "Toleriane Double Repair Matte Face Moisturizer",
+      "source": "https://www.laroche-posay.us/our-products/face/face-moisturizer/toleriane-double-repair-matte-face-moisturizer-for-oily-skin-3337875782999.html",
+      "imageUrl": "https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw7cdd1101/product/March%202023%20packshot%20updates/Toleriane_DblRepairMoisturizer_Matte_Tube.webp?sw=520&sh=520&sm=cut&sfrm=jpg&q=70",
+      "alt": "La Roche-Posay Toleriane Double Repair Matte Face Moisturizer, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-16",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "Toleriane Double Repair Matte Face Moisturizer"
+        }
+      ],
+      "image": "/tracker-media/categories/skincare-la-roche-posay-toleriane-double-repair-matte-face-moisturizer.webp",
+      "bytes": 8570,
+      "contentType": "image/webp"
+    },
+    {
+      "i": 23,
+      "id": "skincare-the-ordinary-niacinamide-10-zinc-1",
+      "category": "skincare",
+      "brand": "The Ordinary",
+      "name": "Niacinamide 10% + Zinc 1%",
+      "source": "https://theordinary.com/en-us/niacinamide-10-zinc-1-serum-100436.html",
+      "imageUrl": "https://theordinary.com/dw/image/v2/BFKJ_PRD/on/demandware.static/-/Sites-deciem-master/default/dwce8a7cdf/Images/products/The%20Ordinary/rdn-niacinamide-10pct-zinc-1pct-30ml.png?sw=520&sh=520&sm=fit",
+      "alt": "The Ordinary Niacinamide 10% + Zinc 1%, manufacturer reference image",
+      "period": "2026-10-B",
+      "runDate": "2026-10-16",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "Niacinamide 10% + Zinc 1%"
+        },
+        {
+          "agent": "gemini",
+          "needle": "Niacinamide 10% + Zinc 1%"
+        }
+      ],
+      "image": "/tracker-media/categories/skincare-the-ordinary-niacinamide-10-zinc-1.png",
+      "bytes": 59787,
+      "contentType": "image/png"
+    },
+    {
+      "i": 24,
+      "id": "standing-desks-uplift-v3-standing-desk",
+      "category": "standing-desks",
+      "brand": "UPLIFT",
+      "name": "V3 Standing Desk",
+      "source": "https://www.upliftdesk.com/2-leg-standing-desk/",
+      "imageUrl": "https://cdn11.bigcommerce.com/s-l85bzww3lo/images/stencil/384w/products/890/37618/FINAL_Entrepreneur_05023_1_no_basket.jpg_1__03457.1783450275.jpg?compression=lossy",
+      "alt": "UPLIFT V3 Standing Desk, manufacturer reference image",
+      "period": "2026-10-A",
+      "runDate": "2026-10-13",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "UPLIFT V3"
+        },
+        {
+          "agent": "perplexity",
+          "needle": "UPLIFT V3"
+        }
+      ],
+      "image": "/tracker-media/categories/standing-desks-uplift-v3-standing-desk.jpg",
+      "bytes": 30614,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 25,
+      "id": "standing-desks-flexispot-e7-pro",
+      "category": "standing-desks",
+      "brand": "FlexiSpot",
+      "name": "E7 Pro",
+      "source": "https://www.flexispot.com/e7-pro-line-standing-desk",
+      "imageUrl": "https://s3.springbeetle.eu/dev-de-s3-flexispot/commodity/item/1028_file_E7-Pro-Cable-20251120%20%287%29.jpg",
+      "alt": "FlexiSpot E7 Pro, manufacturer reference image",
+      "period": "2026-10-A",
+      "runDate": "2026-10-13",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "E7 Pro"
+        },
+        {
+          "agent": "claude",
+          "needle": "E7 Pro"
+        },
+        {
+          "agent": "perplexity",
+          "needle": "E7 Pro"
+        }
+      ],
+      "image": "/tracker-media/categories/standing-desks-flexispot-e7-pro.jpg",
+      "bytes": 68813,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 26,
+      "id": "standing-desks-branch-duo-standing-desk",
+      "category": "standing-desks",
+      "brand": "Branch",
+      "name": "Duo Standing Desk",
+      "source": "https://www.branchfurniture.com/products/duo-standing-desk",
+      "imageUrl": "https://www.branchfurniture.com/cdn/shop/files/duo-standing-desk_572f12d7-0ee0-4b06-b02c-421710dd67e6_medium.webp?v=1762305913&width=520",
+      "alt": "Branch Duo Standing Desk, manufacturer reference image",
+      "period": "2026-10-A",
+      "runDate": "2026-10-13",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "Duo"
+        },
+        {
+          "agent": "perplexity",
+          "needle": "Duo"
+        }
+      ],
+      "image": "/tracker-media/categories/standing-desks-branch-duo-standing-desk.jpg",
+      "bytes": 18680,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 27,
+      "id": "electric-shavers-braun-series-9-pro",
+      "category": "electric-shavers",
+      "brand": "Braun",
+      "name": "Series 9 Pro+",
+      "source": "https://us.braun.com/en-us/male-grooming/electric-shavers/series-9-pro-plus",
+      "imageUrl": "https://images.ctfassets.net/smfll8aurav0/3HWsWK4IrrL3SG66Uh4NpC/5f87004dc0d20b953eee6899a24b7d71/Rectangle_10.png?fm=webp&q=70&w=520",
+      "alt": "Braun Series 9 Pro+, manufacturer reference image",
+      "period": "2026-05-D",
+      "runDate": "2026-05-30",
+      "matches": [
+        {
+          "agent": "claude",
+          "needle": "Series 9 Pro+"
+        }
+      ],
+      "image": "/tracker-media/categories/electric-shavers-braun-series-9-pro.webp",
+      "bytes": 3038,
+      "contentType": "image/webp"
+    },
+    {
+      "i": 28,
+      "id": "electric-shavers-philips-norelco-s9000-prestige",
+      "category": "electric-shavers",
+      "brand": "Philips Norelco",
+      "name": "S9000 Prestige",
+      "source": "https://www.usa.philips.com/c-p/SP9860_86/shaver-s9000-prestige-wet-dry-electric-shaver-series-9000",
+      "imageUrl": "https://images.philips.com/is/image/philipsconsumer/5a0cdc9cae6343b69621ae77012fd4db?$png$&wid=1200&hei=630",
+      "alt": "Philips Norelco S9000 Prestige, manufacturer reference image",
+      "period": "2026-05-D",
+      "runDate": "2026-05-30",
+      "matches": [
+        {
+          "agent": "claude",
+          "needle": "S9000 Prestige"
+        },
+        {
+          "agent": "perplexity",
+          "needle": "S9000 Prestige"
+        }
+      ],
+      "image": "/tracker-media/categories/electric-shavers-philips-norelco-s9000-prestige.png",
+      "bytes": 278443,
+      "contentType": "image/png"
+    },
+    {
+      "i": 29,
+      "id": "electric-shavers-panasonic-arc5",
+      "category": "electric-shavers",
+      "brand": "Panasonic",
+      "name": "ARC5",
+      "source": "https://shop.panasonic.com/products/arc5-5-blade-mens-electric-shaver",
+      "imageUrl": "https://shop.panasonic.com/cdn/shop/products/ih46phtzafu24cw5mbtg.jpg?v=1779299934&width=520",
+      "alt": "Panasonic ARC5, manufacturer reference image",
+      "period": "2026-05-D",
+      "runDate": "2026-05-30",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "Arc5"
+        },
+        {
+          "agent": "claude",
+          "needle": "Arc5"
+        },
+        {
+          "agent": "gemini",
+          "needle": "Arc5"
+        }
+      ],
+      "image": "/tracker-media/categories/electric-shavers-panasonic-arc5.jpg",
+      "bytes": 20739,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 30,
+      "id": "sleep-supplements-nature-made-melatonin-5-mg-tablets",
+      "category": "sleep-supplements",
+      "brand": "Nature Made",
+      "name": "Melatonin 5 mg Tablets",
+      "source": "https://www.naturemade.com/products/nature-made-melatonin-5-mg-tablets",
+      "imageUrl": "https://www.naturemade.com/cdn/shop/files/NM_2743_PK002800_MELATONIN_5A044_150cc_front.png?v=1782720374&width=520",
+      "alt": "Nature Made Melatonin 5 mg Tablets, manufacturer reference image",
+      "period": "2026-05-C",
+      "runDate": "2026-05-28",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "Nature Made Melatonin 3/5mg"
+        }
+      ],
+      "image": "/tracker-media/categories/sleep-supplements-nature-made-melatonin-5-mg-tablets.png",
+      "bytes": 165865,
+      "contentType": "image/png"
+    },
+    {
+      "i": 31,
+      "id": "sleep-supplements-ritual-sleep-bioseries-melatonin",
+      "category": "sleep-supplements",
+      "brand": "Ritual",
+      "name": "Sleep BioSeries Melatonin",
+      "source": "https://ritual.com/products/sleep-bioseries-melatonin",
+      "imageUrl": "https://ritual.com/cdn/shop/files/PDP_SLP_Bottle.jpg?v=1770263109&width=520",
+      "alt": "Ritual Sleep BioSeries Melatonin, manufacturer reference image",
+      "period": "2026-05-C",
+      "runDate": "2026-05-28",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "Ritual Sleep BioSeries Melatonin"
+        }
+      ],
+      "image": "/tracker-media/categories/sleep-supplements-ritual-sleep-bioseries-melatonin.jpg",
+      "bytes": 43039,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 32,
+      "id": "sleep-supplements-olly-sleep-gummies",
+      "category": "sleep-supplements",
+      "brand": "OLLY",
+      "name": "Sleep Gummies",
+      "source": "https://www.olly.com/products/sleep",
+      "imageUrl": "https://www.olly.com/cdn/shop/files/f1dbd4fe51c0ac0bbc5522a8fcdbed7913887668_grande.png?v=1762440085&width=520",
+      "alt": "OLLY Sleep Gummies, manufacturer reference image",
+      "period": "2026-05-C",
+      "runDate": "2026-05-28",
+      "matches": [
+        {
+          "agent": "perplexity",
+          "needle": "OLLY Sleep Gummies"
+        }
+      ],
+      "image": "/tracker-media/categories/sleep-supplements-olly-sleep-gummies.png",
+      "bytes": 67829,
+      "contentType": "image/png"
+    },
+    {
+      "i": 33,
+      "id": "hair-growth-supplements-nutrafol-postpartum",
+      "category": "hair-growth-supplements",
+      "brand": "Nutrafol",
+      "name": "Postpartum",
+      "source": "https://www.nutrafol.com/hair/women/product/core/postpartum/",
+      "imageUrl": "https://images.ctfassets.net/0rbfqd9c4jdo/3Aj1lgETyVbWG5FIDqd2PJ/45bf24f23149a89e76d8aa58ebd4edb5/POS1_6.png?w=520&fm=webp",
+      "alt": "Nutrafol Postpartum, manufacturer reference image",
+      "period": "2026-05-B",
+      "runDate": "2026-05-18",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "Nutrafol Postpartum"
+        },
+        {
+          "agent": "claude",
+          "needle": "Nutrafol Postpartum"
+        },
+        {
+          "agent": "gemini",
+          "needle": "Nutrafol Postpartum"
+        }
+      ],
+      "image": "/tracker-media/categories/hair-growth-supplements-nutrafol-postpartum.webp",
+      "bytes": 57192,
+      "contentType": "image/webp"
+    },
+    {
+      "i": 34,
+      "id": "hair-growth-supplements-viviscal-women-s-hair-growth-supplements",
+      "category": "hair-growth-supplements",
+      "brand": "Viviscal",
+      "name": "Women\u2019s Hair Growth Supplements",
+      "source": "https://www.viviscal.com/products/womans-hair-growth-supplements",
+      "imageUrl": "https://www.viviscal.com/cdn/shop/files/Medium_JPG-VIV-0841OptimizedHeroViviscalWomen_sSupplement60count.jpg?v=1773165618&width=520",
+      "alt": "Viviscal Women\u2019s Hair Growth Supplements, manufacturer reference image",
+      "period": "2026-05-B",
+      "runDate": "2026-05-18",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "Viviscal Women"
+        },
+        {
+          "agent": "gemini",
+          "needle": "Viviscal Women"
+        }
+      ],
+      "image": "/tracker-media/categories/hair-growth-supplements-viviscal-women-s-hair-growth-supplements.jpg",
+      "bytes": 36802,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 35,
+      "id": "hair-growth-supplements-ritual-essential-postnatal-multivitamin",
+      "category": "hair-growth-supplements",
+      "brand": "Ritual",
+      "name": "Essential Postnatal Multivitamin",
+      "source": "https://ritual.com/products/essential-postnatal-multivitamin",
+      "imageUrl": "https://ritual.com/cdn/shop/files/PDP-EPOST-Bottle-No-Essence.jpg?v=1770263105&width=520",
+      "alt": "Ritual Essential Postnatal Multivitamin, manufacturer reference image",
+      "period": "2026-05-B",
+      "runDate": "2026-05-18",
+      "matches": [
+        {
+          "agent": "chatgpt",
+          "needle": "Ritual Essential Postnatal Multivitamin"
+        }
+      ],
+      "image": "/tracker-media/categories/hair-growth-supplements-ritual-essential-postnatal-multivitamin.jpg",
+      "bytes": 30213,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 36,
+      "id": "mattress-toppers-saatva-graphite-memory-foam-mattress-topper",
+      "category": "mattress-toppers",
+      "brand": "Saatva",
+      "name": "Graphite Memory Foam Mattress Topper",
+      "source": "https://www.saatva.com/bedding/graphite-memory-foam-mattress-topper",
+      "imageUrl": "https://saatva.imgix.net/products/graphite-memory-foam-mattress-topper/model/graphite-memory-foam-mattress-topper-model-16-9.jpg?w=1200&fit=crop&auto=format",
+      "alt": "Saatva Graphite Memory Foam Mattress Topper, manufacturer reference image",
+      "period": "2026-05-B",
+      "runDate": "2026-05-17",
+      "matches": [
+        {
+          "agent": "claude",
+          "needle": "Saatva Graphite Memory Foam"
+        },
+        {
+          "agent": "gemini",
+          "needle": "Saatva Graphite Memory Foam"
+        }
+      ],
+      "image": "/tracker-media/categories/mattress-toppers-saatva-graphite-memory-foam-mattress-topper.jpg",
+      "bytes": 83033,
+      "contentType": "image/jpeg"
+    },
+    {
+      "i": 37,
+      "id": "mattress-toppers-tempur-pedic-tempur-adapt-3-inch-topper",
+      "category": "mattress-toppers",
+      "brand": "Tempur-Pedic",
+      "name": "TEMPUR-Adapt 3-inch Topper",
+      "source": "https://www.tempurpedic.com/other-products/tempur-toppers/v/3814/",
+      "imageUrl": "https://assets-www.tempurpedic.com/media/images/Compare_Tile_B.width-500.png",
+      "alt": "Tempur-Pedic TEMPUR-Adapt 3-inch Topper, manufacturer reference image",
+      "period": "2026-05-B",
+      "runDate": "2026-05-17",
+      "matches": [
+        {
+          "agent": "gemini",
+          "needle": "TEMPUR-Adapt 3-inch"
+        }
+      ],
+      "image": "/tracker-media/categories/mattress-toppers-tempur-pedic-tempur-adapt-3-inch-topper.png",
+      "bytes": 94813,
+      "contentType": "image/png"
+    },
+    {
+      "i": 38,
+      "id": "mattress-toppers-viscosoft-select-high-density-mattress-topper",
+      "category": "mattress-toppers",
+      "brand": "ViscoSoft",
+      "name": "Select High-Density Mattress Topper",
+      "source": "https://viscosoft.com/products/three-inch-mattress-topper",
+      "imageUrl": "https://viscosoft.com/cdn/shop/products/square-gallery-images-shd-4in-4_800x.jpg?v=1768341281&width=520",
+      "alt": "ViscoSoft Select High-Density Mattress Topper, manufacturer reference image",
+      "period": "2026-05-B",
+      "runDate": "2026-05-17",
+      "matches": [
+        {
+          "agent": "gemini",
+          "needle": "ViscoSoft Select High-Density"
+        }
+      ],
+      "image": "/tracker-media/categories/mattress-toppers-viscosoft-select-high-density-mattress-topper.jpg",
+      "bytes": 126108,
+      "contentType": "image/jpeg"
+    }
+  ]
+}
