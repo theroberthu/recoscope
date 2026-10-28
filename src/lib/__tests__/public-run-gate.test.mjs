@@ -57,6 +57,7 @@ const PUBLIC_RUN_QUERIES = [
   "getCategoriesWithSchedule",
   "getTopBrandsForHero",
   "getAllPublishedPrompts",
+  "getPublicSitemapRuns",
 ];
 
 for (const name of PUBLIC_RUN_QUERIES) {
