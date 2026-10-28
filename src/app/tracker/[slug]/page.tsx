@@ -801,7 +801,12 @@ export default async function TrackerReportPage({
         </section>
       </div>
 
-      <ProductGallery products={snapshotProducts(slug, run.id, responses)} />
+      <ProductGallery
+        products={snapshotProducts(slug, run.id, responses, {
+          period: run.period_label,
+          runDate: run.run_date,
+        })}
+      />
 
       <div id="collection-notes" className="report-notes-grid">
         {/* 4. Opportunity for Brands (moved up) */}
@@ -865,7 +870,10 @@ export default async function TrackerReportPage({
 
       <CapturedAnswers
         responses={responses}
-        products={snapshotProducts(slug, run.id, responses)}
+        products={snapshotProducts(slug, run.id, responses, {
+          period: run.period_label,
+          runDate: run.run_date,
+        })}
       />
 
       {channelSplit.hasBothChannels && (

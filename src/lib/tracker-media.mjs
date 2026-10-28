@@ -1,4 +1,7 @@
 import { isEligibleResponse } from "./report-ranking.mjs";
+import { isoDate } from "./seo.mjs";
+import homeMarks from "./home-brand-marks.json" with { type: "json" };
+import { trackerProductCatalog } from "./tracker-product-catalog.mjs";
 
 const base = "/tracker-media/protein-powder/";
 const marks = {
@@ -11,8 +14,11 @@ const marks = {
 };
 
 export function brandMark(category, brand) {
-  if (category !== "protein-powder" || !marks[brand]) return null;
-  return { src: base + marks[brand], dark: brand === "Ascent" };
+  if (!category) return null;
+  if (marks[brand])
+    return { src: base + marks[brand], dark: brand === "Ascent" };
+  const mark = homeMarks[brand];
+  return mark ? { src: mark.src, dark: Boolean(mark.dark) } : null;
 }
 
 // This editorial pilot is tied to one captured snapshot. Brand-level counts
@@ -84,7 +90,40 @@ const products = [
   },
 ];
 
-export function snapshotProducts(category, runId, responses) {
+export function snapshotProducts(category, runId, responses, snapshot) {
+  if (category !== "protein-powder") {
+    const catalog = trackerProductCatalog[category];
+    if (
+      !catalog ||
+      snapshot?.period !== catalog.period ||
+      isoDate(snapshot?.runDate)?.slice(0, 10) !== catalog.runDate
+    )
+      return [];
+    return catalog.products.flatMap(({ matches, ...product }) => {
+      const evidence = responses
+        .filter(
+          (r) =>
+            Number.isSafeInteger(Number(r.id)) &&
+            Number(r.id) > 0 &&
+            Number(r.run_id) === Number(runId) &&
+            r.prompt_number === 3 &&
+            isEligibleResponse(r) &&
+            matches.some(
+              (m) =>
+                m.agent === r.agent_name &&
+                r.raw_response
+                  .toLocaleLowerCase("en-US")
+                  .includes(m.needle.toLocaleLowerCase("en-US")),
+            ),
+        )
+        .map((r) => ({
+          answerId: Number(r.id),
+          agent: r.agent_name,
+          promptNumber: r.prompt_number,
+        }));
+      return evidence.length ? [{ ...product, evidence }] : [];
+    });
+  }
   if (category !== "protein-powder" || Number(runId) !== 166) return [];
   return products.flatMap(({ pattern, ...product }) => {
     const evidence = responses
