@@ -8,6 +8,8 @@ import { todayCentral } from "@/lib/discovery.mjs";
 import { OrganizationSchema } from "@/components/seo/JsonLd";
 import { CategoryFinder } from "@/components/tracker/CategoryFinder";
 import { SnapshotPreview } from "@/components/home/SnapshotPreview";
+import { BrandScroller } from "@/components/home/BrandScroller";
+import { homeBrandLeaders } from "@/lib/home-brand-leaders.mjs";
 import { TrackedLink } from "@/components/TrackedLink";
 
 export const metadata: Metadata = { alternates: { canonical: "/" } };
@@ -77,6 +79,10 @@ export default async function HomePage() {
           </aside>
         )}
       </section>
+      <BrandScroller
+        leaders={homeBrandLeaders(categories)}
+        today={todayCentral()}
+      />
       {stats && stats.runsCompleted > 0 && (
         <section
           className="page-shell corpus-strip"
