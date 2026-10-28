@@ -85,19 +85,19 @@ const products = [
 ];
 
 export function snapshotProducts(category, runId, responses) {
-  if (category !== "protein-powder" || runId !== 166) return [];
+  if (category !== "protein-powder" || Number(runId) !== 166) return [];
   return products.flatMap(({ pattern, ...product }) => {
     const evidence = responses
       .filter(
         (r) =>
-          r.run_id === runId &&
+          Number(r.run_id) === Number(runId) &&
           r.prompt_number === 3 &&
-          r.id === comparisonAnswers[r.agent_name] &&
+          Number(r.id) === comparisonAnswers[r.agent_name] &&
           isEligibleResponse(r) &&
           pattern.test(r.raw_response),
       )
       .map((r) => ({
-        answerId: r.id,
+        answerId: Number(r.id),
         agent: r.agent_name,
         promptNumber: r.prompt_number,
       }));
