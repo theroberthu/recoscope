@@ -57,6 +57,8 @@ import {
 } from "@/components/tracker";
 import { ReportViewTracker } from "@/components/tracker/ReportViewTracker";
 import { formatSnapshotDate, auditHref } from "@/lib/discovery.mjs";
+import { snapshotProducts } from "@/lib/tracker-media.mjs";
+import { ProductGallery } from "@/components/tracker/TrackerMedia";
 import { CapturedAnswers } from "@/components/tracker/CapturedAnswers";
 import { TrackedLink } from "@/components/TrackedLink";
 import { PromptsUsed } from "@/components/tracker/PromptsUsed";
@@ -799,6 +801,8 @@ export default async function TrackerReportPage({
         </section>
       </div>
 
+      <ProductGallery products={snapshotProducts(slug, run.id, responses)} />
+
       <div id="collection-notes" className="report-notes-grid">
         {/* 4. Opportunity for Brands (moved up) */}
         {clean.marketGaps && (
@@ -859,7 +863,10 @@ export default async function TrackerReportPage({
         </section>
       )}
 
-      <CapturedAnswers responses={responses} />
+      <CapturedAnswers
+        responses={responses}
+        products={snapshotProducts(slug, run.id, responses)}
+      />
 
       {channelSplit.hasBothChannels && (
         <ScrollFade className="mt-20">
