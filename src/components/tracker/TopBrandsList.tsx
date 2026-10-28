@@ -1,9 +1,14 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { BrandMark } from "./TrackerMedia";
 import { trackPostHog } from "@/lib/posthog";
 
-export type Movement = { type: "new" } | { type: "up"; positions: number } | { type: "down"; positions: number } | { type: "steady" };
+export type Movement =
+  | { type: "new" }
+  | { type: "up"; positions: number }
+  | { type: "down"; positions: number }
+  | { type: "steady" };
 
 interface Brand {
   name: string;
@@ -49,13 +54,17 @@ function MovementBadge({ movement }: { movement: Movement }) {
         </span>
       );
     case "steady":
-      return (
-        <span className="font-mono text-[11px] text-white/15">—</span>
-      );
+      return <span className="font-mono text-[11px] text-white/15">—</span>;
   }
 }
 
-export function TopBrandsList({ brands, whyTheseWin, droppedBrands, category, eligibleAnswers }: TopBrandsListProps) {
+export function TopBrandsList({
+  brands,
+  whyTheseWin,
+  droppedBrands,
+  category,
+  eligibleAnswers,
+}: TopBrandsListProps) {
   const [expanded, setExpanded] = useState(false);
   const droppedRef = useRef<HTMLDivElement>(null);
   const droppedTracked = useRef(false);
@@ -85,7 +94,8 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands, category, el
   const maxMentions = brands.length > 0 ? brands[0].mentionCount : 1;
   const hasLabels = brands.some((b) => b.label);
   const canCollapse = brands.length > COLLAPSED_COUNT;
-  const visibleBrands = canCollapse && !expanded ? brands.slice(0, COLLAPSED_COUNT) : brands;
+  const visibleBrands =
+    canCollapse && !expanded ? brands.slice(0, COLLAPSED_COUNT) : brands;
 
   return (
     <div>
@@ -93,17 +103,39 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands, category, el
         Top Brands by AI Mention Frequency
       </p>
       <p className="mt-2 text-[13px] text-white/30">
-        Mention frequency counts usable answers containing a brand, once per answer.
-        Unranked and critical mentions count as visibility. Recommendation ranks are shown separately below.
+        Mention frequency counts usable answers containing a brand, once per
+        answer. Unranked and critical mentions count as visibility.
+        Recommendation ranks are shown separately below.
       </p>
 
       {hasLabels && (
         <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-[11px] text-white/25">
-          <span><span className="font-semibold text-cyan/50">Most Mentioned</span> = most answers mentioning a brand</span>
-          <span><span className="font-semibold text-white/40">Tied #1</span> = tied for most mentions</span>
-          <span><span className="font-semibold text-white/40">Top 3 across models</span> = a recorded top-three rank in multiple comparisons</span>
-          <span><span className="font-semibold text-white/40">Ranked #1 in [Model]</span> = first in that comparative answer</span>
-          <span><span className="font-semibold text-amber-400/60">Unranked mentions</span> = visibility without an inferred rank</span>
+          <span>
+            <span className="font-semibold text-cyan/50">Most Mentioned</span> =
+            most answers mentioning a brand
+          </span>
+          <span>
+            <span className="font-semibold text-white/40">Tied #1</span> = tied
+            for most mentions
+          </span>
+          <span>
+            <span className="font-semibold text-white/40">
+              Top 3 across models
+            </span>{" "}
+            = a recorded top-three rank in multiple comparisons
+          </span>
+          <span>
+            <span className="font-semibold text-white/40">
+              Ranked #1 in [Model]
+            </span>{" "}
+            = first in that comparative answer
+          </span>
+          <span>
+            <span className="font-semibold text-amber-400/60">
+              Unranked mentions
+            </span>{" "}
+            = visibility without an inferred rank
+          </span>
         </div>
       )}
 
@@ -111,8 +143,14 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands, category, el
         {visibleBrands.map((brand, i) => {
           const isFirst = i === 0;
           const isTop3 = i < 3;
-          const denominator = eligibleAnswers && eligibleAnswers >= maxMentions ? eligibleAnswers : maxMentions;
-          const barPct = Math.min((brand.mentionCount / denominator) * 100, 100);
+          const denominator =
+            eligibleAnswers && eligibleAnswers >= maxMentions
+              ? eligibleAnswers
+              : maxMentions;
+          const barPct = Math.min(
+            (brand.mentionCount / denominator) * 100,
+            100,
+          );
 
           return (
             <div
@@ -125,7 +163,9 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands, category, el
                     : "border-transparent px-6 pb-3 pt-3 hover:border-white/5"
               }`}
             >
-              <div className="flex items-center justify-between">
+              <div
+                className={`flex items-center justify-between ${category === "protein-powder" ? "tracker-brand-row" : ""}`}
+              >
                 <span className="flex min-w-0 flex-wrap items-center gap-2 sm:gap-4">
                   <span
                     className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full font-mono text-[11px] font-bold ${
@@ -136,8 +176,11 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands, category, el
                           : "text-white/20"
                     }`}
                   >
-                    {brands.findIndex(b => b.mentionCount === brand.mentionCount) + 1}
+                    {brands.findIndex(
+                      (b) => b.mentionCount === brand.mentionCount,
+                    ) + 1}
                   </span>
+                  <BrandMark category={category} brand={brand.name} />
                   <span
                     className={`${
                       isFirst
@@ -149,7 +192,9 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands, category, el
                   >
                     {brand.name}
                   </span>
-                  {brand.movement && <MovementBadge movement={brand.movement} />}
+                  {brand.movement && (
+                    <MovementBadge movement={brand.movement} />
+                  )}
                   {brand.label && !brand.movement && (
                     <span
                       className={`rounded-full px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider ${
@@ -173,7 +218,10 @@ export function TopBrandsList({ brands, whyTheseWin, droppedBrands, category, el
                         : "text-xs text-white/20"
                   }`}
                 >
-                  {brand.mentionCount}{eligibleAnswers && eligibleAnswers >= maxMentions ? `/${eligibleAnswers}` : ""}
+                  {brand.mentionCount}
+                  {eligibleAnswers && eligibleAnswers >= maxMentions
+                    ? `/${eligibleAnswers}`
+                    : ""}
                 </span>
               </div>
 
