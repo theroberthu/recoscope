@@ -64,3 +64,12 @@ test("brand marks are restricted to the pilot category with null for unknown nam
   assert.equal(brandMark("standing-desks", "Optimum Nutrition"), null);
   assert.equal(brandMark("protein-powder", "Unknown"), null);
 });
+
+test("Neon BIGINT string IDs match the same source records as numeric archive IDs", () => {
+  const dbAnswer = { ...answer, id: "1704", run_id: "166" };
+  assert.deepEqual(
+    snapshotProducts("protein-powder", "166", [dbAnswer]),
+    snapshotProducts("protein-powder", 166, [answer]),
+  );
+  assert.deepEqual(snapshotProducts("protein-powder", "166x", [dbAnswer]), []);
+});
