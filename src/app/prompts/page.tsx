@@ -4,8 +4,9 @@ import { getAllPublishedPrompts } from "@/lib/queries";
 import { promptToSlug, promptToTitle } from "@/lib/prompt-seo";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/prompts" },
   title: "AI Product Recommendation Prompts",
-  description: "See exactly what we asked ChatGPT, Claude, Gemini, and Perplexity across 15 product categories. Every prompt, every brand recommendation, tracked over time.",
+  description: "See exactly what we asked ChatGPT, Claude, Gemini, and Perplexity across published product categories. Every prompt, every brand recommendation, tracked over time.",
 };
 
 export const dynamic = "force-dynamic";
