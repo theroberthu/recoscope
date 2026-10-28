@@ -1,0 +1,45 @@
+Protein Powder explainer — October 27, 2026 snapshot only
+
+Status: corrected export verified; site owner approved publication on October 28, 2026.
+Corrected source: /Users/roberthu/Desktop/Recoscope_Corrected_Local_Review.mp4
+SHA-256: 2db46ca15829365fa79a55f1fdafc76d1dc8fdc7e3568ad0bb14ffa34dc546b2
+55 seconds, 1080x1920, H.264/AAC, 2,572,162 bytes.
+Spoken closing at 0:48.14–0:51.66 and written closing both match:
+“Explore benchmark at getrecoscope.com.”
+The exact supplied file is staged as the site's MP4; it has not been re-encoded.
+The older Recoscope.mp4 is superseded and must never be published.
+
+Hosting decision
+Use this existing Next.js/Vercel site's public/tracker-media/ directory, as for
+the tracker photos. The supplied MP4 fits comfortably as a small static asset.
+No new service, YouTube embed, credentials, database write, or paid dependency
+is required. After normal deployment the intended permanent site URL is:
+https://www.getrecoscope.com/tracker-media/protein-powder/2026-10-b/most-mentioned.mp4
+This URL does not exist yet. Desktop and ChatGPT file paths are not public URLs.
+
+Implementation
+BenchmarkVideo.tsx renders after the overview/key finding and before the
+existing audit CTA and detailed results. Its manifest gate requires category,
+run166, period2026-10-B, October27 date, approved=true and an approved SHA-256.
+The current gate is true for this verified corrected checksum. Publication was approved after the corrected local preview review.
+The player has no src until the visitor clicks Play; preload=none, playsInline,
+no autoplay, native controls after click, 9:16 object-fit=contain, max320px width.
+On mobile, title/context precede the player; explanatory copy follows it.
+On-screen captions remain visible; optional WebVTT captions have no default.
+The transcript includes the unranked-Claude visual context and product-quality
+limitation. The final sentence and VTT closing cue now match the corrected export.
+video_start/video_complete reuse existing trackEvent/gtag conventions. No new
+analytics library, provider, consent change, or tracking system is introduced.
+
+Preview
+Local-only /video-preview now uses the same corrected MP4 path, poster and VTT
+as the production component, with a “Not deployed” notice. It repeats public
+findings for layout verification without database access. The preview route
+is untracked and removed for the production build; the release source contains
+only the verified corrected MP4, never the original review file.
+
+Deployment
+The site owner approved publication after reviewing the corrected local preview.
+Use the established GitHub review/Vercel preview and
+production workflow. Verify hosted playback, ranges, exact-snapshot gating and
+unchanged benchmark data. Do not upload to YouTube.

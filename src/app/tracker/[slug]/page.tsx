@@ -62,6 +62,8 @@ import { ProductGallery } from "@/components/tracker/TrackerMedia";
 import { CapturedAnswers } from "@/components/tracker/CapturedAnswers";
 import { TrackedLink } from "@/components/TrackedLink";
 import { PromptsUsed } from "@/components/tracker/PromptsUsed";
+import { BenchmarkVideo } from "@/components/tracker/BenchmarkVideo";
+import { snapshotVideo } from "@/lib/benchmark-video.mjs";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -554,6 +556,7 @@ export default async function TrackerReportPage({
   };
 
   const takeaway = clean.keyTakeaway || snapshotFinding(topBrands, coverage);
+  const explainer = snapshotVideo(slug, run);
 
   // --- Dynamic FAQ ---
   const catName = categoryRow.name;
@@ -713,6 +716,7 @@ export default async function TrackerReportPage({
 
       <nav className="report-jump-links" aria-label="Report sections">
         <a href="#overview">Overview</a>
+        {explainer && <a href="#benchmark-video">Video explainer</a>}
         <a href="#brand-visibility">Brand visibility</a>
         <a href="#model-comparison">Model comparison</a>
         {promptBreakdownData.length > 0 && (
@@ -747,6 +751,8 @@ export default async function TrackerReportPage({
           </section>
         )}
       </div>
+
+      {explainer && <BenchmarkVideo video={explainer} />}
 
       <aside className="report-audit-cta">
         <div>
