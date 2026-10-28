@@ -23,6 +23,11 @@ const nextConfig: NextConfig = {
         destination: "/tracker/:slug?period=:period",
         permanent: true,
       },
+      {
+        source: "/tracker/:slug/:period",
+        destination: "/tracker/:slug?period=:period",
+        permanent: true,
+      },
     ];
   },
 };
