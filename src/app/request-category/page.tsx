@@ -1,12 +1,21 @@
 import type { Metadata } from "next";
+import { getCategoriesWithRuns } from "@/lib/queries";
 import { CategoryRequestForm } from "@/components/audit/CategoryRequestForm";
 
 export const metadata: Metadata = {
   title: "Request a Category",
-  description: "Tell us what category you want benchmarked. New categories added monthly based on demand.",
+  description:
+    "Suggest a category for a future RecoScope benchmark. Browse existing reports before submitting.",
 };
 
-export default function RequestCategoryPage() {
+export const revalidate = 300;
+export default async function RequestCategoryPage() {
+  let categories: Awaited<ReturnType<typeof getCategoriesWithRuns>> = [];
+  try {
+    categories = await getCategoriesWithRuns();
+  } catch (e) {
+    console.error("[request-category] category data unavailable", e);
+  }
   return (
     <div className="bg-dot-grid">
       {/* Hero */}
@@ -18,8 +27,8 @@ export default function RequestCategoryPage() {
           Don&rsquo;t See Your Category?
         </h1>
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/40">
-          Tell us what you sell and we&rsquo;ll prioritize it for our next benchmark.
-          New categories are added monthly based on demand.
+          Tell us which shopper category you want us to investigate. Requests
+          help us choose future collections; a launch date is not guaranteed.
         </p>
       </section>
 
@@ -42,30 +51,54 @@ export default function RequestCategoryPage() {
               </p>
               <ul className="space-y-4">
                 {[
-                  "We review category requests every week",
+                  "We review category requests and consider demand",
                   "Categories with the most demand get prioritized",
-                  "You\u2019ll be notified by email when your category launches",
-                  "All subscribers get early access to new category reports",
+                  "We can contact you if your category is selected",
+                  "Published reports remain available in the benchmark directory",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-cyan/10">
-                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                        <path d="M2.5 6.5L5 9L9.5 3.5" stroke="#00d4aa" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      <svg
+                        width="12"
+                        height="12"
+                        viewBox="0 0 12 12"
+                        fill="none"
+                      >
+                        <path
+                          d="M2.5 6.5L5 9L9.5 3.5"
+                          stroke="#00d4aa"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                     </span>
-                    <span className="text-[14px] leading-relaxed text-[#c8ccd0]">{item}</span>
+                    <span className="text-[14px] leading-relaxed text-[#c8ccd0]">
+                      {item}
+                    </span>
                   </li>
                 ))}
               </ul>
 
-              {/* TODO: update with real roadmap */}
               <div className="mt-8 rounded-xl border border-white/10 bg-surface p-5">
-                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-white/20">
-                  Coming Soon
+                <h2 className="font-semibold">Already published</h2>
+                <p className="mt-2 text-sm text-[var(--secondary)]">
+                  Your category may already have a report.
                 </p>
-                <p className="mt-2 text-[13px] leading-relaxed text-white/30">
-                  Skincare &middot; Supplements &middot; Pet Food &middot; Coffee &middot; Wireless Earbuds
-                </p>
+                <div className="mt-4 flex flex-wrap gap-x-4 gap-y-3">
+                  {categories.map((c) => (
+                    <a
+                      key={c.slug}
+                      href={`/tracker/${c.slug}`}
+                      className="underline underline-offset-4 text-sm text-[var(--brand)]"
+                    >
+                      {c.name}
+                    </a>
+                  ))}
+                </div>
+                <a href="/tracker" className="text-link">
+                  Browse all category reports →
+                </a>
               </div>
             </div>
           </div>
