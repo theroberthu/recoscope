@@ -1,0 +1,117 @@
+{
+  "purpose": "Identify brands named in public AI benchmark snapshots, without implying partnership or endorsement.",
+  "assets": [
+    {
+      "file": "roborock.svg",
+      "source_page": "https://us.roborock.com",
+      "retrieved_on": "2026-10-28",
+      "method": "Official header wordmark SVG"
+    },
+    {
+      "file": "branch.png",
+      "source_page": "https://www.branchfurniture.com",
+      "image_url": "https://www.branchfurniture.com/cdn/shop/files/branch-hi-res_white-min.png?v=1614301521&width=320",
+      "bytes": 9286,
+      "content_type": "image/png",
+      "retrieved_on": "2026-10-28"
+    },
+    {
+      "file": "purina-pro-plan.webp",
+      "source_page": "https://www.purina.co.uk/",
+      "image_url": "https://www.purina.co.uk/sites/default/files/styles/webp_image/public/2024-02/proplan-background.jpg.webp?itok=b3VEkWUo",
+      "bytes": 18946,
+      "content_type": "image/webp",
+      "retrieved_on": "2026-10-28"
+    },
+    {
+      "file": "neutrogena.svg",
+      "source_page": "https://www.neutrogena.com",
+      "image_url": "https://images.ctfassets.net/3zfcttr0ztpr/6tUl8rLVln9RPBMajmeqfv/35a0cd2b60bb2b6297afeb4d21911a59/NTG_LOGO_1.svg",
+      "bytes": 7303,
+      "content_type": "image/svg+xml",
+      "retrieved_on": "2026-10-28"
+    },
+    {
+      "file": "coway.svg",
+      "source_page": "https://cowaymega.com",
+      "image_url": "https://cowaymega.com/cdn/shop/files/Logo-Blue.svg?v=1763393919&width=200",
+      "bytes": 3152,
+      "content_type": "image/svg+xml",
+      "retrieved_on": "2026-10-28"
+    },
+    {
+      "file": "levoit.png",
+      "source_page": "https://levoit.com",
+      "image_url": "https://levoit.com/cdn/shop/files/Logo1_a249a91a-3fe7-49f1-a24c-e13de97dcfc7.png?v=1780401229&width=250",
+      "bytes": 9247,
+      "content_type": "image/png",
+      "retrieved_on": "2026-10-28"
+    },
+    {
+      "file": "cerave.svg",
+      "source_page": "https://www.cerave.com",
+      "image_url": "https://www.cerave.com/-/media/project/loreal/brand-sites/cerave/shared/baseline/cerave-logo-top.svg?w=0&hash=239AA06EAC9D269F3D17D7645863F4C0",
+      "bytes": 8379,
+      "content_type": "image/svg+xml",
+      "retrieved_on": "2026-10-28"
+    },
+    {
+      "file": "uplift.svg",
+      "source_page": "https://www.upliftdesk.com",
+      "image_url": "https://www.content.upliftdesk.com/content/img/logo/upliftHeaderLogo.svg",
+      "bytes": 5889,
+      "content_type": "image/svg+xml",
+      "retrieved_on": "2026-10-28"
+    },
+    {
+      "file": "philips-norelco.png",
+      "source_page": "https://www.usa.philips.com/c-m-pe/face-shavers",
+      "image_url": "https://www.usa.philips.com/c-resources/favicons/favicon-196x196.png",
+      "bytes": 9560,
+      "content_type": "image/png",
+      "retrieved_on": "2026-10-28"
+    },
+    {
+      "file": "viviscal.png",
+      "source_page": "https://www.viviscal.com",
+      "image_url": "https://www.viviscal.com/cdn/shop/files/Viviscal_logo.png?v=1710159949&width=320",
+      "bytes": 24069,
+      "content_type": "image/png",
+      "retrieved_on": "2026-10-28"
+    },
+    {
+      "file": "viscosoft.png",
+      "source_page": "https://viscosoft.com",
+      "image_url": "https://viscosoft.com/cdn/shop/files/vs-logo-website_140x@2x.png?v=1614367732",
+      "bytes": 10230,
+      "content_type": "image/png",
+      "retrieved_on": "2026-10-28"
+    },
+    {
+      "file": "thorne.svg",
+      "source_page": "https://www.thorne.com",
+      "image_url": "https://d1vo8zfysxy97v.cloudfront.net/images/layout/thorne-logo.svg",
+      "bytes": 2361,
+      "content_type": "image/svg+xml",
+      "retrieved_on": "2026-10-28"
+    },
+    {
+      "file": "apple.svg",
+      "source_page": "https://www.apple.com",
+      "method": "Official header SVG, viewBox trimmed to remove navigation whitespace",
+      "retrieved_on": "2026-10-28"
+    },
+    {
+      "file": "braun.svg",
+      "source_page": "https://us.braun.com/en-us",
+      "method": "Official header SVG; standalone namespace and black fill for light surfaces",
+      "retrieved_on": "2026-10-28"
+    },
+    {
+      "file": "brooks.svg",
+      "source_page": "https://www.brooksrunning.com/en_us",
+      "method": "Official header SVG saved from visible logo element; standalone namespace",
+      "retrieved_on": "2026-10-28"
+    }
+  ]
+}
