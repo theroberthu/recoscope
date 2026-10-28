@@ -3,6 +3,7 @@ import { getCategoriesWithRuns } from "@/lib/queries";
 import { todayCentral } from "@/lib/discovery.mjs";
 import { CategoryFinder } from "@/components/tracker/CategoryFinder";
 export const metadata: Metadata = {
+  alternates: { canonical: "/tracker" },
   title: "AI Recommendation Benchmarks by Category",
   description:
     "Find dated AI brand recommendation benchmarks, with findings, usable-answer coverage, and recorded rankings across four AI services.",

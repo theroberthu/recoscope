@@ -5,6 +5,7 @@ import { getLatestPublicSnapshot } from "@/lib/queries";
 import { formatSnapshotDate } from "@/lib/discovery.mjs";
 import { SnapshotPreview } from "@/components/home/SnapshotPreview";
 export const metadata: Metadata = {
+  alternates: { canonical: "/blog" },
   title: "Research and Findings",
   description:
     "Current benchmark findings and dated research into how AI assistants mention and rank product brands.",

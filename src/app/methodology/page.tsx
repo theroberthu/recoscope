@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { FAQSchema } from "@/components/seo/JsonLd";
 export const metadata: Metadata = {
+  alternates: { canonical: "/methodology" },
   title: "How RecoScope Measures AI Recommendations",
   description:
     "The current rules for saved shopper prompts, usable-answer coverage, unique brand mentions, explicitly supported ranks, collection settings and review status.",

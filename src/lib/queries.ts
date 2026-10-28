@@ -490,9 +490,7 @@ export async function getProspectRuns(
   return rows as (Run & { category_name: string; category_slug: string })[];
 }
 
-export async function getProspectDayCount(
-  clientId: string,
-): Promise<{
+export async function getProspectDayCount(clientId: string): Promise<{
   dayCount: number;
   firstDate: string | null;
   lastDate: string | null;
@@ -527,6 +525,7 @@ export interface PromptPageData {
   category_slug: string;
   run_count: number;
   response_count: number;
+  modified_at: string;
 }
 
 export async function getAllPublishedPrompts(): Promise<PromptPageData[]> {
@@ -537,7 +536,8 @@ export async function getAllPublishedPrompts(): Promise<PromptPageData[]> {
       c.name AS category_name,
       c.slug AS category_slug,
       COUNT(DISTINCT r.id)::int AS run_count,
-      COUNT(ar.id)::int AS response_count
+      COUNT(ar.id)::int AS response_count,
+      MAX(GREATEST(r.created_at, ar.created_at))::text AS modified_at
     FROM agent_responses ar
     JOIN runs r ON r.id = ar.run_id
     JOIN categories c ON c.id = r.category_id
@@ -549,6 +549,35 @@ export async function getAllPublishedPrompts(): Promise<PromptPageData[]> {
     ORDER BY c.name, ar.prompt_text
   `;
   return rows as PromptPageData[];
+}
+
+/** Sitemap evidence includes closed public archives, never private or draft runs. */
+export async function getPublicSitemapRuns(): Promise<
+  {
+    category_slug: string;
+    period_label: string;
+    run_date: string;
+    modified_at: string;
+  }[]
+> {
+  const sql = getDb();
+  const rows = await sql`
+    SELECT c.slug AS category_slug, r.period_label, r.run_date::text,
+      GREATEST(r.created_at,
+        (SELECT MAX(ar.created_at) FROM agent_responses ar WHERE ar.run_id = r.id),
+        (SELECT MAX(bm.created_at) FROM brand_mentions bm WHERE bm.run_id = r.id),
+        (SELECT MAX(ri.created_at) FROM run_insights ri WHERE ri.run_id = r.id)
+      )::text AS modified_at
+    FROM runs r JOIN categories c ON c.id = r.category_id
+    WHERE r.is_public = true AND r.status = 'published'
+    ORDER BY r.run_date DESC, r.id DESC
+  `;
+  return rows as {
+    category_slug: string;
+    period_label: string;
+    run_date: string;
+    modified_at: string;
+  }[];
 }
 
 export async function getPromptDetail(promptText: string): Promise<{
@@ -699,9 +728,7 @@ export async function getDemoRuns(
   return rows as (Run & { category_name: string; category_slug: string })[];
 }
 
-export async function getDemoDayCount(
-  brandName: string,
-): Promise<{
+export async function getDemoDayCount(brandName: string): Promise<{
   dayCount: number;
   firstDate: string | null;
   lastDate: string | null;

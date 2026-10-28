@@ -8,6 +8,7 @@ export interface BlogPost {
   slug: string;
   title: string;
   publish_date: string;
+  modified_date?: string;
   excerpt: string;
   author: string;
   tags: string[];
@@ -25,6 +26,7 @@ export function getAllPosts(): BlogPost[] {
         slug: data.slug ?? file.replace(/\.mdx$/, ""),
         title: data.title ?? "Untitled",
         publish_date: data.publish_date ?? "",
+        modified_date: data.modified_date,
         excerpt: data.excerpt ?? "",
         author: data.author ?? "RecoScope",
         tags: data.tags ?? [],

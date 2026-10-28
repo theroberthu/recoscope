@@ -4,6 +4,7 @@ import { getActiveCategories, getLatestPublicSnapshot } from "@/lib/queries";
 import { resolveCategory } from "@/lib/discovery.mjs";
 import { SnapshotPreview } from "@/components/home/SnapshotPreview";
 export const metadata: Metadata = {
+  alternates: { canonical: "/subscribe" },
   title: "Get Category Report Updates",
   description:
     "Subscribe to free AI recommendation research for the categories you care about.",

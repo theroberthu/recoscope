@@ -1,3 +1,4 @@
+import { isoDate } from "@/lib/seo.mjs";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
@@ -39,11 +40,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: post.title,
     description: post.excerpt,
+    alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: "article",
-      publishedTime: post.publish_date,
+      publishedTime: isoDate(post.publish_date),
+      modifiedTime: isoDate(post.modified_date ?? post.publish_date),
       authors: [post.author],
     },
   };
@@ -240,6 +243,8 @@ export default async function BlogPostPage({ params }: Props) {
         headline={post.title}
         description={post.excerpt}
         datePublished={post.publish_date}
+        dateModified={post.modified_date}
+        authorName={post.author}
         url={`${baseUrl}/blog/${post.slug}`}
       />
       <BreadcrumbSchema

@@ -3,6 +3,7 @@ import { getCategoriesWithRuns } from "@/lib/queries";
 import { CategoryRequestForm } from "@/components/audit/CategoryRequestForm";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/request-category" },
   title: "Request a Category",
   description:
     "Suggest a category for a future RecoScope benchmark. Browse existing reports before submitting.",

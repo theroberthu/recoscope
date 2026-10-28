@@ -4,6 +4,7 @@ import { getPlatformStats } from "@/lib/queries";
 import { BreadcrumbSchema } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/platform" },
   title: { absolute: "RecoScope Case Study | AI Commerce Benchmark" },
   description:
     "Learn how RecoScope evaluates product recommendations across ChatGPT, Claude, Gemini, and Perplexity, normalizes the results, and publishes longitudinal AI commerce research.",

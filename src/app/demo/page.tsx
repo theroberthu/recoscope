@@ -4,6 +4,7 @@ import { mentionCounts, reviewStatus } from "@/lib/report-ranking.mjs";
 import { formatSnapshotDate, auditHref } from "@/lib/discovery.mjs";
 import { SnapshotPreview } from "@/components/home/SnapshotPreview";
 export const metadata: Metadata = {
+  alternates: { canonical: "/demo" },
   title: "Sample AI Visibility Report",
   description:
     "Inspect a real, dated public benchmark with brand mention counts, recorded comparison ranks, exact prompts, coverage and review context.",
