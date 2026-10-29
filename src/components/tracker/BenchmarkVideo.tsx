@@ -39,20 +39,11 @@ export function BenchmarkVideo({ video }: { video: VideoDetails }) {
         <p className="report-eyebrow">Video explainer · {durationLabel}</p>
         <h2 id="benchmark-video-title">{video.title}</h2>
         <p id="benchmark-video-context" className="benchmark-video-context">
-          Collected <time dateTime="2026-10-27">October 27, 2026</time>
+          Collected <time dateTime={video.collected}>{video.collectedLabel}</time>
           <br />
-          12 usable answers · Four AI assistants · Three prompt types
+          {video.context}
         </p>
-        <p>
-          Optimum Nutrition appeared in 9 of 12 usable answers. The three ranked
-          comparisons named different first choices: Optimum Nutrition in
-          ChatGPT, Transparent Labs in Gemini, and Ascent in Perplexity.
-        </p>
-        <p>
-          <strong>Claude’s comparative answer was unranked.</strong> Mention
-          frequency measures how often a brand appears; comparative rank records
-          its position only when the answer supplies a ranking.
-        </p>
+        {video.summary.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
         <p className="benchmark-video-limitation">
           These findings describe captured answers. They do not establish
           product quality.
@@ -67,32 +58,9 @@ export function BenchmarkVideo({ video }: { video: VideoDetails }) {
         <details className="benchmark-video-transcript">
           <summary>Read the transcript</summary>
           <div>
-            <p>
-              Most mentioned doesn’t mean first choice. In Recoscope’s October
-              27 protein powder snapshot, Optimum Nutrition appeared in 9 of 12
-              usable answers across four AI assistants and three prompt types.
-            </p>
-            <p>
-              But look at the comparative prompt. ChatGPT ranked Optimum
-              Nutrition first. Gemini ranked Transparent Labs first. Perplexity
-              ranked Ascent first.
-            </p>
-            <p>
-              <em>
-                On screen: three ranked comparisons; Claude’s answer was
-                unranked.
-              </em>
-            </p>
-            <p>
-              For brand owners, track both: how often your brand appears and
-              where it ranks in comparisons. A mention count shows visibility.
-              It doesn’t tell you whether your brand came first.
-            </p>
-            <p>
-              These findings describe the captured answers. They don’t establish
-              product quality.
-            </p>
-            <p>Explore benchmark at getrecoscope.com.</p>
+            {video.transcript.map(({ text, visual }) => (
+              <p key={text}>{visual ? <em>{text}</em> : text}</p>
+            ))}
           </div>
         </details>
       </div>

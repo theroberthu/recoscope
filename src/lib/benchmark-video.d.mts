@@ -11,8 +11,14 @@ export interface BenchmarkVideo {
   src: string;
   poster: string;
   captions: string;
+  collectedLabel: string;
+  context: string;
+  summary: string[];
+  transcript: { text: string; visual?: boolean }[];
 }
 export const proteinExplainer: BenchmarkVideo;
+export const standingDesksExplainer: BenchmarkVideo;
+export const benchmarkExplainers: BenchmarkVideo[];
 export function snapshotVideo(
   category: string,
   run: { id: number | string; period_label: string; run_date: string | Date },
