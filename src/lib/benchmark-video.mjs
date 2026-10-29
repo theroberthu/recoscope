@@ -1,6 +1,6 @@
 import { isoDate } from "./seo.mjs";
 
-// Corrected supplied export verified; publication approved by the site owner.
+// Verified supplied exports; site owner approved both explainers for publication.
 // Exact snapshot and checksum guards prevent reuse of an unverified asset.
 export const proteinExplainer = {
   id: "protein-powder-2026-10-b-most-mentioned",
@@ -15,10 +15,59 @@ export const proteinExplainer = {
   src: "/tracker-media/protein-powder/2026-10-b/most-mentioned.mp4",
   poster: "/tracker-media/protein-powder/2026-10-b/explainer-poster.jpg",
   captions: "/tracker-media/protein-powder/2026-10-b/explainer.en.vtt",
+  "collectedLabel": "October 27, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "summary": ["Optimum Nutrition appeared in 9 of 12 usable answers. The three ranked comparisons named different first choices: Optimum Nutrition in ChatGPT, Transparent Labs in Gemini, and Ascent in Perplexity.", "Claude’s comparative answer was unranked. Mention frequency measures how often a brand appears; comparative rank records its position only when the answer supplies a ranking."],
+  "transcript": [{"text": "Most mentioned doesn’t mean first choice. In Recoscope’s October 27 protein powder snapshot, Optimum Nutrition appeared in 9 of 12 usable answers across four AI assistants and three prompt types."}, {"text": "But look at the comparative prompt. ChatGPT ranked Optimum Nutrition first. Gemini ranked Transparent Labs first. Perplexity ranked Ascent first."}, {"text": "On screen: three ranked comparisons; Claude’s answer was unranked.", "visual": true}, {"text": "For brand owners, track both: how often your brand appears and where it ranks in comparisons. A mention count shows visibility. It doesn’t tell you whether your brand came first."}, {"text": "These findings describe the captured answers. They don’t establish product quality."}, {"text": "Explore benchmark at getrecoscope.com."}],
 };
 
-export function snapshotVideo(category, run, video = proteinExplainer) {
-  if (!video.approved || !/^[a-f0-9]{64}$/.test(video.approvedSha256 || ""))
+export const standingDesksExplainer = {
+  "id": "standing-desks-2026-10-b-visibility-and-rank",
+  "approved": true,
+  "approvedSha256": "95f20e26edc4a0478945f498e7aa70d59f1ecb1160661f6e071f5dd65696a045",
+  "category": "standing-desks",
+  "runId": 167,
+  "period": "2026-10-B",
+  "collected": "2026-10-29",
+  "collectedLabel": "October 29, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Two brands in every answer. One first in all four comparisons.",
+  "duration": "56-second explainer",
+  "src": "/tracker-media/standing-desks/2026-10-b/standing-desks-explainer.mp4",
+  "poster": "/tracker-media/standing-desks/2026-10-b/explainer-poster.jpg",
+  "captions": "/tracker-media/standing-desks/2026-10-b/explainer.en.vtt",
+  "summary": [
+    "UPLIFT and FlexiSpot each appeared in all 12 usable answers. All four comparative answers ranked UPLIFT first.",
+    "FlexiSpot ranked second in ChatGPT, Gemini and Perplexity, and third in Claude. Mention frequency and comparative rank measure different things."
+  ],
+  "transcript": [
+    {
+      "text": "Two brands appeared in every answer. Only one ranked first in all four comparisons."
+    },
+    {
+      "text": "In Recoscope’s October 29 standing desk snapshot, UPLIFT and FlexiSpot each appeared in all 12 usable answers, across four assistants and three prompt types. That’s a tie in mention frequency."
+    },
+    {
+      "text": "But in the comparative prompt, ChatGPT, Claude, Gemini and Perplexity all ranked UPLIFT first. FlexiSpot placed second in three answers, and third in Claude’s."
+    },
+    {
+      "text": "For brand teams, track both: how often you appear, and where you rank in a comparison."
+    },
+    {
+      "text": "These findings describe this captured snapshot. They don’t establish product quality, market share or independently tested performance."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer];
+
+export function snapshotVideo(category, run, video = benchmarkExplainers.find(
+  (candidate) => candidate.category === category && candidate.runId === Number(run.id),
+)) {
+  if (!video || !video.approved || !/^[a-f0-9]{64}$/.test(video.approvedSha256 || ""))
     return null;
   if (
     category !== video.category ||
