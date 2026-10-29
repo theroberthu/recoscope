@@ -8,7 +8,6 @@ import {
   applyRecordedExclusions,
   buildPromptBreakdown,
   buildBudgetInsights,
-  reviewStatus,
   eligibleMentions,
   responseCoverage,
   mentionCounts,
@@ -998,12 +997,6 @@ export default async function TrackerReportPage({
                   </dt>
                   <dd className="font-mono text-[13px] text-white/60">
                     {prompts.length}
-                  </dd>
-                </div>
-                <div className="flex items-baseline justify-between border-b border-white/5 pb-3">
-                  <dt className="text-[13px] text-white/40">Review status</dt>
-                  <dd className="font-mono text-[13px] text-white/60">
-                    {reviewStatus(insight?.reviewed_by_human)}
                   </dd>
                 </div>
                 <div className="flex items-baseline justify-between border-b border-white/5 pb-3 sm:col-span-2">
