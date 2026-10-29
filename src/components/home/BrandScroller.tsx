@@ -83,14 +83,8 @@ export function BrandScroller({
     >
       <div className="home-brand-heading">
         <div>
-          <p className="eyebrow">Explore the names in the answers</p>
-          <h2 id="brand-leaders-title">
-            Most-mentioned brands across our latest benchmarks.
-          </h2>
-          <p className="home-brand-description">
-            Leaders in each category’s latest public snapshot, including ties.
-            Mention frequency measures visibility, not product quality.
-          </p>
+          <p className="eyebrow">Across our latest benchmarks</p>
+          <h2 id="brand-leaders-title">Most-mentioned brands</h2>
         </div>
         <div
           className="home-brand-controls"
@@ -157,6 +151,10 @@ export function BrandScroller({
           </li>
         ))}
       </ul>
+      <p className="home-brand-description">
+        Leaders in each category’s latest public snapshot, including ties.
+        Mention frequency measures visibility, not product quality.
+      </p>
       <p className="home-brand-footnote">
         Scroll or swipe to explore all {leaders.length} brands. Each opens its
         dated report with collection notes and coverage.
