@@ -10,6 +10,7 @@ export function BenchmarkVideo({ video }: { video: VideoDetails }) {
   const sentComplete = useRef(false);
   const [started, setStarted] = useState(false);
   const [error, setError] = useState("");
+  const durationLabel = video.duration.replace("-second explainer", " seconds");
   const params = {
     category_slug: video.category,
     period: video.period,
@@ -35,7 +36,7 @@ export function BenchmarkVideo({ video }: { video: VideoDetails }) {
       aria-labelledby="benchmark-video-title"
     >
       <div className="benchmark-video-copy">
-        <p className="report-eyebrow">Watch the finding · {video.duration}</p>
+        <p className="report-eyebrow">Video explainer · {durationLabel}</p>
         <h2 id="benchmark-video-title">{video.title}</h2>
         <p id="benchmark-video-context" className="benchmark-video-context">
           Collected <time dateTime="2026-10-27">October 27, 2026</time>
@@ -96,7 +97,12 @@ export function BenchmarkVideo({ video }: { video: VideoDetails }) {
         </details>
       </div>
       <div className="benchmark-video-media">
-        <div className="benchmark-video-frame">
+        <div className={`benchmark-video-frame${started ? " is-started" : ""}`}>
+          {!started && (
+            <span className="benchmark-video-badge" aria-hidden="true">
+              Video · {durationLabel}
+            </span>
+          )}
           <video
             ref={player}
             width={1080}
@@ -144,8 +150,19 @@ export function BenchmarkVideo({ video }: { video: VideoDetails }) {
               onClick={start}
               aria-label={`Play ${video.title}`}
             >
-              <span aria-hidden="true">▶</span>
-              <span>Play explainer</span>
+              <span className="benchmark-video-play-icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="28"
+                  height="28"
+                  fill="currentColor"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </span>
+              <span className="benchmark-video-play-label">
+                Watch explainer
+              </span>
             </button>
           )}
         </div>
