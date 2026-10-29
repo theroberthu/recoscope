@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { proteinExplainer, snapshotVideo } from "../benchmark-video.mjs";
+import { proteinExplainer, standingDesksExplainer, benchmarkExplainers, snapshotVideo } from "../benchmark-video.mjs";
 const run = { id: "166", period_label: "2026-10-B", run_date: "2026-10-27" };
 const approved = {
   ...proteinExplainer,
@@ -48,14 +48,22 @@ test("an approved explainer belongs only to the October 27 protein powder snapsh
 });
 
 test("an enabled production video must have an actual MP4 matching its approval checksum", async () => {
-  if (!proteinExplainer.approved) return;
+
   const { readFileSync } = await import("node:fs");
   const { createHash } = await import("node:crypto");
-  const asset = readFileSync(
-    new URL("../../../public" + proteinExplainer.src, import.meta.url),
-  );
-  assert.equal(
-    createHash("sha256").update(asset).digest("hex"),
-    proteinExplainer.approvedSha256,
-  );
+  for (const video of benchmarkExplainers.filter((v) => v.approved)) {
+    const asset = readFileSync(new URL("../../../public" + video.src, import.meta.url));
+    assert.equal(createHash("sha256").update(asset).digest("hex"), video.approvedSha256);
+  }
+});
+
+
+test("registry selects the Standing Desks explainer only for run167 on October29", () => {
+ const deskRun = { id: 167, period_label: "2026-10-B", run_date: "2026-10-29" };
+ assert.equal(snapshotVideo("standing-desks", deskRun), standingDesksExplainer);
+ assert.equal(snapshotVideo("protein-powder", run), proteinExplainer);
+ for (const change of [{id:157},{period_label:"2026-10-A"},{run_date:"2026-10-13"}])
+   assert.equal(snapshotVideo("standing-desks", {...deskRun,...change}), null);
+ assert.equal(snapshotVideo("skincare",deskRun),null);
+ assert.equal(snapshotVideo("standing-desks",run),null);
 });
