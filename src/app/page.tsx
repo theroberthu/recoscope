@@ -27,62 +27,70 @@ export default async function HomePage() {
   return (
     <div>
       <OrganizationSchema />
-      <section className="home-hero page-shell">
-        <div>
-          <p className="eyebrow">Independent AI commerce research</p>
-          <h1>Does AI recommend your brand?</h1>
-          <p className="hero-description">
-            See which brands ChatGPT, Claude, Gemini, and Perplexity mention,
-            how they rank them, and the shopper questions behind each answer.
-          </p>
-          <div className="hero-actions">
-            <TrackedLink
-              href="/audit?source=homepage"
-              event="audit_cta_click"
-              source="homepage"
-              className="button-primary"
-            >
-              Get a free audit
-            </TrackedLink>
-            <TrackedLink
-              href="/tracker"
-              event="benchmark_browse_click"
-              source="homepage"
-              className="button-secondary"
-            >
-              Explore benchmarks
-            </TrackedLink>
-          </div>
-          <p className="hero-reassurance">
-            Free audit · No call required · Emailed within 48 hours
-          </p>
-          <p className="founder-byline">
-            Built and operated by <a href="/about">Robert Hu</a>, with 20+ years
-            in commerce. <a href="/platform">See the project case study →</a>
-          </p>
-        </div>
-        {snapshot ? (
-          <SnapshotPreview snapshot={snapshot} />
-        ) : (
-          <aside className="snapshot-preview">
-            <p className="eyebrow">Inspect the evidence</p>
-            <h2 className="mt-4 text-2xl font-semibold">
-              Same shopper questions. Four AI services.
-            </h2>
-            <p className="mt-4">
-              Browse dated reports with usable-answer coverage, recorded ranks,
-              and collection notes.
+      <div className="home-opening">
+        <section className="home-hero page-shell">
+          <div className="home-hero-copy">
+            <div className="home-hero-intro">
+              <p className="eyebrow">Independent AI commerce research</p>
+              <h1>Does AI recommend your brand?</h1>
+              <p className="hero-description">
+                See which brands ChatGPT, Claude, Gemini, and Perplexity
+                mention, how they rank them, and the shopper questions behind
+                each answer.
+              </p>
+              <div className="hero-actions">
+                <TrackedLink
+                  href="/audit?source=homepage"
+                  event="audit_cta_click"
+                  source="homepage"
+                  className="button-primary"
+                >
+                  Get a free audit
+                </TrackedLink>
+                <TrackedLink
+                  href="/tracker"
+                  event="benchmark_browse_click"
+                  source="homepage"
+                  className="button-secondary"
+                >
+                  Explore benchmarks
+                </TrackedLink>
+              </div>
+              <p className="hero-reassurance">
+                Free audit · No call required · Emailed within 48 hours
+              </p>
+            </div>
+            <p className="founder-byline">
+              Built and operated by <a href="/about">Robert Hu</a>, with 20+
+              years in commerce.{" "}
+              <a href="/platform">See the project case study →</a>
             </p>
-            <a href="/tracker" className="text-link">
-              Browse published benchmarks →
-            </a>
-          </aside>
-        )}
-      </section>
-      <BrandScroller
-        leaders={homeBrandLeaders(categories)}
-        today={todayCentral()}
-      />
+          </div>
+          <div className="home-snapshot-shell">
+            {snapshot ? (
+              <SnapshotPreview snapshot={snapshot} />
+            ) : (
+              <aside className="snapshot-preview">
+                <p className="eyebrow">Inspect the evidence</p>
+                <h2 className="mt-4 text-2xl font-semibold">
+                  Same shopper questions. Four AI services.
+                </h2>
+                <p className="mt-4">
+                  Browse dated reports with usable-answer coverage, recorded
+                  ranks, and collection notes.
+                </p>
+                <a href="/tracker" className="text-link">
+                  Browse published benchmarks →
+                </a>
+              </aside>
+            )}
+          </div>
+        </section>
+        <BrandScroller
+          leaders={homeBrandLeaders(categories)}
+          today={todayCentral()}
+        />
+      </div>
       {stats && stats.runsCompleted > 0 && (
         <section
           className="page-shell corpus-strip"

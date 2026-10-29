@@ -747,6 +747,9 @@
   color: var(--secondary);
   border-bottom: 1px solid var(--line);
 }
+.home-snapshot-shell {
+  display: contents;
+}
 .home-hero {
   display: grid;
   grid-template-columns: 1.05fr 1fr;
@@ -1825,14 +1828,18 @@ article :is(h2, h3) {
 
 /* Snapshot explainer: a deliberately sized, uncropped vertical player. */
 .benchmark-video {
+  scroll-margin-top: 96px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
   gap: clamp(24px, 4vw, 56px);
   align-items: start;
   margin-top: 24px;
-  background: #f7faf7;
+  background: #edf4ee;
+  border-color: #b8cdbd;
 }
-.benchmark-video-copy { min-width: 0; }
+.benchmark-video-copy {
+  min-width: 0;
+}
 .benchmark-video h2 {
   max-width: 24ch;
   margin: 12px 0 18px;
@@ -1848,23 +1855,35 @@ article :is(h2, h3) {
   line-height: 1.65;
   color: var(--secondary);
 }
-.benchmark-video-copy strong { color: var(--ink); font-weight: 600; }
-.benchmark-video-context { color: var(--brand) !important; }
+.benchmark-video-copy strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.benchmark-video-context {
+  color: var(--brand) !important;
+}
 .benchmark-video-limitation {
   padding: 14px 16px;
   border-left: 3px solid #b8cdbd;
   background: #eaf1eb;
   border-radius: 0 8px 8px 0;
 }
-.benchmark-video-copy > .benchmark-video-caption-note { font-size: 13px !important; }
-.benchmark-video-media { width: 100%; max-width: 320px; justify-self: center; }
+.benchmark-video-copy > .benchmark-video-caption-note {
+  font-size: 13px !important;
+}
+.benchmark-video-media {
+  width: 100%;
+  max-width: 320px;
+  justify-self: center;
+}
 .benchmark-video-frame {
   position: relative;
   aspect-ratio: 9 / 16;
   overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: #f3f8f2;
+  border: 3px solid #285c4a;
+  border-radius: 16px;
+  background: #153e32;
+  box-shadow: 0 12px 30px #173e3221;
 }
 .benchmark-video-frame video {
   display: block;
@@ -1873,34 +1892,61 @@ article :is(h2, h3) {
   object-fit: contain;
   aspect-ratio: 9 / 16;
 }
+.benchmark-video-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: #153e32;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}
 .benchmark-video-play {
   position: absolute;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: inline-flex;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  min-height: 48px;
-  width: max-content;
-  max-width: calc(100% - 24px);
-  padding: 12px 20px;
-  border-radius: 999px;
-  background: var(--brand);
+  gap: 12px;
+  width: 100%;
+  background: linear-gradient(transparent 20%, #153e321a 55%, #153e3266);
   color: #fff;
-  font-size: 14px;
-  font-weight: 600;
   cursor: pointer;
 }
-.benchmark-video-play:hover { background: #124a3e; }
+.benchmark-video-play-icon {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #153e32;
+  box-shadow: 0 6px 24px #153e324d;
+}
+.benchmark-video-play-label {
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: #153e32;
+  font-size: 14px;
+  font-weight: 600;
+}
+.benchmark-video-play:hover .benchmark-video-play-icon {
+  background: #28634f;
+}
 .benchmark-video-play:focus-visible,
 .benchmark-video-frame video:focus-visible,
 .benchmark-video-transcript summary:focus-visible {
   outline: 3px solid #357c67;
   outline-offset: 4px;
 }
-.benchmark-video-transcript { margin-top: 20px; border-top: 1px solid var(--line); }
+.benchmark-video-transcript {
+  margin-top: 20px;
+  border-top: 1px solid var(--line);
+}
 .benchmark-video-transcript summary {
   padding: 16px 0;
   color: var(--brand);
@@ -1908,12 +1954,122 @@ article :is(h2, h3) {
   font-size: 14px;
   font-weight: 600;
 }
-.benchmark-video-transcript p { margin: 0 0 14px; font-size: 14px; line-height: 1.7; color: var(--secondary); }
-.benchmark-video-error { margin-top: 12px; font-size: 14px; color: #8a3927; }
+.benchmark-video-transcript p {
+  margin: 0 0 14px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--secondary);
+}
+.benchmark-video-error {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #8a3927;
+}
 @media (max-width: 767px) {
-  .benchmark-video { grid-template-columns: minmax(0, 1fr); gap: 16px; }
-  .benchmark-video-copy { display: contents; }
-  .benchmark-video h2 { max-width: none; margin: 0; }
-  .benchmark-video-copy > p:not(.report-eyebrow) { margin-top: 0; }
-  .benchmark-video-media { max-width: min(320px, 100%); grid-row: 4; }
+  .benchmark-video {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .benchmark-video-copy {
+    display: contents;
+  }
+  .benchmark-video h2 {
+    max-width: none;
+    margin: 0;
+  }
+  .benchmark-video-copy > p:not(.report-eyebrow) {
+    margin-top: 0;
+  }
+  .benchmark-video-media {
+    max-width: min(320px, 100%);
+    grid-row: 4;
+  }
+}
+
+/* On phones, surface the brands before the full evidence table. */
+@media (max-width: 767px) {
+  .home-opening {
+    display: flex;
+    flex-direction: column;
+  }
+  .home-opening .home-hero,
+  .home-opening .home-hero-copy {
+    display: contents;
+  }
+  .home-hero-intro {
+    order: 1;
+    padding: 28px 20px 24px;
+  }
+  .home-hero-intro h1 {
+    margin-top: 14px;
+    font-size: clamp(34px, 9.3vw, 42px);
+  }
+  .home-hero-intro .hero-description {
+    margin-top: 16px;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  .home-hero-intro .hero-actions {
+    margin-top: 20px;
+    gap: 10px;
+  }
+  .home-hero-intro .hero-reassurance {
+    margin-top: 12px;
+    font-size: 12px;
+  }
+  .home-opening .home-brand-strip {
+    order: 2;
+    padding-top: 0;
+    padding-bottom: 24px;
+  }
+  .home-opening .home-brand-heading {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .home-opening .home-brand-heading .eyebrow {
+    display: none;
+  }
+  .home-opening .home-brand-heading h2 {
+    margin-top: 0;
+    font-size: 21px;
+  }
+  .home-opening .home-brand-controls {
+    margin-left: 0;
+  }
+  .home-opening .home-snapshot-shell {
+    display: block;
+    order: 3;
+    padding: 0 20px;
+  }
+  .home-opening .founder-byline {
+    order: 4;
+    max-width: none;
+    margin: 20px 20px 28px;
+  }
+}
+
+.benchmark-video-play:focus-visible {
+  outline-offset: -6px;
+}
+@media (max-width: 360px) {
+  .home-hero-intro {
+    padding-block: 20px;
+  }
+  .home-hero-intro h1 {
+    font-size: 32px;
+  }
+  .home-hero-intro .hero-description {
+    font-size: 15px;
+  }
+  .home-hero-intro .hero-actions {
+    flex-direction: row;
+  }
+  .home-hero-intro .hero-actions a {
+    flex: 1;
+    min-width: 0;
+    padding-inline: 8px;
+    font-size: 12px;
+  }
 }
