@@ -1,6 +1,7 @@
 import { isoDate } from "./seo.mjs";
 
-// Verified supplied exports; site owner approved both explainers for publication.
+// Approved exports are enabled only for their verified snapshots.
+// Exact snapshot and checksum guards prevent reuse of an unverified asset.
 // Exact snapshot and checksum guards prevent reuse of an unverified asset.
 export const proteinExplainer = {
   id: "protein-powder-2026-10-b-most-mentioned",
@@ -62,7 +63,52 @@ export const standingDesksExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer];
+// October 30 Skincare publication approved by the site owner.
+export const skincareExplainer = {
+  "id": "skincare-2026-10-c-split-decision",
+  "approved": true,
+  "approvedSha256": "250ba00d547e425557992df21a5ca2aeabfde9215a88eb65db60bab0731a7096",
+  "category": "skincare",
+  "runId": 168,
+  "period": "2026-10-C",
+  "collected": "2026-10-30",
+  "collectedLabel": "October 30, 2026",
+  "context": "11 usable / 12 captured answers · Four AI assistants · Three prompt types",
+  "title": "Most mentioned. Split decision.",
+  "duration": "50-second explainer",
+  "src": "/tracker-media/skincare/2026-10-c/skincare-explainer.mp4",
+  "poster": "/tracker-media/skincare/2026-10-c/explainer-poster.jpg",
+  "captions": "/tracker-media/skincare/2026-10-c/explainer.en.vtt",
+  "summary": [
+    "CeraVe appeared in 8 of 11 usable answers, followed by La Roche-Posay in 7 and The Ordinary in 6.",
+    "First place split 2–2: ChatGPT and Gemini ranked La Roche-Posay first; Claude and Perplexity ranked CeraVe first. One incomplete Gemini discovery answer was excluded; two valid answers naming no brands remain in the denominator."
+  ],
+  "transcript": [
+    {
+      "text": "One brand led mentions. The first-place choices split."
+    },
+    {
+      "text": "In Recoscope’s October 30 skincare snapshot, 11 of 12 captured answers were usable. CeraVe appeared in 8 of 11. La Roche-Posay appeared in 7."
+    },
+    {
+      "text": "But the comparative answers split 2–2. ChatGPT and Gemini ranked La Roche-Posay first. Claude and Perplexity ranked CeraVe first."
+    },
+    {
+      "text": "For brand teams, track both: mention frequency measures visibility. Comparative rank describes an individual captured answer."
+    },
+    {
+      "text": "An incomplete Gemini discovery answer was excluded. Two valid answers named no brands and still count."
+    },
+    {
+      "text": "These findings don’t establish product quality, clinical effectiveness, safety or market share."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
