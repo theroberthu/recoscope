@@ -18,6 +18,7 @@ export interface BenchmarkVideo {
 }
 export const proteinExplainer: BenchmarkVideo;
 export const standingDesksExplainer: BenchmarkVideo;
+export const skincareExplainer: BenchmarkVideo;
 export const benchmarkExplainers: BenchmarkVideo[];
 export function snapshotVideo(
   category: string,

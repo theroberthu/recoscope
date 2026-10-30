@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { proteinExplainer, standingDesksExplainer, benchmarkExplainers, snapshotVideo } from "../benchmark-video.mjs";
+import { proteinExplainer, standingDesksExplainer, skincareExplainer, benchmarkExplainers, snapshotVideo } from "../benchmark-video.mjs";
 const run = { id: "166", period_label: "2026-10-B", run_date: "2026-10-27" };
 const approved = {
   ...proteinExplainer,
@@ -66,4 +66,13 @@ test("registry selects the Standing Desks explainer only for run167 on October29
    assert.equal(snapshotVideo("standing-desks", {...deskRun,...change}), null);
  assert.equal(snapshotVideo("skincare",deskRun),null);
  assert.equal(snapshotVideo("standing-desks",run),null);
+});
+
+
+test("approved Skincare explainer belongs only to the October 30 snapshot", () => {
+  const skincareRun = { id: 168, period_label: "2026-10-C", run_date: "2026-10-30" };
+  assert.equal(snapshotVideo("skincare", skincareRun), skincareExplainer);
+  assert.equal(snapshotVideo("skincare", skincareRun, { ...skincareExplainer, approved: false }), null);
+  for (const change of [{ id: 158 }, { period_label: "2026-10-B" }, { run_date: "2026-10-16" }])
+    assert.equal(snapshotVideo("skincare", { ...skincareRun, ...change }), null);
 });
