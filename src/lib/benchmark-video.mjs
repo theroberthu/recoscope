@@ -108,7 +108,52 @@ export const skincareExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer];
+// October 31 Air Purifiers publication approved by the site owner.
+export const airPurifiersExplainer = {
+  "id": "air-purifiers-2026-10-c-every-answer",
+  "approved": true,
+  "approvedSha256": "374f0f45b842e81639c251d8c1a8956eb3d47bb6df6c007b855fbb0287b85bf3",
+  "category": "air-purifiers",
+  "runId": 169,
+  "period": "2026-10-C",
+  "collected": "2026-10-31",
+  "collectedLabel": "October 31, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "In every answer. First in one.",
+  "duration": "50-second explainer",
+  "src": "/tracker-media/air-purifiers/2026-10-c/air-purifiers-explainer.mp4",
+  "poster": "/tracker-media/air-purifiers/2026-10-c/explainer-poster.png",
+  "captions": "/tracker-media/air-purifiers/2026-10-c/explainer.en.vtt",
+  "summary": [
+    "Levoit appeared in all 12 usable answers. Coway appeared in nine; Blueair and Winix each appeared in six.",
+    "Coway ranked first in three of four comparative answers: ChatGPT, Gemini and Perplexity. Claude ranked Levoit first. Mention frequency and comparative rank describe different aspects of the captured answers."
+  ],
+  "transcript": [
+    {
+      "text": "Levoit appeared in every answer. But another brand led the first-place choices."
+    },
+    {
+      "text": "In Recoscope’s October 31 air purifier snapshot, Levoit appeared in all 12 usable answers. Coway appeared in nine. Blueair and Winix each appeared in six."
+    },
+    {
+      "text": "Mentions count once per answer, including alternatives and cautions."
+    },
+    {
+      "text": "Now look at four comparative answers. ChatGPT, Gemini and Perplexity ranked Coway first. Claude ranked Levoit first. That’s three first choices for Coway, one for Levoit."
+    },
+    {
+      "text": "Mention frequency measures visibility. Comparative rank describes preference within that captured answer."
+    },
+    {
+      "text": "These findings don’t establish product quality, market share, safety or independently tested performance."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),

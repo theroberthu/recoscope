@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { proteinExplainer, standingDesksExplainer, skincareExplainer, benchmarkExplainers, snapshotVideo } from "../benchmark-video.mjs";
+import { proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, benchmarkExplainers, snapshotVideo } from "../benchmark-video.mjs";
 const run = { id: "166", period_label: "2026-10-B", run_date: "2026-10-27" };
 const approved = {
   ...proteinExplainer,
@@ -75,4 +75,20 @@ test("approved Skincare explainer belongs only to the October 30 snapshot", () =
   assert.equal(snapshotVideo("skincare", skincareRun, { ...skincareExplainer, approved: false }), null);
   for (const change of [{ id: 158 }, { period_label: "2026-10-B" }, { run_date: "2026-10-16" }])
     assert.equal(snapshotVideo("skincare", { ...skincareRun, ...change }), null);
+});
+
+
+test("Approved Air Purifiers explainer is isolated to the October 31 snapshot", async () => {
+  const airRun = { id: 169, period_label: "2026-10-C", run_date: "2026-10-31" };
+  assert.equal(snapshotVideo("air-purifiers", airRun), airPurifiersExplainer);
+  assert.equal(snapshotVideo("air-purifiers", airRun, { ...airPurifiersExplainer, approved: false }), null);
+  const released = { ...airPurifiersExplainer, approved: true };
+  assert.equal(snapshotVideo("air-purifiers", airRun, released), released);
+  for (const change of [{ id: 159 }, { period_label: "2026-10-B" }, { run_date: "2026-10-17" }])
+    assert.equal(snapshotVideo("air-purifiers", { ...airRun, ...change }, released), null);
+  assert.equal(snapshotVideo("skincare", airRun, released), null);
+  const { readFileSync } = await import("node:fs");
+  const { createHash } = await import("node:crypto");
+  const asset = readFileSync(new URL("../../../public" + released.src, import.meta.url));
+  assert.equal(createHash("sha256").update(asset).digest("hex"), released.approvedSha256);
 });
