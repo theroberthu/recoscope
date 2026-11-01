@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, benchmarkExplainers, snapshotVideo } from "../benchmark-video.mjs";
+import { proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, benchmarkExplainers, snapshotVideo } from "../benchmark-video.mjs";
 const run = { id: "166", period_label: "2026-10-B", run_date: "2026-10-27" };
 const approved = {
   ...proteinExplainer,
@@ -87,6 +87,22 @@ test("Approved Air Purifiers explainer is isolated to the October 31 snapshot", 
   for (const change of [{ id: 159 }, { period_label: "2026-10-B" }, { run_date: "2026-10-17" }])
     assert.equal(snapshotVideo("air-purifiers", { ...airRun, ...change }, released), null);
   assert.equal(snapshotVideo("skincare", airRun, released), null);
+  const { readFileSync } = await import("node:fs");
+  const { createHash } = await import("node:crypto");
+  const asset = readFileSync(new URL("../../../public" + released.src, import.meta.url));
+  assert.equal(createHash("sha256").update(asset).digest("hex"), released.approvedSha256);
+});
+
+
+test("Approved Sunscreen explainer belongs only to the November 1 snapshot", async () => {
+  const sunscreenRun = { id: 170, period_label: "2026-11-A", run_date: "2026-11-01" };
+  assert.equal(snapshotVideo("sunscreen", sunscreenRun), sunscreenExplainer);
+  assert.equal(snapshotVideo("sunscreen", sunscreenRun, { ...sunscreenExplainer, approved: false }), null);
+  const released = { ...sunscreenExplainer, approved: true };
+  assert.equal(snapshotVideo("sunscreen", sunscreenRun, released), released);
+  for (const change of [{ id: 160 }, { period_label: "2026-10-B" }, { run_date: "2026-10-18" }])
+    assert.equal(snapshotVideo("sunscreen", { ...sunscreenRun, ...change }, released), null);
+  assert.equal(snapshotVideo("skincare", sunscreenRun, released), null);
   const { readFileSync } = await import("node:fs");
   const { createHash } = await import("node:crypto");
   const asset = readFileSync(new URL("../../../public" + released.src, import.meta.url));
