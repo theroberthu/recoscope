@@ -153,7 +153,52 @@ export const airPurifiersExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer];
+// November 1 Sunscreen publication approved by the site owner.
+export const sunscreenExplainer = {
+  "id": "sunscreen-2026-11-a-first-choice-budget",
+  "approved": true,
+  "approvedSha256": "71a503b9b415a17bbb7e88e610863fe8771845381a9eb0e326394b83243388f7",
+  "category": "sunscreen",
+  "runId": 170,
+  "period": "2026-11-A",
+  "collected": "2026-11-01",
+  "collectedLabel": "November 1, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "First choice. Missing from the budget answers.",
+  "duration": "53-second explainer",
+  "src": "/tracker-media/sunscreen/2026-11-a/sunscreen-explainer.mp4",
+  "poster": "/tracker-media/sunscreen/2026-11-a/explainer-poster.png",
+  "captions": "/tracker-media/sunscreen/2026-11-a/explainer.en.vtt",
+  "summary": [
+    "EltaMD ranked first in three of four comparative answers: ChatGPT, Claude and Gemini. Perplexity ranked La Roche-Posay first. EltaMD also led overall mentions, appearing in 7 of 12 usable answers.",
+    "EltaMD appeared in none of the four under-$25 budget answers. Those answers named 12 brands; no brand appeared in more than two. This does not establish that EltaMD has no products below $25. Prompt wording differed beyond price."
+  ],
+  "transcript": [
+    {
+      "text": "EltaMD ranked first in three of four comparative answers, but it appeared in none of the four budget answers."
+    },
+    {
+      "text": "In Recoscope’s November 1 sunscreen snapshot, ChatGPT, Claude and Gemini ranked EltaMD first. Perplexity ranked La Roche-Posay first."
+    },
+    {
+      "text": "EltaMD also led overall mentions: seven of twelve answers."
+    },
+    {
+      "text": "The under-$25 shortlists named twelve brands. None appeared in more than two of the four answers. That does not mean EltaMD has no products below $25."
+    },
+    {
+      "text": "Track discovery, budget and comparison prompts separately. These prompts differ in more than price."
+    },
+    {
+      "text": "These captured answers don’t establish product quality, health benefits, clinical effectiveness, safety, market share or independent wear testing."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
