@@ -198,7 +198,55 @@ export const sunscreenExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer];
+// November 2 Espresso Machines publication approved by the site owner.
+export const espressoMachinesExplainer = {
+  "id": "espresso-machines-2026-11-a-complete-gift",
+  "approved": true,
+  "approvedSha256": "69ea66631ad001bcac68552cf4ca6da1d806a9bb95fdbc78e7e4cbb0eba0a8a9",
+  "category": "espresso-machines",
+  "runId": 171,
+  "period": "2026-11-A",
+  "collected": "2026-11-02",
+  "collectedLabel": "November 2, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "A $500 machine isn’t necessarily a $500 gift.",
+  "duration": "56-second explainer",
+  "src": "/tracker-media/espresso-machines/2026-11-a/espresso-machines-explainer.mp4",
+  "poster": "/tracker-media/espresso-machines/2026-11-a/explainer-poster.jpg",
+  "captions": "/tracker-media/espresso-machines/2026-11-a/explainer.en.vtt",
+  "summary": [
+    "Breville appeared in all 12 usable answers and ranked first in all four comparative answers. De’Longhi and Gaggia each appeared in seven answers. Brand ranks describe the captured comparisons; individual machine choices varied.",
+    "Breville also appeared in all four under-$500 answers. Perplexity’s captured machine-and-grinder pairing totaled $499.90 before tax. This does not guarantee a complete gift below $500 or establish a verified current price."
+  ],
+  "transcript": [
+    {
+      "text": "Breville appeared in all 12 answers, and ranked first in all four comparisons."
+    },
+    {
+      "text": "But a $500 machine isn’t necessarily a $500 gift."
+    },
+    {
+      "text": "In Recoscope’s November 2 espresso-machine snapshot, De’Longhi and Gaggia each appeared in seven answers."
+    },
+    {
+      "text": "Breville also appeared in all four budget answers. Several answers raised the cost of a separate grinder."
+    },
+    {
+      "text": "Perplexity’s captured machine-and-grinder pairing totaled $499.90 before tax. That doesn’t guarantee a complete gift below $500."
+    },
+    {
+      "text": "For brand teams, track mentions, comparative rank, and the exact setup separately."
+    },
+    {
+      "text": "These captured answers don’t establish product quality or verified prices."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
