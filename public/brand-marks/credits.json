@@ -112,6 +112,26 @@
       "source_page": "https://www.brooksrunning.com/en_us",
       "method": "Official header SVG saved from visible logo element; standalone namespace",
       "retrieved_on": "2026-10-28"
+    },
+    {
+      "file": "breville.svg",
+      "source_page": "https://www.breville.com/en-us",
+      "method": "Official header wordmark SVG saved from the visible logo element; artwork unchanged.",
+      "retrieved_on": "2026-11-03"
+    },
+    {
+      "file": "eltamd.svg",
+      "source_page": "https://eltamd.com/",
+      "image_url": "https://eltamd.com/cdn/shop/files/ELTAMD-ShopLOGO-svg.svg?v=1776698943&width=360&format=webp",
+      "method": "Official stacked header logo; original SVG unchanged.",
+      "retrieved_on": "2026-11-03"
+    },
+    {
+      "file": "flexispot.png",
+      "source_page": "https://www.flexispot.com/",
+      "image_url": "https://s3.springbeetle.eu/prod-de2-s3/trantor/attachments/SE/homeLogo.png",
+      "method": "Official header logo; original PNG unchanged.",
+      "retrieved_on": "2026-11-03"
     }
   ]
 }

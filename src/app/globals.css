@@ -1750,6 +1750,12 @@ article :is(h2, h3) {
   max-height: 40px;
   object-fit: contain;
 }
+.home-brand-logo-stacked {
+  padding: 4px 12px;
+}
+.home-brand-logo-stacked img {
+  max-height: 56px;
+}
 .home-brand-logo > span {
   font-size: 24px;
   font-weight: 600;

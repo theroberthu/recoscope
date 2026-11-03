@@ -16,5 +16,8 @@
   "Philips Norelco": { "src": "/brand-marks/philips-norelco.png" },
   "Thorne": { "src": "/brand-marks/thorne.svg" },
   "Viviscal": { "src": "/brand-marks/viviscal.png" },
-  "ViscoSoft": { "src": "/brand-marks/viscosoft.png" }
+  "ViscoSoft": { "src": "/brand-marks/viscosoft.png" },
+  "Breville": { "src": "/brand-marks/breville.svg" },
+  "EltaMD": { "src": "/brand-marks/eltamd.svg", "stacked": true },
+  "FlexiSpot": { "src": "/brand-marks/flexispot.png" }
 }
