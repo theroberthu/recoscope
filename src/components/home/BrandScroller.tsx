@@ -8,13 +8,13 @@ import { TrackedLink } from "@/components/TrackedLink";
 import marks from "@/lib/home-brand-marks.json";
 
 function LeaderLogo({ brand }: { brand: string }) {
-  const mark = (marks as Record<string, { src: string; dark?: boolean }>)[
+  const mark = (marks as Record<string, { src: string; dark?: boolean; stacked?: boolean }>)[
     brand
   ];
   const [failed, setFailed] = useState(false);
   return (
     <div
-      className={`home-brand-logo ${mark?.dark && !failed ? "home-brand-logo-dark" : ""}`}
+      className={`home-brand-logo ${mark?.dark && !failed ? "home-brand-logo-dark" : ""}${mark?.stacked && !failed ? " home-brand-logo-stacked" : ""}`}
       aria-hidden="true"
     >
       {mark && !failed ? (
