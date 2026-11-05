@@ -312,7 +312,55 @@ export const dogFoodExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer];
+// November 5 Office Chairs benchmark and video publication approved by the site owner.
+export const officeChairsExplainer = {
+  "id": "office-chairs-2026-11-a-mentions-first-choice",
+  "approved": true,
+  "approvedSha256": "2806525009b4b7f1eb5e93eec8e6fd37871fa1f041033f261fecbc1e6bdd159f",
+  "category": "office-chairs",
+  "runId": 173,
+  "period": "2026-11-A",
+  "collected": "2026-11-05",
+  "collectedLabel": "November 5, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Most mentioned. Never ranked first.",
+  "duration": "50-second explainer",
+  "src": "/tracker-media/office-chairs/2026-11-a/office-chairs-explainer.mp4",
+  "poster": "/tracker-media/office-chairs/2026-11-a/explainer-poster.jpg",
+  "captions": "/tracker-media/office-chairs/2026-11-a/explainer.en.vtt",
+  "summary": [
+    "Branch appeared in 11 of 12 usable answers; Steelcase appeared in nine. All four comparative answers placed Steelcase first and Herman Miller second. None placed Branch first.",
+    "Branch appeared in all four under-$400 budget answers. Steelcase appeared in one, as a refurbished alternative. These are captured mentions, not verified prices. Gemini ranked individual models; its original positions are preserved."
+  ],
+  "transcript": [
+    {
+      "text": "The most-mentioned office-chair brand wasn't the first comparative choice."
+    },
+    {
+      "text": "In Recoscope's November fifth snapshot, Branch appeared in eleven of twelve usable answers. Steelcase appeared in nine."
+    },
+    {
+      "text": "But all four comparative answers placed Steelcase first and Herman Miller second. None placed Branch first."
+    },
+    {
+      "text": "Ask for an office chair under four hundred dollars, and Branch appeared in all four budget answers. Steelcase appeared in just one, as a refurbished alternative."
+    },
+    {
+      "text": "These are captured mentions, not verified prices."
+    },
+    {
+      "text": "For brand owners, showing up often, showing up for a budget question, and being ranked first are different measures. Track them separately."
+    },
+    {
+      "text": "Captured answers do not establish product quality."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
