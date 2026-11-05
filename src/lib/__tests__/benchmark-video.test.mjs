@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, benchmarkExplainers, snapshotVideo } from "../benchmark-video.mjs";
+import { proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, benchmarkExplainers, snapshotVideo } from "../benchmark-video.mjs";
 const run = { id: "166", period_label: "2026-10-B", run_date: "2026-10-27" };
 const approved = {
   ...proteinExplainer,
@@ -145,4 +145,29 @@ test("Dog Food publication retains the approved final MP4 and exact closing capt
   assert.equal(captions.match(/-->/g)?.length, 17);
   assert.ok(captions.includes("Explore benchmark at getrecoscope.com."));
   assert.equal(dogFoodExplainer.transcript.at(-1).text, "Explore benchmark at getrecoscope.com.");
+});
+
+
+test("Office Chairs approved explainer belongs only to November 5 run173", () => {
+  const officeRun = { id: 173, period_label: "2026-11-A", run_date: "2026-11-05" };
+  assert.equal(snapshotVideo("office-chairs", officeRun), officeChairsExplainer);
+  const approved = { ...officeChairsExplainer, approved: true, approvedSha256: "2806525009b4b7f1eb5e93eec8e6fd37871fa1f041033f261fecbc1e6bdd159f" };
+  assert.equal(snapshotVideo("office-chairs", officeRun, approved), approved);
+  for (const change of [{ id: 162 }, { period_label: "2026-10-B" }, { run_date: "2026-10-21" }])
+    assert.equal(snapshotVideo("office-chairs", { ...officeRun, ...change }, approved), null);
+  assert.equal(snapshotVideo("dog-food", officeRun, approved), null);
+  assert.equal(snapshotVideo("office-chairs", officeRun, { ...approved, approved: false }), null);
+  assert.equal(snapshotVideo("office-chairs", officeRun, { ...approved, approvedSha256: null }), null);
+});
+
+test("Office Chairs preview preserves supplied video, accessible captions and exact closing", async () => {
+  const { readFileSync } = await import("node:fs");
+  const { createHash } = await import("node:crypto");
+  const asset = readFileSync(new URL("../../../public" + officeChairsExplainer.src, import.meta.url));
+  assert.equal(createHash("sha256").update(asset).digest("hex"), "2806525009b4b7f1eb5e93eec8e6fd37871fa1f041033f261fecbc1e6bdd159f");
+  const captions = readFileSync(new URL("../../../public" + officeChairsExplainer.captions, import.meta.url), "utf8");
+  assert.ok(captions.startsWith("WEBVTT"));
+  assert.equal(captions.match(/-->/g)?.length, 20);
+  assert.ok(captions.includes("Explore benchmark at getrecoscope.com."));
+  assert.equal(officeChairsExplainer.transcript.at(-1).text, "Explore benchmark at getrecoscope.com.");
 });
