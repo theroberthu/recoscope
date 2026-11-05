@@ -28,3 +28,21 @@ check is necessary because valid local files alone do not prove hosted image
 delivery or lazy loading. Save both command output and browser results with the
 run's publication evidence. Reuse existing analytics; staff QA is not organic
 engagement.
+
+## Homepage freshness after publication
+
+Logo loading alone does not prove that a new snapshot reached the homepage.
+The homepage uses a five-minute revalidation interval and can temporarily serve
+the previous snapshot after a database publication. Do not report a release as
+complete until a normal request to the canonical homepage (without a cache-busting
+query string) and a browser check both show the expected new snapshot.
+
+Check the featured latest benchmark and its exact dated report link, first
+category-leader card (brand, date and mention fraction), newest category card
+(finding, date and usable coverage), and benchmark directory. Preserve the
+distinction between mention fraction and usable-answer coverage. If the cached
+page is stale, allow expiry and background regeneration, then request it again.
+If it stays stale after repeated regeneration windows, investigate the failed
+refresh instead of declaring success. Save the canonical HTML, expected values,
+and desktop/mobile proof alongside the release evidence. Do not modify benchmark
+data to satisfy this check. Staff QA visits are not organic acquisition.
