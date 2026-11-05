@@ -246,7 +246,73 @@ export const espressoMachinesExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer];
+// November 4 Dog Food publication and Benchmark Brief badge approved by the site owner.
+export const dogFoodExplainer = {
+  "id": "dog-food-2026-11-a-budget-shortlist",
+  "approved": true,
+  "approvedSha256": "737578bddfb7ebea52b1560dfeb4b4c7ac9db96c92213cb9455edd77079c763b",
+  "category": "dog-food",
+  "runId": 172,
+  "period": "2026-11-A",
+  "collected": "2026-11-04",
+  "collectedLabel": "November 4, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Same top three. Different budget shortlist.",
+  "duration": "53-second explainer",
+  "src": "/tracker-media/dog-food/2026-11-a/dog-food-explainer.mp4",
+  "poster": "/tracker-media/dog-food/2026-11-a/explainer-poster.jpg",
+  "captions": "/tracker-media/dog-food/2026-11-a/explainer.en.vtt",
+  "summary": [
+    "All four comparative answers ranked Purina Pro Plan first, Hill’s Science Diet second and Royal Canin third. Pro Plan appeared in 10 of 12 usable answers overall. These are brand-level findings; individual recipes may differ.",
+    "In the four under-$70-per-bag answers, IAMS and Purina ONE each appeared in all four, while Pro Plan appeared in two. These are captured mentions, not verified prices, diet quality or safety."
+  ],
+  "transcript": [
+    {
+      "text": "Four AI assistants agreed on the top three."
+    },
+    {
+      "text": "Then the budget prompt changed the shortlist."
+    },
+    {
+      "text": "In Recoscope’s November fourth dog food snapshot,"
+    },
+    {
+      "text": "all four comparative answers ranked Purina Pro Plan first,"
+    },
+    {
+      "text": "Hill’s Science Diet second, and Royal Canin third."
+    },
+    {
+      "text": "But ask for everyday dog food under seventy dollars per bag,"
+    },
+    {
+      "text": "and visibility changes."
+    },
+    {
+      "text": "IAMS and Purina ONE appeared in all four budget answers."
+    },
+    {
+      "text": "Pro Plan appeared in two."
+    },
+    {
+      "text": "Overall, Pro Plan appeared in ten of twelve usable answers."
+    },
+    {
+      "text": "A brand can lead the rankings without appearing in every budget answer."
+    },
+    {
+      "text": "For brand owners, track overall mentions, budget visibility, and comparative rank separately."
+    },
+    {
+      "text": "These are captured mentions, not verified prices or evidence of diet quality or safety."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),

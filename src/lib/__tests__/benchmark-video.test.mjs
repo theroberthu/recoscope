@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, benchmarkExplainers, snapshotVideo } from "../benchmark-video.mjs";
+import { proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, benchmarkExplainers, snapshotVideo } from "../benchmark-video.mjs";
 const run = { id: "166", period_label: "2026-10-B", run_date: "2026-10-27" };
 const approved = {
   ...proteinExplainer,
@@ -122,4 +122,27 @@ test("Espresso review stays private and any approved export belongs only to Nove
   const { createHash } = await import("node:crypto");
   const asset = readFileSync(new URL("../../../public" + released.src, import.meta.url));
   assert.equal(createHash("sha256").update(asset).digest("hex"), released.approvedSha256);
+});
+
+test("Dog Food review is gated and any approved export belongs only to November 4 run 172", () => {
+  const dogRun = { id: 172, period_label: "2026-11-A", run_date: "2026-11-04" };
+  assert.equal(snapshotVideo("dog-food", dogRun), dogFoodExplainer);
+  const released = { ...dogFoodExplainer, approved: true, approvedSha256: "a".repeat(64) };
+  assert.equal(snapshotVideo("dog-food", dogRun, released), released);
+  for (const change of [{ id: 161 }, { period_label: "2026-10-B" }, { run_date: "2026-10-19" }])
+    assert.equal(snapshotVideo("dog-food", { ...dogRun, ...change }, released), null);
+  assert.equal(snapshotVideo("sunscreen", dogRun, released), null);
+  assert.equal(snapshotVideo("dog-food", dogRun, { ...released, approved: false }), null);
+  assert.equal(snapshotVideo("dog-food", dogRun, { ...released, approvedSha256: null }), null);
+});
+
+test("Dog Food publication retains the approved final MP4 and exact closing captions", async () => {
+  const { readFileSync } = await import("node:fs");
+  const { createHash } = await import("node:crypto");
+  const asset = readFileSync(new URL("../../../public" + dogFoodExplainer.src, import.meta.url));
+  assert.equal(createHash("sha256").update(asset).digest("hex"), "737578bddfb7ebea52b1560dfeb4b4c7ac9db96c92213cb9455edd77079c763b");
+  const captions = readFileSync(new URL("../../../public" + dogFoodExplainer.captions, import.meta.url), "utf8");
+  assert.equal(captions.match(/-->/g)?.length, 17);
+  assert.ok(captions.includes("Explore benchmark at getrecoscope.com."));
+  assert.equal(dogFoodExplainer.transcript.at(-1).text, "Explore benchmark at getrecoscope.com.");
 });
