@@ -63,6 +63,8 @@ import { TrackedLink } from "@/components/TrackedLink";
 import { PromptsUsed } from "@/components/tracker/PromptsUsed";
 import { BenchmarkVideo } from "@/components/tracker/BenchmarkVideo";
 import { snapshotVideo } from "@/lib/benchmark-video.mjs";
+import { officeChairsHistory } from "@/lib/office-chairs-history.mjs";
+import { SnapshotComparison } from "@/components/tracker/SnapshotComparison";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -556,6 +558,22 @@ export default async function TrackerReportPage({
 
   const takeaway = clean.keyTakeaway || snapshotFinding(topBrands, coverage);
   const explainer = snapshotVideo(slug, run);
+  // Keep this reviewed comparison on its November 5 snapshot; older reports
+  // must not acquire findings from a capture that had not happened yet.
+  const previousOfficeChairs = slug === "office-chairs" && Number(run.id) === 173
+    ? allRuns.find(r => Number(r.id) === 162)
+    : undefined;
+  let history = null;
+  if (previousOfficeChairs) {
+    const [previousMentions, previousResponses] = await Promise.all([
+      getBrandMentions(previousOfficeChairs.id),
+      getAgentResponses(previousOfficeChairs.id),
+    ]);
+    history = officeChairsHistory(slug,
+      { run, mentions, responses },
+      { run: previousOfficeChairs, mentions: previousMentions, responses: previousResponses },
+    );
+  }
 
   // --- Dynamic FAQ ---
   const catName = categoryRow.name;
@@ -715,6 +733,7 @@ export default async function TrackerReportPage({
 
       <nav className="report-jump-links" aria-label="Report sections">
         <a href="#overview">Overview</a>
+        {history && <a href="#snapshot-comparison">Compare snapshots</a>}
         {explainer && <a href="#benchmark-video">Video explainer</a>}
         <a href="#brand-visibility">Brand visibility</a>
         <a href="#model-comparison">Model comparison</a>
@@ -750,6 +769,8 @@ export default async function TrackerReportPage({
           </section>
         )}
       </div>
+
+      {history && <SnapshotComparison history={history} />}
 
       {explainer && <BenchmarkVideo video={explainer} />}
 
