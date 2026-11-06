@@ -24,6 +24,7 @@ export const sunscreenExplainer: BenchmarkVideo;
 export const espressoMachinesExplainer: BenchmarkVideo;
 export const dogFoodExplainer: BenchmarkVideo;
 export const officeChairsExplainer: BenchmarkVideo;
+export const runningShoesExplainer: BenchmarkVideo;
 export const benchmarkExplainers: BenchmarkVideo[];
 export function snapshotVideo(
   category: string,

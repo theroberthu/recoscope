@@ -360,7 +360,55 @@ export const officeChairsExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer];
+// November 6 Running Shoes benchmark and video publication approved by the site owner.
+export const runningShoesExplainer = {
+  "id": "running-shoes-2026-11-a-every-answer-half-firsts",
+  "approved": true,
+  "approvedSha256": "7eb59df21147bc1b3563d90d5dfa8ded6ee90c7d22500cab8786ce95019bc4e7",
+  "category": "running-shoes",
+  "runId": 174,
+  "period": "2026-11-A",
+  "collected": "2026-11-06",
+  "collectedLabel": "November 6, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Every answer. Half the first places.",
+  "duration": "49-second explainer",
+  "src": "/tracker-media/running-shoes/2026-11-a/running-shoes-explainer.mp4",
+  "poster": "/tracker-media/running-shoes/2026-11-a/explainer-poster.jpg",
+  "captions": "/tracker-media/running-shoes/2026-11-a/explainer.en.vtt",
+  "summary": [
+    "Brooks appeared in all 12 usable answers. ASICS and Saucony each appeared in 10. Each brand counts once per usable answer across the three prompt types.",
+    "Comparative first place split 2–2: ChatGPT and Claude ranked Brooks first; Gemini and Perplexity ranked ASICS first. The denominator here is four explicit Ranking answers, rather than all 12 answers."
+  ],
+  "transcript": [
+    {
+      "text": "Brooks appeared in every answer. But it wasn't everyone's first choice."
+    },
+    {
+      "text": "In Recoscope's November sixth running-shoes snapshot, Brooks appeared in all twelve usable answers. ASICS and Saucony each appeared in ten."
+    },
+    {
+      "text": "Then we isolated the comparative rankings."
+    },
+    {
+      "text": "ChatGPT and Claude put Brooks first. Gemini and Perplexity put ASICS first."
+    },
+    {
+      "text": "That's twelve out of twelve mentions for Brooks, but two out of four comparative first places."
+    },
+    {
+      "text": "For brand owners, those are different measures. Mention frequency shows how often a brand appears. Comparative rank shows where it lands in an explicit ranking."
+    },
+    {
+      "text": "Track both. These captured answers do not establish product quality."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
