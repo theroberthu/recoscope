@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, benchmarkExplainers, snapshotVideo } from "../benchmark-video.mjs";
+import { proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, benchmarkExplainers, snapshotVideo } from "../benchmark-video.mjs";
 const run = { id: "166", period_label: "2026-10-B", run_date: "2026-10-27" };
 const approved = {
   ...proteinExplainer,
@@ -170,4 +170,32 @@ test("Office Chairs preview preserves supplied video, accessible captions and ex
   assert.equal(captions.match(/-->/g)?.length, 20);
   assert.ok(captions.includes("Explore benchmark at getrecoscope.com."));
   assert.equal(officeChairsExplainer.transcript.at(-1).text, "Explore benchmark at getrecoscope.com.");
+});
+
+
+test("Running Shoes review is gated and approved video is isolated to November 6 run174", () => {
+  const runningRun = { id: 174, period_label: "2026-11-A", run_date: "2026-11-06" };
+  assert.equal(snapshotVideo("running-shoes", runningRun, { ...runningShoesExplainer, approved: false }), null);
+  const approved = { ...runningShoesExplainer, approved: true };
+  assert.equal(snapshotVideo("running-shoes", runningRun, approved), approved);
+  for (const change of [{ id: 163 }, { period_label: "2026-10-B" }, { run_date: "2026-10-24" }])
+    assert.equal(snapshotVideo("running-shoes", { ...runningRun, ...change }, approved), null);
+  assert.equal(snapshotVideo("office-chairs", runningRun, approved), null);
+  assert.equal(snapshotVideo("running-shoes", runningRun, { ...approved, approvedSha256: null }), null);
+});
+
+test("Running Shoes supplied export and captions preserve the verified split and closing", async () => {
+  const { readFileSync } = await import("node:fs");
+  const { createHash } = await import("node:crypto");
+  const asset = readFileSync(new URL("../../../public" + runningShoesExplainer.src, import.meta.url));
+  assert.equal(createHash("sha256").update(asset).digest("hex"), "7eb59df21147bc1b3563d90d5dfa8ded6ee90c7d22500cab8786ce95019bc4e7");
+  const captions = readFileSync(new URL("../../../public" + runningShoesExplainer.captions, import.meta.url), "utf8");
+  assert.ok(captions.startsWith("WEBVTT"));
+  assert.equal(captions.match(/-->/g)?.length, 16);
+  assert.ok(captions.includes("ChatGPT and Claude\nput Brooks first."));
+  assert.ok(captions.includes("Gemini and Perplexity\nput ASICS first."));
+  assert.ok(captions.includes("These captured answers do not\nestablish product quality."));
+  assert.equal(runningShoesExplainer.transcript.at(-1).text, "Explore benchmark at getrecoscope.com.");
+  const poster = readFileSync(new URL("../../../public" + runningShoesExplainer.poster, import.meta.url));
+  assert.equal(poster.subarray(0, 3).toString("hex"), "ffd8ff");
 });
