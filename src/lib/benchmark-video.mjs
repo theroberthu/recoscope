@@ -408,7 +408,55 @@ export const runningShoesExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer];
+// Owner-approved November 7 Robot Vacuums Benchmark Brief.
+export const robotVacuumsExplainer = {
+  "id": "robot-vacuums-2026-11-a-same-brands-different-models",
+  "approved": true,
+  "approvedSha256": "33b325bc2d9c3d67b8c4766813e7e891f43965c6906a77e0e8cc5a6c845481ae",
+  "category": "robot-vacuums",
+  "runId": 175,
+  "period": "2026-11-A",
+  "collected": "2026-11-07",
+  "collectedLabel": "November 7, 2026",
+  "context": "12 usable answers \u00b7 Four AI assistants \u00b7 Three prompt types",
+  "title": "Same top brands. Different vacuum recommendations.",
+  "duration": "59-second explainer",
+  "src": "/tracker-media/robot-vacuums/2026-11-a/robot-vacuums-explainer.mp4",
+  "poster": "/tracker-media/robot-vacuums/2026-11-a/explainer-poster.png",
+  "captions": "/tracker-media/robot-vacuums/2026-11-a/explainer.en.vtt",
+  "summary": [
+    "Roborock appeared in all 12 usable answers. Dreame appeared in eight. In the four comparative answers, every assistant ranked Roborock first and Dreame second. Mention frequency and comparative rank use different denominators.",
+    "The Discovery answers named different models: ChatGPT highlighted Dreame L60 Ultra PE; Claude Roborock Saros 20; Gemini Roborock Qrevo Curv / Edge; and Perplexity MOVA P50 Pro Ultra. These are captured Discovery recommendations, separate from comparative brand ranks."
+  ],
+  "transcript": [
+    {
+      "text": "Roborock appeared in every answer, and ranked first in every comparative response."
+    },
+    {
+      "text": "In Recoscope's November seventh robot-vacuum snapshot, across ChatGPT, Claude, Gemini and Perplexity, Roborock appeared in all twelve usable answers. Dreame appeared in eight."
+    },
+    {
+      "text": "All four assistants ranked Roborock first and Dreame second in the four Ranking answers. Third place split across iRobot, Shark and MOVA."
+    },
+    {
+      "text": "Yet Discovery recommendations differed. ChatGPT named the Dreame L60 Ultra PE. Claude named Roborock Saros 20. Gemini named Roborock Qrevo Curv or Edge. Perplexity named the MOVA P50 Pro Ultra."
+    },
+    {
+      "text": "That's the distinction: agreement on a brand ranking can still produce different product recommendations."
+    },
+    {
+      "text": "For brands, track how often you appear, where you rank and which exact models get named."
+    },
+    {
+      "text": "These captured answers do not establish product quality."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
