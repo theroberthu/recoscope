@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, benchmarkExplainers, snapshotVideo } from "../benchmark-video.mjs";
+import { proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, benchmarkExplainers, snapshotVideo } from "../benchmark-video.mjs";
 const run = { id: "166", period_label: "2026-10-B", run_date: "2026-10-27" };
 const approved = {
   ...proteinExplainer,
@@ -198,4 +198,32 @@ test("Running Shoes supplied export and captions preserve the verified split and
   assert.equal(runningShoesExplainer.transcript.at(-1).text, "Explore benchmark at getrecoscope.com.");
   const poster = readFileSync(new URL("../../../public" + runningShoesExplainer.poster, import.meta.url));
   assert.equal(poster.subarray(0, 3).toString("hex"), "ffd8ff");
+});
+
+
+test("Robot Vacuums approved media belongs only to November 7 run175", () => {
+ const run = { id: 175, period_label: "2026-11-A", run_date: "2026-11-07" };
+ assert.equal(snapshotVideo("robot-vacuums", run), robotVacuumsExplainer);
+ assert.equal(snapshotVideo("robot-vacuums", run, {...robotVacuumsExplainer,approved:false}), null);
+ const approved = { ...robotVacuumsExplainer, approved: true };
+ assert.equal(snapshotVideo("robot-vacuums", run, approved), approved);
+ for (const change of [{id:164},{period_label:"2026-10-B"},{run_date:"2026-10-25"}])
+  assert.equal(snapshotVideo("robot-vacuums", {...run,...change},approved),null);
+ assert.equal(snapshotVideo("running-shoes",run,approved),null);
+ assert.equal(snapshotVideo("robot-vacuums",run,{...approved,approvedSha256:null}),null);
+});
+
+test("Robot Vacuums supplied media preserves separate denominators and final closing", async () => {
+ const {readFileSync}=await import("node:fs");
+ const {createHash}=await import("node:crypto");
+ const bytes=readFileSync(new URL("../../../public"+robotVacuumsExplainer.src,import.meta.url));
+ assert.equal(createHash("sha256").update(bytes).digest("hex"),"33b325bc2d9c3d67b8c4766813e7e891f43965c6906a77e0e8cc5a6c845481ae");
+ const captions=readFileSync(new URL("../../../public"+robotVacuumsExplainer.captions,import.meta.url),"utf8");
+ assert.equal(captions.match(/-->/g)?.length,20);
+ assert.ok(captions.includes("all twelve usable"));
+ assert.ok(captions.includes("four Ranking answers."));
+ assert.ok(captions.includes("do not establish"));
+ assert.equal(robotVacuumsExplainer.transcript.at(-1).text,"Explore benchmark at getrecoscope.com.");
+ const poster=readFileSync(new URL("../../../public"+robotVacuumsExplainer.poster,import.meta.url));
+ assert.equal(poster.subarray(0,8).toString("hex"),"89504e470d0a1a0a");
 });
