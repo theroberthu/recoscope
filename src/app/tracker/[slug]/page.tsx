@@ -65,6 +65,8 @@ import { BenchmarkVideo } from "@/components/tracker/BenchmarkVideo";
 import { snapshotVideo } from "@/lib/benchmark-video.mjs";
 import { officeChairsHistory } from "@/lib/office-chairs-history.mjs";
 import { SnapshotComparison } from "@/components/tracker/SnapshotComparison";
+import { ReportOpening } from "@/components/tracker/ReportOpening";
+import { reportBriefEvidence } from "@/lib/report-brief.mjs";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -673,36 +675,19 @@ export default async function TrackerReportPage({
       />
       <ReportViewTracker slug={slug} />
 
-      <header className="report-hero">
-        <SectionHeader
-          title={categoryRow.name}
-          subtitle={`${TYPE_LABELS[trackerType] ?? trackerType} — ${periodDisplay}`}
-        />
-        <p className="report-models">
-          Research by <a href="/about">Robert Hu</a> · Published by RecoScope ·{" "}
-          <time dateTime={isoDate(run.run_date)}>
-            Collected {formatSnapshotDate(isoDate(run.run_date) ?? "")}
-          </time>
-        </p>
-        <div className="report-coverage">
-          <dl className="report-stats">
-            <div>
-              <dt>Usable answers</dt>
-              <dd>
-                {coverage.eligible}
-                <span>/{coverage.captured}</span>
-              </dd>
-            </div>
-            <div>
-              <dt>Models</dt>
-              <dd>{coverage.models.length}</dd>
-            </div>
-            <div>
-              <dt>Prompt types</dt>
-              <dd>{prompts.length}</dd>
-            </div>
-          </dl>
-          <p className="report-models">Included: {aiModelLabel}</p>
+      <ReportOpening
+        category={categoryRow.name}
+        date={isoDate(run.run_date) ?? ""}
+        dateLabel={formatSnapshotDate(isoDate(run.run_date) ?? "")}
+        cadence={TYPE_LABELS[trackerType] ?? trackerType}
+        coverage={coverage}
+        promptCount={prompts.length}
+        models={aiModelLabel}
+        headline={frequencyFinding}
+        evidence={reportBriefEvidence(topBrands, coverage, promptBreakdownData)}
+        video={explainer}
+        history={periodNavItems.length > 1 ? <WeekNav weeks={periodNavItems} currentWeek={periodLabel} /> : null}
+        warnings={<>
           {coverage.unavailableModels.length > 0 && (
             <p className="report-warning">
               Unavailable answers from {coverage.unavailableModels.join(", ")}{" "}
@@ -723,13 +708,8 @@ export default async function TrackerReportPage({
               . Original answers remain retained.
             </p>
           )}
-        </div>
-      </header>
-
-      {/* Period nav */}
-      {periodNavItems.length > 1 && (
-        <WeekNav weeks={periodNavItems} currentWeek={periodLabel} />
-      )}
+        </>}
+      />
 
       <nav className="report-jump-links" aria-label="Report sections">
         <a href="#overview">Overview</a>
