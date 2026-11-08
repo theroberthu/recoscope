@@ -132,6 +132,13 @@
       "image_url": "https://s3.springbeetle.eu/prod-de2-s3/trantor/attachments/SE/homeLogo.png",
       "method": "Official header logo; original PNG unchanged.",
       "retrieved_on": "2026-11-03"
+    },
+    {
+      "file": "sony.png",
+      "source_page": "https://electronics.sony.com/",
+      "image_url": "https://d1ncau8tqf99kp.cloudfront.net/media/sony-logo-200.png",
+      "method": "Official Sony Electronics header PNG; original white wordmark unchanged, displayed on dark background.",
+      "retrieved_on": "2026-11-08"
     }
   ]
 }
