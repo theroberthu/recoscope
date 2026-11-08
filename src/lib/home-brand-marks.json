@@ -2,6 +2,7 @@
   "Optimum Nutrition": {
     "src": "/tracker-media/protein-powder/optimum-nutrition-logo.webp"
   },
+  "Sony": { "src": "/brand-marks/sony.png", "dark": true },
   "Apple": { "src": "/brand-marks/apple.svg" },
   "Roborock": { "src": "/brand-marks/roborock.svg" },
   "Brooks": { "src": "/brand-marks/brooks.svg" },
