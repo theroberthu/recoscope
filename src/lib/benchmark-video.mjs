@@ -456,7 +456,55 @@ export const robotVacuumsExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer];
+// Owner-approved November 8 Wireless Earbuds benchmark brief.
+export const wirelessEarbudsExplainer = {
+  "id": "wireless-earbuds-2026-11-a-top-three-never-first",
+  "approved": true,
+  "approvedSha256": "07bf429696163a4d284e6234ff27e4a833def12f4ed8f3f1bdc40a348d1f2e4d",
+  "category": "wireless-earbuds",
+  "runId": 176,
+  "period": "2026-11-A",
+  "collected": "2026-11-08",
+  "collectedLabel": "November 8, 2026",
+  "context": "11 usable answers from 12 prompts · Four AI assistants · Three prompt types",
+  "title": "Apple: top three every time. Never first.",
+  "duration": "47-second explainer",
+  "src": "/tracker-media/wireless-earbuds/2026-11-a/wireless-earbuds-explainer.mp4",
+  "poster": "/tracker-media/wireless-earbuds/2026-11-a/explainer-poster.jpg",
+  "captions": "/tracker-media/wireless-earbuds/2026-11-a/explainer.en.vtt",
+  "summary": [
+    "Apple appeared in 7 of 11 usable answers and placed in the top three in all four comparative answers, but none ranked it first. Gemini placed Apple and Samsung together at second.",
+    "Sony led overall mentions at 8/11 and ranked first in two of four comparisons. Claude ranked Jabra first; Gemini ranked Bose first. Claude’s clarification-only Discovery response is excluded from the usable-answer count."
+  ],
+  "transcript": [
+    {
+      "text": "Apple made the top three in every comparison. Not one ranked it first."
+    },
+    {
+      "text": "In Recoscope's November eighth wireless-earbuds snapshot, eleven usable answers came from twelve prompts. Apple appeared in seven of eleven answers."
+    },
+    {
+      "text": "Across the four comparative rankings, it made the top three four times, and ranked first zero times. Gemini placed Apple and Samsung together at second."
+    },
+    {
+      "text": "So who came first? Sony twice. Jabra once. Bose once."
+    },
+    {
+      "text": "Sony also led overall mentions, appearing in eight of eleven usable answers."
+    },
+    {
+      "text": "For brand owners, being consistently shortlisted isn't the same as being the first choice."
+    },
+    {
+      "text": "Captured answers, not product-quality ratings."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
