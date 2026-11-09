@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getPublicSitemapRuns, getAllPublishedPrompts } from "@/lib/queries";
+import { publicWatchVideos, watchPath, videoSchema, WATCH_PAGES_UPDATED_AT } from "@/lib/video-watch.mjs";
 import { getAllPosts } from "@/lib/blog";
 import { promptToSlug } from "@/lib/prompt-seo";
 import {
@@ -72,12 +73,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: latestDate(post.modified_date, post.publish_date),
   }));
 
+  const videoPages: MetadataRoute.Sitemap = publicWatchVideos(runs).map((video) => ({
+    url: canonicalUrl(watchPath(video)),
+    lastModified: WATCH_PAGES_UPDATED_AT,
+    videos: [{
+      title: `${video.category}: ${video.title}`,
+      description: video.summary.join(" "),
+      thumbnail_loc: canonicalUrl(video.poster),
+      content_loc: canonicalUrl(video.src),
+      publication_date: String(videoSchema(video).uploadDate),
+    }],
+  }));
+  if (videoPages.length) staticPages.push({ url: canonicalUrl("/videos"), lastModified: WATCH_PAGES_UPDATED_AT });
+
   const unique = new Map<string, MetadataRoute.Sitemap[number]>();
   for (const entry of [
     ...staticPages,
     ...snapshots,
     ...promptPages,
     ...blogPages,
+    ...videoPages,
   ]) {
     const previous = unique.get(entry.url);
     unique.set(entry.url, {

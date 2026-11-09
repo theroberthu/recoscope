@@ -122,6 +122,7 @@ export default function RootLayout({
                       About
                     </Link>
                   </li>
+                  <li><Link href="/videos" className="transition-colors hover:text-white/60">Videos</Link></li>
                   <li>
                     <Link
                       href="/subscribe"
