@@ -504,7 +504,55 @@ export const wirelessEarbudsExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer];
+// Owner-approved November 9 Protein Powder benchmark brief.
+export const proteinNovemberExplainer = {
+  "id": "protein-powder-2026-11-a-read-the-context",
+  "approved": true,
+  "approvedSha256": "c3cad3fc1030a5e44c16f78d96031069e9f314efc98cf80b7af39c37c79e49df",
+  "category": "protein-powder",
+  "runId": 177,
+  "period": "2026-11-A",
+  "collected": "2026-11-09",
+  "collectedLabel": "November 9, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Most mentioned. But read the context.",
+  "duration": "55-second explainer",
+  "src": "/tracker-media/protein-powder/2026-11-a/protein-powder-explainer.mp4",
+  "poster": "/tracker-media/protein-powder/2026-11-a/explainer-poster.jpg",
+  "captions": "/tracker-media/protein-powder/2026-11-a/explainer.en.vtt",
+  "summary": [
+    "Optimum Nutrition appeared in 8 of 12 usable answers. Transparent Labs and Dymatize each appeared in 7/12. Transparent Labs ranked first in three of four comparative answers and top-three in all four; Optimum Nutrition ranked first once.",
+    "Optimum Nutrition appeared in three under-$50 answers, but Perplexity mentioned it to reject the listings it found as above budget. That mention measures visibility; it is not a positive budget recommendation."
+  ],
+  "transcript": [
+    {
+      "text": "AI mentioned this brand most. One budget answer ruled it out."
+    },
+    {
+      "text": "In Recoscope’s November ninth protein powder snapshot, Optimum Nutrition appeared in eight of twelve usable answers."
+    },
+    {
+      "text": "Transparent Labs appeared in seven, but ranked first in three of four comparisons. Optimum Nutrition ranked first once."
+    },
+    {
+      "text": "Then we asked for options under fifty dollars. Three assistants mentioned Optimum Nutrition. Perplexity mentioned it specifically to say the listings it found were over budget."
+    },
+    {
+      "text": "That still counts as a mention. It does not count as a positive budget recommendation."
+    },
+    {
+      "text": "For brands, measure how often you appear, where you rank, and what the answer actually says."
+    },
+    {
+      "text": "These findings describe captured answers, not product quality."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),

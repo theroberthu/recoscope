@@ -17,6 +17,7 @@ export interface BenchmarkVideo {
   transcript: { text: string; visual?: boolean }[];
 }
 export const proteinExplainer: BenchmarkVideo;
+export const proteinNovemberExplainer: BenchmarkVideo;
 export const standingDesksExplainer: BenchmarkVideo;
 export const skincareExplainer: BenchmarkVideo;
 export const airPurifiersExplainer: BenchmarkVideo;

@@ -5,6 +5,8 @@ export const WATCH_PAGES_UPDATED_AT = "2026-11-09";
 
 // First successful public deployments; collection dates are separate evidence.
 const releases = {
+  // First public upload of the approved MP4; the collection date is separate.
+  "protein-powder-2026-11-a-read-the-context": ["2026-11-09T15:31:08-06:00", 54.5],
   "protein-powder-2026-10-b-most-mentioned": ["2026-10-28T17:20:00-05:00", 55],
   "standing-desks-2026-10-b-visibility-and-rank": ["2026-10-29T08:01:00-05:00", 56],
   "skincare-2026-10-c-split-decision": ["2026-10-30T08:33:00-05:00", 49.5],
