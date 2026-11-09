@@ -130,10 +130,7 @@ export function BrandScroller({
               <h3>{item.brand}</h3>
               <p className="home-brand-category">{item.category}</p>
               <p className="home-brand-count">
-                <strong>
-                  {item.mentionCount}/{item.eligibleAnswers}
-                </strong>{" "}
-                usable answers
+                <span>Mentioned in</span>{" "}<strong>{item.mentionCount} of {item.eligibleAnswers}</strong>{" "}<span>answers</span>
               </p>
               <p className="home-brand-date">
                 <time dateTime={item.runDate}>
@@ -155,10 +152,7 @@ export function BrandScroller({
         Leaders in each category’s latest public snapshot, including ties.
         Mention frequency measures visibility, not product quality.
       </p>
-      <p className="home-brand-footnote">
-        Scroll or swipe to explore all {leaders.length} brands. Each opens its
-        dated report with collection notes and coverage.
-      </p>
+
     </section>
   );
 }

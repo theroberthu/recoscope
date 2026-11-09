@@ -104,7 +104,7 @@ export function CategoryFinder({
                 </time>
               </p>
               <p className="mt-2 text-sm text-[var(--secondary)]">
-                {c.coverage.eligible}/{c.coverage.captured} usable answers ·{" "}
+                {compact ? `${c.coverage.eligible} of ${c.coverage.captured} responses usable` : `${c.coverage.eligible}/${c.coverage.captured} usable answers`} ·{" "}
                 {c.coverage.models.length} models
               </p>
               {c.coverage.eligible < c.coverage.captured && (
