@@ -2145,3 +2145,93 @@ article :is(h2, h3) {
   .home-finding-story h3 { font-size: 19px; }
   .home-brand-heading h2 { max-width: 160px; }
 }
+
+/* Watch pages keep the video central and the evidence within reach. */
+.watch-page { padding-top: 26px; padding-bottom: 64px; }
+.watch-breadcrumb { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 24px; font-size: 13px; color: var(--secondary); }
+.watch-breadcrumb a { color: var(--brand); font-weight: 600; }
+.watch-hero { display: grid; grid-template-columns: minmax(300px, .9fr) minmax(0, 1fr); gap: 0 clamp(32px, 5vw, 76px); align-items: start; }
+.watch-heading { grid-column: 2; grid-row: 1; padding-top: 16px; }
+[data-theme="light"] .watch-heading { background: transparent; border: 0; }
+.watch-kicker { color: var(--brand); font-size: 11px; line-height: 1.5; text-transform: uppercase; letter-spacing: .11em; font-weight: 700; }
+.watch-kicker span { color: var(--secondary); letter-spacing: .02em; }
+.watch-heading h1 { max-width: 18ch; margin: 15px 0; font-size: clamp(32px, 3.5vw, 48px); line-height: 1.08; letter-spacing: -.045em; font-weight: 650; color: var(--ink); text-wrap: balance; }
+.watch-date { font-size: 13px; line-height: 1.6; color: var(--secondary); }
+.watch-stage { grid-column: 1; grid-row: 1 / 3; margin: 0; padding: 18px 20px 16px; border: 1px solid #c8d8ce; border-radius: 24px; background: radial-gradient(ellipse at 50% 45%, #f9fcf9, #e7efe8); }
+.watch-stage-top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 16px; color: var(--brand); font-size: 11px; line-height: 1.5; font-weight: 650; }
+.watch-stage-top > span:last-child { white-space: nowrap; }
+.watch-media { width: min(100%, 360px, calc((100svh - 235px) * .5625)); margin-inline: auto; }
+.watch-player { position: relative; border: 2px solid #285c4a; border-radius: 17px; box-shadow: 0 15px 35px #153e3224; }
+.watch-player-play { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; width: 100%; border-radius: 14px; background: linear-gradient(transparent 30%, #153e3210 55%, #153e3220); color: #fff; cursor: pointer; }
+.watch-player-play-icon { display: grid; place-items: center; width: 70px; height: 70px; padding-left: 4px; border: 2px solid #fff; border-radius: 50%; background: #153e32; color: #fff; font-size: 25px; box-shadow: 0 4px 20px #153e3240; }
+.watch-player-play-label { padding: 8px 14px; border-radius: 99px; background: #153e32; color: #fff; font-size: 12px; font-weight: 650; }
+.watch-player-play:hover .watch-player-play-icon { background: #28634f; transform: scale(1.04); }
+.watch-player-play:focus-visible, .watch-player video:focus-visible, .watch-transcript summary:focus-visible, .watch-related-card:focus-visible { outline: 3px solid var(--brand); outline-offset: 5px; }
+.watch-stage figcaption { margin-top: 15px; text-align: center; font-size: 11px; line-height: 1.5; color: var(--secondary); }
+.watch-insight { grid-column: 2; grid-row: 2; padding-top: 22px; padding-bottom: 12px; }
+.watch-context { padding-block: 13px; margin-bottom: 23px; border-block: 1px solid var(--line); color: var(--brand); font-size: 13px; line-height: 1.6; font-weight: 600; }
+.watch-insight h2 { margin-bottom: 10px; color: var(--ink); font-size: 18px; font-weight: 650; letter-spacing: -.02em; }
+.watch-insight section p { margin-top: 12px; color: var(--secondary); font-size: 15px; line-height: 1.75; }
+.watch-evidence-action { margin-top: 24px; }
+.watch-evidence-action .button-primary { display: inline-flex; gap: 20px; justify-content: space-between; font-size: 14px; }
+.watch-evidence-action > p { margin-top: 10px; color: var(--secondary); font-size: 12px; line-height: 1.6; }
+.watch-limitation { margin-top: 20px; padding-left: 12px; border-left: 2px solid #9ebda8; font-size: 12px; line-height: 1.6; color: var(--secondary); }
+.watch-reading { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(24px, 5vw, 72px); margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); }
+.watch-reading h2, .watch-related h2 { margin: 8px 0 10px; font-size: 25px; line-height: 1.2; font-weight: 650; letter-spacing: -.03em; color: var(--ink); }
+.watch-reading p:not(.watch-kicker) { color: var(--secondary); font-size: 14px; line-height: 1.7; }
+.watch-transcript details { margin-top: 18px; border-block: 1px solid var(--line); }
+.watch-transcript summary { display: flex; align-items: center; justify-content: space-between; min-height: 52px; gap: 20px; color: var(--brand); font-size: 14px; font-weight: 600; cursor: pointer; list-style: none; }
+.watch-transcript summary::-webkit-details-marker { display: none; }
+.watch-transcript details[open] summary span { transform: rotate(45deg); }
+.watch-transcript details div { padding: 4px 0 12px; }
+.watch-transcript details p { margin-bottom: 14px; }
+.watch-reading .watch-caption-note { margin-top: 14px; font-size: 11px; }
+.watch-next-step { align-self: start; padding: 25px; border-radius: 18px; background: #eaf2ec; border: 1px solid #d1dfd4; }
+.watch-next-step .text-link { display: inline-flex; min-height: 44px; align-items: center; gap: 20px; margin-top: 8px; font-size: 14px; }
+.watch-reading .watch-audit-note { margin-top: 4px; font-size: 11px; }
+.watch-related { margin-top: 48px; }
+.watch-related-heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 18px; }
+.watch-related-heading > a { min-height: 44px; display: flex; align-items: center; font-size: 13px; }
+.watch-related-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.watch-related-card { display: grid; grid-template-columns: 72px minmax(0, 1fr); align-items: center; gap: 16px; min-width: 0; padding: 16px; border: 1px solid var(--line); border-radius: 16px; background: #fff; transition: border-color .15s, box-shadow .15s; }
+.watch-related-card:hover { border-color: #a4c2b0; box-shadow: 0 5px 18px #153e3210; }
+.watch-related-poster { position: relative; }
+.watch-related-poster img { display: block; width: 100%; aspect-ratio: 9 / 16; object-fit: contain; border: 1px solid var(--line); border-radius: 7px; background: #eaf2ec; }
+.watch-related-poster > span { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid #fff; border-radius: 50%; background: #153e32; color: #fff; font-size: 11px; }
+.watch-related-card p { color: var(--secondary); font-size: 10px; line-height: 1.5; }
+.watch-related-card h3 { margin-top: 7px; color: var(--ink); font-size: 15px; line-height: 1.3; font-weight: 650; letter-spacing: -.02em; }
+.watch-related-duration { display: inline-block; margin-top: 10px; color: var(--brand); font-size: 11px; font-weight: 600; }
+@media (min-width: 768px) and (max-width: 1023px) {
+  .watch-hero { grid-template-columns: minmax(260px, .85fr) minmax(0, 1fr); gap: 0 28px; }
+  .watch-related-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 767px) {
+  .watch-page { padding-top: 18px; padding-bottom: 40px; }
+  .watch-breadcrumb { font-size: 11px; gap: 8px; margin-bottom: 18px; }
+  .watch-hero { display: flex; flex-direction: column; gap: 20px; }
+  .watch-heading { padding-top: 0; }
+  .watch-heading h1 { margin: 9px 0 10px; max-width: 22ch; font-size: clamp(28px, 7.5vw, 36px); }
+  .watch-date { font-size: 11px; }
+  .watch-kicker { font-size: 10px; }
+  .watch-stage { width: 100%; padding: 12px 16px; border-radius: 18px; }
+  .watch-stage-top { font-size: 10px; margin-bottom: 12px; }
+  .watch-media { width: min(100%, 300px, calc((100svh - 285px) * .5625)); min-width: 160px; }
+  .watch-stage figcaption { margin-top: 12px; font-size: 10px; }
+  .watch-player-play-icon { width: 60px; height: 60px; font-size: 21px; }
+  .watch-insight { padding: 0; }
+  .watch-context { margin-bottom: 18px; font-size: 12px; }
+  .watch-insight section p { font-size: 14px; line-height: 1.75; }
+  .watch-evidence-action .button-primary { width: 100%; }
+  .watch-reading { grid-template-columns: minmax(0, 1fr); margin-top: 30px; padding-top: 26px; gap: 26px; }
+  .watch-reading h2, .watch-related h2 { font-size: 23px; }
+  .watch-next-step { padding: 22px; }
+  .watch-related { margin-top: 32px; }
+  .watch-related-heading { align-items: start; gap: 12px; }
+  .watch-related-heading > a { font-size: 11px; white-space: nowrap; }
+  .watch-related-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .watch-related-card { grid-template-columns: 64px minmax(0, 1fr); padding: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .watch-related-card { transition: none; }
+  .watch-player-play:hover .watch-player-play-icon { transform: none; }
+}
