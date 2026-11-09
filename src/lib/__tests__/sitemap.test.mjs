@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import vm from "node:vm";
 import ts from "typescript";
+import * as videoWatch from "../video-watch.mjs";
 import * as seo from "../seo.mjs";
 
 const compiled = ts.transpileModule(
@@ -25,6 +26,7 @@ function loadSitemap({
   vm.runInNewContext(compiled, {
     exports,
     require(name) {
+      if (name === "@/lib/video-watch.mjs") return videoWatch;
       if (name === "@/lib/seo.mjs") return seo;
       if (name === "@/lib/queries")
         return {
@@ -101,4 +103,13 @@ test("sitemap lists canonical snapshots and preserves separate periods while ded
 
 test("failed evidence reads fail the sitemap instead of publishing a partial successful response", async () => {
   await assert.rejects(loadSitemap({ fail: true })(), /database unavailable/);
+});
+
+test("video sitemap includes only matching public snapshots and their real media", async () => {
+  const entries = await loadSitemap({ runs: [{ id: 172, category_slug: "dog-food", period_label: "2026-11-A", run_date: "2026-11-04", modified_at: "2026-11-04" }] })();
+  const videos = entries.filter((entry) => entry.videos);
+  assert.equal(videos.length, 1);
+  assert.equal(videos[0].url, seo.canonicalUrl("/videos/dog-food-2026-11-a-budget-shortlist"));
+  assert.equal(videos[0].videos[0].content_loc, seo.canonicalUrl("/tracker-media/dog-food/2026-11-a/dog-food-explainer.mp4"));
+  assert.ok(entries.some((entry) => entry.url === seo.canonicalUrl("/videos")));
 });
