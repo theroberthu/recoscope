@@ -227,3 +227,24 @@ test("Robot Vacuums supplied media preserves separate denominators and final clo
  const poster=readFileSync(new URL("../../../public"+robotVacuumsExplainer.poster,import.meta.url));
  assert.equal(poster.subarray(0,8).toString("hex"),"89504e470d0a1a0a");
 });
+
+
+test("November9 Protein Powder approval remains isolated from the October27 explainer", async () => {
+  const { proteinNovemberExplainer } = await import("../benchmark-video.mjs");
+  const current = { id:177, period_label:"2026-11-A", run_date:"2026-11-09" };
+  assert.equal(snapshotVideo("protein-powder",current,{...proteinNovemberExplainer,approved:false}),null);
+  assert.equal(snapshotVideo("protein-powder",current),proteinNovemberExplainer);
+  assert.equal(snapshotVideo("protein-powder",run),proteinExplainer);
+  const released = {...proteinNovemberExplainer,approved:true};
+  assert.equal(snapshotVideo("protein-powder",current,released),released);
+  for (const change of [{id:166},{period_label:"2026-10-B"},{run_date:"2026-10-27"}])
+    assert.equal(snapshotVideo("protein-powder",{...current,...change},released),null);
+  assert.equal(snapshotVideo("wireless-earbuds",current,released),null);
+  const {readFileSync}=await import("node:fs");
+  const {createHash}=await import("node:crypto");
+  assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+released.src,import.meta.url))).digest("hex"),released.approvedSha256);
+  const captions=readFileSync(new URL("../../../public"+released.captions,import.meta.url),"utf8");
+  assert.equal(captions.match(/-->/g)?.length,19);
+  assert.ok(captions.replace(/\s+/g," ").includes("Explore benchmark at getrecoscope.com."));
+  assert.equal(released.transcript.at(-1).text,"Explore benchmark at getrecoscope.com.");
+});
