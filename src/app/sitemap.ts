@@ -77,7 +77,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: canonicalUrl(watchPath(video)),
     lastModified: WATCH_PAGES_UPDATED_AT,
     videos: [{
-      title: `${video.category}: ${video.title}`,
+      title: String(videoSchema(video).name),
       description: video.summary.join(" "),
       thumbnail_loc: canonicalUrl(video.poster),
       content_loc: canonicalUrl(video.src),
