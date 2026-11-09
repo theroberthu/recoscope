@@ -562,6 +562,7 @@ export async function getAllPublishedPrompts(): Promise<PromptPageData[]> {
 /** Sitemap evidence includes closed public archives, never private or draft runs. */
 export async function getPublicSitemapRuns(): Promise<
   {
+    id: number;
     category_slug: string;
     period_label: string;
     run_date: string;
@@ -570,7 +571,7 @@ export async function getPublicSitemapRuns(): Promise<
 > {
   const sql = getDb();
   const rows = await sql`
-    SELECT c.slug AS category_slug, r.period_label, r.run_date::text,
+    SELECT r.id, c.slug AS category_slug, r.period_label, r.run_date::text,
       GREATEST(r.created_at,
         (SELECT MAX(ar.created_at) FROM agent_responses ar WHERE ar.run_id = r.id),
         (SELECT MAX(bm.created_at) FROM brand_mentions bm WHERE bm.run_id = r.id),
@@ -581,6 +582,7 @@ export async function getPublicSitemapRuns(): Promise<
     ORDER BY r.run_date DESC, r.id DESC
   `;
   return rows as {
+    id: number;
     category_slug: string;
     period_label: string;
     run_date: string;

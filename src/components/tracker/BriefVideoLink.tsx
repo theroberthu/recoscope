@@ -1,18 +1,14 @@
 "use client";
 
+import { watchPath } from "@/lib/video-watch.mjs";
 import type { BenchmarkVideo } from "@/lib/benchmark-video.mjs";
 
 export function BriefVideoLink({ video }: { video: BenchmarkVideo }) {
   const seconds = video.duration.match(/^\d+/)?.[0];
   return (
     <a
-      href="#benchmark-video"
+      href={watchPath(video)}
       className="report-brief-video"
-      onClick={() => {
-        // Use the existing player and its existing playback analytics. The
-        // visitor's click is the only action that assigns the MP4 source.
-        document.querySelector<HTMLButtonElement>("#benchmark-video .benchmark-video-play")?.click();
-      }}
     >
       <span className="report-brief-thumbnail" aria-hidden="true">
         {/* Keep the full vertical frame visible, including embedded text. */}
