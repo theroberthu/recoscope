@@ -42,10 +42,12 @@ export function SiteNav() {
         <Link
           href="/"
           aria-label="RecoScope home"
+          className="nav-brand"
           onClick={() => setOpen(false)}
         >
           <img src="/logo.svg" alt="RecoScope" className="nav-logo" />
           <img src="/icon.svg" alt="" className="nav-icon" />
+          <span className="nav-wordmark" aria-hidden="true">RecoScope</span>
         </Link>
         <div className="nav-desktop">
           {links.map(([href, label]) => (
