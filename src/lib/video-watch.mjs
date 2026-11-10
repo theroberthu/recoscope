@@ -1,10 +1,11 @@
 import { benchmarkExplainers, snapshotVideo } from "./benchmark-video.mjs";
 import { canonicalUrl, isoDate, PUBLISHER, ROBERT_HU } from "./seo.mjs";
 
-export const WATCH_PAGES_UPDATED_AT = "2026-11-09";
+export const WATCH_PAGES_UPDATED_AT = "2026-11-10";
 
 // First successful public deployments; collection dates are separate evidence.
 const releases = {
+  "standing-desks-2026-11-a-tied-mentions-one-first": ["2026-11-10T21:32:10+00:00", 45],
   // First public upload of the approved MP4; the collection date is separate.
   "protein-powder-2026-11-a-read-the-context": ["2026-11-09T15:31:08-06:00", 54.5],
   "protein-powder-2026-10-b-most-mentioned": ["2026-10-28T17:20:00-05:00", 55],
