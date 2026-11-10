@@ -248,3 +248,26 @@ test("November9 Protein Powder approval remains isolated from the October27 expl
   assert.ok(captions.replace(/\s+/g," ").includes("Explore benchmark at getrecoscope.com."));
   assert.equal(released.transcript.at(-1).text,"Explore benchmark at getrecoscope.com.");
 });
+
+
+test("November10 Standing Desks review stays private and cannot replace October29 run167", async () => {
+  const {standingNovemberExplainer}=await import("../benchmark-video.mjs");
+  const current={id:178,period_label:"2026-11-A",run_date:"2026-11-10"};
+  assert.equal(snapshotVideo("standing-desks",current),standingNovemberExplainer);
+  assert.equal(snapshotVideo("standing-desks",current,{...standingNovemberExplainer,approved:false}),null);
+  assert.equal(snapshotVideo("standing-desks",{id:167,period_label:"2026-10-B",run_date:"2026-10-29"}),standingDesksExplainer);
+  const released={...standingNovemberExplainer,approved:true};
+  assert.equal(snapshotVideo("standing-desks",current,released),released);
+  for(const change of [{id:167},{period_label:"2026-10-B"},{run_date:"2026-10-29"}])
+    assert.equal(snapshotVideo("standing-desks",{...current,...change},released),null);
+  assert.equal(snapshotVideo("protein-powder",current,released),null);
+  assert.match(released.context,/11 usable answers from 12 prompts/);
+  assert.ok(released.summary[1].includes("three usable comparisons out of four submitted"));
+  const {readFileSync}=await import("node:fs");
+  const {createHash}=await import("node:crypto");
+  assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+released.src,import.meta.url))).digest("hex"),released.approvedSha256);
+  const captions=readFileSync(new URL("../../../public"+released.captions,import.meta.url),"utf8");
+  assert.equal(captions.match(/-->/g)?.length,16);
+  assert.ok(captions.replace(/\s+/g," ").includes("Explore benchmark at getrecoscope.com."));
+  assert.equal(released.transcript.at(-1).text,"Explore benchmark at getrecoscope.com.");
+});

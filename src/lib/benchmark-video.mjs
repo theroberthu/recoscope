@@ -552,7 +552,52 @@ export const proteinNovemberExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer];
+// November 10 Standing Desks private review. Enable only after owner approval.
+export const standingNovemberExplainer = {
+  "id": "standing-desks-2026-11-a-tied-mentions-one-first",
+  "approved": true,
+  "approvedSha256": "0c6d0e29672c5870cc2bd975a8fc379b7493ea32afc8658a98b28e04594d40a9",
+  "category": "standing-desks",
+  "runId": 178,
+  "period": "2026-11-A",
+  "collected": "2026-11-10",
+  "collectedLabel": "November 10, 2026",
+  "context": "11 usable answers from 12 prompts · Four AI assistants · Three prompt types",
+  "title": "Tied on mentions. One first choice.",
+  "duration": "45-second explainer",
+  "src": "/tracker-media/standing-desks/2026-11-a/standing-desks-explainer.mp4",
+  "poster": "/tracker-media/standing-desks/2026-11-a/explainer-poster.jpg",
+  "captions": "/tracker-media/standing-desks/2026-11-a/explainer.en.vtt",
+  "summary": [
+    "UPLIFT and FlexiSpot each appeared in 10 of 11 usable answers. In all three usable comparative answers, UPLIFT ranked first and FlexiSpot second.",
+    "Gemini’s incomplete comparison is excluded from mention and ranking calculations. There were 12 submitted answers, 11 usable answers, and three usable comparisons out of four submitted."
+  ],
+  "transcript": [
+    {
+      "text": "Two brands tied for mentions. But they didn’t tie for first choice."
+    },
+    {
+      "text": "In Recoscope’s November tenth standing desks benchmark, UPLIFT and FlexiSpot each appeared in ten of eleven usable answers."
+    },
+    {
+      "text": "In the comparison prompt, ChatGPT, Claude, and Perplexity all ranked UPLIFT first and FlexiSpot second."
+    },
+    {
+      "text": "Gemini’s incomplete comparison was excluded from the analysis."
+    },
+    {
+      "text": "For brand owners, track how often you appear, where you rank, and the context of the answer."
+    },
+    {
+      "text": "These findings describe captured AI answers, not product quality."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
