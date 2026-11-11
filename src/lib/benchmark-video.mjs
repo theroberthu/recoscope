@@ -597,7 +597,52 @@ export const standingNovemberExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer];
+// November 11 Skincare private review; enable only after owner approval.
+export const skincareNovemberExplainer = {
+  "id": "skincare-2026-11-a-check-the-total",
+  "approved": true,
+  "approvedSha256": "e5d0328ed4d60b0dd90abecfbbce5e3944c22e3d5e81bfcfdeb3d5221f458ac0",
+  "category": "skincare",
+  "runId": 179,
+  "period": "2026-11-A",
+  "collected": "2026-11-11",
+  "collectedLabel": "November 11, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Under $50? Check the total.",
+  "duration": "50-second explainer",
+  "src": "/tracker-media/skincare/2026-11-a/skincare-explainer.mp4",
+  "poster": "/tracker-media/skincare/2026-11-a/explainer-poster.jpg",
+  "captions": "/tracker-media/skincare/2026-11-a/explainer.en.vtt",
+  "summary": [
+    "Claude’s captured budget answer opened with “all well under $50 total,” then estimated $55–65 upfront. A lower monthly estimate does not resolve that upfront-budget contradiction.",
+    "Gemini labeled its second routine about $44, but its quoted $17 + $22 + $15 totals $54. Its first routine correctly totals $42. These are arithmetic checks of captured statements, not verified checkout prices."
+  ],
+  "transcript": [
+    {
+      "text": "Under fifty dollars? Check the total."
+    },
+    {
+      "text": "Recoscope’s November eleventh skincare benchmark captured twelve usable answers."
+    },
+    {
+      "text": "Claude opened with “all well under fifty dollars total,” then estimated fifty-five to sixty-five dollars upfront. A lower monthly estimate doesn’t fix that upfront-budget contradiction."
+    },
+    {
+      "text": "Gemini labeled its second routine about forty-four dollars. But seventeen plus twenty-two plus fifteen equals fifty-four. Its first routine correctly totaled forty-two."
+    },
+    {
+      "text": "For brand owners, measure mentions, comparative rank, and recommendation context separately."
+    },
+    {
+      "text": "These are captured statements and arithmetic checks, not verified checkout prices, product ratings, or medical advice."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),

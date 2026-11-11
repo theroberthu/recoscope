@@ -35,3 +35,5 @@ export function snapshotVideo(
   run: { id: number | string; period_label: string; run_date: string | Date },
   video?: BenchmarkVideo,
 ): BenchmarkVideo | null;
+
+export const skincareNovemberExplainer: BenchmarkVideo;
