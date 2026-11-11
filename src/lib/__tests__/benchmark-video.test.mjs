@@ -271,3 +271,30 @@ test("November10 Standing Desks review stays private and cannot replace October2
   assert.ok(captions.replace(/\s+/g," ").includes("Explore benchmark at getrecoscope.com."));
   assert.equal(released.transcript.at(-1).text,"Explore benchmark at getrecoscope.com.");
 });
+
+
+test("Approved November11 Skincare stays isolated to run179 and preserves historical skincare", async () => {
+ const {skincareNovemberExplainer,skincareExplainer,snapshotVideo}=await import("../benchmark-video.mjs");
+ const run={id:179,period_label:"2026-11-A",run_date:"2026-11-11"};
+ assert.equal(snapshotVideo("skincare",run),skincareNovemberExplainer);
+ const released={...skincareNovemberExplainer,approved:true};
+ assert.equal(snapshotVideo("skincare",run,released),released);
+ for(const change of [{id:168},{period_label:"2026-10-C"},{run_date:"2026-10-30"}])assert.equal(snapshotVideo("skincare",{...run,...change},released),null);
+ assert.equal(snapshotVideo("standing-desks",run,released),null);
+ assert.equal(snapshotVideo("skincare",{id:168,period_label:"2026-10-C",run_date:"2026-10-30"}),skincareExplainer);
+ const {readFileSync}=await import("node:fs");const {createHash}=await import("node:crypto");
+ assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+released.src,import.meta.url))).digest("hex"),released.approvedSha256);
+ const captions=readFileSync(new URL("../../../public"+released.captions,import.meta.url),"utf8");assert.equal(captions.match(/-->/g)?.length,17);
+ assert.equal(released.transcript.at(-1).text,"Explore benchmark at getrecoscope.com.");
+ assert.match(released.summary[0],/\$55–65 upfront/);assert.match(released.summary[1],/totals \$54/);
+});
+
+
+test("November11 Skincare watch listing requires exact published run179",async()=>{
+ const {skincareNovemberExplainer}=await import("../benchmark-video.mjs");const {publicWatchVideos,videoSchema}=await import("../video-watch.mjs");
+ const run={id:179,category_slug:"skincare",period_label:"2026-11-A",run_date:"2026-11-11"};
+ assert.ok(publicWatchVideos([run]).includes(skincareNovemberExplainer));
+ for(const change of [{id:168},{period_label:"2026-10-C"},{run_date:"2026-10-30"}])assert.ok(!publicWatchVideos([{...run,...change}]).includes(skincareNovemberExplainer));
+ assert.ok(!publicWatchVideos([]).includes(skincareNovemberExplainer));
+ const schema=videoSchema(skincareNovemberExplainer);assert.equal(schema.duration,"PT50S");assert.match(schema.url,/skincare-2026-11-a-check-the-total$/);assert.match(schema.transcript,/Explore benchmark at getrecoscope.com/);
+});
