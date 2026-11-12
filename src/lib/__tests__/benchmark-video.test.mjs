@@ -298,3 +298,28 @@ test("November11 Skincare watch listing requires exact published run179",async()
  assert.ok(!publicWatchVideos([]).includes(skincareNovemberExplainer));
  const schema=videoSchema(skincareNovemberExplainer);assert.equal(schema.duration,"PT50S");assert.match(schema.url,/skincare-2026-11-a-check-the-total$/);assert.match(schema.transcript,/Explore benchmark at getrecoscope.com/);
 });
+
+
+test("November12 Air Purifiers is approved and scoped to run180",async()=>{
+ const {airPurifiersNovemberExplainer:v,airPurifiersExplainer:old,snapshotVideo}=await import("../benchmark-video.mjs");
+ const run={id:180,period_label:"2026-11-A",run_date:"2026-11-12"};
+ assert.equal(snapshotVideo("air-purifiers",run),v);
+ assert.equal(snapshotVideo("air-purifiers",run,{...v,approved:false}),null);
+ const released={...v,approved:true};assert.equal(snapshotVideo("air-purifiers",run,released),released);
+ for(const change of [{id:169},{period_label:"2026-10-C"},{run_date:"2026-10-31"}])assert.equal(snapshotVideo("air-purifiers",{...run,...change},released),null);
+ assert.equal(snapshotVideo("skincare",run,released),null);
+ assert.equal(snapshotVideo("air-purifiers",{id:169,period_label:"2026-10-C",run_date:"2026-10-31"}),old);
+ const {readFileSync}=await import("node:fs");const {createHash}=await import("node:crypto");
+ assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+v.src,import.meta.url))).digest("hex"),v.approvedSha256);
+ const captions=readFileSync(new URL("../../../public"+v.captions,import.meta.url),"utf8");assert.equal(captions.match(/-->/g)?.length,16);
+ assert.equal(v.transcript.at(-1).text,"Explore benchmark at getrecoscope.com.");assert.match(v.summary[0],/11 of 12/);assert.match(v.summary[1],/all four comparative answers/);
+});
+
+
+test("November12 Air Purifiers watch listing requires exact public evidence",async()=>{
+ const {airPurifiersNovemberExplainer:v}=await import("../benchmark-video.mjs");const {publicWatchVideos,videoSchema}=await import("../video-watch.mjs");
+ const run={id:180,category_slug:"air-purifiers",period_label:"2026-11-A",run_date:"2026-11-12"};
+ assert.ok(publicWatchVideos([run]).includes(v));assert.ok(!publicWatchVideos([]).includes(v));
+ for(const c of [{id:169},{period_label:"2026-10-C"},{run_date:"2026-10-31"}])assert.ok(!publicWatchVideos([{...run,...c}]).includes(v));
+ const schema=videoSchema(v);assert.equal(schema.duration,"PT47S");assert.match(schema.url,/air-purifiers-2026-11-a-split-first-choice$/);assert.match(schema.transcript,/Explore benchmark at getrecoscope.com/);
+});
