@@ -642,7 +642,52 @@ export const skincareNovemberExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer];
+// Owner-approved November 12 Air Purifiers benchmark brief.
+export const airPurifiersNovemberExplainer = {
+  "id": "air-purifiers-2026-11-a-split-first-choice",
+  "approved": true,
+  "approvedSha256": "20b3cd67913cbab6fddc440161d398a5c5095ccae2574c5e55161002d9801e24",
+  "category": "air-purifiers",
+  "runId": 180,
+  "period": "2026-11-A",
+  "collected": "2026-11-12",
+  "collectedLabel": "November 12, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Same visibility. Split first choice.",
+  "duration": "47-second explainer",
+  "src": "/tracker-media/air-purifiers/2026-11-a/air-purifiers-explainer.mp4",
+  "poster": "/tracker-media/air-purifiers/2026-11-a/explainer-poster.jpg",
+  "captions": "/tracker-media/air-purifiers/2026-11-a/explainer.en.vtt",
+  "summary": [
+    "Coway and Levoit each appeared in 11 of 12 usable answers. In the comparative prompt, ChatGPT and Claude ranked Levoit first; Gemini and Perplexity ranked Coway first.",
+    "Coway placed in the top three in all four comparative answers; Levoit did in three. Mention frequency and comparative rank are separate measures."
+  ],
+  "transcript": [
+    {
+      "text": "Two brands. The same eleven-out-of-twelve mentions. But who came first?"
+    },
+    {
+      "text": "In Recoscope’s November twelfth air purifier snapshot, Coway and Levoit each appeared in eleven of twelve usable answers, across four AI assistants and three prompt types."
+    },
+    {
+      "text": "In the comparisons, ChatGPT and Claude ranked Levoit first. Gemini and Perplexity ranked Coway first."
+    },
+    {
+      "text": "Coway also made the top three in all four comparisons. Levoit did in three."
+    },
+    {
+      "text": "The lesson for brands: visibility and first choice are different measures."
+    },
+    {
+      "text": "These findings describe captured AI answers, not product quality."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),

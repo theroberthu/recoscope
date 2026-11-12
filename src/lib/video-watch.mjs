@@ -1,10 +1,11 @@
 import { benchmarkExplainers, snapshotVideo } from "./benchmark-video.mjs";
 import { canonicalUrl, isoDate, PUBLISHER, ROBERT_HU } from "./seo.mjs";
 
-export const WATCH_PAGES_UPDATED_AT = "2026-11-11";
+export const WATCH_PAGES_UPDATED_AT = "2026-11-12";
 
 // First successful public deployments; collection dates are separate evidence.
 const releases = {
+  "air-purifiers-2026-11-a-split-first-choice": ["2026-11-12T15:52:49+00:00", 47],
   "skincare-2026-11-a-check-the-total": ["2026-11-11T16:10:05+00:00", 50],
   "standing-desks-2026-11-a-tied-mentions-one-first": ["2026-11-10T21:32:10+00:00", 45],
   // First public upload of the approved MP4; the collection date is separate.
