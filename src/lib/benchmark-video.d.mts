@@ -37,3 +37,5 @@ export function snapshotVideo(
 ): BenchmarkVideo | null;
 
 export const skincareNovemberExplainer: BenchmarkVideo;
+
+export const airPurifiersNovemberExplainer: BenchmarkVideo;
