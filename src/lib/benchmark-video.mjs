@@ -687,7 +687,55 @@ export const airPurifiersNovemberExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer];
+// November 13 Humidifiers benchmark and narrated video approved by the owner.
+export const humidifiersExplainer = {
+  "id": "humidifiers-2026-11-a-mentioned-every-time",
+  "approved": true,
+  "approvedSha256": "d5f676d68d81fe635e993a367f83839b44add7a08cf78f7b857329efef8b5f6e",
+  "category": "humidifiers",
+  "runId": 181,
+  "period": "2026-11-A",
+  "collected": "2026-11-13",
+  "collectedLabel": "November 13, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Mentioned every time. First just once.",
+  "duration": "43.5-second explainer",
+  "src": "/tracker-media/humidifiers/2026-11-a/humidifiers-explainer.mp4",
+  "poster": "/tracker-media/humidifiers/2026-11-a/explainer-poster.jpg",
+  "captions": "/tracker-media/humidifiers/2026-11-a/explainer.en.vtt",
+  "summary": [
+    "Levoit appeared in all 12 usable answers but ranked first in only one of four comparative answers. Carepod appeared in 6/12 answers and ranked first twice.",
+    "ChatGPT and Perplexity ranked Carepod first; Gemini ranked Levoit first; Claude ranked Dreo first. Mention frequency and comparative rank are separate measures of captured answers, not product quality."
+  ],
+  "transcript": [
+    {
+      "text": "Levoit appeared in every answer. But it came first just once."
+    },
+    {
+      "text": "Recoscope’s November thirteenth humidifier benchmark captured twelve usable answers across four AI assistants and three prompt types."
+    },
+    {
+      "text": "Levoit appeared in all twelve. Carepod appeared in six."
+    },
+    {
+      "text": "But in the four comparisons, ChatGPT and Perplexity ranked Carepod first. Gemini ranked Levoit first, and Claude ranked Dreo first."
+    },
+    {
+      "text": "So the brand with the most mentions wasn’t the one with the most first-place rankings."
+    },
+    {
+      "text": "For brands, visibility and first choice are separate measures."
+    },
+    {
+      "text": "These findings describe captured AI answers, not product quality."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),

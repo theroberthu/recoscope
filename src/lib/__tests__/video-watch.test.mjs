@@ -6,7 +6,7 @@ import { canonicalUrl } from "../seo.mjs";
 const runs = benchmarkExplainers.map((video) => ({ id: video.runId, category_slug: video.category, period_label: video.period, run_date: video.collected }));
 
 test("watch listing requires exact published evidence and never substitutes another snapshot", () => {
-  assert.equal(publicWatchVideos(runs).length, 15);
+  assert.equal(publicWatchVideos(runs).length, 16);
   assert.equal(publicWatchVideos([]).length, 0);
   for (const change of [{ id: -1 }, { category_slug: "private-category" }, { period_label: "2026-12-A" }, { run_date: "2025-01-01" }]) {
     assert.equal(publicWatchVideos(runs.map((run) => ({ ...run, ...change }))).length, 0);

@@ -323,3 +323,23 @@ test("November12 Air Purifiers watch listing requires exact public evidence",asy
  for(const c of [{id:169},{period_label:"2026-10-C"},{run_date:"2026-10-31"}])assert.ok(!publicWatchVideos([{...run,...c}]).includes(v));
  const schema=videoSchema(v);assert.equal(schema.duration,"PT47S");assert.match(schema.url,/air-purifiers-2026-11-a-split-first-choice$/);assert.match(schema.transcript,/Explore benchmark at getrecoscope.com/);
 });
+
+
+test("approved Humidifiers video is scoped to the first November13 snapshot",async()=>{
+ const {humidifiersExplainer:v,snapshotVideo,benchmarkExplainers}=await import("../benchmark-video.mjs");
+ const {publicWatchVideos,videoSchema}=await import("../video-watch.mjs");
+ const run={id:181,category_slug:"humidifiers",period_label:"2026-11-A",run_date:"2026-11-13"};
+ assert.equal(snapshotVideo("humidifiers",run),v);assert.ok(publicWatchVideos([run]).includes(v));
+ for(const change of [{id:180},{period_label:"2026-10-C"},{run_date:"2026-11-12"}]){
+  assert.equal(snapshotVideo("humidifiers",{...run,...change}),null);
+  assert.ok(!publicWatchVideos([{...run,...change}]).includes(v));
+ }
+ assert.equal(snapshotVideo("sunscreen",run),null);
+ assert.equal(snapshotVideo("humidifiers",run,{...v,approved:false}),null);
+ assert.equal(benchmarkExplainers.length,16);
+ const schema=videoSchema(v);assert.equal(schema.duration,"PT43.5S");assert.match(schema.transcript,/Explore benchmark at getrecoscope\.com\.$/);
+ const {readFileSync}=await import("node:fs");const {createHash}=await import("node:crypto");
+ assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+v.src,import.meta.url))).digest("hex"),v.approvedSha256);
+ const captions=readFileSync(new URL("../../../public"+v.captions,import.meta.url),"utf8");assert.equal(captions.match(/-->/g)?.length,17);
+ assert.match(v.summary[0],/all 12 usable answers/);assert.match(v.summary[0],/one of four/);
+});
