@@ -94,14 +94,22 @@ export function promptToTitle(promptText: string, categoryName: string): string 
   return `AI Recommendations for ${categoryName}${suffix} (2026)`;
 }
 
-export function promptToDescription(promptText: string, categoryName: string, topBrands: string[]): string {
-  const persona = extractPersona(promptText);
-  const personaStr = persona ? ` for ${persona.toLowerCase()}` : "";
-  const brandStr = topBrands.slice(0, 3).join(", ");
-  if (topBrands.length > 0) {
-    return `We asked ChatGPT, Claude, Gemini, and Perplexity about ${categoryName.toLowerCase()}${personaStr}. ${brandStr} lead the recommendations. See the full breakdown.`;
+export function promptToDescription(promptText: string, categoryName: string): string {
+  const category = categoryName.trim().toLowerCase();
+  const prompt = promptText.toLowerCase();
+  // Describe the question being measured, without turning mention counts into
+  // endorsements or implying that a budget mention verifies the product price.
+  if (prompt.includes("compare") && prompt.includes("rank")) {
+    return `Compare AI rankings for ${category}. See how brands appear across assistants, with the exact shopper question behind the results.`;
   }
-  return `See which ${categoryName.toLowerCase()} brands AI models recommend${personaStr} in 2026.`;
+  const budget = promptText.match(/\bunder\s+\$\s*(\d[\d,]*(?:\.\d{1,2})?)/i);
+  if (budget) {
+    return `Which ${category} appear in AI answers to an under-$${budget[1]} question? Compare brand mentions across assistants and explore the exact shopper prompt.`;
+  }
+  if (prompt.includes("alternative")) {
+    return `Explore ${category} alternatives mentioned by AI assistants. Compare brand mentions and recorded ranks, with the exact question behind the results.`;
+  }
+  return `Which ${category} do AI assistants mention? Compare brand visibility and recorded ranks across models, with the exact shopper question behind the results.`;
 }
 
 export { CATEGORY_LABELS };
