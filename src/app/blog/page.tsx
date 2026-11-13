@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/blog" },
   title: "Research and Findings",
   description:
-    "Current benchmark findings and dated research into how AI assistants mention and rank product brands.",
+    "Discover what RecoScope's benchmarks reveal about AI brand visibility. Read findings, compare model rankings and follow the evidence behind each analysis.",
 };
 export const revalidate = 300;
 export default async function BlogIndexPage() {
