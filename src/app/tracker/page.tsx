@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/tracker" },
   title: "AI Recommendation Benchmarks by Category",
   description:
-    "Find dated AI brand recommendation benchmarks, with findings, usable-answer coverage, and recorded rankings across four AI services.",
+    "Find your product category and compare the brands AI assistants mention and rank. Explore dated findings, shopper prompts and model-by-model results.",
 };
 export const dynamic = "force-dynamic";
 export default async function TrackerIndexPage() {
