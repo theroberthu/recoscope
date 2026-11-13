@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     default: "RecoScope — AI Brand Recommendation Tracker",
   },
   description:
-    "Explore dated AI recommendation benchmarks from ChatGPT, Claude, Gemini, and Perplexity, with recorded brand mentions, comparison ranks, prompts, and collection limitations.",
+    "Does AI mention your brand? Compare brand visibility and rankings across ChatGPT, Claude, Gemini and Perplexity, with dated benchmarks and evidence you can inspect.",
   metadataBase: new URL("https://www.getrecoscope.com"),
   icons: {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }],

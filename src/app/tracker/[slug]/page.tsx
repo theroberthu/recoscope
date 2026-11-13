@@ -359,7 +359,7 @@ export async function generateMetadata({
   return {
     alternates: { canonical: snapshotUrl(slug, run.period_label) },
     title: `${label}: AI mention frequency — ${formatRunDate(run.run_date)}`,
-    description: `${snapshotFinding(brands, coverage)} ${coverage.eligible} usable answers from ${coverage.models.join(", ") || "the recorded services"}. View response ranks and collection limitations.`,
+    description: `Compare AI answers for ${label.toLowerCase()}. ${snapshotFinding(brands, coverage)} Explore model rankings, shopper prompts and collection notes.`,
   };
 }
 

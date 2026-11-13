@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/methodology" },
   title: "How RecoScope Measures AI Recommendations",
   description:
-    "The current rules for saved shopper prompts, usable-answer coverage, unique brand mentions, explicitly supported ranks, collection settings and review status.",
+    "How does RecoScope measure AI brand visibility? See how we collect answers, count brand mentions, record explicit rankings and document research limitations.",
 };
 const questions = [
   {

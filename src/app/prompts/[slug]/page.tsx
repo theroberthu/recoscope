@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!detail) return { title: "Not Found" };
 
   const title = promptToTitle(found.promptText, detail.category_name);
-  const description = promptToDescription(found.promptText, detail.category_name, detail.brands.slice(0, 3).map((b) => b.brand));
+  const description = promptToDescription(found.promptText, detail.category_name);
 
   return {
     title,
@@ -65,6 +65,7 @@ export default async function PromptDetailPage({ params }: Props) {
   if (!detail) notFound();
 
   const title = promptToTitle(promptText, detail.category_name);
+  const description = promptToDescription(promptText, detail.category_name);
   const topBrands = detail.brands.slice(0, 3).map((b) => b.brand);
   const baseUrl = "https://www.getrecoscope.com";
 
@@ -106,13 +107,17 @@ export default async function PromptDetailPage({ params }: Props) {
           {title}
         </h1>
 
+        <p className="mt-4 text-[15px] leading-relaxed text-white/60">
+          {description}
+        </p>
+
         <p className="mt-4 text-[14px] text-white/30">
           Tracked across {detail.run_dates.length} benchmark run{detail.run_dates.length !== 1 ? "s" : ""}
           {detail.run_dates.length > 0 && ` from ${fmtDate(detail.run_dates[detail.run_dates.length - 1])} to ${fmtDate(detail.run_dates[0])}`}
         </p>
 
         {/* H2: exact prompt */}
-        <div className="mt-10 rounded-xl border border-white/10 bg-surface p-6">
+        <div data-nosnippet="" className="mt-10 rounded-xl border border-white/10 bg-surface p-6">
           <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-white/25">
             The exact question we asked AI models
           </p>
