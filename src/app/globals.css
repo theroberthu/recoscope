@@ -2235,3 +2235,28 @@ article :is(h2, h3) {
   .watch-related-card { transition: none; }
   .watch-player-play:hover .watch-player-play-icon { transform: none; }
 }
+
+/* A click-to-play introduction, kept small beside the main conversion path. */
+.home-intro-trailer { margin-top: 16px; max-width: 440px; }
+.home-intro-card { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 76px; padding: 8px; text-align: left; color: var(--ink); border: 1px solid var(--line); border-radius: 12px; background: var(--surface); transition: border-color .15s, background-color .15s; }
+.home-intro-card:hover { border-color: var(--brand); background: #eef4ef; }
+.home-intro-card:focus-visible, .home-intro-links a:focus-visible, .home-intro-links summary:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
+.home-intro-thumbnail { position: relative; display: block; flex: 0 0 104px; aspect-ratio: 16/9; overflow: hidden; border-radius: 6px; background: #edf4ee; }
+.home-intro-thumbnail img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.home-intro-thumbnail > span { position: absolute; inset: 0; margin: auto; display: grid; place-items: center; width: 32px; height: 32px; padding-left: 2px; border-radius: 50%; background: #075d50; color: #fff; font-size: 13px; box-shadow: 0 2px 8px #0003; }
+.home-intro-copy strong { display: block; font-size: 15px; line-height: 1.4; }
+.home-intro-copy > span { display: block; margin-top: 3px; color: var(--brand); font-size: 12px; line-height: 1.5; }
+.home-intro-trailer video { display: block; width: 100%; height: auto; aspect-ratio: 16/9; object-fit: contain; border-radius: 12px; background: #153e32; }
+.home-intro-links { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: start; margin-top: 4px; font-size: 12px; color: var(--brand); }
+.home-intro-links summary, .home-intro-links > a { min-height: 44px; padding-block: 12px; cursor: pointer; }
+.home-intro-links > a { text-decoration: underline; text-underline-offset: 3px; }
+.home-intro-links details { flex: 1; min-width: 130px; }
+.home-intro-links details p { color: var(--secondary); line-height: 1.65; margin-bottom: 12px; }
+.home-intro-note { color: var(--secondary); font-size: 12px; margin-top: 8px; }
+@media (max-width: 767px) {
+ .home-intro-trailer { margin-top: 10px; max-width: none; }
+ .home-intro-card { min-height: 64px; padding: 6px; gap: 10px; }
+ .home-intro-thumbnail { flex-basis: 86px; }
+ .home-intro-copy strong { font-size: 14px; }
+ .home-intro-copy > span { font-size: 11px; margin-top: 1px; }
+}
