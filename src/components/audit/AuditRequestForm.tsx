@@ -35,10 +35,10 @@ export function AuditRequestForm({
           A new request hasn&rsquo;t been added. To update your brand or check
           on your audit, email{" "}
           <a
-            href="mailto:contact@getrecoscope.com"
+            href="mailto:robert@theroberthu.com"
             className="text-cyan underline underline-offset-2"
           >
-            contact@getrecoscope.com
+            robert@theroberthu.com
           </a>
           .
         </p>
