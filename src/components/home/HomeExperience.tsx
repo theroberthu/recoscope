@@ -1,5 +1,6 @@
 import type { getCategoriesWithRuns, getLatestPublicSnapshot, getAuditStats } from "@/lib/queries";
 import { CategoryFinder } from "@/components/tracker/CategoryFinder";
+import { IntroTrailer } from "./IntroTrailer";
 import { HomeFinding } from "./HomeFinding";
 import { CategoryJump } from "./CategoryJump";
 import { BrandScroller } from "./BrandScroller";
@@ -47,6 +48,7 @@ export function HomeExperience({ categories, snapshot, stats, today }: HomeExper
               <p className="hero-reassurance">
                 Free · No call · Emailed within 48 hours
               </p>
+              <IntroTrailer />
               {categories.length > 0 && <CategoryJump categories={categories} />}
             </div>
             <p className="founder-byline">Independent research by <a href="/about">Robert Hu</a> · 20+ years in commerce</p>
