@@ -1,3 +1,4 @@
+import { YOUTUBE_CHANNEL_URL } from "@/lib/social-links";
 import { articleSchemaData, jsonLd, PUBLISHER, ROBERT_HU } from "@/lib/seo.mjs";
 import type { ArticleDataProps } from "@/lib/seo.mjs";
 
@@ -16,7 +17,7 @@ export function OrganizationSchema() {
     ...PUBLISHER,
     description:
       "AI recommendation tracking and benchmarking for consumer brands.",
-    sameAs: ["https://x.com/recoscope"],
+    sameAs: ["https://x.com/recoscope", YOUTUBE_CHANNEL_URL],
     founder: ROBERT_HU,
   };
   return (
