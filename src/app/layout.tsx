@@ -167,6 +167,8 @@ export default function RootLayout({
                 <a href={YOUTUBE_CHANNEL_URL} target="_blank" rel="noopener noreferrer"
                   className="transition-colors hover:text-white/40">YouTube @recoscope</a>
                 <span className="text-white/10">&middot;</span>
+                <a href="mailto:robert@theroberthu.com" className="transition-colors hover:text-white/40">Email Robert</a>
+                <span className="text-white/10">&middot;</span>
                 <Link
                   href="/terms"
                   className="transition-colors hover:text-white/40"
