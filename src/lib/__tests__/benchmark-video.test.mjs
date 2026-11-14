@@ -336,10 +336,30 @@ test("approved Humidifiers video is scoped to the first November13 snapshot",asy
  }
  assert.equal(snapshotVideo("sunscreen",run),null);
  assert.equal(snapshotVideo("humidifiers",run,{...v,approved:false}),null);
- assert.equal(benchmarkExplainers.length,16);
+ assert.equal(benchmarkExplainers.length,17);
  const schema=videoSchema(v);assert.equal(schema.duration,"PT43.5S");assert.match(schema.transcript,/Explore benchmark at getrecoscope\.com\.$/);
  const {readFileSync}=await import("node:fs");const {createHash}=await import("node:crypto");
  assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+v.src,import.meta.url))).digest("hex"),v.approvedSha256);
  const captions=readFileSync(new URL("../../../public"+v.captions,import.meta.url),"utf8");assert.equal(captions.match(/-->/g)?.length,17);
  assert.match(v.summary[0],/all 12 usable answers/);assert.match(v.summary[0],/one of four/);
+});
+
+
+test("November14 DogFood video preserves the prior snapshot and exact new scoping",async()=>{
+ const {dogFoodNovemberBExplainer:v,dogFoodExplainer:old,snapshotVideo,benchmarkExplainers}=await import("../benchmark-video.mjs");
+ const {publicWatchVideos,videoSchema}=await import("../video-watch.mjs");
+ const run={id:182,category_slug:"dog-food",period_label:"2026-11-B",run_date:"2026-11-14"};
+ assert.equal(snapshotVideo("dog-food",run),v);assert.ok(publicWatchVideos([run]).includes(v));
+ assert.equal(snapshotVideo("dog-food",{id:172,period_label:"2026-11-A",run_date:"2026-11-04"}),old);
+ for(const change of [{id:172},{period_label:"2026-11-A"},{run_date:"2026-11-04"}]){
+  assert.equal(snapshotVideo("dog-food",{...run,...change}),null);
+  assert.ok(!publicWatchVideos([{...run,...change}]).includes(v));
+ }
+ assert.equal(snapshotVideo("humidifiers",run),null);
+ assert.equal(snapshotVideo("dog-food",run,{...v,approved:false}),null);
+ const schema=videoSchema(v);assert.equal(schema.duration,"PT48.3S");assert.match(schema.transcript,/Explore benchmark at getrecoscope\.com\.$/);
+ const {readFileSync}=await import("node:fs");const {createHash}=await import("node:crypto");
+ assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+v.src,import.meta.url))).digest("hex"),v.approvedSha256);
+ const captions=readFileSync(new URL("../../../public"+v.captions,import.meta.url),"utf8");assert.equal(captions.match(/-->/g)?.length,18);
+ assert.match(v.summary[0],/Each date captured 12 usable answers/);assert.match(v.summary[2],/Two snapshots do not establish stable AI behavior/);
 });
