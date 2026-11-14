@@ -735,7 +735,53 @@ export const humidifiersExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer];
+// November 14 Dog Food benchmark and narrated video approved by the owner.
+export const dogFoodNovemberBExplainer = {
+  "id": "dog-food-2026-11-b-same-top-three-ten-days",
+  "approved": true,
+  "approvedSha256": "d5c48cdb02de932926bb561944d6ac1fcec14bee94fa52335bddd00ea5b4b737",
+  "category": "dog-food",
+  "runId": 182,
+  "period": "2026-11-B",
+  "collected": "2026-11-14",
+  "collectedLabel": "November 14, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Same top three. Ten days apart.",
+  "duration": "48.3-second explainer",
+  "src": "/tracker-media/dog-food/2026-11-b/dog-food-explainer.mp4",
+  "poster": "/tracker-media/dog-food/2026-11-b/explainer-poster.jpg",
+  "captions": "/tracker-media/dog-food/2026-11-b/explainer.en.vtt",
+  "summary": [
+    "On November 4 and November 14, all four comparative answers ranked Purina Pro Plan first, Hill’s Science Diet second, and Royal Canin third. Each date captured 12 usable answers across four AI assistants and three prompt types.",
+    "Pro Plan appeared in 10/12 answers on both dates. In November 14’s under-$70-per-bag answers, Purina ONE appeared in 4/4 and IAMS in 3/4. Mention frequency and comparative rank are separate measures of captured answers.",
+    "Two snapshots do not establish stable AI behavior or product quality. Gemini’s default changed from Flash to 4 Hydrogen; Claude used fresh regular chats instead of Incognito. Mentions do not verify current prices or veterinary suitability."
+  ],
+  "transcript": [
+    {
+      "text": "Ten days apart. The same top three."
+    },
+    {
+      "text": "On November fourth and November fourteenth, all four comparative answers ranked Purina Pro Plan first, Hill's Science Diet second, and Royal Canin third."
+    },
+    {
+      "text": "Each Recoscope snapshot captured twelve usable answers, across four AI assistants and three prompt types."
+    },
+    {
+      "text": "Pro Plan appeared in ten of twelve answers on both dates."
+    },
+    {
+      "text": "But the under-seventy-dollar prompt still changed visibility. Purina ONE appeared in all four budget answers on November fourteenth; Iams appeared in three."
+    },
+    {
+      "text": "These are two captured snapshots, not proof of stable AI behavior. Assistant settings changed, and mentions don't verify price, suitability, or product quality."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),

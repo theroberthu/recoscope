@@ -1,10 +1,11 @@
 import { benchmarkExplainers, snapshotVideo } from "./benchmark-video.mjs";
 import { canonicalUrl, isoDate, PUBLISHER, ROBERT_HU } from "./seo.mjs";
 
-export const WATCH_PAGES_UPDATED_AT = "2026-11-13";
+export const WATCH_PAGES_UPDATED_AT = "2026-11-14";
 
 // First successful public deployments; collection dates are separate evidence.
 const releases = {
+  "dog-food-2026-11-b-same-top-three-ten-days": ["2026-11-14T14:48:40+00:00", 48.3],
   "humidifiers-2026-11-a-mentioned-every-time": ["2026-11-13T16:29:24+00:00", 43.5],
   "air-purifiers-2026-11-a-split-first-choice": ["2026-11-12T15:52:49+00:00", 47],
   "skincare-2026-11-a-check-the-total": ["2026-11-11T16:10:05+00:00", 50],
