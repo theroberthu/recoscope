@@ -24,7 +24,7 @@ export default function PrivacyPage() {
             <p>
               RecoScope (<a href="https://getrecoscope.com" className="text-cyan/60 underline underline-offset-2 hover:text-cyan">getrecoscope.com</a>) provides
               AI recommendation benchmark data for consumer brands. If you have questions about this policy,
-              contact us at <a href="mailto:contact@getrecoscope.com" className="text-cyan/60 underline underline-offset-2 hover:text-cyan">contact@getrecoscope.com</a>.
+              contact us at <a href="mailto:robert@theroberthu.com" className="text-cyan/60 underline underline-offset-2 hover:text-cyan">robert@theroberthu.com</a>.
             </p>
           </section>
 
@@ -107,7 +107,7 @@ export default function PrivacyPage() {
             </p>
             <p className="mt-3">
               To exercise any of these rights, email{" "}
-              <a href="mailto:contact@getrecoscope.com" className="text-cyan/60 underline underline-offset-2 hover:text-cyan">contact@getrecoscope.com</a>.
+              <a href="mailto:robert@theroberthu.com" className="text-cyan/60 underline underline-offset-2 hover:text-cyan">robert@theroberthu.com</a>.
               We respond to all requests within 30 days.
             </p>
           </section>
