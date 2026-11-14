@@ -3,6 +3,7 @@ import Script from "next/script";
 import Link from "next/link";
 import { PostHogProvider } from "@/lib/posthog";
 import "./globals.css";
+import { YOUTUBE_CHANNEL_URL } from "@/lib/social-links";
 import { SiteNav } from "@/components/SiteNav";
 
 export const metadata: Metadata = {
@@ -153,15 +154,18 @@ export default function RootLayout({
             </div>
 
             <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-6 text-[12px] text-white/20">
-              <div className="flex items-center gap-4">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                 <a
                   href="https://x.com/recoscope"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="transition-colors hover:text-white/40"
                 >
-                  @recoscope
+                  X @recoscope
                 </a>
+                <span className="text-white/10">&middot;</span>
+                <a href={YOUTUBE_CHANNEL_URL} target="_blank" rel="noopener noreferrer"
+                  className="transition-colors hover:text-white/40">YouTube @recoscope</a>
                 <span className="text-white/10">&middot;</span>
                 <Link
                   href="/terms"
