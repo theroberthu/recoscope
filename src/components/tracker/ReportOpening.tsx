@@ -5,6 +5,7 @@ import type { BenchmarkVideo } from "@/lib/benchmark-video.mjs";
 import marks from "@/lib/home-brand-marks.json";
 import { SectionHeader } from "./SectionHeader";
 import { BriefVideoLink } from "./BriefVideoLink";
+import { isNewCategory } from "@/lib/discovery.mjs";
 
 function EvidenceCard({ metric, ranking = false }: { metric: BriefMetric; ranking?: boolean }) {
   const name = metric.names.join(" / ");
@@ -42,6 +43,7 @@ export function ReportOpening({ category, date, dateLabel, cadence, coverage, pr
   return <>
     <header className="report-hero">
       <div className="report-identity">
+        {video && isNewCategory(video.category) && <span className="new-category-badge report-new-category">New category</span>}
         <p className="report-mobile-date">AI benchmark · <time dateTime={date}>{dateLabel}</time></p>
         <SectionHeader title={category} subtitle={`${cadence} — ${dateLabel}`} />
         <p className="report-models report-attribution-desktop">{attribution} · Collected <time dateTime={date}>{dateLabel}</time></p>
