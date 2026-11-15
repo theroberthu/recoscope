@@ -781,7 +781,68 @@ export const dogFoodNovemberBExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer];
+// November 15 Office Chairs benchmark and narrated video approved by the owner.
+export const officeChairsNovemberBExplainer = {
+  "id": "office-chairs-2026-11-b-different-leader-split-first",
+  "approved": true,
+  "approvedSha256": "b72f5c792ffabe701d01d2a3c1c0428853a290b3642cb840e7799d0fd6d3568b",
+  "category": "office-chairs",
+  "runId": 183,
+  "period": "2026-11-B",
+  "collected": "2026-11-15",
+  "collectedLabel": "November 15, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "A different mention leader. A split first choice.",
+  "duration": "44.3-second explainer",
+  "src": "/tracker-media/office-chairs/2026-11-b/office-chairs-explainer.mp4",
+  "poster": "/tracker-media/office-chairs/2026-11-b/explainer-poster.png",
+  "captions": "/tracker-media/office-chairs/2026-11-b/explainer.en.vtt",
+  "summary": [
+    "Steelcase appeared in 10/12 usable answers on November 15; Branch appeared in 9/12. ChatGPT, Gemini and Perplexity ranked Steelcase first in the comparative prompt; Claude ranked Herman Miller first. Each date captured 12 usable answers across four AI assistants and three prompt types.",
+    "On November 5, Branch led mentions at 11/12 and Steelcase appeared in 9/12. Branch appeared in all four under-$400 answers on both dates. Mention frequency and explicit comparative rank are separate measures of captured answers.",
+    "These are two captured snapshots, not a controlled trend or product-quality test. Gemini’s default changed from Flash to 4 Hydrogen; Claude used fresh regular chats instead of Incognito. Perplexity’s discovery answer showed an automatic advanced-search preview. Mentions do not verify current prices or clinical suitability."
+  ],
+  "transcript": [
+    {
+      "text": "Ten days."
+    },
+    {
+      "text": "A different visibility leader."
+    },
+    {
+      "text": "On November fifth, Branch appeared in eleven of twelve office chair answers."
+    },
+    {
+      "text": "On November fifteenth, Steelcase led with ten of twelve."
+    },
+    {
+      "text": "But most mentioned still doesn't mean unanimous first choice."
+    },
+    {
+      "text": "ChatGPT, Gemini and Perplexity ranked Steelcase first."
+    },
+    {
+      "text": "Claude ranked Herman Miller first."
+    },
+    {
+      "text": "Each snapshot captured twelve usable answers across four AI assistants and three prompt types."
+    },
+    {
+      "text": "Branch still appeared in all four under-four-hundred-dollar answers."
+    },
+    {
+      "text": "These are captured snapshots, not product-quality ratings."
+    },
+    {
+      "text": "Model and privacy settings changed, so this isn't a controlled trend test."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),

@@ -139,6 +139,13 @@
       "image_url": "https://d1ncau8tqf99kp.cloudfront.net/media/sony-logo-200.png",
       "method": "Official Sony Electronics header PNG; original white wordmark unchanged, displayed on dark background.",
       "retrieved_on": "2026-11-08"
+    },
+    {
+      "file": "steelcase.svg",
+      "source_page": "https://www.steelcase.com/",
+      "image_url": "https://dumy1g3ng547g.cloudfront.net/content/themes/steelcase/img/logo.svg",
+      "method": "Official header wordmark SVG; original artwork unchanged.",
+      "retrieved_on": "2026-11-15"
     }
   ]
 }
