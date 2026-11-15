@@ -146,6 +146,13 @@
       "image_url": "https://dumy1g3ng547g.cloudfront.net/content/themes/steelcase/img/logo.svg",
       "method": "Official header wordmark SVG; original artwork unchanged.",
       "retrieved_on": "2026-11-15"
+    },
+    {
+      "file": "dreo.png",
+      "source_page": "https://www.dreo.com/",
+      "image_url": "https://www.dreo.com/cdn/shop/files/DREO_Logo_dee39d9c-bf28-42ac-ad99-8efc5a525501.png?v=1757931409&width=800",
+      "method": "Official header logo PNG at source-provided 800px width; original artwork unchanged.",
+      "retrieved_on": "2026-11-15"
     }
   ]
 }
