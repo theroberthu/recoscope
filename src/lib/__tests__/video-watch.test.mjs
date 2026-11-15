@@ -5,8 +5,13 @@ import { publicWatchVideos, watchPath, videoSchema } from "../video-watch.mjs";
 import { canonicalUrl } from "../seo.mjs";
 const runs = benchmarkExplainers.map((video) => ({ id: video.runId, category_slug: video.category, period_label: video.period, run_date: video.collected }));
 
+test("same-day releases put the newest published snapshot first", () => {
+  const sameDay = publicWatchVideos(runs).filter((video) => video.collected === "2026-11-15");
+  assert.deepEqual(sameDay.map((video) => video.runId), [184, 183]);
+});
+
 test("watch listing requires exact published evidence and never substitutes another snapshot", () => {
-  assert.equal(publicWatchVideos(runs).length, 18);
+  assert.equal(publicWatchVideos(runs).length, 19);
   assert.equal(publicWatchVideos([]).length, 0);
   for (const change of [{ id: -1 }, { category_slug: "private-category" }, { period_label: "2026-12-A" }, { run_date: "2025-01-01" }]) {
     assert.equal(publicWatchVideos(runs.map((run) => ({ ...run, ...change }))).length, 0);
