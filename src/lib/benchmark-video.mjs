@@ -842,7 +842,71 @@ export const officeChairsNovemberBExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer];
+// November 15 Space Heaters seasonal pilot and approved narrated brief.
+export const spaceHeatersExplainer = {
+  "id": "space-heaters-2026-11-a-three-first-choices",
+  "approved": true,
+  "approvedSha256": "78be0c6787d148b353bcf3b2c2807e3469ed5101352f332bd24c979440959144",
+  "category": "space-heaters",
+  "runId": 184,
+  "period": "2026-11-A",
+  "collected": "2026-11-15",
+  "collectedLabel": "November 15, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "11 mentions. Three different first choices.",
+  "duration": "49.3-second explainer",
+  "src": "/tracker-media/space-heaters/2026-11-a/space-heaters-explainer.mp4",
+  "poster": "/tracker-media/space-heaters/2026-11-a/explainer-poster.png",
+  "captions": "/tracker-media/space-heaters/2026-11-a/explainer.en.vtt",
+  "summary": [
+    "Dreo appeared in 11/12 usable answers, followed by Vornado at 9/12, De’Longhi at 8/12 and Lasko at 7/12. In the comparative prompt, Claude and Gemini ranked Dreo first; ChatGPT ranked Vornado first; Perplexity ranked De’Longhi first.",
+    "Dreo also appeared in all four under-$100 answers. Mention frequency and comparative rank are separate measures. Budget mentions do not verify a tax-inclusive under-$100 checkout price.",
+    "This first winter pilot captured a US shopper’s quiet 200-square-foot home office across four AI assistants and three prompt types. Specific models and heating types varied. These findings describe captured answers, not product quality or safety ratings. There is no historical trend for this new category."
+  ],
+  "transcript": [
+    {
+      "text": "Eleven mentions."
+    },
+    {
+      "text": "Three different first choices."
+    },
+    {
+      "text": "In Recoscope's November fifteenth space heater benchmark, Dreo appeared in eleven of twelve usable answers."
+    },
+    {
+      "text": "But in the comparative prompt, Claude and Gemini ranked Dreo first."
+    },
+    {
+      "text": "ChatGPT ranked Vornado first."
+    },
+    {
+      "text": "Perplexity ranked De'Longhi first."
+    },
+    {
+      "text": "The snapshot covers four AI assistants and three prompt types: discovery, under one hundred dollars, and ranking."
+    },
+    {
+      "text": "Dreo also appeared in all four budget answers."
+    },
+    {
+      "text": "That doesn't verify an under-one-hundred-dollar checkout price."
+    },
+    {
+      "text": "Different models and heating types appeared across the answers."
+    },
+    {
+      "text": "These findings describe captured AI responses, not product quality or safety ratings."
+    },
+    {
+      "text": "Track how often a brand appears, and where it ranks."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
