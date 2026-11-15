@@ -5,6 +5,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   "protein-powder": "Protein Powder",
   "sunscreen": "Sunscreen",
   "humidifiers": "Humidifiers",
+  "space-heaters": "Space Heaters",
   "skincare": "Skincare",
   "mattress-toppers": "Mattress Toppers",
   "wireless-earbuds": "Wireless Earbuds",

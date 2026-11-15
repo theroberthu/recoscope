@@ -5,6 +5,7 @@ export const WATCH_PAGES_UPDATED_AT = "2026-11-15";
 
 // First successful public deployments; collection dates are separate evidence.
 const releases = {
+  "space-heaters-2026-11-a-three-first-choices": ["2026-11-15T22:18:30+00:00", 49.3],
   "office-chairs-2026-11-b-different-leader-split-first": ["2026-11-15T14:57:11+00:00", 44.3],
   "dog-food-2026-11-b-same-top-three-ten-days": ["2026-11-14T14:48:40+00:00", 48.3],
   "humidifiers-2026-11-a-mentioned-every-time": ["2026-11-13T16:29:24+00:00", 43.5],
@@ -37,7 +38,7 @@ export function publicWatchVideos(runs) {
     snapshotVideo(run.category_slug, {
       id: run.id, period_label: run.period_label, run_date: run.run_date,
     }, video),
-  )).sort((a, b) => b.collected.localeCompare(a.collected));
+  )).sort((a, b) => b.collected.localeCompare(a.collected) || b.runId - a.runId);
 }
 export function videoSchema(video) {
   const release = releases[video.id];
