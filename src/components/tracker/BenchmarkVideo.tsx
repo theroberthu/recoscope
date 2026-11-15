@@ -6,6 +6,7 @@ import type { BenchmarkVideo as VideoDetails } from "@/lib/benchmark-video.mjs";
 
 export function BenchmarkVideo({ video }: { video: VideoDetails }) {
   const durationLabel = video.duration.replace("-second explainer", " seconds");
+  const seconds = video.duration.match(/^\d+/)?.[0];
   return (
     <section
       id="benchmark-video"
@@ -42,7 +43,7 @@ export function BenchmarkVideo({ video }: { video: VideoDetails }) {
         </details>
       </div>
       <div className="benchmark-video-media">
-        <BenchmarkPlayer video={video} />
+        <BenchmarkPlayer video={video} showPlayButton playLabel={`Watch the ${seconds ? `${seconds}-second ` : ""}brief`} />
         <p className="mt-3 text-sm text-brand"><a href={watchPath(video)}>Watch on the dedicated video page →</a></p>
       </div>
     </section>

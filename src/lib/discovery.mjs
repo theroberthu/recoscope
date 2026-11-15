@@ -7,6 +7,15 @@ export function todayCentral() {
   }).format(new Date());
 }
 
+// Launch labels expire after 30 days, independently of repeat collections.
+const categoryLaunches = { "space-heaters": "2026-11-15" };
+export function isNewCategory(slug, today = todayCentral()) {
+  const launched = categoryLaunches[slug];
+  if (!launched) return false;
+  const age = (Date.parse(`${today}T12:00:00Z`) - Date.parse(`${launched}T12:00:00Z`)) / 86400000;
+  return Number.isFinite(age) && age >= 0 && age < 30;
+}
+
 export function formatSnapshotDate(value) {
   const date = new Date(`${String(value).slice(0, 10)}T12:00:00Z`);
   return Number.isNaN(date.getTime())

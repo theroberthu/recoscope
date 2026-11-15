@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
 import type { BenchmarkVideo } from "@/lib/benchmark-video.mjs";
 
-export function BenchmarkPlayer({ video, showPlayButton = false }: { video: BenchmarkVideo; showPlayButton?: boolean }) {
+export function BenchmarkPlayer({ video, showPlayButton = false, playLabel }: { video: BenchmarkVideo; showPlayButton?: boolean; playLabel?: string }) {
   const player = useRef<HTMLVideoElement>(null);
   const sentStart = useRef(false);
   const sentComplete = useRef(false);
@@ -41,11 +41,11 @@ export function BenchmarkPlayer({ video, showPlayButton = false }: { video: Benc
         <button
           type="button"
           className="watch-player-play"
-          aria-label={`Play ${video.duration.replace("explainer", "brief")}: ${video.title}`}
+          aria-label={playLabel ? `${playLabel}: ${video.title}` : `Play ${video.duration.replace("explainer", "brief")}: ${video.title}`}
           onClick={() => { player.current?.play().catch(() => setError(true)); }}
         >
           <span className="watch-player-play-icon" aria-hidden="true">▶</span>
-          <span className="watch-player-play-label">Play the brief</span>
+          <span className="watch-player-play-label">{playLabel ?? "Play the brief"}</span>
         </button>
       )}
       {error && <p role="status">The video could not load. Please read the transcript or <a href={video.src}>open the video file</a>.</p>}

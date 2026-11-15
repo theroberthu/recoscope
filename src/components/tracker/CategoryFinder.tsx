@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { formatSnapshotDate, snapshotAge } from "@/lib/discovery.mjs";
+import { formatSnapshotDate, snapshotAge, isNewCategory } from "@/lib/discovery.mjs";
 import { TrackedLink } from "@/components/TrackedLink";
 
 export interface DiscoveryCategory {
@@ -92,8 +92,8 @@ export function CategoryFinder({
           >
             <div className="flex flex-wrap items-start justify-between gap-2">
               <h3>{c.name}</h3>
-              <span className="snapshot-status">
-                {snapshotAge(c.latest_run_date, today)}
+              <span className={isNewCategory(c.slug, today) ? "new-category-badge" : "snapshot-status"}>
+                {isNewCategory(c.slug, today) ? "New category" : snapshotAge(c.latest_run_date, today)}
               </span>
             </div>
             <p className="my-4 leading-relaxed">{c.finding}</p>

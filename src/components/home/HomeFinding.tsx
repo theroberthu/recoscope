@@ -1,6 +1,6 @@
 import { watchPath } from "@/lib/video-watch.mjs";
 import { snapshotVideo } from "@/lib/benchmark-video.mjs";
-import { formatSnapshotDate } from "@/lib/discovery.mjs";
+import { formatSnapshotDate, isNewCategory } from "@/lib/discovery.mjs";
 import { displayAgent, rankSlots } from "@/lib/report-ranking.mjs";
 import type { getLatestPublicSnapshot } from "@/lib/queries";
 import { SnapshotPreview } from "./SnapshotPreview";
@@ -13,7 +13,7 @@ export function HomeFinding({ snapshot }: { snapshot: NonNullable<Awaited<Return
   const comparisons = snapshot.comparison.filter(row => row.hasResponse && row.rankedBrands.length > 0).length;
   const seconds = video.duration.match(/^\d+/)?.[0];
   return <section className="snapshot-preview home-finding" aria-labelledby="preview-heading">
-    <div className="home-finding-meta"><h2 id="preview-heading">{snapshot.category.name}</h2><time dateTime={video.collected}>{formatSnapshotDate(video.collected)}</time></div>
+    <div className="home-finding-meta"><div className="home-finding-category"><h2 id="preview-heading">{snapshot.category.name}</h2>{isNewCategory(snapshot.category.slug) && <span className="new-category-badge">New category</span>}</div><time dateTime={video.collected}>{formatSnapshotDate(video.collected)}</time></div>
     <div className="home-finding-story">
       <a className="home-finding-poster" href={watchPath(video)} aria-label={`Watch ${video.title}`}>
         {/* Full vertical poster; the MP4 loads only after playback is requested on the report. */}

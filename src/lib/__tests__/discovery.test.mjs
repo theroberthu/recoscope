@@ -5,7 +5,17 @@ import {
   formatSnapshotDate,
   auditHref,
   resolveCategory,
+  isNewCategory,
 } from "../discovery.mjs";
+
+test("new-category label is limited to the launch window and never follows snapshot freshness", () => {
+  assert.equal(isNewCategory("space-heaters", "2026-11-14"), false);
+  assert.equal(isNewCategory("space-heaters", "2026-11-15"), true);
+  assert.equal(isNewCategory("space-heaters", "2026-12-14"), true);
+  assert.equal(isNewCategory("space-heaters", "2026-12-15"), false);
+  assert.equal(isNewCategory("office-chairs", "2026-11-15"), false);
+  assert.equal(isNewCategory("space-heaters", "invalid"), false);
+});
 
 test("publication freshness has an explicit boundary and does not label future or missing records recent", () => {
   assert.equal(snapshotAge("2026-09-13", "2026-10-28"), "Recent snapshot");
