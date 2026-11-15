@@ -1,4 +1,5 @@
 export function todayCentral(): string;
+export function isNewCategory(slug: string, today?: string): boolean;
 export function formatSnapshotDate(value: string): string;
 export function snapshotAge(
   value: string,
