@@ -336,7 +336,7 @@ test("approved Humidifiers video is scoped to the first November13 snapshot",asy
  }
  assert.equal(snapshotVideo("sunscreen",run),null);
  assert.equal(snapshotVideo("humidifiers",run,{...v,approved:false}),null);
- assert.equal(benchmarkExplainers.length,20);
+ assert.equal(benchmarkExplainers.length,21);
  const schema=videoSchema(v);assert.equal(schema.duration,"PT43.5S");assert.match(schema.transcript,/Explore benchmark at getrecoscope\.com\.$/);
  const {readFileSync}=await import("node:fs");const {createHash}=await import("node:crypto");
  assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+v.src,import.meta.url))).digest("hex"),v.approvedSha256);
@@ -378,5 +378,23 @@ test("November16 Running Shoes logo video is isolated to run185 and preserves No
  assert.equal(snapshotVideo("office-chairs",run),null);assert.equal(snapshotVideo("running-shoes",run,{...v,approved:false}),null);
  const schema=videoSchema(v);assert.equal(schema.duration,"PT51.2S");assert.match(schema.url,/running-shoes-2026-11-b-mentions-versus-first$/);
  assert.equal(v.transcript.at(-1).text,"Explore benchmark at getrecoscope.com.");
+ const {readFileSync}=await import("node:fs");const captions=readFileSync(new URL("../../../public"+v.captions,import.meta.url),"utf8");assert.equal(captions.match(/-->/g)?.length,19);
+});
+
+
+test("November16 Robot Vacuums video is isolated to approved run186",async()=>{
+ const {robotVacuumsNovemberBExplainer:v,robotVacuumsExplainer:old,snapshotVideo}=await import("../benchmark-video.mjs");
+ const {publicWatchVideos,videoSchema}=await import("../video-watch.mjs");
+ const run={id:186,category_slug:"robot-vacuums",period_label:"2026-11-B",run_date:"2026-11-16"};
+ assert.equal(snapshotVideo("robot-vacuums",run),v);assert.ok(publicWatchVideos([run]).includes(v));
+ assert.equal(snapshotVideo("robot-vacuums",{id:175,period_label:"2026-11-A",run_date:"2026-11-07"}),old);
+ for(const change of [{id:175},{period_label:"2026-11-A"},{run_date:"2026-11-07"}]){
+  assert.equal(snapshotVideo("robot-vacuums",{...run,...change}),null);
+  assert.ok(!publicWatchVideos([{...run,...change}]).includes(v));
+ }
+ assert.equal(snapshotVideo("running-shoes",run),null);assert.equal(snapshotVideo("robot-vacuums",run,{...v,approved:false}),null);
+ const schema=videoSchema(v);assert.equal(schema.duration,"PT50S");assert.match(schema.url,/robot-vacuums-2026-11-b-ranking-versus-discovery$/);
+ assert.equal(v.transcript.at(-1).text,"Explore benchmark at getrecoscope.com.");
+ assert.match(v.summary.join(" "),/Claude with Shark/);assert.match(v.summary.join(" "),/shared third place/);
  const {readFileSync}=await import("node:fs");const captions=readFileSync(new URL("../../../public"+v.captions,import.meta.url),"utf8");assert.equal(captions.match(/-->/g)?.length,19);
 });
