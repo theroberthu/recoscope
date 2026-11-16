@@ -952,7 +952,53 @@ export const runningShoesNovemberBExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer];
+// November 16 Robot Vacuums revision 3 approved by the site owner.
+export const robotVacuumsNovemberBExplainer = {
+  "id": "robot-vacuums-2026-11-b-ranking-versus-discovery",
+  "approved": true,
+  "approvedSha256": "392cf77ddf55c9fe1374ae6d74254f39f3acf211d0313edb8a80114a0daf6716",
+  "category": "robot-vacuums",
+  "runId": 186,
+  "period": "2026-11-B",
+  "collected": "2026-11-16",
+  "collectedLabel": "November 16, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "All four agree. Then picks split.",
+  "duration": "50-second explainer",
+  "src": "/tracker-media/robot-vacuums/2026-11-b/robot-vacuums-explainer.mp4",
+  "poster": "/tracker-media/robot-vacuums/2026-11-b/explainer-poster.png",
+  "captions": "/tracker-media/robot-vacuums/2026-11-b/explainer.en.vtt",
+  "summary": [
+    "Roborock appeared in all 12 usable answers and ranked first in all four comparative answers. But the open recommendation leads differed: ChatGPT and Gemini led with Roborock, Claude with Shark, and Perplexity with MOVA. Discovery leads describe those answers; they are separate from comparative first-place flags.",
+    "The snapshot repeats the same US household across three fresh prompts: discovery, under-$500 budget and comparative ranking. Roborock appeared in all four budget answers and Eufy in three. A mention does not verify a tax-inclusive checkout offer under $500, and exact models vary.",
+    "These findings describe captured answers, not product quality. Claude grouped Ecovacs, Narwal and Dreame at shared third place in its comparison. Mention frequency, comparative rank and a specific product recommendation measure different things."
+  ],
+  "transcript": [
+    {
+      "text": "All four ranked Roborock first. But their shopping picks were different."
+    },
+    {
+      "text": "In Recoscope's November sixteenth robot vacuum benchmark, Roborock appeared in all twelve usable answers. Every comparative answer ranked it first."
+    },
+    {
+      "text": "In the open recommendation prompt, ChatGPT and Gemini led with Roborock. Claude picked Shark. Perplexity picked MOVA."
+    },
+    {
+      "text": "Same household: two floors, two kids and a long-haired cat. Three prompt types: discovery, under five hundred dollars, and ranking."
+    },
+    {
+      "text": "Roborock appeared in every budget answer, while Eufy appeared in three. Those mentions don't verify a checkout price under five hundred dollars."
+    },
+    {
+      "text": "A first-place brand is not one agreed product recommendation. These findings describe captured answers, not product quality."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
