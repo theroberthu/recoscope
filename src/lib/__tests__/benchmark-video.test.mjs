@@ -336,7 +336,7 @@ test("approved Humidifiers video is scoped to the first November13 snapshot",asy
  }
  assert.equal(snapshotVideo("sunscreen",run),null);
  assert.equal(snapshotVideo("humidifiers",run,{...v,approved:false}),null);
- assert.equal(benchmarkExplainers.length,19);
+ assert.equal(benchmarkExplainers.length,20);
  const schema=videoSchema(v);assert.equal(schema.duration,"PT43.5S");assert.match(schema.transcript,/Explore benchmark at getrecoscope\.com\.$/);
  const {readFileSync}=await import("node:fs");const {createHash}=await import("node:crypto");
  assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+v.src,import.meta.url))).digest("hex"),v.approvedSha256);
@@ -362,4 +362,21 @@ test("November14 DogFood video preserves the prior snapshot and exact new scopin
  assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+v.src,import.meta.url))).digest("hex"),v.approvedSha256);
  const captions=readFileSync(new URL("../../../public"+v.captions,import.meta.url),"utf8");assert.equal(captions.match(/-->/g)?.length,18);
  assert.match(v.summary[0],/Each date captured 12 usable answers/);assert.match(v.summary[2],/Two snapshots do not establish stable AI behavior/);
+});
+
+
+test("November16 Running Shoes logo video is isolated to run185 and preserves November6",async()=>{
+ const {runningShoesNovemberBExplainer:v,runningShoesExplainer:old,snapshotVideo}=await import("../benchmark-video.mjs");
+ const {publicWatchVideos,videoSchema}=await import("../video-watch.mjs");
+ const run={id:185,category_slug:"running-shoes",period_label:"2026-11-B",run_date:"2026-11-16"};
+ assert.equal(snapshotVideo("running-shoes",run),v);assert.ok(publicWatchVideos([run]).includes(v));
+ assert.equal(snapshotVideo("running-shoes",{id:174,period_label:"2026-11-A",run_date:"2026-11-06"}),old);
+ for(const change of [{id:174},{period_label:"2026-11-A"},{run_date:"2026-11-06"}]){
+  assert.equal(snapshotVideo("running-shoes",{...run,...change}),null);
+  assert.ok(!publicWatchVideos([{...run,...change}]).includes(v));
+ }
+ assert.equal(snapshotVideo("office-chairs",run),null);assert.equal(snapshotVideo("running-shoes",run,{...v,approved:false}),null);
+ const schema=videoSchema(v);assert.equal(schema.duration,"PT51.2S");assert.match(schema.url,/running-shoes-2026-11-b-mentions-versus-first$/);
+ assert.equal(v.transcript.at(-1).text,"Explore benchmark at getrecoscope.com.");
+ const {readFileSync}=await import("node:fs");const captions=readFileSync(new URL("../../../public"+v.captions,import.meta.url),"utf8");assert.equal(captions.match(/-->/g)?.length,19);
 });
