@@ -45,3 +45,5 @@ export const humidifiersExplainer: BenchmarkVideo;
 export const dogFoodNovemberBExplainer: BenchmarkVideo;
 
 export const spaceHeatersExplainer: BenchmarkVideo;
+
+export const runningShoesNovemberBExplainer: BenchmarkVideo;
