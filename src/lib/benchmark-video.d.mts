@@ -47,3 +47,5 @@ export const dogFoodNovemberBExplainer: BenchmarkVideo;
 export const spaceHeatersExplainer: BenchmarkVideo;
 
 export const runningShoesNovemberBExplainer: BenchmarkVideo;
+
+export const robotVacuumsNovemberBExplainer: BenchmarkVideo;

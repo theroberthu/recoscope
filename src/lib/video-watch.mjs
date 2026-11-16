@@ -5,6 +5,7 @@ export const WATCH_PAGES_UPDATED_AT = "2026-11-16";
 
 // First successful public deployments; collection dates are separate evidence.
 const releases = {
+  "robot-vacuums-2026-11-b-ranking-versus-discovery": ["2026-11-16T23:31:24+00:00", 50],
   "running-shoes-2026-11-b-mentions-versus-first": ["2026-11-16T15:03:55+00:00", 51.2],
   "space-heaters-2026-11-a-three-first-choices": ["2026-11-15T22:18:30+00:00", 49.3],
   "office-chairs-2026-11-b-different-leader-split-first": ["2026-11-15T14:57:11+00:00", 44.3],
