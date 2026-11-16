@@ -906,7 +906,53 @@ export const spaceHeatersExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer];
+// November 16 Running Shoes logo revision approved by the site owner.
+export const runningShoesNovemberBExplainer = {
+  "id": "running-shoes-2026-11-b-mentions-versus-first",
+  "approved": true,
+  "approvedSha256": "0be188a4c13794943c300650ce73c2a60df1cb50f4fc007da50b7a2e1aced880",
+  "category": "running-shoes",
+  "runId": 185,
+  "period": "2026-11-B",
+  "collected": "2026-11-16",
+  "collectedLabel": "November 16, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Brooks shows up. ASICS ranks first.",
+  "duration": "51.2-second explainer",
+  "src": "/tracker-media/running-shoes/2026-11-b/running-shoes-explainer.mp4",
+  "poster": "/tracker-media/running-shoes/2026-11-b/explainer-poster.png",
+  "captions": "/tracker-media/running-shoes/2026-11-b/explainer.en.vtt",
+  "summary": [
+    "Brooks appeared most often, in 11/12 usable answers, while ASICS and New Balance each appeared in 10/12. All four comparative answers ranked ASICS first. Brooks received no comparative first places.",
+    "Brooks and Saucony appeared in all four under-$150 answers. A mention does not verify a tax-inclusive checkout offer under $150. The snapshot covers four AI assistants and three unchanged prompt types: discovery, budget and comparative ranking.",
+    "These findings describe captured answers, not product quality or health benefits. November 6 first choices split between Brooks and ASICS; November 16 first choices all named ASICS. Claude privacy and Gemini model changes limit comparisons between the two dates."
+  ],
+  "transcript": [
+    {
+      "text": "Brooks showed up most. ASICS ranked first every time."
+    },
+    {
+      "text": "In Recoscope's November sixteenth running shoe benchmark, Brooks appeared in eleven of twelve usable answers. ASICS and New Balance each appeared in ten."
+    },
+    {
+      "text": "But when we asked the assistants to compare and rank brands, ChatGPT, Claude, Gemini and Perplexity all put ASICS first. Brooks received no first-place rankings."
+    },
+    {
+      "text": "This snapshot uses four AI assistants and three prompt types: discovery, under one hundred fifty dollars, and ranking."
+    },
+    {
+      "text": "Brooks and Saucony appeared in every budget answer. That doesn't verify a checkout price under one hundred fifty dollars."
+    },
+    {
+      "text": "Mention frequency measures visibility. Comparative rank measures position within those captured answers. Neither establishes product quality."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
