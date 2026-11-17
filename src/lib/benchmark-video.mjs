@@ -998,7 +998,53 @@ export const robotVacuumsNovemberBExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer];
+// November 17 Wireless Earbuds narrated revision 1 approved by the site owner.
+export const wirelessEarbudsNovemberBExplainer = {
+  "id": "wireless-earbuds-2026-11-b-four-first-choices",
+  "approved": true,
+  "approvedSha256": "11eb308f9bd82324497a252cb3b9c0407a56c4db0a1436bf1c3dc344350ea8c7",
+  "category": "wireless-earbuds",
+  "runId": 187,
+  "period": "2026-11-B",
+  "collected": "2026-11-17",
+  "collectedLabel": "November 17, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Tied on mentions. Four first choices.",
+  "duration": "50-second explainer",
+  "src": "/tracker-media/wireless-earbuds/2026-11-b/wireless-earbuds-explainer.mp4",
+  "poster": "/tracker-media/wireless-earbuds/2026-11-b/explainer-poster.png",
+  "captions": "/tracker-media/wireless-earbuds/2026-11-b/explainer.en.vtt",
+  "summary": [
+    "Sony and Beats tied most mentioned, each appearing in 9/12 usable answers. Yet the comparative first choices split four ways: ChatGPT ranked Sony first, Claude Jabra, Gemini Apple, and Perplexity Beats. Mention frequency and comparative rank are separate measures.",
+    "The same US commuter and gym routine was repeated across discovery, under-$150 everyday budget and ranking prompts. Soundcore appeared in all four budget answers; Sony in three. A mention does not verify an under-$150 checkout price, and exact models and generations varied.",
+    "These findings describe captured answers, not product quality. Perplexity automatically enabled a free advanced-search preview on its budget answer. The November 8 snapshot had 11 usable answers versus 12 here, with browser, model and preview differences, so the two dates do not establish a controlled improvement."
+  ],
+  "transcript": [
+    {
+      "text": "Two brands tied on mentions. But four assistants chose four different brands first."
+    },
+    {
+      "text": "In Recoscope’s November seventeenth wireless earbuds benchmark, Sony and Beats each appeared in nine of twelve usable answers."
+    },
+    {
+      "text": "In the comparative prompt, ChatGPT ranked Sony first. Claude ranked Jabra first. Gemini ranked Apple first. And Perplexity ranked Beats first."
+    },
+    {
+      "text": "Same commuter and gym routine. Three prompt types: discovery, under one hundred fifty dollars, and ranking."
+    },
+    {
+      "text": "Soundcore appeared in every budget answer. Those mentions don’t verify an under-one-hundred-fifty-dollar checkout price."
+    },
+    {
+      "text": "Brand visibility and comparative rank tell different stories. These findings describe captured answers, not product quality."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),

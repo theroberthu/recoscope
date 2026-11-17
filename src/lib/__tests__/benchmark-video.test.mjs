@@ -336,7 +336,7 @@ test("approved Humidifiers video is scoped to the first November13 snapshot",asy
  }
  assert.equal(snapshotVideo("sunscreen",run),null);
  assert.equal(snapshotVideo("humidifiers",run,{...v,approved:false}),null);
- assert.equal(benchmarkExplainers.length,21);
+ assert.equal(benchmarkExplainers.length,22);
  const schema=videoSchema(v);assert.equal(schema.duration,"PT43.5S");assert.match(schema.transcript,/Explore benchmark at getrecoscope\.com\.$/);
  const {readFileSync}=await import("node:fs");const {createHash}=await import("node:crypto");
  assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+v.src,import.meta.url))).digest("hex"),v.approvedSha256);
@@ -397,4 +397,27 @@ test("November16 Robot Vacuums video is isolated to approved run186",async()=>{
  assert.equal(v.transcript.at(-1).text,"Explore benchmark at getrecoscope.com.");
  assert.match(v.summary.join(" "),/Claude with Shark/);assert.match(v.summary.join(" "),/shared third place/);
  const {readFileSync}=await import("node:fs");const captions=readFileSync(new URL("../../../public"+v.captions,import.meta.url),"utf8");assert.equal(captions.match(/-->/g)?.length,19);
+});
+
+test("November17 Wireless Earbuds release preserves its older snapshot and explicit four-way split",async()=>{
+ const {wirelessEarbudsNovemberBExplainer:v,wirelessEarbudsExplainer:old,snapshotVideo}=await import("../benchmark-video.mjs");
+ const {publicWatchVideos,videoSchema}=await import("../video-watch.mjs");
+ const run={id:187,category_slug:"wireless-earbuds",period_label:"2026-11-B",run_date:"2026-11-17"};
+ assert.equal(snapshotVideo("wireless-earbuds",run),v);assert.ok(publicWatchVideos([run]).includes(v));
+ assert.equal(snapshotVideo("wireless-earbuds",{id:176,period_label:"2026-11-A",run_date:"2026-11-08"}),old);
+ for(const change of [{id:176},{period_label:"2026-11-A"},{run_date:"2026-11-08"}]){
+  assert.equal(snapshotVideo("wireless-earbuds",{...run,...change}),null);
+  assert.ok(!publicWatchVideos([{...run,...change}]).includes(v));
+ }
+ assert.equal(snapshotVideo("robot-vacuums",run),null);
+ assert.equal(snapshotVideo("wireless-earbuds",run,{...v,approved:false}),null);
+ const schema=videoSchema(v);assert.equal(schema.duration,"PT50S");
+ assert.match(schema.url,/wireless-earbuds-2026-11-b-four-first-choices$/);
+ assert.match(v.summary[0],/each appearing in 9\/12/);
+ assert.match(v.summary[0],/ChatGPT ranked Sony first, Claude Jabra, Gemini Apple, and Perplexity Beats/);
+ assert.match(v.summary[2],/free advanced-search preview/);
+ assert.equal(v.transcript.at(-1).text,"Explore benchmark at getrecoscope.com.");
+ const {readFileSync}=await import("node:fs");const {createHash}=await import("node:crypto");
+ assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+v.src,import.meta.url))).digest("hex"),v.approvedSha256);
+ const captions=readFileSync(new URL("../../../public"+v.captions,import.meta.url),"utf8");assert.equal(captions.match(/-->/g)?.length,17);
 });

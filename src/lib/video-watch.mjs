@@ -1,10 +1,11 @@
 import { benchmarkExplainers, snapshotVideo } from "./benchmark-video.mjs";
 import { canonicalUrl, isoDate, PUBLISHER, ROBERT_HU } from "./seo.mjs";
 
-export const WATCH_PAGES_UPDATED_AT = "2026-11-16";
+export const WATCH_PAGES_UPDATED_AT = "2026-11-17";
 
 // First successful public deployments; collection dates are separate evidence.
 const releases = {
+  "wireless-earbuds-2026-11-b-four-first-choices": ["2026-11-17T13:29:01+00:00", 50],
   "robot-vacuums-2026-11-b-ranking-versus-discovery": ["2026-11-16T23:31:24+00:00", 50],
   "running-shoes-2026-11-b-mentions-versus-first": ["2026-11-16T15:03:55+00:00", 51.2],
   "space-heaters-2026-11-a-three-first-choices": ["2026-11-15T22:18:30+00:00", 49.3],
