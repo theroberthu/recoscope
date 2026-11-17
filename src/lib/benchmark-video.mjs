@@ -1044,7 +1044,53 @@ export const wirelessEarbudsNovemberBExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer];
+// November 17 Protein Powder narrated revision 1 approved by the site owner.
+export const proteinNovemberBExplainer = {
+  "id": "protein-powder-2026-11-b-split-first-choice",
+  "approved": true,
+  "approvedSha256": "24e90c015600291843583f6df8e41945ed65760cc2bb7000eb6b248e96370592",
+  "category": "protein-powder",
+  "runId": 188,
+  "period": "2026-11-B",
+  "collected": "2026-11-17",
+  "collectedLabel": "November 17, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "11 mentions. A split first choice.",
+  "duration": "54-second explainer",
+  "src": "/tracker-media/protein-powder/2026-11-b/protein-powder-explainer.mp4",
+  "poster": "/tracker-media/protein-powder/2026-11-b/explainer-poster.png",
+  "captions": "/tracker-media/protein-powder/2026-11-b/explainer.en.vtt",
+  "summary": [
+    "Optimum Nutrition appeared in 11/12 usable answers; Transparent Labs and Dymatize each appeared in 7/12. Comparative first choice split evenly: ChatGPT and Claude ranked Transparent Labs first; Gemini and Perplexity ranked Optimum Nutrition first. Mention frequency and comparative rank are separate measures.",
+    "The same US strength-training and desk-job profile was repeated across three fresh prompt types: discovery, everyday budget under $50 and comparative ranking. Optimum Nutrition, Dymatize and Orgain appeared in all four budget answers. Mentions do not verify an under-$50 checkout price, availability or one agreed formula. Gemini named Dymatize Elite whey while the other budget answers named ISO100; Perplexity described its Orgain listing as out of stock.",
+    "These findings describe captured answers, not product quality or nutrition advice. Certification, purity, digestion and price claims remain unverified model output. Perplexity automatically enabled a free advanced-search preview on discovery. The November 9 and November 17 captures are descriptive snapshots, not a controlled improvement claim."
+  ],
+  "transcript": [
+    {
+      "text": "Eleven mentions. But first choice split in two."
+    },
+    {
+      "text": "In Recoscope’s November seventeenth protein powder benchmark, Optimum Nutrition appeared in eleven of twelve usable answers. Transparent Labs and Dymatize each appeared in seven."
+    },
+    {
+      "text": "In the comparative prompt, ChatGPT and Claude ranked Transparent Labs first. Gemini and Perplexity ranked Optimum Nutrition first."
+    },
+    {
+      "text": "Same strength-training and desk-job profile. Four AI assistants. Three prompt types: discovery, under fifty dollars, and ranking."
+    },
+    {
+      "text": "Optimum Nutrition, Dymatize and Orgain appeared in every budget answer. But brand mentions don’t verify an under-fifty-dollar checkout price, and the exact formulas varied."
+    },
+    {
+      "text": "Visibility and comparative rank are separate measures. These findings describe captured answers, not product quality."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
