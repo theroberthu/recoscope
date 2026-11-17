@@ -153,6 +153,14 @@
       "image_url": "https://www.dreo.com/cdn/shop/files/DREO_Logo_dee39d9c-bf28-42ac-ad99-8efc5a525501.png?v=1757931409&width=800",
       "method": "Official header logo PNG at source-provided 800px width; original artwork unchanged.",
       "retrieved_on": "2026-11-15"
+    },
+    {
+      "file": "beats.png",
+      "source_page": "https://www.beatsbydre.com/",
+      "image_url": "https://www.beatsbydre.com/content/dam/beats/global/logos/beats-logo-161616.png",
+      "retrieved_on": "2026-11-17",
+      "method": "Official header brand mark; identifies captured brand without implying sponsorship.",
+      "bytes": 4606
     }
   ]
 }
