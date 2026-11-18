@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getPublicSitemapRuns, getAllPublishedPrompts } from "@/lib/queries";
 import { publicWatchVideos, watchPath, videoSchema, WATCH_PAGES_UPDATED_AT } from "@/lib/video-watch.mjs";
 import { getAllPosts } from "@/lib/blog";
-import { promptToSlug } from "@/lib/prompt-seo";
+import { promptPageSlug } from "@/lib/prompt-seo";
 import {
   canonicalUrl,
   reportUrl,
@@ -65,7 +65,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ),
   }));
   const promptPages = prompts.map((prompt) => ({
-    url: canonicalUrl(`/prompts/${promptToSlug(prompt.prompt_text)}`),
+    url: canonicalUrl(`/prompts/${promptPageSlug(prompt, prompts)}`),
     lastModified: latestDate(prompt.modified_at),
   }));
   const blogPages = posts.map((post) => ({

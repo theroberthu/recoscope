@@ -87,17 +87,13 @@ test("getLatestRun default branch gates on status='published'", () => {
 // getPromptDetail contains multiple subqueries; every one must be gated.
 test("getPromptDetail gates every subquery on published + public", () => {
   const body = extractFunctionBody(source, "getPromptDetail");
-  const publishedCount = (body.match(/status\s*=\s*'published'/g) || []).length;
-  const publicCount = (body.match(/is_public\s*=\s*true/g) || []).length;
-  // 5 subqueries touch runs (meta, brands, agents, runDates, insight).
-  assert.ok(
-    publishedCount >= 5,
-    `getPromptDetail has only ${publishedCount} published gates, expected >= 5`,
-  );
-  assert.ok(
-    publicCount >= 5,
-    `getPromptDetail has only ${publicCount} is_public gates, expected >= 5`,
-  );
+  const queries = [...body.matchAll(/(?:sql`)([\s\S]*?)`/g)].map(m => m[1]);
+  assert.equal(queries.length, 3);
+  for (const query of queries) {
+    assert.ok(hasPublishedGate(query) && hasIsPublicTrue(query));
+    assert.match(query, /c\.slug = \$\{categorySlug\}/);
+    assert.match(query, /ar\.prompt_text = \$\{promptText\}/);
+  }
 });
 
 // getAuditStats: brand + category + run subqueries must all be gated.

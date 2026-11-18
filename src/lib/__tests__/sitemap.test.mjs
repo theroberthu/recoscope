@@ -38,7 +38,7 @@ function loadSitemap({
         };
       if (name === "@/lib/blog") return { getAllPosts: () => posts };
       if (name === "@/lib/prompt-seo")
-        return { promptToSlug: (value) => value };
+        return { promptPageSlug: (value) => value.prompt_text };
       throw new Error(`Unexpected import ${name}`);
     },
   });
