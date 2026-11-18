@@ -861,7 +861,7 @@ export default async function TrackerReportPage({
           )}
       </div>
 
-      <PromptsUsed prompts={prompts} />
+      <PromptsUsed prompts={prompts} categorySlug={slug} />
       {promptBreakdownData.length > 0 && (
         <section
           id="prompt-details"
