@@ -49,3 +49,5 @@ export const spaceHeatersExplainer: BenchmarkVideo;
 export const runningShoesNovemberBExplainer: BenchmarkVideo;
 
 export const robotVacuumsNovemberBExplainer: BenchmarkVideo;
+
+export const standingNovemberBExplainer: BenchmarkVideo;
