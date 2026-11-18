@@ -1,0 +1,3 @@
+import type { AgentResponse, BrandMention } from './types';
+export interface PromptSnapshot { id: number; run_date: string; period_label: string; answers: { agent_name: string; prompt_number: number; eligible: boolean; status: string | null; brands: {brand: string; rank: number | null}[] }[] }
+export function buildPromptReport(runs: {id: number; run_date: string; period_label: string}[], responses: AgentResponse[], mentions: BrandMention[]): {snapshots: PromptSnapshot[]; usable_answers: number; captured_answers: number; brands: {brand: string; mentions: number; top3: number; first_picks: number}[]};

@@ -46,6 +46,32 @@ export function promptToSlug(promptText: string): string {
   return `${base}-${hash}`;
 }
 
+/** Category-qualified identity, also accepted as an alias for unique questions. */
+export function categoryPromptSlug(promptText: string, categorySlug: string): string {
+  return `${categorySlug}-${promptToSlug(promptText)}`;
+}
+
+type PromptIdentity = { prompt_text: string; category_slug: string };
+export function promptPageSlug(prompt: PromptIdentity, all: PromptIdentity[]): string {
+  const slug = promptToSlug(prompt.prompt_text);
+  const categories = new Set(all.filter(p => promptToSlug(p.prompt_text) === slug).map(p => p.category_slug));
+  // Keep the indexed Electric Shavers URL; split the other two historical
+  // categories without changing the established search result's address.
+  const legacyOwner = slug === 'compare-top-brands-and-rank-them-6537e966' && prompt.category_slug === 'electric-shavers';
+  return categories.size > 1 && !legacyOwner ? categoryPromptSlug(prompt.prompt_text, prompt.category_slug) : slug;
+}
+
+export function resolvePromptSlug(slug: string, all: PromptIdentity[]) {
+  const qualified = all.find(p => categoryPromptSlug(p.prompt_text, p.category_slug) === slug);
+  if (qualified) return { ...qualified, canonicalSlug: promptPageSlug(qualified, all) };
+  const matches = all.filter(p => promptToSlug(p.prompt_text) === slug || promptToOldSlug(p.prompt_text) === slug);
+  // Preserve the established Electric Shavers search result's intent. Other
+  // ambiguous legacy aliases must never pick an arbitrary category from SQL order.
+  const owner = matches.length === 1 ? matches[0] :
+    matches.find(p => promptToSlug(p.prompt_text) === 'compare-top-brands-and-rank-them-6537e966' && p.category_slug === 'electric-shavers');
+  return owner ? { ...owner, canonicalSlug: promptPageSlug(owner, all) } : null;
+}
+
 // Old slug format (no hash, 80-char truncation). Used only for 301 redirects
 // from the previous URL scheme.
 export function promptToOldSlug(promptText: string): string {
@@ -102,7 +128,7 @@ export function promptToDescription(promptText: string, categoryName: string): s
   // Describe the question being measured, without turning mention counts into
   // endorsements or implying that a budget mention verifies the product price.
   if (prompt.includes("compare") && prompt.includes("rank")) {
-    return `Compare AI rankings for ${category}. See how brands appear across assistants, with the exact shopper question behind the results.`;
+    return `Which ${category} did AI rank first? Compare captured picks from ChatGPT, Claude, Gemini and Perplexity, with dates and the exact question.`;
   }
   const budget = promptText.match(/\bunder\s+\$\s*(\d[\d,]*(?:\.\d{1,2})?)/i);
   if (budget) {
