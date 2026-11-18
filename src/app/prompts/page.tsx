@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllPublishedPrompts } from "@/lib/queries";
-import { promptToSlug, promptToTitle } from "@/lib/prompt-seo";
+import { promptPageSlug, promptToTitle } from "@/lib/prompt-seo";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/prompts" },
@@ -54,7 +54,7 @@ export default async function PromptsIndexPage() {
             </div>
             <div className="mt-4 space-y-3">
               {catPrompts.map((p) => {
-                const slug = promptToSlug(p.prompt_text);
+                const slug = promptPageSlug(p, prompts);
                 const title = promptToTitle(p.prompt_text, p.category_name);
                 return (
                   <Link
