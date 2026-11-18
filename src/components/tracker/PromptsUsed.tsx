@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { promptToSlug } from "@/lib/prompt-seo";
+import { categoryPromptSlug } from "@/lib/prompt-seo";
 
 const PROMPT_LABELS: Record<number, string> = {
   1: "Broad Discovery",
@@ -11,10 +11,11 @@ const PROMPT_LABELS: Record<number, string> = {
 };
 
 interface PromptsUsedProps {
+  categorySlug: string;
   prompts: { prompt_number: number; prompt_text: string }[];
 }
 
-export function PromptsUsed({ prompts }: PromptsUsedProps) {
+export function PromptsUsed({ prompts, categorySlug }: PromptsUsedProps) {
   const [open, setOpen] = useState(false);
 
   if (prompts.length === 0) return null;
@@ -53,7 +54,7 @@ export function PromptsUsed({ prompts }: PromptsUsedProps) {
                     `Prompt ${p.prompt_number}`}
                 </p>
                 <Link
-                  href={`/prompts/${promptToSlug(p.prompt_text)}`}
+                  href={`/prompts/${categoryPromptSlug(p.prompt_text, categorySlug)}`}
                   className="mt-1.5 block font-mono text-[13px] leading-relaxed text-white/40 transition-colors hover:text-cyan/60"
                 >
                   {p.prompt_text}
