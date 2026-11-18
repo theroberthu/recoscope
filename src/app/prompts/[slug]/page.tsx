@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { getAllPublishedPrompts, getPromptDetail } from "@/lib/queries";
-import { promptToSlug, promptToOldSlug, promptToTitle, promptToDescription } from "@/lib/prompt-seo";
+import { resolvePromptSlug, promptToTitle, promptToDescription } from "@/lib/prompt-seo";
 
 export const dynamic = "force-dynamic";
 
@@ -18,26 +18,19 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-async function findPromptBySlug(slug: string): Promise<{ promptText: string; canonicalSlug: string } | null> {
-  const all = await getAllPublishedPrompts();
-  // Try new slug format first
-  const exact = all.find((p) => promptToSlug(p.prompt_text) === slug);
-  if (exact) return { promptText: exact.prompt_text, canonicalSlug: slug };
-  // Fall back to old slug format (for 301 redirects from previous URL scheme)
-  const legacy = all.find((p) => promptToOldSlug(p.prompt_text) === slug);
-  if (legacy) return { promptText: legacy.prompt_text, canonicalSlug: promptToSlug(legacy.prompt_text) };
-  return null;
+async function findPromptBySlug(slug: string) {
+  return resolvePromptSlug(slug, await getAllPublishedPrompts());
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const found = await findPromptBySlug(slug);
   if (!found) return { title: "Not Found" };
-  const detail = await getPromptDetail(found.promptText);
+  const detail = await getPromptDetail(found.prompt_text, found.category_slug);
   if (!detail) return { title: "Not Found" };
 
-  const title = promptToTitle(found.promptText, detail.category_name);
-  const description = promptToDescription(found.promptText, detail.category_name);
+  const title = promptToTitle(found.prompt_text, detail.category_name);
+  const description = promptToDescription(found.prompt_text, detail.category_name);
 
   return {
     title,
@@ -55,43 +48,33 @@ export default async function PromptDetailPage({ params }: Props) {
   const { slug } = await params;
   const found = await findPromptBySlug(slug);
   if (!found) notFound();
-  // 301 redirect from old slug format to new canonical slug
+  // Permanent redirect keeps old indexed URLs attached to the right category.
   if (found.canonicalSlug !== slug) {
-    redirect(`/prompts/${found.canonicalSlug}`);
+    permanentRedirect(`/prompts/${found.canonicalSlug}`);
   }
 
-  const promptText = found.promptText;
-  const detail = await getPromptDetail(promptText);
+  const promptText = found.prompt_text;
+  const detail = await getPromptDetail(promptText, found.category_slug);
   if (!detail) notFound();
 
   const title = promptToTitle(promptText, detail.category_name);
   const description = promptToDescription(promptText, detail.category_name);
-  const topBrands = detail.brands.slice(0, 3).map((b) => b.brand);
   const baseUrl = "https://www.getrecoscope.com";
-
-  const qaSchema = {
+  const pageSchema = {
     "@context": "https://schema.org",
-    "@type": "QAPage",
-    mainEntity: {
-      "@type": "Question",
-      name: promptText,
-      text: promptText,
-      answerCount: detail.agent_breakdown.length,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: topBrands.length > 0
-          ? `Based on benchmarking across ChatGPT, Claude, Gemini, and Perplexity, the top recommended ${detail.category_name.toLowerCase()} brands are ${topBrands.join(", ")}.`
-          : `AI models provide varying recommendations for ${detail.category_name.toLowerCase()}.`,
-        url: `${baseUrl}/prompts/${slug}`,
-      },
-    },
+    "@type": "Article",
+    headline: title,
+    description,
+    mainEntityOfPage: `${baseUrl}/prompts/${found.canonicalSlug}`,
+    author: { "@type": "Person", name: "Robert Hu" },
+    publisher: { "@type": "Organization", name: "RecoScope", url: baseUrl },
   };
 
   return (
     <div className="bg-dot-grid min-h-screen">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(qaSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema).replace(/</g, "\\u003c") }}
       />
 
       <article className="mx-auto max-w-3xl px-6 pb-20 pt-20">
@@ -112,8 +95,9 @@ export default async function PromptDetailPage({ params }: Props) {
         </p>
 
         <p className="mt-4 text-[14px] text-white/30">
-          Tracked across {detail.run_dates.length} benchmark run{detail.run_dates.length !== 1 ? "s" : ""}
-          {detail.run_dates.length > 0 && ` from ${fmtDate(detail.run_dates[detail.run_dates.length - 1])} to ${fmtDate(detail.run_dates[0])}`}
+          {detail.usable_answers} usable answers from {detail.snapshots.length} benchmark run{detail.snapshots.length !== 1 ? "s" : ""}
+          {` · ${fmtDate(detail.snapshots[detail.snapshots.length - 1].run_date)} – ${fmtDate(detail.snapshots[0].run_date)}`}
+
         </p>
 
         {/* H2: exact prompt */}
@@ -126,89 +110,67 @@ export default async function PromptDetailPage({ params }: Props) {
           </p>
         </div>
 
-        {/* Brand recommendations table */}
-        <div className="mt-12">
-          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
-            Brand Recommendations
+        <section className="mt-10 rounded-xl border border-cyan/20 bg-cyan/5 p-5">
+          <h2 className="text-lg font-semibold text-white">Mentions and rank measure different things</h2>
+          <p className="mt-2 text-[14px] leading-relaxed text-white/60">
+            A mention counts a brand once per usable answer. Recorded ranks belong to individual answers;
+            an unranked mention is never treated as first place. These captured answers do not establish product quality.
           </p>
-          <p className="mt-2 text-[13px] text-white/25">
-            Aggregated across ChatGPT, Claude, Gemini, and Perplexity over {detail.run_dates.length} benchmark run{detail.run_dates.length !== 1 ? "s" : ""}.
+        </section>
+
+        <section className="mt-10" aria-labelledby="brand-visibility">
+          <h2 id="brand-visibility" className="text-xl font-semibold text-white">Brand visibility for this question</h2>
+          <p className="mt-2 text-[13px] leading-relaxed text-white/50">
+            Only {detail.category_name} answers to this exact question are included. Sorted by mention frequency,
+            with ties kept equal. Top-three and first-place counts use recorded ranks, not mention order.
+            Unavailable and excluded answers do not contribute. {detail.captured_answers - detail.usable_answers} of {detail.captured_answers} captured answers were unavailable or excluded.
           </p>
           <div className="mt-4 overflow-x-auto rounded-xl border border-white/10 bg-surface">
             <table className="w-full text-[13px]">
-              <thead>
-                <tr className="border-b border-white/5">
-                  <Th>#</Th>
-                  <Th>Brand</Th>
-                  <Th>Mentions</Th>
-                  <Th>Top-3</Th>
-                  <Th>First Picks</Th>
+              <caption className="sr-only">Brand mentions and recorded ranks across {detail.usable_answers} usable answers</caption>
+              <thead><tr className="border-b border-white/5">
+                <Th>Brand</Th><Th>Answers mentioning</Th><Th>Recorded top-three</Th><Th>Recorded first-place</Th>
+              </tr></thead>
+              <tbody>{detail.brands.map(b => (
+                <tr key={b.brand} className="border-b border-white/5 last:border-0">
+                  <th scope="row" className="px-5 py-3 text-left font-medium text-white/70">{b.brand}</th>
+                  <td className="px-5 py-3 font-mono tabular-nums text-white/60">{b.mentions}/{detail.usable_answers}</td>
+                  <td className="px-5 py-3 font-mono tabular-nums text-white/60">{b.top3}</td>
+                  <td className="px-5 py-3 font-mono tabular-nums text-white/60">{b.first_picks}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {detail.brands.slice(0, 20).map((b, i) => (
-                  <tr key={b.brand} className={`border-b border-white/5 last:border-0 ${i < 3 ? "bg-cyan/[0.03]" : ""}`}>
-                    <td className="px-5 py-3 font-mono text-white/30">{i + 1}</td>
-                    <td className={`px-5 py-3 font-medium ${i < 3 ? "text-white/70" : "text-white/50"}`}>{b.brand}</td>
-                    <td className="px-5 py-3 font-mono tabular-nums text-white/40">{b.mentions}</td>
-                    <td className="px-5 py-3 font-mono tabular-nums text-white/40">{b.top3}</td>
-                    <td className="px-5 py-3 font-mono tabular-nums text-white/40">{b.first_picks}</td>
-                  </tr>
-                ))}
-              </tbody>
+              ))}</tbody>
             </table>
           </div>
-        </div>
+          {!detail.brands.length && <p className="mt-4 text-white/60">No brand mentions recorded in usable answers.</p>}
+        </section>
 
-        {/* Model-by-model breakdown */}
-        {detail.agent_breakdown.length > 0 && (
-          <div className="mt-12">
-            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
-              Model-by-Model Breakdown
-            </p>
-            <p className="mt-2 text-[13px] text-white/25">
-              Top brands each AI model recommends for this prompt.
-            </p>
-            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {detail.agent_breakdown.map((agent) => (
-                <div key={agent.agent_name} className="rounded-xl border border-white/5 bg-surface p-5">
-                  <p className="font-mono text-[12px] font-semibold text-white/60">{agent.agent_name}</p>
-                  <ol className="mt-2 space-y-1">
-                    {agent.brands.slice(0, 5).map((brand, j) => (
-                      <li key={brand} className={`text-[13px] ${j === 0 ? "font-medium text-white/60" : "text-white/35"}`}>
-                        <span className="mr-2 font-mono text-[11px] text-white/20">{j + 1}.</span>
-                        {brand}
+        <section className="mt-12" aria-labelledby="recorded-answers">
+          <h2 id="recorded-answers" className="text-xl font-semibold text-white">Recorded results by date and assistant</h2>
+          <p className="mt-2 text-[13px] leading-relaxed text-white/50">
+            Each card shows one captured answer. Rank numbers are preserved, including ties and gaps.
+            “Unranked” means no position was recorded. Dates are separate snapshots, not a combined ranking or evidence of a trend.
+          </p>
+          {detail.snapshots.map((snapshot, index) => (
+            <details key={snapshot.id} open={index === 0} className="mt-5 rounded-xl border border-white/10 bg-surface p-5">
+              <summary className="cursor-pointer font-semibold text-white/70">{fmtDate(snapshot.run_date)} · {snapshot.answers.filter(a => a.eligible).length} usable answers</summary>
+              <Link href={`/tracker/${detail.category_slug}?period=${encodeURIComponent(snapshot.period_label)}#captured-answers`} className="mt-3 inline-block text-sm text-cyan underline underline-offset-4">View this dated benchmark and captured answers →</Link>
+              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {snapshot.answers.map(answer => (
+                  <div key={`${answer.agent_name}-${answer.prompt_number}`} className="min-w-0 rounded-lg border border-white/10 p-4">
+                    <h3 className="font-semibold text-white/70">{answer.agent_name}</h3>
+                    {answer.status && <p className="mt-2 text-sm text-white/50">{answer.status}</p>}
+                    <ul className="mt-2 space-y-2">{answer.brands.map(b => (
+                      <li key={b.brand} className="flex justify-between gap-3 text-[13px] text-white/60">
+                        <span className="min-w-0 break-words">{b.brand}</span>
+                        <span className="shrink-0 font-mono">{b.rank === null ? "Unranked" : `Rank ${b.rank}`}</span>
                       </li>
-                    ))}
-                  </ol>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Insights */}
-        {detail.insight && (detail.insight.key_takeaway || detail.insight.top_brands_summary) && (
-          <div className="mt-12">
-            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
-              Key Insights
-            </p>
-            <div className="mt-4 space-y-4">
-              {detail.insight.key_takeaway && (
-                <div className="rounded-xl border border-white/10 bg-surface p-5">
-                  <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-white/25">Key Takeaway</p>
-                  <p className="mt-2 text-[14px] leading-relaxed text-white/50">{detail.insight.key_takeaway}</p>
-                </div>
-              )}
-              {detail.insight.top_brands_summary && (
-                <div className="rounded-xl border border-white/10 bg-surface p-5">
-                  <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-white/25">Top Brands Summary</p>
-                  <p className="mt-2 text-[14px] leading-relaxed text-white/50">{detail.insight.top_brands_summary}</p>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
+                    ))}</ul>
+                  </div>
+                ))}
+              </div>
+            </details>
+          ))}
+        </section>
 
         {/* CTAs */}
         <div className="mt-16 space-y-4">
@@ -217,7 +179,7 @@ export default async function PromptDetailPage({ params }: Props) {
               See the full {detail.category_name} benchmark
             </p>
             <p className="mt-2 text-[13px] text-white/40">
-              Cross-model rankings, trend data, and competitive landscape.
+              Explore the shopper context, dated snapshots and captured answers.
             </p>
             <Link
               href={`/tracker/${detail.category_slug}`}
