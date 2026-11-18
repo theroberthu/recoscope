@@ -5,6 +5,7 @@ export const WATCH_PAGES_UPDATED_AT = "2026-11-17";
 
 // First successful public deployments; collection dates are separate evidence.
 const releases = {
+  "standing-desks-2026-11-b-tied-on-mentions": ["2026-11-18", 49.5],
   // Calendar publication date; no exact first-deployment time is asserted.
   "protein-powder-2026-11-b-split-first-choice": ["2026-11-17", 53.8],
   "wireless-earbuds-2026-11-b-four-first-choices": ["2026-11-17T13:29:01+00:00", 50],

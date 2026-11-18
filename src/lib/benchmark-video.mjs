@@ -1090,7 +1090,53 @@ export const proteinNovemberBExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer];
+// November 18 Standing Desks release requested by the owner.
+export const standingNovemberBExplainer = {
+  "id": "standing-desks-2026-11-b-tied-on-mentions",
+  "approved": true,
+  "approvedSha256": "bc914aeaedafe31b98d96dc760475d53b04ec192d58cbb392cf37ab4bef76ef8",
+  "category": "standing-desks",
+  "runId": 189,
+  "period": "2026-11-B",
+  "collected": "2026-11-18",
+  "collectedLabel": "November 18, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Tied on mentions. One first choice.",
+  "duration": "50-second explainer",
+  "src": "/tracker-media/standing-desks/2026-11-b/standing-desks-explainer.mp4",
+  "poster": "/tracker-media/standing-desks/2026-11-b/explainer-poster.png",
+  "captions": "/tracker-media/standing-desks/2026-11-b/explainer.en.vtt",
+  "summary": [
+    "UPLIFT and FlexiSpot each appeared in 11/12 usable answers. All four comparative answers ranked UPLIFT first and FlexiSpot second. Mention frequency and comparative rank are separate measures.",
+    "The saved US remote-marketing-manager profile was repeated across discovery, under-$600 everyday budget and comparative ranking prompts. FlexiSpot appeared in all four budget answers and UPLIFT in three. Some UPLIFT mentions refer to a base configuration near the cap. Mentions do not verify checkout totals, tax, stock or a common desktop and accessory configuration. Gemini discovery and budget each required one fresh retry after an empty original: 14 submissions, 12 usable cells.",
+    "On November 10, both brands appeared in 10/11 usable answers and UPLIFT ranked first in all three usable comparisons. This snapshot covers 12 usable answers and four comparisons. Coverage and default-model behavior differ; these dated captures do not establish growth or a controlled trend. Specifications, warranties, ergonomic and price claims remain unverified model output. These findings describe captured answers, not product quality or verified pain relief."
+  ],
+  "transcript": [
+    {
+      "text": "Two standing-desk brands tied on mentions. Every comparison still picked the same winner."
+    },
+    {
+      "text": "In Recoscope’s November eighteenth snapshot, Uplift and FlexiSpot each appeared in eleven of twelve usable answers, across four AI assistants and three prompt types."
+    },
+    {
+      "text": "But all four comparative answers ranked Uplift first and FlexiSpot second."
+    },
+    {
+      "text": "In the under-six-hundred-dollar answers, FlexiSpot appeared in all four. Uplift appeared in three, sometimes at a base price near the cap. A mention doesn't verify the checkout total."
+    },
+    {
+      "text": "On November tenth, both brands appeared in ten of eleven usable answers. Coverage differs, so this isn't evidence of growth."
+    },
+    {
+      "text": "Mention frequency and comparative rank are separate measures of captured answers, not product quality."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
