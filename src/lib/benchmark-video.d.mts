@@ -51,3 +51,5 @@ export const runningShoesNovemberBExplainer: BenchmarkVideo;
 export const robotVacuumsNovemberBExplainer: BenchmarkVideo;
 
 export const standingNovemberBExplainer: BenchmarkVideo;
+
+export const skincareNovemberBExplainer: BenchmarkVideo;

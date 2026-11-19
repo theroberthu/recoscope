@@ -1136,7 +1136,56 @@ export const standingNovemberBExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer];
+// November 18 Skincare release approved by the owner.
+export const skincareNovemberBExplainer = {
+  "id": "skincare-2026-11-b-per-product-or-total",
+  "approved": true,
+  "approvedSha256": "d4c5fbd9b53531746eee1a930e331912a5814449354ac2a0be7ca62e077913cd",
+  "category": "skincare",
+  "runId": 190,
+  "period": "2026-11-B",
+  "collected": "2026-11-18",
+  "collectedLabel": "November 18, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Under $50. Per product or total?",
+  "duration": "53-second explainer",
+  "src": "/tracker-media/skincare/2026-11-b/skincare-explainer.mp4",
+  "poster": "/tracker-media/skincare/2026-11-b/explainer-poster.png",
+  "captions": "/tracker-media/skincare/2026-11-b/explainer.en.vtt",
+  "summary": [
+    "CeraVe appeared in 9/12 usable answers and La Roche-Posay in 8/12. ChatGPT, Claude and Perplexity ranked CeraVe first; Gemini ranked La Roche-Posay first. Both brands were top-three in all four comparative answers. Mention frequency and comparative rank are separate measures.",
+    "The saved US combination-skin profile was repeated across discovery, under-$50 everyday budget and comparative ranking prompts. ChatGPT, Claude and Gemini described the budget per product; Claude’s four listed products total $76. Perplexity explicitly treated $50 as a total, quoting three basics at $39.97 before tax. The question did not clarify per-product versus total budget. These captured quotes and arithmetic checks do not verify current prices, tax, stock, checkout totals or suitability.",
+    "Twelve first attempts produced twelve usable answers, with no retries or exclusions. Claude’s discovery answer named no brand and remains in the denominator. On November 11, CeraVe appeared in 9/12 answers and La Roche-Posay in 7/12; the comparative first-choice split was also three CeraVe and one La Roche-Posay. Model behavior and collection conditions differ; dated captures do not establish growth or a controlled trend. These findings describe captured answers, not product quality or medical advice."
+  ],
+  "transcript": [
+    {
+      "text": "Under fifty dollars sounds clear. AI didn’t treat it the same way."
+    },
+    {
+      "text": "In Recoscope’s November eighteenth skincare snapshot, we captured twelve usable answers across four assistants and three prompt types."
+    },
+    {
+      "text": "CeraVe appeared in nine answers and La Roche-Posay in eight. Three comparisons ranked CeraVe first. Gemini picked La Roche-Posay."
+    },
+    {
+      "text": "But the budget prompt asked for skincare under fifty dollars. ChatGPT, Claude and Gemini described limits per product. Claude’s four listed products total seventy-six dollars."
+    },
+    {
+      "text": "Perplexity explicitly treated fifty dollars as the total, quoting a three-product basket at thirty-nine ninety-seven before tax."
+    },
+    {
+      "text": "Mention counts don’t tell you whether a recommendation fits the budget."
+    },
+    {
+      "text": "These findings describe captured answers, not product quality or medical advice."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),

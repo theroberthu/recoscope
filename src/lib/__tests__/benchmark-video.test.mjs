@@ -336,7 +336,7 @@ test("approved Humidifiers video is scoped to the first November13 snapshot",asy
  }
  assert.equal(snapshotVideo("sunscreen",run),null);
  assert.equal(snapshotVideo("humidifiers",run,{...v,approved:false}),null);
- assert.equal(benchmarkExplainers.length,24);
+ assert.equal(benchmarkExplainers.length,25);
  const schema=videoSchema(v);assert.equal(schema.duration,"PT43.5S");assert.match(schema.transcript,/Explore benchmark at getrecoscope\.com\.$/);
  const {readFileSync}=await import("node:fs");const {createHash}=await import("node:crypto");
  assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+v.src,import.meta.url))).digest("hex"),v.approvedSha256);
@@ -436,6 +436,29 @@ test("November17 Protein Powder release requires exact run188 and preserves the 
  assert.equal(snapshotVideo("protein-powder",run,{...v,approved:false}),null);
  assert.equal(videoSchema(v).duration,"PT53.8S");
  assert.match(v.summary[0],/11\/12/);assert.match(v.summary[0],/ChatGPT and Claude ranked Transparent Labs first; Gemini and Perplexity ranked Optimum Nutrition first/);
+ assert.equal(v.transcript.at(-1).text,"Explore benchmark at getrecoscope.com.");
+ const {readFileSync}=await import("node:fs");const {createHash}=await import("node:crypto");
+ assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+v.src,import.meta.url))).digest("hex"),v.approvedSha256);
+ assert.equal(readFileSync(new URL("../../../public"+v.captions,import.meta.url),"utf8").match(/-->/g)?.length,17);
+});
+
+
+test("November18 Skincare release requires approved run190 and preserves both older videos",async()=>{
+ const {skincareNovemberBExplainer:v,skincareNovemberExplainer:old,skincareExplainer:older,snapshotVideo}=await import("../benchmark-video.mjs");
+ const {publicWatchVideos,videoSchema}=await import("../video-watch.mjs");
+ const run={id:190,category_slug:"skincare",period_label:"2026-11-B",run_date:"2026-11-18"};
+ assert.equal(snapshotVideo("skincare",run),v);assert.ok(publicWatchVideos([run]).includes(v));
+ assert.equal(snapshotVideo("skincare",{id:179,period_label:"2026-11-A",run_date:"2026-11-11"}),old);
+ assert.equal(snapshotVideo("skincare",{id:168,period_label:"2026-10-C",run_date:"2026-10-30"}),older);
+ for(const change of [{id:179},{period_label:"2026-11-A"},{run_date:"2026-11-11"}]){
+  assert.equal(snapshotVideo("skincare",{...run,...change}),null);
+  assert.ok(!publicWatchVideos([{...run,...change}]).includes(v));
+ }
+ assert.equal(snapshotVideo("standing-desks",run),null);
+ assert.equal(snapshotVideo("skincare",run,{...v,approved:false}),null);
+ assert.equal(videoSchema(v).duration,"PT52.7S");
+ assert.match(v.summary[0],/9\/12/);assert.match(v.summary[0],/ChatGPT, Claude and Perplexity ranked CeraVe first; Gemini ranked La Roche-Posay first/);
+ assert.match(v.summary[1],/per product/);assert.match(v.summary[1],/\$76/);assert.match(v.summary[1],/\$39.97 before tax/);
  assert.equal(v.transcript.at(-1).text,"Explore benchmark at getrecoscope.com.");
  const {readFileSync}=await import("node:fs");const {createHash}=await import("node:crypto");
  assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+v.src,import.meta.url))).digest("hex"),v.approvedSha256);

@@ -1,0 +1,53 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:01.880
+Under $50 sounds clear.
+
+00:00:01.880 --> 00:00:04.440
+AI didn’t treat it the same way.
+
+00:00:04.780 --> 00:00:08.350
+In RecoScope’s November 18 skincare snapshot,
+
+00:00:08.350 --> 00:00:10.100
+we captured 12 usable answers
+
+00:00:10.100 --> 00:00:12.500
+across four assistants and three prompt types.
+
+00:00:13.180 --> 00:00:16.500
+CeraVe appeared in nine answers and La Roche-Posay in eight.
+
+00:00:16.960 --> 00:00:19.000
+Three comparisons ranked CeraVe first.
+
+00:00:19.000 --> 00:00:21.200
+Gemini picked La Roche-Posay.
+
+00:00:21.420 --> 00:00:24.520
+But the budget prompt asked for skincare under $50.
+
+00:00:25.640 --> 00:00:29.420
+ChatGPT, Claude and Gemini described limits per product.
+
+00:00:29.940 --> 00:00:32.320
+Claude’s four listed products total $76.
+
+00:00:33.140 --> 00:00:36.400
+Perplexity explicitly treated $50 as the total,
+
+00:00:36.400 --> 00:00:40.500
+quoting a three-product basket at $39.97 before tax.
+
+00:00:41.100 --> 00:00:44.260
+Mention counts don’t tell you whether a recommendation fits the budget.
+
+00:00:44.560 --> 00:00:47.000
+These findings describe captured answers,
+
+00:00:47.000 --> 00:00:49.320
+not product quality or medical advice.
+
+00:00:49.560 --> 00:00:52.240
+Explore benchmark at getrecoscope.com.
+
