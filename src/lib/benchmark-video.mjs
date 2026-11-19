@@ -1185,7 +1185,52 @@ export const skincareNovemberBExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer];
+export const airPurifiersNovemberBExplainer = {
+  "id": "air-purifiers-2026-11-b-every-answer-different-winner",
+  "approved": true,
+  "approvedSha256": "3d54635ce30c2c3dfb6640cb254153c4ea73a95ce7beb2d9d581e6128972799e",
+  "category": "air-purifiers",
+  "runId": 191,
+  "period": "2026-11-B",
+  "collected": "2026-11-19",
+  "collectedLabel": "November 19, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Every answer. Different winner.",
+  "duration": "53-second explainer",
+  "src": "/tracker-media/air-purifiers/2026-11-b/air-purifiers-explainer.mp4",
+  "poster": "/tracker-media/air-purifiers/2026-11-b/explainer-poster.png",
+  "captions": "/tracker-media/air-purifiers/2026-11-b/explainer.en.vtt",
+  "summary": [
+    "Levoit appeared in 12/12 usable answers and Coway in 11/12. Yet all four comparative answers ranked Coway first and Levoit second. Mention frequency and comparative rank are separate measures.",
+    "The saved profile is a 35-year-old parent working from home with seasonal allergies and young kids. Both brands appeared in all four under-$300 answers. These mentions and quoted prices do not verify current checkout totals, room fit, filtration specifications, health benefits or safety claims. Specific recommended models and operating conditions vary.",
+    "Twelve first attempts produced twelve usable answers, with no retries or exclusions. On November 12, both brands appeared in 11/12 answers and first place split two Coway and two Levoit; on November 19, all four comparisons ranked Coway first. Model/interface and search-preview conditions can differ. These dated snapshots do not establish sustained growth, causation or a controlled preference trend. These findings describe captured answers, not product quality or medical advice."
+  ],
+  "transcript": [
+    {
+      "text": "Every answer mentioned Levoit. Every comparison ranked Coway first."
+    },
+    {
+      "text": "In Recoscope's November nineteenth air purifier snapshot, we captured twelve usable answers across four AI assistants and three prompt types."
+    },
+    {
+      "text": "Levoit appeared in all twelve answers. Coway appeared in eleven. But all four comparative answers ranked Coway first and Levoit second."
+    },
+    {
+      "text": "Both brands also appeared in all four under-three-hundred-dollar answers. A mention doesn't verify the checkout price, room fit, or safety claims."
+    },
+    {
+      "text": "On November twelfth, both brands appeared in eleven of twelve answers, and first place split two to two. These are dated snapshots, not a controlled trend."
+    },
+    {
+      "text": "Track how often a brand appears and where it ranks separately. These findings describe captured answers, not product quality or medical advice."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
