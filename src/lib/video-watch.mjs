@@ -1,10 +1,12 @@
 import { benchmarkExplainers, snapshotVideo } from "./benchmark-video.mjs";
 import { canonicalUrl, isoDate, PUBLISHER, ROBERT_HU } from "./seo.mjs";
 
-export const WATCH_PAGES_UPDATED_AT = "2026-11-19";
+export const WATCH_PAGES_UPDATED_AT = "2026-11-20";
 
 // First successful public deployments; collection dates are separate evidence.
 const releases = {
+  // Calendar publication date; collection and first deployment are distinct.
+  "humidifiers-2026-11-b-12-mentions-first-twice": ["2026-11-20", 56.1],
   "air-purifiers-2026-11-b-every-answer-different-winner": ["2026-11-19T17:00:58-06:00", 52.7],
   // First public upload of this approved MP4; collection date remains separate.
   "skincare-2026-11-b-per-product-or-total": ["2026-11-18T18:08:17-06:00", 52.7],

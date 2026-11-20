@@ -55,3 +55,5 @@ export const standingNovemberBExplainer: BenchmarkVideo;
 export const skincareNovemberBExplainer: BenchmarkVideo;
 
 export const airPurifiersNovemberBExplainer: BenchmarkVideo;
+
+export const humidifiersNovemberBExplainer: BenchmarkVideo;

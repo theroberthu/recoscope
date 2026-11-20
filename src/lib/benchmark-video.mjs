@@ -1230,7 +1230,53 @@ export const airPurifiersNovemberBExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer];
+// November 20 Humidifiers benchmark and narrated brief approved for the complete publishing workflow.
+export const humidifiersNovemberBExplainer = {
+  "id": "humidifiers-2026-11-b-12-mentions-first-twice",
+  "approved": true,
+  "approvedSha256": "2eff49f68534de5fe0093c19714fccc957de6aedcf7e4ebd666f4079e7ee2223",
+  "category": "humidifiers",
+  "runId": 192,
+  "period": "2026-11-B",
+  "collected": "2026-11-20",
+  "collectedLabel": "November 20, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "12 mentions. First twice.",
+  "duration": "56-second explainer",
+  "src": "/tracker-media/humidifiers/2026-11-b/humidifiers-explainer.mp4",
+  "poster": "/tracker-media/humidifiers/2026-11-b/explainer-poster.png",
+  "captions": "/tracker-media/humidifiers/2026-11-b/explainer.en.vtt",
+  "summary": [
+    "Levoit appeared in all 12 usable answers, but ranked first in only two comparative answers. Carepod appeared in 6/12 answers and also received two first places: Claude and Gemini ranked Levoit first; ChatGPT and Perplexity ranked Carepod first. Mention frequency and comparative rank are separate measures.",
+    "The saved profile is a US shopper seeking a quiet, easy-to-clean humidifier for a 300-square-foot winter bedroom. Levoit and Dreo appeared in all four under-$100 answers. These mentions and quoted prices do not verify current checkout totals, room fit, cleaning instructions, health benefits or safety claims.",
+    "Twelve first attempts produced twelve usable answers, with no retries or exclusions. On November 13, comparative first places split Carepod 2, Levoit 1 and Dreo 1; on November 20, they split Carepod 2 and Levoit 2. Perplexity search-preview conditions differed. These dated descriptive snapshots do not establish a controlled trend, sustained growth or causation. Findings describe captured answers, not product quality."
+  ],
+  "transcript": [
+    {
+      "text": "Every answer mentioned Levoit. But only two comparisons ranked it first."
+    },
+    {
+      "text": "In RecoScope's November twentieth humidifier snapshot, we captured twelve usable answers across four AI assistants and three prompt types."
+    },
+    {
+      "text": "Levoit appeared in all twelve answers. Carepod appeared in six. Yet first place split evenly. Claude and Gemini ranked Levoit first. ChatGPT and Perplexity ranked Carepod first."
+    },
+    {
+      "text": "Levoit and Dreo also appeared in all four under-one-hundred-dollar answers. Mentions don't verify checkout prices, room fit, or safety claims."
+    },
+    {
+      "text": "On November thirteenth, first place split between Carepod, Levoit, and Dreo. Today, it split between two brands. These are dated snapshots, not a controlled trend."
+    },
+    {
+      "text": "Track mentions and comparative rank separately. These findings describe captured answers, not product quality."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
