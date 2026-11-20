@@ -161,6 +161,14 @@
       "retrieved_on": "2026-11-17",
       "method": "Official header brand mark; identifies captured brand without implying sponsorship.",
       "bytes": 4606
+    },
+    {
+      "file": "hills-science-diet.png",
+      "source_page": "https://www.hillspet.com/science-diet/dog-food",
+      "image_url": "https://www.hillspet.com/content/dam/cp-sites-aem/hills/hills-pet/mlp-assets/logos/Hills%20Science%20Diet%20Logo%20Desktop%20x1.png",
+      "retrieved_on": "2026-11-20",
+      "method": "Official Science Diet brand image; original proportions preserved",
+      "bytes": 11994
     }
   ]
 }

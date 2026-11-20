@@ -5,6 +5,8 @@ export const WATCH_PAGES_UPDATED_AT = "2026-11-20";
 
 // First successful public deployments; collection dates are separate evidence.
 const releases = {
+  // Calendar publication date; no exact first-deployment time is asserted.
+  "dog-food-2026-11-c-most-mentioned-never-first": ["2026-11-20", 59.4],
   // Calendar publication date; collection and first deployment are distinct.
   "humidifiers-2026-11-b-12-mentions-first-twice": ["2026-11-20", 56.1],
   "air-purifiers-2026-11-b-every-answer-different-winner": ["2026-11-19T17:00:58-06:00", 52.7],

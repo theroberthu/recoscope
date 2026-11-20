@@ -1276,7 +1276,55 @@ export const humidifiersNovemberBExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer];
+export const dogFoodNovemberCExplainer = {
+  "id": "dog-food-2026-11-c-most-mentioned-never-first",
+  "approved": true,
+  "approvedSha256": "65c1f3ed4217312300a474c3efaa859b9b9eeac1bd534c79bd7023656dcd031e",
+  "category": "dog-food",
+  "runId": 193,
+  "period": "2026-11-C",
+  "collected": "2026-11-20",
+  "collectedLabel": "November 20, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Most mentioned. Never first.",
+  "duration": "59-second brief",
+  "src": "/tracker-media/dog-food/2026-11-c/dog-food-explainer.mp4",
+  "poster": "/tracker-media/dog-food/2026-11-c/explainer-poster.png",
+  "captions": "/tracker-media/dog-food/2026-11-c/explainer.en.vtt",
+  "summary": [
+    "Hill's Science Diet appeared in 11/12 usable answers, compared with Purina Pro Plan in 10/12. Yet all four comparative answers ranked Purina Pro Plan first, Hill's second and Royal Canin third. Mention frequency and comparative rank are separate measures.",
+    "The saved profile is a US owner with a 3-year-old, 60-pound mixed-breed rescue. Four AI assistants answered three standalone prompt types. Purina ONE appeared in all four under-$70-per-bag answers; mentions do not verify delivered prices, equivalent bag sizes or veterinary suitability.",
+    "On November 14, Hill's appeared in 8/12 answers and Pro Plan in 10/12. On November 20, Hill's appeared in 11/12 and Pro Plan in 10/12; the comparative top three stayed the same. These are dated descriptive snapshots, not a controlled trend. Model, search and session conditions limit comparison. Findings describe captured answers, not product quality."
+  ],
+  "transcript": [
+    {
+      "text": "The most mentioned dog food brand was never ranked first."
+    },
+    {
+      "text": "In RecoScope's November twentieth snapshot, Hill's Science Diet appeared in eleven of twelve usable answers. Purina Pro Plan appeared in ten."
+    },
+    {
+      "text": "But all four comparative answers ranked Purina Pro Plan first, Hill's second, and Royal Canin third."
+    },
+    {
+      "text": "We captured ChatGPT, Claude, Gemini, and Perplexity across three prompt types, using the same dog-owner profile."
+    },
+    {
+      "text": "In the under-seventy-dollar-per-bag answers, Purina ONE appeared in all four. Mentions don't verify delivered prices, bag sizes, or suitability for a particular dog."
+    },
+    {
+      "text": "On November fourteenth, Hill's appeared in eight of twelve answers. Today, eleven. The comparative top three stayed the same. These are dated snapshots, not a controlled trend."
+    },
+    {
+      "text": "Track how often a brand appears and where it ranks separately. These findings describe captured answers, not product quality."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
