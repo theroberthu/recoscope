@@ -1372,7 +1372,55 @@ export const officeChairsNovemberCExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer];
+export const runningShoesNovemberCExplainer = {
+  "id": "running-shoes-2026-11-c-every-answer-four-second-places",
+  "approved": true,
+  "approvedSha256": "6b75a5b6d389d2536dfa4473ce2dd4a01a3db035b87da0602e8b50e6c2f9c4c5",
+  "category": "running-shoes",
+  "runId": 195,
+  "period": "2026-11-C",
+  "collected": "2026-11-21",
+  "collectedLabel": "November 21, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Every answer. Four second places.",
+  "duration": "50-second brief",
+  "src": "/tracker-media/running-shoes/2026-11-c/running-shoes-explainer.mp4",
+  "poster": "/tracker-media/running-shoes/2026-11-c/explainer-poster.png",
+  "captions": "/tracker-media/running-shoes/2026-11-c/explainer.en.vtt",
+  "summary": [
+    "Brooks appeared in all 12 usable answers, yet all four comparative answers ranked it second. ASICS appeared in 10/12 answers and ranked first in every comparison. Saucony also appeared in 10/12. Mention frequency and comparative rank are separate measures.",
+    "Four assistants answered three saved prompts for a 32-year-old US man running 3–4 times a week for fitness. Brooks and Saucony appeared in every under-$150 answer. Some listed shoes cost exactly $150 before tax; mentions do not verify an under-budget checkout price, availability or suitability.",
+    "On November 16, ASICS also ranked first in all four comparisons. Brooks mentions moved from 11/12 to 12/12, while comparative first places remained 0/4. These are two dated descriptive captures, not a controlled trend or evidence of product quality. Claude’s November 21 comparison supplies only three explicit ranks; its other mentioned brands remain unranked."
+  ],
+  "transcript": [
+    {
+      "text": "Every answer. Four second places."
+    },
+    {
+      "text": "In RecoScope's November twenty-first running-shoe snapshot, Brooks appeared in all twelve usable answers. Yet all four comparisons ranked it second."
+    },
+    {
+      "text": "ASICS appeared in ten answers and ranked first in every comparison."
+    },
+    {
+      "text": "Four assistants answered three saved prompts for a U.S. man running three to four times a week for fitness."
+    },
+    {
+      "text": "Brooks and Saucony appeared in every under-one-hundred-fifty-dollar answer. Some listed shoes cost exactly one hundred fifty before tax. A mention isn't a verified under-budget offer."
+    },
+    {
+      "text": "On November sixteenth, ASICS also ranked first four times. Two dated captures are not a controlled trend."
+    },
+    {
+      "text": "For your brand, track mentions and ranks separately. These findings describe captured answers, not product quality."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
