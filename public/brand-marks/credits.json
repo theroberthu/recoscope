@@ -169,6 +169,27 @@
       "retrieved_on": "2026-11-20",
       "method": "Official Science Diet brand image; original proportions preserved",
       "bytes": 11994
+    },
+    {
+      "file": "herman-miller.svg",
+      "source_page": "https://store.hermanmiller.com/",
+      "image_url": "https://store.hermanmiller.com/on/demandware.static/Sites-herman-miller-Site/-/default/dw91652905/images/compiled/sprites.svg#logo",
+      "retrieved_on": "2026-11-21",
+      "method": "Official brand logo; identifies captured brand without endorsement."
+    },
+    {
+      "file": "haworth.webp",
+      "source_page": "https://www.haworth.com/na/en",
+      "image_url": "https://cdn.media.amplience.net/i/haworth/Haworth_Logo_Black?w=292&fmt=webp&upscale=false",
+      "retrieved_on": "2026-11-21",
+      "method": "Official brand logo; identifies captured brand without endorsement."
+    },
+    {
+      "file": "sihoo.png",
+      "source_page": "https://www.sihoo.com/",
+      "image_url": "https://www.sihoo.com/cdn/shop/files/d1163c6c79dbd29abd30e0d32a5b83d8_973bd250-6b12-4af6-bbd8-f688190aad72.png?v=1649489425&width=400",
+      "retrieved_on": "2026-11-21",
+      "method": "Official brand logo; identifies captured brand without endorsement."
     }
   ]
 }
