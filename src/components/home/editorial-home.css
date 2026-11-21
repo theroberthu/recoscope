@@ -1,4 +1,4 @@
-/* Homepage-only editorial direction. Report pages retain their existing styles. */
+/* Homepage composition on the shared matte editorial palette. */
 body:has(.research-home) { --brand: #914b37; --ink: #2c2a27; --secondary: #696057; --line: #cdc4b8; background: #f2eee6; color: #2c2a27; }
 body:has(.research-home) .site-header { background: #f2eee6; border-bottom-color: #cdc4b8; box-shadow: none; }
 body:has(.research-home) .site-nav { max-width: 1280px; padding-inline: 36px; }
@@ -11,7 +11,7 @@ body:has(.research-home) footer { background: #e8e1d6; }
 .editorial-edition > span:last-child > span { margin-inline: 10px; color: #978b7e; }
 .editorial-opening { display: grid; grid-template-columns: .95fr 1.05fr; gap: 72px; padding-block: 48px 44px; }
 .editorial-kicker { font-size: 11px; letter-spacing: .11em; text-transform: uppercase; font-weight: 650; color: var(--brand); }
-.editorial-introduction h1 { margin-top: 22px; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(54px, 5.3vw, 76px); line-height: 1.04; letter-spacing: -.045em; font-weight: 400; }
+.editorial-introduction h1 { margin-top: 22px; font-family: var(--font-editorial); font-size: clamp(54px, 5.3vw, 76px); line-height: 1.04; letter-spacing: -.045em; font-weight: 400; }
 .editorial-introduction h1 em { font-weight: 400; color: var(--brand); }
 .editorial-deck { font-size: 21px; line-height: 1.45; max-width: 420px; margin-top: 26px; letter-spacing: -.015em; }
 .editorial-intro-description { font-size: 15px; line-height: 1.75; margin-top: 18px; max-width: 420px; color: var(--secondary); }
@@ -20,7 +20,7 @@ body:has(.research-home) footer { background: #e8e1d6; }
 .editorial-primary:hover { background: var(--brand); color: #fff; }
 .editorial-quiet-link { padding-block: 12px; font-size: 13px; text-decoration: underline; text-underline-offset: 4px; }
 .editorial-byline { display: flex; gap: 12px; align-items: center; margin-top: 29px; }
-.editorial-byline-mark { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border: 1px solid #b7a99a; border-radius: 50%; font-family: Georgia, serif; font-size: 12px; color: var(--brand); }
+.editorial-byline-mark { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border: 1px solid #b7a99a; border-radius: 50%; font-family: var(--font-editorial); font-size: 12px; color: var(--brand); }
 .editorial-byline p { font-size: 12px; line-height: 1.6; }
 .editorial-byline a { font-weight: 650; text-decoration: underline; text-underline-offset: 3px; }
 .editorial-byline p > span { display: block; color: var(--secondary); font-size: 11px; }
@@ -33,7 +33,7 @@ body:has(.research-home) footer { background: #e8e1d6; }
 .editorial-feature-dateline > span { display: flex; align-items: center; gap: 8px; }
 .editorial-feature-dateline > span::before { content: ''; width: 6px; height: 6px; background: var(--brand); border-radius: 50%; }
 .editorial-category { margin-top: 26px; font-size: 12px; font-weight: 650; }
-.editorial-feature h2 { max-width: 450px; margin-top: 8px; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(32px, 3.1vw, 44px); font-weight: 400; line-height: 1.09; letter-spacing: -.035em; }
+.editorial-feature h2 { max-width: 450px; margin-top: 8px; font-family: var(--font-editorial); font-size: clamp(32px, 3.1vw, 44px); font-weight: 400; line-height: 1.09; letter-spacing: -.035em; }
 .editorial-comparison { margin-top: 28px; }
 .editorial-comparison-labels { display: grid; grid-template-columns: 1fr 100px; gap: 28px; padding-bottom: 11px; border-bottom: 1px solid var(--ink); font-size: 10px; color: var(--secondary); text-transform: uppercase; letter-spacing: .055em; }
 .editorial-comparison-labels span:last-child { text-align: right; }
@@ -59,7 +59,7 @@ body:has(.research-home) footer { background: #e8e1d6; }
 .research-home .home-brand-strip { max-width: 1280px; padding: 28px 36px 30px; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line); }
 .research-home .home-brand-heading { margin-bottom: 20px; align-items: center; }
 .research-home .home-brand-heading .eyebrow { font-size: 10px; letter-spacing: .09em; }
-.research-home .home-brand-heading h2 { font-family: Georgia, serif; font-size: 27px; font-weight: 400; letter-spacing: -.025em; margin-top: 5px; }
+.research-home .home-brand-heading h2 { font-family: var(--font-editorial); font-size: 27px; font-weight: 400; letter-spacing: -.025em; margin-top: 5px; }
 .research-home .home-brand-controls button { width: 34px; height: 34px; background: transparent; border-color: #b7a99a; }
 .research-home .home-brand-list { gap: 0; margin: 0; padding: 0 0 13px; }
 .research-home .home-brand-item { flex: 0 0 20%; min-width: 200px; padding-right: 22px; }
@@ -78,7 +78,7 @@ body:has(.research-home) footer { background: #e8e1d6; }
 .research-home .home-brand-description { margin-top: 7px; max-width: none; font-size: 10px; line-height: 1.6; }
 .editorial-index { padding-block: 54px; scroll-margin-top: 100px; }
 .editorial-section-heading { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 24px; }
-.editorial-section-heading h2, .editorial-method h2, .editorial-colophon h2 { font-family: Georgia, serif; font-weight: 400; font-size: 42px; letter-spacing: -.035em; line-height: 1.1; margin-top: 10px; }
+.editorial-section-heading h2, .editorial-method h2, .editorial-colophon h2 { font-family: var(--font-editorial); font-weight: 400; font-size: 42px; letter-spacing: -.035em; line-height: 1.1; margin-top: 10px; }
 .editorial-section-heading > p { font-size: 13px; line-height: 1.6; color: var(--secondary); }
 .research-home .finder-controls { max-width: 360px; }
 .research-home .finder-controls label { font-size: 11px; color: var(--secondary); }
@@ -87,7 +87,7 @@ body:has(.research-home) footer { background: #e8e1d6; }
 .research-home .category-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 28px; }
 .research-home .category-card { padding: 20px 0; border: 0; border-top: 1px solid #afa18f; border-radius: 0; background: transparent; box-shadow: none; min-height: 220px; }
 .research-home .category-card:hover { box-shadow: none; background: #e9e1d5; transform: none; }
-.research-home .category-card h3 { font-family: Georgia, serif; font-weight: 400; font-size: 25px; letter-spacing: -.02em; }
+.research-home .category-card h3 { font-family: var(--font-editorial); font-weight: 400; font-size: 25px; letter-spacing: -.02em; }
 .research-home .snapshot-status { background: transparent; padding: 3px 0; color: var(--secondary); font-size: 10px; }
 .research-home .category-card > p { font-size: 14px; margin-block: 14px; }
 .research-home .category-card .mt-auto p { font-size: 11px; }
@@ -105,7 +105,7 @@ body:has(.research-home) footer { background: #e8e1d6; }
 .editorial-audit { background: #38312c; color: #f2eee6; }
 .editorial-audit > div { display: grid; grid-template-columns: 1.4fr 1fr; align-items: center; gap: 70px; padding-block: 46px; }
 .editorial-audit .editorial-kicker { color: #d4bba8; }
-.editorial-audit h2 { font-family: Georgia, serif; font-size: 43px; line-height: 1.1; letter-spacing: -.03em; font-weight: 400; margin-top: 13px; }
+.editorial-audit h2 { font-family: var(--font-editorial); font-size: 43px; line-height: 1.1; letter-spacing: -.03em; font-weight: 400; margin-top: 13px; }
 .editorial-audit h2 + p { font-size: 14px; line-height: 1.7; color: #e0d4c7; max-width: 490px; margin-top: 18px; }
 .editorial-audit .editorial-primary { background: #f2eee6; color: #38312c; min-width: 215px; }
 .editorial-audit-note { font-size: 11px; margin-top: 12px; color: #e0d4c7; }
@@ -117,7 +117,7 @@ body:has(.research-home) footer { background: #e8e1d6; }
 .editorial-colophon .home-intro-trailer { margin-top: 10px; max-width: none; }
 .editorial-colophon .home-intro-card { background: transparent; border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); border-radius: 0; padding: 15px 0; }
 .editorial-colophon .home-intro-thumbnail { border-radius: 0; }
-.editorial-colophon .home-intro-copy strong { font-family: Georgia, serif; font-size: 22px; font-weight: 400; }
+.editorial-colophon .home-intro-copy strong { font-family: var(--font-editorial); font-size: 22px; font-weight: 400; }
 .editorial-corpus { margin-top: 24px; font-size: 12px; color: var(--secondary); }
 .editorial-corpus strong { font-size: 18px; color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
 .editorial-corpus > span:not([aria-hidden]) { display: block; margin-top: 8px; font-size: 10px; }

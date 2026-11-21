@@ -21,8 +21,8 @@ export default async function VideosPage() {
       <a href={YOUTUBE_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex min-h-11 items-center gap-2 font-semibold text-brand underline underline-offset-4">Follow RecoScope on YouTube <span aria-hidden="true">↗</span></a>
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {videos.map((video) => (
-          <Link key={video.id} href={watchPath(video)} className="block rounded-xl border border-line bg-surface p-5">
-            <img src={video.poster} alt="" width={1080} height={1920} loading="lazy" style={{ width: "100%", height: 240, objectFit: "contain", background: "#edf4ee", borderRadius: 8 }} />
+          <Link key={video.id} href={watchPath(video)} className="videos-index-card block rounded-xl border border-line bg-surface p-5">
+            <img src={video.poster} alt="" width={1080} height={1920} loading="lazy" style={{ width: "100%", height: 240, objectFit: "contain", background: "var(--surface-light)", borderRadius: 4 }} />
             <p className="mt-4 text-xs text-secondary">{categoryLabel(video)} · {video.collectedLabel}</p>
             <h2 className="mt-2 text-lg font-semibold text-ink">{video.title}</h2>
             <p className="mt-3 text-sm font-semibold text-brand">Watch video →</p>
