@@ -3,9 +3,9 @@ import { auditHref } from "@/lib/discovery.mjs";
 
 export function AuditDeliverables() {
   return <dl className="audit-deliverables">
-    <div><dt>Your brand and its competitors</dt><dd>Which brands appear in the captured shopper answers, and how often.</dd></div>
-    <div><dt>Where recommendations differ</dt><dd>Who is explicitly ranked first, with the shopper question and original answer attached.</dd></div>
-    <div><dt>Questions worth investigating</dt><dd>Product-information gaps and follow-up questions to test, with the collection limits stated.</dd></div>
+    <div><dt>Where your brand appears</dt><dd>Which shopper questions mention your brand, and which name competitors.</dd></div>
+    <div><dt>Who gets recommended first</dt><dd>Explicit first-place ranks, with the original question and answer attached.</dd></div>
+    <div><dt>What to investigate next</dt><dd>Product-fit, pricing and positioning claims to check against the captured answers.</dd></div>
   </dl>;
 }
 
