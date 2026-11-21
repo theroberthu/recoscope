@@ -199,6 +199,24 @@ export function AuditRequestForm({
         />
       </div>
 
+          <div>
+            <label htmlFor="product_url" className={labelCls}>
+              Brand website (optional)
+            </label>
+            <input
+              id="product_url"
+              name="product_url"
+              type="text"
+              inputMode="url"
+              autoComplete="url"
+              aria-describedby="product-url-help"
+              className={inputCls}
+              placeholder="example.com or a product page link"
+            />
+            <p id="product-url-help" className="mt-2 text-[12px] text-white/40">
+              A website or product page helps identify your brand. You can leave off https://.
+            </p>
+          </div>
       <div>
         <label htmlFor="category_interest" className={labelCls}>
           Product Category *
@@ -232,7 +250,7 @@ export function AuditRequestForm({
       </div>
       <div>
         <label htmlFor="email" className={labelCls}>
-          Work email *
+          Email for your report *
         </label>
         <input
           id="email"
@@ -246,7 +264,7 @@ export function AuditRequestForm({
       </div>
 
       <details className="optional-fields">
-        <summary>Add product details (optional)</summary>
+        <summary>Add a shopper question or context (optional)</summary>
         <div className="space-y-5 mt-5">
           {" "}
           <div>
@@ -263,26 +281,8 @@ export function AuditRequestForm({
             />
           </div>
           <div>
-            <label htmlFor="product_url" className={labelCls}>
-              Product URL
-            </label>
-            <input
-              id="product_url"
-              name="product_url"
-              type="text"
-              inputMode="url"
-              autoComplete="url"
-              aria-describedby="product-url-help"
-              className={inputCls}
-              placeholder="example.com or a product page link"
-            />
-            <p id="product-url-help" className="mt-2 text-[12px] text-white/40">
-              A website or product link is optional. You can leave off https://.
-            </p>
-          </div>
-          <div>
             <label htmlFor="challenge" className={labelCls}>
-              Biggest challenge{" "}
+              What would you like to understand?{" "}
               <span className="normal-case tracking-normal text-white/15">
                 (optional)
               </span>
@@ -292,7 +292,7 @@ export function AuditRequestForm({
               name="challenge"
               rows={3}
               className={inputCls}
-              placeholder="e.g. We don't show up when people ask AI what to buy"
+              placeholder="e.g. Which competitors get recommended for small home offices?"
             />
           </div>
         </div>
