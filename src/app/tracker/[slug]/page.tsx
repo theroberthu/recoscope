@@ -1,3 +1,4 @@
+import { BrandNextStep } from "@/components/AuditJourney";
 import {
   reportUrl as snapshotUrl,
   CONTENT_UPDATED_AT,
@@ -712,16 +713,10 @@ export default async function TrackerReportPage({
       />
 
       <nav className="report-jump-links" aria-label="Report sections">
-        <a href="#overview">Overview</a>
-        {history && <a href="#snapshot-comparison">Compare snapshots</a>}
-        {explainer && <a href="#benchmark-video">Video explainer</a>}
-        <a href="#brand-visibility">Brand visibility</a>
-        <a href="#model-comparison">Model comparison</a>
-        {promptBreakdownData.length > 0 && (
-          <a href="#prompt-details">Prompt details</a>
-        )}
+        <a href="#overview">Summary</a>
+        <a href="#brand-visibility">Compare brands</a>
+        <a href="#model-comparison">AI rankings</a>
         <a href="#captured-answers">Captured answers</a>
-        <a href="#collection-notes">Collection notes</a>
       </nav>
 
       <div
@@ -750,33 +745,12 @@ export default async function TrackerReportPage({
         )}
       </div>
 
+      <BrandNextStep categoryName={catName} categorySlug={slug} />
+
       {history && <SnapshotComparison history={history} />}
 
       {explainer && <BenchmarkVideo video={explainer} />}
 
-      <aside className="report-audit-cta">
-        <div>
-          <strong>How does your brand compare?</strong>
-          <p>
-            Get a free {catName} audit, emailed within 48 hours. No call
-            required.
-          </p>
-        </div>
-        <TrackedLink
-          href={auditHref(slug)}
-          event="audit_cta_click"
-          source="report"
-          className="button-primary"
-        >
-          Audit my brand
-        </TrackedLink>
-        <a
-          href={`/subscribe?category=${encodeURIComponent(slug)}`}
-          className="text-link"
-        >
-          Get category updates
-        </a>
-      </aside>
       <div className="report-results-grid">
         <section
           id="brand-visibility"
@@ -1034,7 +1008,7 @@ export default async function TrackerReportPage({
                 href={auditHref(slug)}
                 className="text-white/30 underline underline-offset-2 hover:text-white/50"
               >
-                Request a private analysis
+                Get my free brand audit
               </a>
             </p>
           </ScrollFade>
