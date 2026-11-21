@@ -1327,7 +1327,7 @@ export const dogFoodNovemberCExplainer = {
 export const officeChairsNovemberCExplainer = {
   "id": "office-chairs-2026-11-c-one-first-choice-two-thirds",
   "approved": true,
-  "approvedSha256": "b37d7ad70e63912f3b3bae2498302b4cb50b4066bd2ac830b3639c512be55031",
+  "approvedSha256": "afcff06655ef749043f6bc7b14a46902cd9495e028e38073d9cd0309655d4105",
   "category": "office-chairs",
   "runId": 194,
   "period": "2026-11-C",
@@ -1336,8 +1336,8 @@ export const officeChairsNovemberCExplainer = {
   "context": "12 usable answers · Four AI assistants · Three prompt types",
   "title": "One first choice. Two different thirds.",
   "duration": "56-second brief",
-  "src": "/tracker-media/office-chairs/2026-11-c/office-chairs-explainer.mp4",
-  "poster": "/tracker-media/office-chairs/2026-11-c/explainer-poster.png",
+  "src": "/tracker-media/office-chairs/2026-11-c/matte-v3/office-chairs-explainer.mp4",
+  "poster": "/tracker-media/office-chairs/2026-11-c/matte-v3/explainer-poster.png",
   "captions": "/tracker-media/office-chairs/2026-11-c/explainer.en.vtt",
   "summary": [
     "Steelcase appeared in 11/12 usable answers and ranked first in all four comparative answers. Herman Miller ranked second in all four. Third place split: Haworth in ChatGPT and Gemini, Branch in Claude and Perplexity. Mention frequency and comparative rank are separate measures.",
