@@ -336,7 +336,7 @@ test("approved Humidifiers video is scoped to the first November13 snapshot",asy
  }
  assert.equal(snapshotVideo("sunscreen",run),null);
  assert.equal(snapshotVideo("humidifiers",run,{...v,approved:false}),null);
- assert.equal(benchmarkExplainers.length,29);
+ assert.equal(benchmarkExplainers.length,30);
  const schema=videoSchema(v);assert.equal(schema.duration,"PT43.5S");assert.match(schema.transcript,/Explore benchmark at getrecoscope\.com\.$/);
  const {readFileSync}=await import("node:fs");const {createHash}=await import("node:crypto");
  assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+v.src,import.meta.url))).digest("hex"),v.approvedSha256);
@@ -482,4 +482,22 @@ test("November21 Office Chairs video uses exact run194 and preserves earlier sna
   const { createHash } = await import("node:crypto");
   assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public" + video.src, import.meta.url))).digest("hex"), video.approvedSha256);
   assert.equal(readFileSync(new URL("../../../public" + video.captions, import.meta.url), "utf8").match(/-->/g)?.length, 21);
+});
+
+
+test("November21 Running Shoes media cannot replace earlier evidence or gain invented ranks", async () => {
+  const { runningShoesNovemberCExplainer: video, runningShoesNovemberBExplainer: previous } = await import("../benchmark-video.mjs");
+  const { videoSchema } = await import("../video-watch.mjs");
+  const run = { id: 195, period_label: "2026-11-C", run_date: "2026-11-21" };
+  assert.equal(snapshotVideo("running-shoes", run), video);
+  assert.equal(snapshotVideo("running-shoes", { id:185, period_label:"2026-11-B", run_date:"2026-11-16" }), previous);
+  for (const change of [{id:185}, {period_label:"2026-11-B"}, {run_date:"2026-11-16"}]) assert.equal(snapshotVideo("running-shoes", {...run,...change}), null);
+  assert.equal(videoSchema(video).duration, "PT50.3S");
+  assert.equal(videoSchema(video).uploadDate, "2026-11-21T22:17:09.470Z");
+  assert.match(video.summary[0], /ranked it second/);
+  assert.match(video.summary[2], /three explicit ranks/);
+  assert.equal(video.transcript.at(-1).text,"Explore benchmark at getrecoscope.com.");
+  const {readFileSync} = await import("node:fs"); const {createHash} = await import("node:crypto");
+  assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+video.src,import.meta.url))).digest("hex"), video.approvedSha256);
+  assert.equal(readFileSync(new URL("../../../public"+video.captions,import.meta.url),"utf8").match(/-->/g)?.length,15);
 });
