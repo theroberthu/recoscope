@@ -66,7 +66,7 @@ export function AuditRequestForm({
           </div>
         </div>
         <p className="text-center text-lg font-semibold text-white">
-          Thanks &mdash; your audit request is received.
+          Your audit request is received.
         </p>
         <p className="mt-4 text-[14px] leading-relaxed text-[#c8ccd0]">
           We&rsquo;ll email your full AI visibility report within 48 hours. It
@@ -185,21 +185,6 @@ export function AuditRequestForm({
       }
     >
       <div>
-        <label htmlFor="email" className={labelCls}>
-          Email *
-        </label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          required
-          className={inputCls}
-          placeholder="you@company.com"
-        />
-      </div>
-
-      <div>
         <label htmlFor="brand_name" className={labelCls}>
           Brand Name *
         </label>
@@ -244,6 +229,20 @@ export function AuditRequestForm({
             placeholder="What category is your product in?"
           />
         )}
+      </div>
+      <div>
+        <label htmlFor="email" className={labelCls}>
+          Work email *
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          required
+          className={inputCls}
+          placeholder="you@company.com"
+        />
       </div>
 
       <details className="optional-fields">
@@ -319,7 +318,7 @@ export function AuditRequestForm({
         disabled={status === "submitting"}
         className="w-full rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-all hover:bg-cyan/90 hover:shadow-[0_0_20px_rgba(0,212,170,0.25)] disabled:opacity-50"
       >
-        {status === "submitting" ? "Submitting..." : "Request Your Free Audit"}
+        {status === "submitting" ? "Submitting..." : "Get my free brand audit"}
       </button>
     </form>
   );
