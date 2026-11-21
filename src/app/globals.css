@@ -2314,3 +2314,45 @@ article :is(h2, h3) {
 [data-theme="light"] :is(h1, h2).report-eyebrow { font-family: var(--font-reading); font-weight: 650; letter-spacing: .08em; }
 [data-theme="light"] :is(.form-card, .conversion-grid) button[type="submit"] { border-radius: 3px; }
 [data-theme="light"] :is(.rounded-xl, .rounded-2xl, .rounded-lg) { border-radius: 6px; }
+
+/* The buyer journey: understand the offer, inspect proof, request the report. */
+.audit-deliverables { display: grid; gap: 0; margin-top: 18px; }
+.audit-deliverables > div { padding-block: 16px; border-top: 1px solid var(--line); }
+.audit-deliverables dt { color: var(--ink); font-size: 17px; font-weight: 600; }
+.audit-deliverables dd { color: var(--secondary); margin-top: 5px; font-size: 15px; line-height: 1.6; max-width: 58ch; }
+.audit-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; list-style: none; }
+.audit-steps li { display: flex; align-items: start; gap: 14px; }
+.audit-steps li > span { color: var(--brand); font: 13px ui-monospace, monospace; padding-top: 3px; }
+.audit-steps h3 { font-size: 18px; font-weight: 600; line-height: 1.35; }
+.audit-steps p { font-size: 15px; line-height: 1.6; color: var(--secondary); margin-top: 7px; }
+.brand-next-step { display: grid; grid-template-columns: 1.45fr 1fr; align-items: center; gap: 32px; margin-block: 24px; padding: 26px 0; border-block: 1px solid var(--line); }
+.brand-next-step h2 { font-size: 30px; line-height: 1.15; margin-top: 10px; }
+.brand-next-step p:not(.eyebrow) { font-size: 16px; color: var(--secondary); line-height: 1.65; margin-top: 12px; }
+.brand-next-step .brand-next-step-note { font-size: 14px; }
+.brand-next-step-action { border-left: 1px solid var(--line); padding-left: 28px; }
+.brand-next-step-action p:not(.eyebrow) { font-size: 14px; }
+.sample-audit-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-block: 25px 32px; }
+.sample-audit-actions p { color: var(--secondary); font-size: 14px; }
+.sample-reading-guide { border-block: 1px solid var(--line); padding-block: 26px; margin-block: 28px; }
+.sample-reading-guide h2, .sample-audit-delivery h2 { font-size: 32px; line-height: 1.2; margin-top: 9px; }
+.sample-reading-guide ol { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; margin-top: 24px; list-style: none; counter-reset: question; }
+.sample-reading-guide li { counter-increment: question; }
+.sample-reading-guide li::before { content: '0' counter(question); display: block; margin-bottom: 12px; font: 12px ui-monospace, monospace; color: var(--brand); }
+.sample-reading-guide strong { font-size: 17px; }
+.sample-reading-guide li p { font-size: 15px; line-height: 1.65; color: var(--secondary); margin-top: 8px; }
+.sample-audit-delivery { margin-block: 32px; max-width: 740px; }
+.audit-form-expectation { color: var(--secondary); font-size: 15px; margin: -10px 0 24px; line-height: 1.6; }
+@media (max-width: 760px) {
+  .audit-steps, .brand-next-step, .sample-reading-guide ol { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+  .brand-next-step { padding-block: 24px; }
+  .brand-next-step-action { padding: 0; border: 0; }
+  .brand-next-step h2 { font-size: 28px; }
+  .sample-reading-guide h2, .sample-audit-delivery h2 { font-size: 28px; }
+  .sample-audit-actions { gap: 12px; }
+}
+@media (max-width: 480px) {
+  .nav-actions .button-primary { font-size: 13px; padding-inline: 12px; }
+}
+@media (max-width: 360px) {
+  .nav-brand .nav-wordmark { display: none; }
+}
