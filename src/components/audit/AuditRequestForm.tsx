@@ -66,7 +66,7 @@ export function AuditRequestForm({
           </div>
         </div>
         <p className="text-center text-lg font-semibold text-white">
-          Thanks &mdash; your audit request is received.
+          Your audit request is received.
         </p>
         <p className="mt-4 text-[14px] leading-relaxed text-[#c8ccd0]">
           We&rsquo;ll email your full AI visibility report within 48 hours. It
@@ -185,21 +185,6 @@ export function AuditRequestForm({
       }
     >
       <div>
-        <label htmlFor="email" className={labelCls}>
-          Email *
-        </label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          required
-          className={inputCls}
-          placeholder="you@company.com"
-        />
-      </div>
-
-      <div>
         <label htmlFor="brand_name" className={labelCls}>
           Brand Name *
         </label>
@@ -214,6 +199,24 @@ export function AuditRequestForm({
         />
       </div>
 
+          <div>
+            <label htmlFor="product_url" className={labelCls}>
+              Brand website (optional)
+            </label>
+            <input
+              id="product_url"
+              name="product_url"
+              type="text"
+              inputMode="url"
+              autoComplete="url"
+              aria-describedby="product-url-help"
+              className={inputCls}
+              placeholder="example.com or a product page link"
+            />
+            <p id="product-url-help" className="mt-2 text-[12px] text-white/40">
+              A website or product page helps identify your brand. You can leave off https://.
+            </p>
+          </div>
       <div>
         <label htmlFor="category_interest" className={labelCls}>
           Product Category *
@@ -245,9 +248,23 @@ export function AuditRequestForm({
           />
         )}
       </div>
+      <div>
+        <label htmlFor="email" className={labelCls}>
+          Email for your report *
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          required
+          className={inputCls}
+          placeholder="you@company.com"
+        />
+      </div>
 
       <details className="optional-fields">
-        <summary>Add product details (optional)</summary>
+        <summary>Add a shopper question or context (optional)</summary>
         <div className="space-y-5 mt-5">
           {" "}
           <div>
@@ -264,26 +281,8 @@ export function AuditRequestForm({
             />
           </div>
           <div>
-            <label htmlFor="product_url" className={labelCls}>
-              Product URL
-            </label>
-            <input
-              id="product_url"
-              name="product_url"
-              type="text"
-              inputMode="url"
-              autoComplete="url"
-              aria-describedby="product-url-help"
-              className={inputCls}
-              placeholder="example.com or a product page link"
-            />
-            <p id="product-url-help" className="mt-2 text-[12px] text-white/40">
-              A website or product link is optional. You can leave off https://.
-            </p>
-          </div>
-          <div>
             <label htmlFor="challenge" className={labelCls}>
-              Biggest challenge{" "}
+              What would you like to understand?{" "}
               <span className="normal-case tracking-normal text-white/15">
                 (optional)
               </span>
@@ -293,7 +292,7 @@ export function AuditRequestForm({
               name="challenge"
               rows={3}
               className={inputCls}
-              placeholder="e.g. We don't show up when people ask AI what to buy"
+              placeholder="e.g. Which competitors get recommended for small home offices?"
             />
           </div>
         </div>
@@ -317,9 +316,9 @@ export function AuditRequestForm({
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="w-full rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-all hover:bg-cyan/90 hover:shadow-[0_0_20px_rgba(0,212,170,0.25)] disabled:opacity-50"
+        className="button-primary w-full disabled:opacity-50"
       >
-        {status === "submitting" ? "Submitting..." : "Request Your Free Audit"}
+        {status === "submitting" ? "Submitting..." : "Get my free brand audit"}
       </button>
     </form>
   );

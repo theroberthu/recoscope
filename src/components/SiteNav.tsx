@@ -4,11 +4,9 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const links = [
+  ["/demo", "Example report"],
   ["/tracker", "Benchmarks"],
-  ["/blog", "Research"],
-  ["/methodology", "Methodology"],
-  ["/platform", "Case study"],
-  ["/about", "About Robert"],
+  ["/#how-it-works", "How it works"],
 ];
 
 export function SiteNav() {
@@ -62,7 +60,7 @@ export function SiteNav() {
             className="button-primary"
             onClick={() => setOpen(false)}
           >
-            Free Audit
+            Free brand audit
           </Link>
           <button
             ref={button}

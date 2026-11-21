@@ -146,7 +146,7 @@ export default function RootLayout({
                       href="/audit"
                       className="transition-colors hover:text-white/60"
                     >
-                      Request a private analysis
+                      Get my free brand audit
                     </Link>
                   </li>
                 </ul>

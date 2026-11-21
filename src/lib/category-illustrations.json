@@ -1,0 +1,70 @@
+{
+  "wireless-earbuds": {
+    "src": "/tracker-media/categories/wireless-earbuds-apple-airpods-pro-3.jpg",
+    "alt": "Category illustration: Apple AirPods Pro 3, manufacturer reference image"
+  },
+  "robot-vacuums": {
+    "src": "/tracker-media/categories/robot-vacuums-dreame-x50-ultra.jpg",
+    "alt": "Category illustration: Dreame X50 Ultra, manufacturer reference image"
+  },
+  "running-shoes": {
+    "src": "/tracker-media/categories/running-shoes-brooks-ghost-18.avif",
+    "alt": "Category illustration: Brooks Ghost 18, manufacturer reference image"
+  },
+  "office-chairs": {
+    "src": "/tracker-media/categories/office-chairs-branch-ergonomic-chair-pro.png",
+    "alt": "Category illustration: Branch Ergonomic Chair Pro, black mesh without headrest"
+  },
+  "dog-food": {
+    "src": "/tracker-media/categories/dog-food-hill-s-science-diet-adult-large-breed-chicken-barley.jpg",
+    "alt": "Category illustration: Hill\u2019s Science Diet Adult Large Breed Chicken & Barley, manufacturer reference image"
+  },
+  "sunscreen": {
+    "src": "/tracker-media/categories/sunscreen-blue-lizard-sport-mineral-spf-50.jpg",
+    "alt": "Category illustration: Blue Lizard Sport Mineral SPF 50, manufacturer reference image"
+  },
+  "air-purifiers": {
+    "src": "/tracker-media/categories/air-purifiers-blueair-blue-pure-311i-max.png",
+    "alt": "Category illustration: Blueair Blue Pure 311i Max, manufacturer reference image"
+  },
+  "skincare": {
+    "src": "/tracker-media/categories/skincare-cerave-foaming-facial-cleanser.jpg",
+    "alt": "Category illustration: CeraVe Foaming Facial Cleanser, manufacturer reference image"
+  },
+  "standing-desks": {
+    "src": "/tracker-media/categories/standing-desks-branch-duo-standing-desk.jpg",
+    "alt": "Category illustration: Branch Duo Standing Desk, manufacturer reference image"
+  },
+  "electric-shavers": {
+    "src": "/tracker-media/categories/electric-shavers-braun-series-9-pro.webp",
+    "alt": "Category illustration: Braun Series 9 Pro+, manufacturer reference image"
+  },
+  "sleep-supplements": {
+    "src": "/tracker-media/categories/sleep-supplements-nature-made-melatonin-5-mg-tablets.png",
+    "alt": "Category illustration: Nature Made Melatonin 5 mg Tablets, manufacturer reference image"
+  },
+  "hair-growth-supplements": {
+    "src": "/tracker-media/categories/hair-growth-supplements-nutrafol-postpartum.webp",
+    "alt": "Category illustration: Nutrafol Postpartum, manufacturer reference image"
+  },
+  "mattress-toppers": {
+    "src": "/tracker-media/categories/mattress-toppers-saatva-graphite-memory-foam-mattress-topper.jpg",
+    "alt": "Category illustration: Saatva Graphite Memory Foam Mattress Topper, manufacturer reference image"
+  },
+  "protein-powder": {
+    "src": "/tracker-media/protein-powder/optimum-whey.png",
+    "alt": "Category illustration: Optimum Nutrition whey protein container"
+  },
+  "humidifiers": {
+    "src": "/tracker-media/humidifiers/2026-11-b/explainer-poster.png",
+    "alt": "Category illustration: Humidifiers benchmark video poster"
+  },
+  "espresso-machines": {
+    "src": "/tracker-media/espresso-machines/2026-11-a/explainer-poster.jpg",
+    "alt": "Category illustration: Espresso Machines benchmark video poster"
+  },
+  "space-heaters": {
+    "src": "/tracker-media/space-heaters/2026-11-a/explainer-poster.png",
+    "alt": "Category illustration: Space Heaters benchmark video poster"
+  }
+}

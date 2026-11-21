@@ -224,3 +224,88 @@ body:has(.research-home) .nav-mobile { background: #f2eee6; border-color: #cdc4b
   .editorial-typing-visual { display: none; }
   .editorial-typing-cursor { animation: none; }
 }
+
+/* Offer first; the live example supplies proof below the decision to act. */
+.journey-opening { display: grid; grid-template-columns: 1.2fr 1fr; gap: 70px; padding-block: 45px 38px; align-items: start; }
+.journey-introduction h1 { font: 400 clamp(44px, 4.5vw, 64px)/1.04 var(--font-editorial); letter-spacing: -.035em; margin-top: 18px; max-width: 620px; }
+.journey-deck { font-size: 21px; line-height: 1.5; max-width: 530px; margin-top: 24px; }
+.journey-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; margin-top: 25px; }
+.journey-actions .button-primary { background: var(--brand); font-size: 16px; }
+.journey-promise { font-size: 14px; color: var(--secondary); margin-top: 12px; }
+.journey-scope { color: var(--secondary); font-size: 14px; line-height: 1.65; max-width: 490px; margin-top: 20px; }
+.journey-receipt { padding: 25px 28px 20px; border: 1px solid var(--line); background: #faf7f1; }
+.journey-receipt h2 { font: 400 33px/1.15 var(--font-editorial); margin-top: 10px; }
+.journey-receipt .audit-deliverables { margin-top: 20px; }
+.journey-receipt .audit-deliverables dt { font-size: 16px; }
+.journey-receipt .audit-deliverables dd { font-size: 14px; }
+.journey-receipt-note { font-size: 12px; color: var(--secondary); line-height: 1.65; border-top: 1px solid var(--line); padding-top: 14px; }
+.journey-process { scroll-margin-top: 100px; border-block: 1px solid var(--line); padding-block: 26px; }
+.journey-example { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; padding-block: 48px; scroll-margin-top: 100px; }
+.journey-example-intro h2 { font: 400 clamp(36px, 4vw, 48px)/1.08 var(--font-editorial); letter-spacing: -.03em; margin-top: 16px; }
+.journey-example-intro h2 em { color: var(--brand); }
+.journey-example-intro > p:not(.editorial-kicker) { max-width: 420px; font-size: 18px; line-height: 1.6; margin-top: 22px; }
+.journey-example-intro > .journey-example-context { font-size: 14px !important; color: var(--secondary); }
+.journey-example-intro .editorial-evidence-link { margin-top: 15px; }
+@media (max-width: 1000px) {
+  .journey-opening { gap: 36px; grid-template-columns: 1.1fr 1fr; }
+  .journey-receipt { padding: 22px; }
+  .journey-example { gap: 36px; }
+}
+@media (max-width: 760px) {
+  .journey-opening { grid-template-columns: minmax(0, 1fr); gap: 27px; padding-block: 26px; }
+  .journey-introduction h1 { font-size: clamp(40px, 10.8vw, 58px); margin-top: 12px; }
+  .journey-introduction h1 br { display: none; }
+  .journey-introduction .editorial-kicker { font-size: 10px; }
+  .journey-deck { font-size: 18px; line-height: 1.5; margin-top: 18px; }
+  .journey-actions { gap: 8px 20px; margin-top: 18px; }
+  .journey-actions .button-primary { font-size: 15px; padding-inline: 16px; }
+  .journey-actions .editorial-quiet-link { font-size: 14px; }
+  .journey-promise, .journey-scope { font-size: 13px; margin-top: 10px; }
+  .journey-receipt { padding: 21px; }
+  .journey-receipt h2 { font-size: 29px; }
+  .journey-receipt .audit-deliverables > div { padding-block: 12px; }
+  .journey-process { padding-block: 24px; }
+  .journey-example { grid-template-columns: minmax(0, 1fr); gap: 26px; padding-block: 32px; }
+  .journey-example-intro h2 { font-size: 36px; }
+  .journey-example-intro h2 br { display: none; }
+  .journey-example-intro > p:not(.editorial-kicker) { font-size: 17px; margin-top: 16px; }
+  .journey-example .editorial-feature { order: initial; }
+}
+
+/* Balance the offer with a real video, then alternate concise copy and evidence. */
+.journey-opening { align-items: center; gap: clamp(36px, 5vw, 76px); padding-block: 48px 52px; }
+.journey-deck { max-width: 510px; font-size: 20px; }
+.journey-visual { min-width: 0; }
+.journey-visual > .editorial-kicker { margin-bottom: 14px; }
+.journey-visual .home-intro-trailer { max-width: none; margin: 0; }
+.journey-visual .home-intro-card { display: block; padding: 0; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--surface); }
+.journey-visual .home-intro-thumbnail { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 0; }
+.journey-visual .home-intro-thumbnail > span { width: 58px; height: 58px; border: 2px solid #faf7f1; background: var(--ink); font-size: 22px; box-shadow: none; }
+.journey-visual .home-intro-copy { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 16px 18px; }
+.journey-visual .home-intro-copy strong { font-size: 16px; }
+.journey-visual .home-intro-copy > span { margin: 0; font-size: 13px; }
+.journey-visual video { border-radius: 6px; }
+.journey-visual-caption { font-size: 13px; line-height: 1.6; color: var(--secondary); margin-top: 14px; max-width: 430px; }
+.journey-delivery { padding-block: 32px 40px; border-top: 1px solid var(--line); }
+.journey-delivery h2 { font: 400 32px/1.2 var(--font-editorial); margin-top: 10px; }
+.journey-delivery .audit-deliverables { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 22px; }
+.journey-delivery .audit-deliverables > div { padding-top: 15px; }
+.journey-process { padding-block: 30px; }
+.journey-example { padding-block: 60px; gap: clamp(36px, 6vw, 90px); }
+.research-home .editorial-index { padding-block: 58px; }
+.research-home .category-card { min-height: 0; padding-block: 22px; }
+.research-home .category-illustration { margin-bottom: 20px; }
+.research-home .category-card > p { font-size: 15px; line-height: 1.65; }
+@media (max-width: 760px) {
+ .journey-opening { padding-block: 27px 32px; gap: 28px; }
+ .journey-deck { font-size: 18px; }
+ .journey-visual .home-intro-copy { padding: 13px 14px; flex-wrap: wrap; gap: 3px 12px; }
+ .journey-visual .home-intro-thumbnail > span { width: 50px; height: 50px; font-size: 18px; }
+ .journey-visual-caption { font-size: 12px; margin-top: 10px; }
+ .journey-delivery { padding-block: 28px; }
+ .journey-delivery .audit-deliverables { grid-template-columns: minmax(0, 1fr); gap: 2px; margin-top: 18px; }
+ .journey-delivery h2 { font-size: 29px; }
+ .journey-process { padding-block: 28px; }
+ .journey-example { padding-block: 38px; gap: 30px; }
+ .research-home .editorial-index { padding-block: 38px; }
+}
