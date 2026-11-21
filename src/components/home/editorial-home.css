@@ -271,3 +271,41 @@ body:has(.research-home) .nav-mobile { background: #f2eee6; border-color: #cdc4b
   .journey-example-intro > p:not(.editorial-kicker) { font-size: 17px; margin-top: 16px; }
   .journey-example .editorial-feature { order: initial; }
 }
+
+/* Balance the offer with a real video, then alternate concise copy and evidence. */
+.journey-opening { align-items: center; gap: clamp(36px, 5vw, 76px); padding-block: 48px 52px; }
+.journey-deck { max-width: 510px; font-size: 20px; }
+.journey-visual { min-width: 0; }
+.journey-visual > .editorial-kicker { margin-bottom: 14px; }
+.journey-visual .home-intro-trailer { max-width: none; margin: 0; }
+.journey-visual .home-intro-card { display: block; padding: 0; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--surface); }
+.journey-visual .home-intro-thumbnail { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 0; }
+.journey-visual .home-intro-thumbnail > span { width: 58px; height: 58px; border: 2px solid #faf7f1; background: var(--ink); font-size: 22px; box-shadow: none; }
+.journey-visual .home-intro-copy { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 16px 18px; }
+.journey-visual .home-intro-copy strong { font-size: 16px; }
+.journey-visual .home-intro-copy > span { margin: 0; font-size: 13px; }
+.journey-visual video { border-radius: 6px; }
+.journey-visual-caption { font-size: 13px; line-height: 1.6; color: var(--secondary); margin-top: 14px; max-width: 430px; }
+.journey-delivery { padding-block: 32px 40px; border-top: 1px solid var(--line); }
+.journey-delivery h2 { font: 400 32px/1.2 var(--font-editorial); margin-top: 10px; }
+.journey-delivery .audit-deliverables { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 22px; }
+.journey-delivery .audit-deliverables > div { padding-top: 15px; }
+.journey-process { padding-block: 30px; }
+.journey-example { padding-block: 60px; gap: clamp(36px, 6vw, 90px); }
+.research-home .editorial-index { padding-block: 58px; }
+.research-home .category-card { min-height: 0; padding-block: 22px; }
+.research-home .category-illustration { margin-bottom: 20px; }
+.research-home .category-card > p { font-size: 15px; line-height: 1.65; }
+@media (max-width: 760px) {
+ .journey-opening { padding-block: 27px 32px; gap: 28px; }
+ .journey-deck { font-size: 18px; }
+ .journey-visual .home-intro-copy { padding: 13px 14px; flex-wrap: wrap; gap: 3px 12px; }
+ .journey-visual .home-intro-thumbnail > span { width: 50px; height: 50px; font-size: 18px; }
+ .journey-visual-caption { font-size: 12px; margin-top: 10px; }
+ .journey-delivery { padding-block: 28px; }
+ .journey-delivery .audit-deliverables { grid-template-columns: minmax(0, 1fr); gap: 2px; margin-top: 18px; }
+ .journey-delivery h2 { font-size: 29px; }
+ .journey-process { padding-block: 28px; }
+ .journey-example { padding-block: 38px; gap: 30px; }
+ .research-home .editorial-index { padding-block: 38px; }
+}
