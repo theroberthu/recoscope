@@ -25,12 +25,8 @@ export default async function DemoPage() {
   const href = `/tracker/${snapshot.category.slug}?period=${encodeURIComponent(snapshot.run.period_label)}`;
   return <div className="page-shell section-space">
     <p className="eyebrow">Example report · real public benchmark data</p>
-    <h1 className="page-title">What your audit helps you inspect.</h1>
+    <h1 className="page-title">See what your brand audit shows.</h1>
     <p className="page-description">This published {snapshot.category.name} snapshot from {formatSnapshotDate(snapshot.run.run_date)} shows how to read the evidence. Your private audit would use your own brand and category.</p>
-    <div className="sample-audit-actions">
-      <TrackedLink href="/audit?source=demo" event="audit_cta_click" source="demo" className="button-primary">Get my free brand audit <span aria-hidden="true">↗</span></TrackedLink>
-      <p>Free · No call required · Emailed within 48 hours</p>
-    </div>
     <div className="sample-proof-grid">
       <SnapshotPreview snapshot={snapshot} />
       <SampleReadingGuide />

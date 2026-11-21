@@ -48,13 +48,13 @@ function Feature({ snapshot }: { snapshot: Snapshot }) {
               <p><strong>{brand.mentionCount}</strong><span>/{snapshot.coverage.eligible}</span><span className="sr-only"> usable answers mention {brand.name}</span></p>
               <div className="editorial-bar" aria-hidden="true"><span style={{ width: `${snapshot.coverage.eligible ? brand.mentionCount / snapshot.coverage.eligible * 100 : 0}%` }} /></div>
             </div>
-            <p className={`editorial-firsts ${(brand.firstPlaces ?? 0) > 0 ? "has-firsts" : ""}`}><strong>{brand.firstPlaces ?? "—"}</strong>{rankedComparisons > 0 && <span>/{rankedComparisons}</span>}<span className="sr-only"> ranked comparative answers put {brand.name} first</span></p>
+            <p className={`editorial-firsts ${(brand.firstPlaces ?? 0) > 0 ? "has-firsts" : ""}`}><strong>{brand.firstPlaces ?? "—"}</strong>{rankedComparisons > 0 && <span>/{rankedComparisons}</span>}<span className="sr-only">{rankedComparisons > 0 ? ` ranked comparative answers put ${brand.name} first` : `No first-place count is recorded for ${brand.name}; the comparative answers are unranked or unavailable.`}</span></p>
           </div>
         </div>;
       })}
     </div>
     <p className="editorial-evidence-note">{snapshot.coverage.eligible} usable answers · {snapshot.coverage.models.length} AI assistants · {new Set(snapshot.responses.map(r => r.prompt_number)).size} prompt types</p>
-    <p className="editorial-interpretation">Read this as two separate measures: visibility in answers and preference in ranked comparisons. First places use {rankedComparisons} explicitly ranked answers; unranked answers have no recorded first choice.</p>
+    <p className="editorial-interpretation">First-place counts use {rankedComparisons} explicitly ranked comparisons. Unranked answers have no recorded first choice.</p>
     <div className="editorial-feature-actions">
       <TrackedLink href={href} event="benchmark_category_open" source="homepage-featured-brief" className="editorial-evidence-link">Explore this benchmark <span aria-hidden="true">↗</span></TrackedLink>
       {video && <TrackedLink href={watchPath(video)} event="benchmark_category_open" source="homepage-featured-brief" className="editorial-watch-link"><span className="editorial-play" aria-hidden="true">▶</span> Watch the {seconds ? `${seconds}-second ` : ""}brief</TrackedLink>}
@@ -85,21 +85,21 @@ export function EditorialHome({ categories, snapshot, stats, today }: Props) {
           <p className="journey-visual-caption">A 40-second introduction to the questions, comparisons and captured answers behind RecoScope.</p>
         </aside>
       </section>
+      <section className="journey-example" id="example" aria-label="Public benchmark example">
+        {snapshot ? <Feature snapshot={snapshot} /> : <section className="editorial-feature"><p className="editorial-kicker">The research archive</p><h2>Follow the answers.</h2><a href="/tracker" className="editorial-evidence-link">Browse the benchmarks ↗</a></section>}
+        <div className="journey-example-intro">
+          <p className="editorial-kicker">What to look for</p>
+          <h2 id="example-heading">Visibility and<br />{" "}<TypewriterPhrase /></h2>
+          <p>Compare how often a brand appears with how often an assistant explicitly puts it first. Those measures answer different questions.</p>
+          <p className="journey-example-context">This {snapshot?.category.name ?? "category"} example illustrates the measures. Your audit uses your own brand and category.</p>
+          <TrackedLink href="/demo" event="benchmark_browse_click" source="homepage-example" className="editorial-evidence-link">See the explained report <span aria-hidden="true">↗</span></TrackedLink>
+        </div>
+      </section>
       <section className="journey-delivery" aria-labelledby="audit-delivery-heading">
         <div><p className="editorial-kicker">Your free audit</p><h2 id="audit-delivery-heading">A report built around your brand.</h2></div>
         <AuditDeliverables />
       </section>
       <section className="journey-process" id="how-it-works" aria-label="From your brand to your report"><AuditSteps /></section>
-      <section className="journey-example" id="example" aria-labelledby="example-heading">
-        <div className="journey-example-intro">
-          <p className="editorial-kicker">See what the evidence tells you</p>
-          <h2 id="example-heading">A mention isn’t<br />{" "}a <TypewriterPhrase /></h2>
-          <p>A brand can appear often and still lose the first recommendation. Your audit keeps those two signals separate.</p>
-          <p className="journey-example-context">This example uses a published {snapshot?.category.name ?? "category"} benchmark. It illustrates the measures; it is not an assessment of your brand.</p>
-          <TrackedLink href="/demo" event="benchmark_browse_click" source="homepage-example" className="editorial-evidence-link">Walk through the example <span aria-hidden="true">↗</span></TrackedLink>
-        </div>
-        {snapshot ? <Feature snapshot={snapshot} /> : <section className="editorial-feature"><p className="editorial-kicker">The research archive</p><h2>Follow the answers.</h2><a href="/tracker" className="editorial-evidence-link">Browse the benchmarks ↗</a></section>}
-      </section>
     </div>
     <BrandScroller leaders={homeBrandLeaders(categories)} today={today} />
     <section className="editorial-shell editorial-index" id="categories" aria-labelledby="research-index-heading">
