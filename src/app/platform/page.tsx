@@ -1,3 +1,4 @@
+import { socialImage } from "@/lib/social-image.mjs";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getPlatformStats } from "@/lib/queries";
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
   description:
     "Learn how RecoScope evaluates product recommendations across ChatGPT, Claude, Gemini, and Perplexity, normalizes the results, and publishes longitudinal AI commerce research.",
   openGraph: {
+    images: [socialImage()],
     title: "RecoScope Case Study | AI Commerce Benchmark",
     description:
       "How RecoScope evaluates product recommendations across ChatGPT, Claude, Gemini, and Perplexity, normalizes the results, and publishes longitudinal AI commerce research.",

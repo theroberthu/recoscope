@@ -1,3 +1,4 @@
+import { socialImage } from "@/lib/social-image.mjs";
 import { isoDate } from "@/lib/seo.mjs";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -42,6 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: post.excerpt,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
+      images: [socialImage()],
       title: post.title,
       description: post.excerpt,
       type: "article",

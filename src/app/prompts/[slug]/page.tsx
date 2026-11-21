@@ -1,3 +1,4 @@
+import { socialImage } from "@/lib/social-image.mjs";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
@@ -37,6 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description,
     alternates: { canonical: `/prompts/${found.canonicalSlug}` },
     openGraph: {
+      images: [socialImage()],
       title: `${title} | RecoScope`,
       description,
       type: "article",
