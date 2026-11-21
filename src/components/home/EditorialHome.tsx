@@ -54,7 +54,7 @@ function Feature({ snapshot }: { snapshot: Snapshot }) {
       })}
     </div>
     <p className="editorial-evidence-note">{snapshot.coverage.eligible} usable answers · {snapshot.coverage.models.length} AI assistants · {new Set(snapshot.responses.map(r => r.prompt_number)).size} prompt types</p>
-    <p className="editorial-interpretation">Read this as two separate measures: visibility in answers and preference in ranked comparisons. First places use {rankedComparisons} explicitly ranked answers; unranked answers have no recorded first choice.</p>
+    <p className="editorial-interpretation">First-place counts use {rankedComparisons} explicitly ranked comparisons. Unranked answers have no recorded first choice.</p>
     <div className="editorial-feature-actions">
       <TrackedLink href={href} event="benchmark_category_open" source="homepage-featured-brief" className="editorial-evidence-link">Explore this benchmark <span aria-hidden="true">↗</span></TrackedLink>
       {video && <TrackedLink href={watchPath(video)} event="benchmark_category_open" source="homepage-featured-brief" className="editorial-watch-link"><span className="editorial-play" aria-hidden="true">▶</span> Watch the {seconds ? `${seconds}-second ` : ""}brief</TrackedLink>}
