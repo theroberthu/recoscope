@@ -738,6 +738,8 @@ export default async function TrackerReportPage({
         </section>
       </div>
 
+      <PromptsUsed prompts={prompts} categorySlug={slug} />
+
       <div className="report-results-grid">
         <section
           id="brand-visibility"
@@ -835,7 +837,6 @@ export default async function TrackerReportPage({
           )}
       </div>
 
-      <PromptsUsed prompts={prompts} categorySlug={slug} />
       {promptBreakdownData.length > 0 && (
         <section
           id="prompt-details"
