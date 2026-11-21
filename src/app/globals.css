@@ -2190,8 +2190,10 @@ article :is(h2, h3) {
 .watch-stage-top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 16px; color: var(--brand); font-size: 11px; line-height: 1.5; font-weight: 650; }
 .watch-stage-top > span:last-child { white-space: nowrap; }
 .watch-media { width: min(100%, 360px, calc((100svh - 235px) * .5625)); margin-inline: auto; }
-.watch-player { position: relative; border: 2px solid #914b37; border-radius: 17px; box-shadow: 0 15px 35px #38312c24; }
-.watch-player-play { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; width: 100%; border-radius: 14px; background: linear-gradient(transparent 30%, #38312c10 55%, #38312c20); color: #fff; cursor: pointer; }
+.watch-player { --player-radius: 17px; position: relative; overflow: hidden; border: 2px solid #914b37; border-radius: var(--player-radius); box-shadow: 0 15px 35px #38312c24; }
+.watch-player > video, .watch-player-play { border-radius: calc(var(--player-radius) - 2px); }
+.watch-player:has(> :focus-visible) { outline: 3px solid var(--brand); outline-offset: 4px; }
+.watch-player-play { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; width: 100%; background: linear-gradient(transparent 30%, #38312c10 55%, #38312c20); color: #fff; cursor: pointer; }
 .watch-player-play-icon { display: grid; place-items: center; width: 70px; height: 70px; padding-left: 4px; border: 2px solid #fff; border-radius: 50%; background: #38312c; color: #fff; font-size: 25px; box-shadow: 0 4px 20px #38312c40; }
 .watch-player-play-label { padding: 8px 14px; border-radius: 99px; background: #38312c; color: #fff; font-size: 12px; font-weight: 650; }
 .watch-player-play:hover .watch-player-play-icon { background: #753b2b; transform: scale(1.04); }
@@ -2305,6 +2307,7 @@ article :is(h2, h3) {
 [data-theme="light"] :is(.watch-stage, .benchmark-video) { background: var(--surface-light); }
 [data-theme="light"] .watch-related-card:hover { box-shadow: none; border-color: var(--brand); }
 [data-theme="light"] :is(.watch-player, .benchmark-video-frame) { box-shadow: none; border-radius: 8px; }
+[data-theme="light"] .watch-player { --player-radius: 8px; }
 [data-theme="light"] :is(.report-brief-metric, .report-brief-unranked, .report-brief-video) { border-radius: 6px; box-shadow: none; }
 [data-theme="light"] :is(.report-stats dd, .report-brief-metric strong, table) { font-variant-numeric: tabular-nums; }
 [data-theme="light"] .report-hero h1 { line-height: 1.06; }

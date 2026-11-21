@@ -23,7 +23,7 @@ export function BenchmarkPlayer({ video, showPlayButton = false, playLabel }: { 
         playsInline
         preload="none"
         aria-label={video.title}
-        style={{ display: "block", width: "100%", height: "auto", aspectRatio: "9 / 16", objectFit: "contain", borderRadius: 14, background: "var(--player)" }}
+        style={{ display: "block", width: "100%", height: "auto", aspectRatio: "9 / 16", objectFit: "contain", background: "var(--player)" }}
         onPlay={() => {
           setStarted(true);
           setError(false);
