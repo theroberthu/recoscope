@@ -73,5 +73,14 @@
   },
   "Hill's Science Diet": {
     "src": "/brand-marks/hills-science-diet.png"
+  },
+  "Herman Miller": {
+    "src": "/brand-marks/herman-miller.svg"
+  },
+  "Haworth": {
+    "src": "/brand-marks/haworth.webp"
+  },
+  "SIHOO": {
+    "src": "/brand-marks/sihoo.png"
   }
 }
