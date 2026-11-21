@@ -12,6 +12,7 @@ import { AuditDeliverables, AuditSteps } from "@/components/AuditJourney";
 import { BrandScroller } from "./BrandScroller";
 import { IntroTrailer } from "./IntroTrailer";
 import { TypewriterPhrase } from "./TypewriterPhrase";
+import { CategoryPoll } from "./CategoryPoll";
 import "./editorial-home.css";
 
 type Snapshot = NonNullable<Awaited<ReturnType<typeof getLatestPublicSnapshot>>>;
@@ -93,6 +94,7 @@ export function EditorialHome({ categories, snapshot, stats, today }: Props) {
           <p>Compare how often a brand appears with how often an assistant explicitly puts it first. Those measures answer different questions.</p>
           <p className="journey-example-context">This {snapshot?.category.name ?? "category"} example illustrates the measures. Your audit uses your own brand and category.</p>
           <TrackedLink href="/demo" event="benchmark_browse_click" source="homepage-example" className="editorial-evidence-link">See the explained report <span aria-hidden="true">↗</span></TrackedLink>
+          <CategoryPoll />
         </div>
       </section>
       <section className="journey-delivery" aria-labelledby="audit-delivery-heading">
