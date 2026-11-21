@@ -3,16 +3,21 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { SOCIAL_IMAGE_SIZE, type SocialCard } from "./social-image.mjs";
 
-// Static instances of the site's existing OFL fonts; no request to a font CDN.
-const fonts = Promise.all([
+// Metadata modules are also imported by ordinary page functions, whose bundles
+// do not include the image fonts. Read them only when actually rendering a PNG.
+// Memoize the immutable local files across image requests; no font CDN is used.
+let fontFiles: Promise<Buffer[]> | undefined;
+function loadFonts() {
+  return fontFiles ??= Promise.all([
   readFile(join(process.cwd(), "public/fonts/newsreader-og-regular.ttf")),
   readFile(join(process.cwd(), "public/fonts/recoscope-og-sans-regular.ttf")),
   readFile(join(process.cwd(), "public/fonts/recoscope-og-sans-semibold.ttf")),
 ]);
+}
 const palette = { paper: "#f2eee6", ink: "#2c2a27", secondary: "#696057", accent: "#914b37", line: "#cdc4b8" };
 
 export async function renderSocialCard(card: SocialCard) {
-  const [serif, sans, semibold] = await fonts;
+  const [serif, sans, semibold] = await loadFonts();
   return new ImageResponse(
     <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", background: palette.paper, color: palette.ink, fontFamily: "RecoScope Sans", padding: "42px 60px 32px", borderBottom: `8px solid ${palette.accent}` }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingBottom: 25, borderBottom: `1px solid ${palette.line}` }}>
