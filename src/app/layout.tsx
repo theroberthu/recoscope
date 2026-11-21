@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialImage } from "@/lib/social-image.mjs";
 import Script from "next/script";
 import Link from "next/link";
 import { PostHogProvider } from "@/lib/posthog";
@@ -21,10 +22,12 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "RecoScope",
     locale: "en_US",
+    images: [socialImage()],
   },
   twitter: {
     card: "summary_large_image",
     site: "@recoscope",
+    images: [socialImage()],
   },
 };
 
