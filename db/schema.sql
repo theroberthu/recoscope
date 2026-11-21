@@ -70,3 +70,12 @@ CREATE TABLE audit_leads (
   notes             TEXT,
   created_at        TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+-- Anonymous browser votes are separate from audit leads and benchmark data.
+CREATE TABLE category_poll_votes (
+  poll_id TEXT NOT NULL,
+  voter_hash TEXT NOT NULL CHECK (voter_hash ~ '^[a-f0-9]{64}$'),
+  option_key TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (poll_id, voter_hash)
+);
