@@ -2368,3 +2368,11 @@ article :is(h2, h3) {
 @media (max-width: 760px) {
   .sample-proof-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
 }
+.category-illustration { display: block; position: relative; margin-bottom: 18px; overflow: hidden; background: var(--surface); border-bottom: 1px solid var(--line); }
+.category-illustration img { display: block; width: 100%; height: 150px; object-fit: contain; padding: 14px 28px 25px; mix-blend-mode: multiply; }
+.category-illustration > span { position: absolute; bottom: 6px; left: 10px; font-size: 10px; color: var(--secondary); }
+.sample-proof-grid { gap: clamp(30px, 5vw, 64px); margin-block: 38px; }
+@media (max-width: 760px) {
+  .category-illustration img { height: 165px; }
+  .sample-proof-grid { gap: 32px; }
+}
