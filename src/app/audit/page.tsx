@@ -58,7 +58,7 @@ export default async function AuditPage({
               For {initialCategory}. You can change the category below.
             </p>
           )}
-          <p className="audit-form-expectation">We’ll use these details to identify your brand and prepare your report. Look for it by email within 48 hours.</p>
+          <p className="audit-form-expectation">Brand, category and email are required. Your website is optional and helps us identify the right business.</p>
           <AuditRequestForm
             categories={categories}
             initialCategory={initialCategory}
