@@ -34,7 +34,8 @@ export function CategoryFinder({
         (snapshotAge(c.latest_run_date, today) === "Recent snapshot") ===
           (filter === "recent")),
   );
-  const visible = compact ? matches.slice(0, 6) : matches;
+  const previewing = compact && !query.trim();
+  const visible = previewing ? matches.slice(0, 3) : matches;
   return (
     <div>
       <div className="finder-controls">
@@ -60,7 +61,7 @@ export function CategoryFinder({
               htmlFor="snapshot-filter"
               className="block text-sm font-medium mb-2"
             >
-              Publication age
+              Snapshot age
             </label>
             <select
               id="snapshot-filter"
@@ -78,8 +79,8 @@ export function CategoryFinder({
       <p className="mt-3 mb-5 text-sm text-[var(--secondary)]" role="status">
         {matches.length} {matches.length === 1 ? "category" : "categories"}{" "}
         found
-        {compact && matches.length > 6
-          ? " · showing the six most recently published"
+        {previewing && matches.length > 3
+          ? " · showing the three most recent snapshots"
           : ""}
       </p>
       <div className="category-grid">
@@ -95,14 +96,14 @@ export function CategoryFinder({
               <img src={(illustrations as Record<string, { src: string; alt: string }>)[c.slug].src} alt={(illustrations as Record<string, { src: string; alt: string }>)[c.slug].alt} loading="lazy" width={320} height={180} />
               <span>Category illustration</span>
             </span>}
-            <div className="flex flex-wrap items-start justify-between gap-2">
+            <div className="category-card-heading flex flex-wrap items-start justify-between gap-2">
               <h3>{c.name}</h3>
               <span className={isNewCategory(c.slug, today) ? "new-category-badge" : "snapshot-status"}>
                 {isNewCategory(c.slug, today) ? "New category" : snapshotAge(c.latest_run_date, today)}
               </span>
             </div>
-            <p className="my-4 leading-relaxed">{c.finding}</p>
-            <div className="mt-auto">
+            <p className="category-card-finding my-4 leading-relaxed">{c.finding}</p>
+            <div className="category-card-meta mt-auto">
               <p className="text-sm text-[var(--secondary)]">
                 <time dateTime={c.latest_run_date}>
                   {formatSnapshotDate(c.latest_run_date)}
@@ -126,15 +127,14 @@ export function CategoryFinder({
       </div>
       {!visible.length && (
         <div className="empty-state">
-          <p>No matching published category.</p>
-          <a href="/request-category" className="text-link">
-            Request a category →
-          </a>
+          <p>No matching public benchmark.</p>
+          <p className="mt-2 text-sm text-[var(--secondary)]">You can still request a brand audit. Choose “Other” in the category field and tell us what you sell.</p>
+          <TrackedLink href={`/audit?source=${compact ? "homepage" : "tracker"}`} event="audit_cta_click" source={compact ? "homepage" : "tracker"} className="button-primary mt-5">Get my free brand audit <span aria-hidden="true">↗</span></TrackedLink>
+          <a href="/request-category" className="text-link mt-3">Suggest a public category →</a>
         </div>
       )}
       <p className="mt-6 text-sm text-[var(--secondary)]">
-        Images illustrate product categories; they are not rankings or endorsements. “Recent” means published within 45 days. Dates show when answers were
-        collected; reports are snapshots, not continuous monitoring.
+        Images illustrate categories, not rankings. “Recent” means collected within 45 days. Reports describe dated answers, not continuous monitoring.
       </p>
       {compact && (
         <a href="/tracker" className="button-secondary mt-6">
