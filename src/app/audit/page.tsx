@@ -1,3 +1,4 @@
+import { AuditDeliverables } from "@/components/AuditJourney";
 import type { Metadata } from "next";
 import { AuditRequestForm } from "@/components/audit/AuditRequestForm";
 import { getActiveCategories, getLatestPublicSnapshot } from "@/lib/queries";
@@ -38,10 +39,10 @@ export default async function AuditPage({
       <div className="conversion-grid audit-layout">
         <section className="audit-intro">
           <p className="eyebrow">Free brand audit</p>
-          <h1 className="page-title">Is AI recommending your brand?</h1>
+          <h1 className="page-title">Get your free brand audit.</h1>
           <p className="page-description">
-            See where your brand and competitors appear in answers from ChatGPT,
-            Claude, Gemini, and Perplexity.
+            Tell us your brand and category. We’ll email a dated comparison of
+            your brand and competitors across ChatGPT, Claude, Gemini and Perplexity.
           </p>
           <p className="offer-promise">
             Free · No call required · Emailed within 48 hours
@@ -57,6 +58,7 @@ export default async function AuditPage({
               For {initialCategory}. You can change the category below.
             </p>
           )}
+          <p className="audit-form-expectation">Submit your details below. We prepare the report and email it within 48 hours; this form does not generate an instant score.</p>
           <AuditRequestForm
             categories={categories}
             initialCategory={initialCategory}
@@ -64,18 +66,8 @@ export default async function AuditPage({
           />
         </section>
         <section className="audit-benefits">
-          <h2 className="text-xl font-semibold">What your audit includes</h2>
-          <ul className="benefit-list">
-            <li>
-              A dated comparison of brand mentions and explicitly supported
-              ranks.
-            </li>
-            <li>
-              The shopper prompts and usable-answer coverage behind the
-              findings.
-            </li>
-            <li>Product-information questions worth testing next.</li>
-          </ul>
+          <h2 className="text-xl font-semibold">What you’ll receive</h2>
+          <AuditDeliverables />
           <p className="text-sm text-[var(--secondary)]">
             One captured answer can change between sessions. Your audit states
             its collection conditions and limitations.
@@ -86,14 +78,13 @@ export default async function AuditPage({
         <div className="section-intro">
           <div>
             <p className="eyebrow">Inspect an example</p>
-            <h2>Real answers, with their limits.</h2>
+            <h2>Prefer to see an example first?</h2>
           </div>
           <p>
-            We reuse standardized shopper questions within a collection. A
-            missing numeric rank stays unranked; it never becomes an invented
-            recommendation.
+            See how to read mentions, comparative ranks and original answers in a published benchmark.
           </p>
         </div>
+        <a href="/demo" className="text-link mb-6">Walk through the example →</a>
         {snapshot ? (
           <div className="max-w-3xl">
             <SnapshotPreview snapshot={snapshot} />
