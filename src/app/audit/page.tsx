@@ -58,7 +58,7 @@ export default async function AuditPage({
               For {initialCategory}. You can change the category below.
             </p>
           )}
-          <p className="audit-form-expectation">Submit your details below. We prepare the report and email it within 48 hours; this form does not generate an instant score.</p>
+          <p className="audit-form-expectation">We’ll use these details to identify your brand and prepare your report. Look for it by email within 48 hours.</p>
           <AuditRequestForm
             categories={categories}
             initialCategory={initialCategory}
