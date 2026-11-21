@@ -1,3 +1,4 @@
+import { socialImage } from "@/lib/social-image.mjs";
 import { BrandNextStep } from "@/components/AuditJourney";
 import {
   reportUrl as snapshotUrl,
@@ -359,6 +360,8 @@ export async function generateMetadata({
   const brands = mentionCounts(eligibleMentions(mentions, responses));
   return {
     alternates: { canonical: snapshotUrl(slug, run.period_label) },
+    openGraph: { images: [socialImage("benchmark", run.id)] },
+    twitter: { card: "summary_large_image", images: [socialImage("benchmark", run.id)] },
     title: `${label}: AI mention frequency — ${formatRunDate(run.run_date)}`,
     description: `Compare AI answers for ${label.toLowerCase()}. ${snapshotFinding(brands, coverage)} Explore model rankings, shopper prompts and collection notes.`,
   };

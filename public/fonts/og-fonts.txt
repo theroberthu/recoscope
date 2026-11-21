@@ -1,0 +1,10 @@
+Social-image font instances
+
+Derived from the same self-hosted Newsreader and Source Sans 3 fonts used by the website.
+Newsreader: roman, weight400, optical size36.
+Source Sans 3: roman, weights400 and600.
+Converted to static TTF for Next.js ImageResponse compatibility.
+The existing newsreader-OFL.txt and sourcesans3-OFL.txt licenses apply.
+No new client-side font requests or external font service.
+
+The derived Source Sans 3 instances are renamed internally to RecoScope Social Sans to respect the reserved name. Copyright and license records are retained.

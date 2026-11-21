@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialImage } from "@/lib/social-image.mjs";
 import { notFound } from "next/navigation";
 import { WatchExperience } from "@/components/videos/WatchExperience";
 import { BreadcrumbSchema } from "@/components/seo/JsonLd";
@@ -19,8 +20,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const url = canonicalUrl(watchPath(video));
   return {
     title, description, alternates: { canonical: url },
-    openGraph: { type: "video.other", title, description, url, images: [{ url: canonicalUrl(video.poster) }], videos: [{ url: canonicalUrl(video.src), type: "video/mp4", width: 1080, height: 1920 }] },
-    twitter: { card: "summary_large_image", title, description, images: [canonicalUrl(video.poster)] },
+    openGraph: { type: "video.other", title, description, url, images: [socialImage("video", video.id)], videos: [{ url: canonicalUrl(video.src), type: "video/mp4", width: 1080, height: 1920 }] },
+    twitter: { card: "summary_large_image", title, description, images: [socialImage("video", video.id)] },
   };
 }
 export default async function WatchPage({ params }: Props) {
