@@ -1,10 +1,12 @@
 import { benchmarkExplainers, snapshotVideo } from "./benchmark-video.mjs";
 import { canonicalUrl, isoDate, PUBLISHER, ROBERT_HU } from "./seo.mjs";
 
-export const WATCH_PAGES_UPDATED_AT = "2026-11-20";
+export const WATCH_PAGES_UPDATED_AT = "2026-11-21";
 
 // First successful public deployments; collection dates are separate evidence.
 const releases = {
+  // Calendar publication date; collection and first public upload are distinct.
+  "office-chairs-2026-11-c-one-first-choice-two-thirds": ["2026-11-21", 55.6],
   // Calendar publication date; no exact first-deployment time is asserted.
   "dog-food-2026-11-c-most-mentioned-never-first": ["2026-11-20", 59.4],
   // Calendar publication date; collection and first deployment are distinct.

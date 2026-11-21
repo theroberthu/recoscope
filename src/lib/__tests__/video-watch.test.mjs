@@ -12,8 +12,8 @@ test("same-day releases put the newest published snapshot first", () => {
 });
 
 test("watch listing requires exact published evidence and never substitutes another snapshot", () => {
-  assert.equal(publicWatchVideos(runs).length, 28);
-  assert.equal(publicWatchVideos(runs)[0].runId, 193);
+  assert.equal(publicWatchVideos(runs).length, 29);
+  assert.equal(publicWatchVideos(runs)[0].runId, 194);
   assert.equal(publicWatchVideos([]).length, 0);
   for (const change of [{ id: -1 }, { category_slug: "private-category" }, { period_label: "2026-12-A" }, { run_date: "2025-01-01" }]) {
     assert.equal(publicWatchVideos(runs.map((run) => ({ ...run, ...change }))).length, 0);
