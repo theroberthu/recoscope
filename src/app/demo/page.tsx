@@ -1,7 +1,9 @@
+import { AuditDeliverables, SampleReadingGuide } from "@/components/AuditJourney";
+import { TrackedLink } from "@/components/TrackedLink";
 import type { Metadata } from "next";
 import { getLatestPublicSnapshot } from "@/lib/queries";
-import { mentionCounts, reviewStatus } from "@/lib/report-ranking.mjs";
-import { formatSnapshotDate, auditHref } from "@/lib/discovery.mjs";
+import { mentionCounts } from "@/lib/report-ranking.mjs";
+import { formatSnapshotDate } from "@/lib/discovery.mjs";
 import { SnapshotPreview } from "@/components/home/SnapshotPreview";
 export const metadata: Metadata = {
   alternates: { canonical: "/demo" },
@@ -42,6 +44,11 @@ export default async function DemoPage() {
         {formatSnapshotDate(snapshot.run.run_date)}. It illustrates the measures
         in an audit; it does not describe your own brand.
       </p>
+      <div className="sample-audit-actions">
+        <TrackedLink href="/audit?source=demo" event="audit_cta_click" source="demo" className="button-primary">Get my free brand audit <span aria-hidden="true">↗</span></TrackedLink>
+        <p>Free · No call required · Emailed within 48 hours</p>
+      </div>
+      <SampleReadingGuide />
       <div className="sample-metrics">
         {lead && (
           <section className="form-card">
@@ -80,10 +87,7 @@ export default async function DemoPage() {
                 {snapshot.coverage.eligible}/{snapshot.coverage.captured}
               </dd>
             </div>
-            <div>
-              <dt>Review</dt>
-              <dd>{reviewStatus(snapshot.insight?.reviewed_by_human)}</dd>
-            </div>
+
           </dl>
           <p className="mt-5 text-sm text-[var(--secondary)]">
             No combined score or letter grade is inferred. This is a snapshot of
@@ -94,6 +98,9 @@ export default async function DemoPage() {
       <div className="max-w-3xl my-10">
         <SnapshotPreview snapshot={snapshot} />
       </div>
+      <section className="sample-audit-delivery">
+        <p className="eyebrow">Your report</p><h2>These measures, applied to your brand.</h2><AuditDeliverables />
+      </section>
       <section className="form-card">
         <h2 className="text-2xl font-semibold">The exact shopper questions</h2>
         <ol className="mt-5 space-y-5 list-decimal pl-6">
@@ -116,10 +123,10 @@ export default async function DemoPage() {
           </p>
         </div>
         <a
-          href={auditHref(snapshot.category.slug, "demo")}
+          href="/audit?source=demo"
           className="button-primary"
         >
-          Get my brand’s audit
+          Get my free brand audit
         </a>
       </div>
     </div>
