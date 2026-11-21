@@ -17,7 +17,7 @@
   },
   "dog-food": {
     "src": "/tracker-media/categories/dog-food-hill-s-science-diet-adult-large-breed-chicken-barley.jpg",
-    "alt": "Category illustration: Hill’s Science Diet Adult Large Breed Chicken & Barley, manufacturer reference image"
+    "alt": "Category illustration: Hill\u2019s Science Diet Adult Large Breed Chicken & Barley, manufacturer reference image"
   },
   "sunscreen": {
     "src": "/tracker-media/categories/sunscreen-blue-lizard-sport-mineral-spf-50.jpg",
@@ -50,5 +50,21 @@
   "mattress-toppers": {
     "src": "/tracker-media/categories/mattress-toppers-saatva-graphite-memory-foam-mattress-topper.jpg",
     "alt": "Category illustration: Saatva Graphite Memory Foam Mattress Topper, manufacturer reference image"
+  },
+  "protein-powder": {
+    "src": "/tracker-media/protein-powder/optimum-whey.png",
+    "alt": "Category illustration: Optimum Nutrition whey protein container"
+  },
+  "humidifiers": {
+    "src": "/tracker-media/humidifiers/2026-11-b/explainer-poster.png",
+    "alt": "Category illustration: Humidifiers benchmark video poster"
+  },
+  "espresso-machines": {
+    "src": "/tracker-media/espresso-machines/2026-11-a/explainer-poster.jpg",
+    "alt": "Category illustration: Espresso Machines benchmark video poster"
+  },
+  "space-heaters": {
+    "src": "/tracker-media/space-heaters/2026-11-a/explainer-poster.png",
+    "alt": "Category illustration: Space Heaters benchmark video poster"
   }
 }
