@@ -45,14 +45,12 @@ export function CrossAgentTable({ rows, whatThisMeans, notableAbsents }: CrossAg
       {/* Section intro */}
       <div className="mb-6 flex items-end justify-between">
         <div>
-          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-cyan/50">
-            Cross-Agent Comparison
-          </p>
+          <h2 className="report-result-heading">Who ranks first in each AI answer?</h2>
           <p className="mt-1 text-[14px] text-white/40">
             Recorded ranks from the comparative prompt (Prompt 3). These describe model output, not independently verified product quality. Historical parsing conventions may differ.
           </p>
         </div>
-        <p className="hidden font-mono text-[10px] text-white/20 sm:block">
+        <p className="report-rank-coverage">
           {rankedRows.length}/{rows.length} models with recorded ranks
         </p>
       </div>
@@ -72,9 +70,22 @@ export function CrossAgentTable({ rows, whatThisMeans, notableAbsents }: CrossAg
         </div>
       )}
 
-      {/* Table */}
-      <div className="overflow-x-auto rounded-xl border border-cyan/15 bg-surface shadow-[0_0_30px_rgba(0,212,170,0.06)]">
+      <div className="report-rank-cards">
+        {rows.map((row) => <section key={row.agentName} className="report-rank-card" aria-label={`${row.agentName} comparative answer`}>
+          <h3>{row.agentName}</h3>
+          {row.status ? <p className="report-rank-status">{row.status}</p> : <dl>
+            {[0, 1, 2].map((idx) => {
+              const brand = row.rankSlots ? row.rankSlots[idx] : row.topBrands[idx];
+              return <div key={idx}><dt>#{idx + 1}</dt><dd>{brand || "No rank recorded"}</dd></div>;
+            })}
+          </dl>}
+        </section>)}
+      </div>
+
+      {/* A native table supports direct column comparison on larger screens. */}
+      <div className="report-rank-table overflow-x-auto rounded-xl border border-cyan/15 bg-surface shadow-[0_0_30px_rgba(0,212,170,0.06)]">
         <table className="w-full">
+          <caption className="sr-only">Recorded top-three ranks by AI assistant in the comparative prompt</caption>
           <thead>
             <tr className="border-b border-white/5">
               <th className="px-6 py-4 text-left font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/25">
@@ -161,6 +172,8 @@ export function CrossAgentTable({ rows, whatThisMeans, notableAbsents }: CrossAg
           </p>
         </div>
       )}
+
+      <a href="#captured-answers" className="report-evidence-link">Read the captured answers <span aria-hidden="true">↗</span></a>
 
       {/* What this means */}
       {whatThisMeans && whatThisMeans.length > 0 && (

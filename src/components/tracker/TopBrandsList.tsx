@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useId } from "react";
 import { BrandMark } from "./TrackerMedia";
 import { trackPostHog } from "@/lib/posthog";
 
@@ -66,6 +66,9 @@ export function TopBrandsList({
   eligibleAnswers,
 }: TopBrandsListProps) {
   const [expanded, setExpanded] = useState(false);
+  const [query, setQuery] = useState("");
+  const searchId = useId();
+  const search = query.trim().toLocaleLowerCase();
   const droppedRef = useRef<HTMLDivElement>(null);
   const droppedTracked = useRef(false);
 
@@ -94,21 +97,35 @@ export function TopBrandsList({
   const maxMentions = brands.length > 0 ? brands[0].mentionCount : 1;
   const hasLabels = brands.some((b) => b.label);
   const canCollapse = brands.length > COLLAPSED_COUNT;
-  const visibleBrands =
-    canCollapse && !expanded ? brands.slice(0, COLLAPSED_COUNT) : brands;
+  const visibleBrands = search
+    ? brands.filter((brand) => brand.name.toLocaleLowerCase().includes(search))
+    : canCollapse && !expanded ? brands.slice(0, COLLAPSED_COUNT) : brands;
 
   return (
     <div>
-      <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/30">
-        Top Brands by AI Mention Frequency
-      </p>
+      <h2 className="report-result-heading">Which brands appear?</h2>
       <p className="mt-2 text-[13px] text-white/30">
         Mention frequency counts usable answers containing a brand, once per
         answer. Unranked and critical mentions count as visibility.
-        Recommendation ranks are shown separately below.
+        Comparative ranks are shown in the AI rankings section.
       </p>
 
+      <div className="report-brand-search">
+        <label htmlFor={searchId}>Find your brand or a competitor</label>
+        <div>
+          <input id={searchId} type="search" value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search all captured brands" aria-describedby={`${searchId}-status`} />
+          {query && <button type="button" onClick={() => setQuery("")}>Clear</button>}
+        </div>
+        <p id={`${searchId}-status`} role="status" aria-live="polite" aria-atomic="true">
+          {search ? `${visibleBrands.length} matching brand${visibleBrands.length === 1 ? "" : "s"} in this snapshot.` : `${brands.length} brands recorded in this snapshot. Counts are usable answers, not recommendation ranks.`}
+        </p>
+      </div>
+
       {hasLabels && (
+        <details className="report-brand-labels">
+          <summary>How to read the labels</summary>
         <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-[11px] text-white/25">
           <span>
             <span className="font-semibold text-cyan/50">Most Mentioned</span> =
@@ -137,12 +154,18 @@ export function TopBrandsList({
             = visibility without an inferred rank
           </span>
         </div>
+        </details>
       )}
 
-      <div className="mt-6 space-y-1.5">
-        {visibleBrands.map((brand, i) => {
-          const isFirst = i === 0;
-          const isTop3 = i < 3;
+      {search && visibleBrands.length === 0 && <p className="report-brand-empty">
+        No matching brand in this captured snapshot. This does not establish your brand’s overall AI visibility.
+      </p>}
+
+      <div className="mt-6 space-y-1.5 report-brand-list">
+        {visibleBrands.map((brand) => {
+          const position = brands.indexOf(brand);
+          const isFirst = position === 0;
+          const isTop3 = position < 3;
           const denominator =
             eligibleAnswers && eligibleAnswers >= maxMentions
               ? eligibleAnswers
@@ -246,7 +269,7 @@ export function TopBrandsList({
         })}
       </div>
 
-      {canCollapse && (
+      {canCollapse && !search && (
         <button
           onClick={() => {
             if (!expanded) {
