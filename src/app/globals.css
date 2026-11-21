@@ -2376,3 +2376,54 @@ article :is(h2, h3) {
   .category-illustration img { height: 165px; }
   .sample-proof-grid { gap: 32px; }
 }
+
+/* Tracker reading path: finding, evidence, then context and the private audit. */
+.benchmark-report .report-overview-single { grid-template-columns: minmax(0, 1fr); }
+.benchmark-report .report-takeaway { gap: 12px; padding: 24px 28px; }
+.benchmark-report .report-takeaway > div p { max-width: 95ch; font-size: 18px; line-height: 1.6; }
+.benchmark-report .report-takeaway .report-text-link { padding-top: 12px; }
+.report-result-heading { margin: 0; color: var(--ink); font-size: 27px; line-height: 1.15; letter-spacing: -.025em; }
+.report-brand-search { margin-top: 20px; }
+.report-brand-search label { display: block; margin-bottom: 7px; font-size: 15px; font-weight: 600; color: var(--ink); }
+.report-brand-search > div { position: relative; }
+.report-brand-search input { width: 100%; min-height: 48px; padding: 10px 68px 10px 12px; border: 1px solid var(--secondary); border-radius: 4px; background: var(--surface); color: var(--ink); font-size: 16px; }
+.report-brand-search input::-webkit-search-cancel-button { display: none; }
+.report-brand-search button { position: absolute; right: 4px; top: 2px; min-width: 52px; min-height: 44px; color: var(--brand); font-size: 14px; text-decoration: underline; text-underline-offset: 3px; }
+.report-brand-search p { margin-top: 7px; font-size: 13px; line-height: 1.5; color: var(--secondary); }
+.report-brand-labels { margin-top: 10px; font-size: 13px; color: var(--secondary); }
+.report-brand-labels summary { cursor: pointer; padding: 8px 0; min-height: 40px; }
+.report-brand-labels > div { margin: 8px 0 0; font-size: 13px; line-height: 1.6; }
+.report-brand-empty { margin-top: 20px; padding: 16px; background: var(--surface-light); font-size: 16px; line-height: 1.6; }
+.report-brand-list { margin-top: 16px; }
+.report-rank-coverage { margin-top: 10px; font-size: 13px; color: var(--secondary); }
+.report-rank-cards { display: none; }
+.report-evidence-link { display: flex; align-items: center; justify-content: space-between; min-height: 44px; margin-top: 16px; color: var(--brand); font-size: 15px; text-decoration: underline; text-underline-offset: 4px; }
+.report-trend-disclosure { margin-top: 24px; }
+.report-trend-disclosure > summary { cursor: pointer; font-size: 23px; line-height: 1.4; color: var(--ink); }
+.report-trend-disclosure > summary > span { display: block; margin-top: 4px; color: var(--secondary); font-size: 14px; }
+.report-trend-disclosure[open] > summary { margin-bottom: 24px; }
+.report-brand-search input:focus-visible, .report-brand-search button:focus-visible,
+.report-brand-labels summary:focus-visible, .report-trend-disclosure > summary:focus-visible,
+.report-evidence-link:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
+@media (max-width: 767px) {
+  .report-brief-brand { gap: 6px; flex-wrap: wrap; }
+  .report-brief-brand img { max-width: 60px; }
+  .benchmark-report .report-takeaway { padding: 20px; }
+  .benchmark-report .report-takeaway > div p { font-size: 16px; }
+  .report-result-heading { font-size: 25px; }
+  .report-brand-list > div { padding: 14px 12px; }
+  .report-brand-list .tracker-brand-row { gap: 10px; }
+  .report-brand-list .tracker-brand-row > span:last-child { flex-shrink: 0; font-size: 14px; }
+  .report-rank-table { display: none; }
+  .report-rank-cards { display: grid; gap: 12px; }
+  .report-rank-card { padding: 16px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); }
+  .report-rank-card h3 { margin: 0 0 10px; color: var(--brand); font-family: var(--font-reading); font-size: 17px; font-weight: 600; }
+  .report-rank-card dl { display: grid; gap: 8px; }
+  .report-rank-card dl > div { display: grid; grid-template-columns: 28px minmax(0,1fr); gap: 8px; align-items: baseline; }
+  .report-rank-card dt { color: var(--secondary); font-size: 13px; }
+  .report-rank-card dd { margin: 0; color: var(--ink); font-size: 16px; line-height: 1.4; overflow-wrap: anywhere; }
+  .report-rank-card dl > div:first-child dd { font-weight: 600; }
+  .report-rank-status { color: var(--secondary); font-size: 15px; line-height: 1.5; }
+  .report-trend-disclosure { padding: 20px; }
+  .report-trend-disclosure > summary { font-size: 21px; }
+}

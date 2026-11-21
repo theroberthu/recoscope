@@ -714,14 +714,15 @@ export default async function TrackerReportPage({
 
       <nav className="report-jump-links" aria-label="Report sections">
         <a href="#overview">Summary</a>
-        <a href="#brand-visibility">Compare brands</a>
+        <a href="#brand-visibility">Find a brand</a>
         <a href="#model-comparison">AI rankings</a>
+        {explainer && <a href="#benchmark-video">Watch the brief</a>}
         <a href="#captured-answers">Captured answers</a>
       </nav>
 
       <div
         id="overview"
-        className={`report-overview ${trendLines.length > 0 && trendWeeks.length >= 2 ? "" : "report-overview-single"}`}
+        className="report-overview report-overview-single"
       >
         <section
           className="report-card report-takeaway"
@@ -735,21 +736,9 @@ export default async function TrackerReportPage({
             Compare the model rankings <span aria-hidden="true">↗</span>
           </a>
         </section>
-        {trendLines.length > 0 && trendWeeks.length >= 2 && (
-          <section
-            className="report-card report-trend"
-            aria-label="Mention frequency trend"
-          >
-            <TrendChart lines={trendLines} weeks={trendWeeks} />
-          </section>
-        )}
       </div>
 
-      <BrandNextStep categoryName={catName} categorySlug={slug} />
-
-      {history && <SnapshotComparison history={history} />}
-
-      {explainer && <BenchmarkVideo video={explainer} />}
+      <PromptsUsed prompts={prompts} categorySlug={slug} />
 
       <div className="report-results-grid">
         <section
@@ -780,6 +769,19 @@ export default async function TrackerReportPage({
           />
         </section>
       </div>
+
+      <BrandNextStep categoryName={catName} categorySlug={slug} />
+
+      {history && <SnapshotComparison history={history} />}
+
+      {trendLines.length > 0 && trendWeeks.length >= 2 && (
+        <details className="report-card report-trend report-trend-disclosure">
+          <summary>Explore mention history <span>Coverage and model changes can affect comparisons.</span></summary>
+          <TrendChart lines={trendLines} weeks={trendWeeks} />
+        </details>
+      )}
+
+      {explainer && <BenchmarkVideo video={explainer} />}
 
       <ProductGallery
         products={snapshotProducts(slug, run.id, responses, {
@@ -835,7 +837,6 @@ export default async function TrackerReportPage({
           )}
       </div>
 
-      <PromptsUsed prompts={prompts} categorySlug={slug} />
       {promptBreakdownData.length > 0 && (
         <section
           id="prompt-details"

@@ -20,7 +20,7 @@ function EvidenceCard({ metric, ranking = false }: { metric: BriefMetric; rankin
           {mark ? <>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={mark.src} alt="" width={90} height={24} />
-            <span className="sr-only">{name}</span>
+            <span>{name}</span>
           </> : <span>{name || (ranking ? "No recorded first place" : "No recorded mentions")}</span>}
         </span>
         <strong>{metric.count}<span>/{metric.total}</span></strong>
