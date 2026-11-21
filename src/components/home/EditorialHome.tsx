@@ -86,7 +86,7 @@ export function EditorialHome({ categories, snapshot, stats, today }: Props) {
           <p className="journey-receipt-note">Prepared for your brand. Research you can inspect, with clear limits on what each finding establishes.</p>
         </aside>
       </section>
-      <section className="journey-process" aria-label="From your brand to your report"><AuditSteps /></section>
+      <section className="journey-process" id="how-it-works" aria-label="From your brand to your report"><AuditSteps /></section>
       <section className="journey-example" id="example" aria-labelledby="example-heading">
         <div className="journey-example-intro">
           <p className="editorial-kicker">See what the evidence tells you</p>
