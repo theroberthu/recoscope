@@ -67,7 +67,7 @@ export function CategoryRequestForm() {
   const labelCls = "mb-1.5 block font-mono text-[11px] font-medium uppercase tracking-[0.15em] text-white/30";
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form id="category-request" onSubmit={handleSubmit} className="space-y-5 scroll-mt-28">
       <div>
         <label htmlFor="category_name" className={labelCls}>Category Name *</label>
         <input id="category_name" name="category_name" type="text" required className={inputCls} placeholder="e.g. Sunscreen, Protein Powder, Pet Food" />
