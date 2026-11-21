@@ -336,7 +336,7 @@ test("approved Humidifiers video is scoped to the first November13 snapshot",asy
  }
  assert.equal(snapshotVideo("sunscreen",run),null);
  assert.equal(snapshotVideo("humidifiers",run,{...v,approved:false}),null);
- assert.equal(benchmarkExplainers.length,28);
+ assert.equal(benchmarkExplainers.length,29);
  const schema=videoSchema(v);assert.equal(schema.duration,"PT43.5S");assert.match(schema.transcript,/Explore benchmark at getrecoscope\.com\.$/);
  const {readFileSync}=await import("node:fs");const {createHash}=await import("node:crypto");
  assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+v.src,import.meta.url))).digest("hex"),v.approvedSha256);
@@ -463,4 +463,23 @@ test("November18 Skincare release requires approved run190 and preserves both ol
  const {readFileSync}=await import("node:fs");const {createHash}=await import("node:crypto");
  assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+v.src,import.meta.url))).digest("hex"),v.approvedSha256);
  assert.equal(readFileSync(new URL("../../../public"+v.captions,import.meta.url),"utf8").match(/-->/g)?.length,17);
+});
+
+
+test("November21 Office Chairs video uses exact run194 and preserves earlier snapshots", async () => {
+  const { officeChairsNovemberCExplainer: video, officeChairsNovemberBExplainer: previous, snapshotVideo } = await import("../benchmark-video.mjs");
+  const { publicWatchVideos, videoSchema } = await import("../video-watch.mjs");
+  const run = { id: 194, category_slug: "office-chairs", period_label: "2026-11-C", run_date: "2026-11-21" };
+  assert.equal(snapshotVideo("office-chairs", run), video);
+  assert.ok(publicWatchVideos([run]).includes(video));
+  assert.equal(snapshotVideo("office-chairs", { id: 183, period_label: "2026-11-B", run_date: "2026-11-15" }), previous);
+  for (const change of [{ id: 183 }, { period_label: "2026-11-B" }, { run_date: "2026-11-15" }]) {
+    assert.equal(snapshotVideo("office-chairs", { ...run, ...change }), null);
+  }
+  assert.equal(videoSchema(video).duration, "PT55.6S");
+  assert.equal(video.transcript.at(-1).text, "Explore benchmark at getrecoscope.com.");
+  const { readFileSync } = await import("node:fs");
+  const { createHash } = await import("node:crypto");
+  assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public" + video.src, import.meta.url))).digest("hex"), video.approvedSha256);
+  assert.equal(readFileSync(new URL("../../../public" + video.captions, import.meta.url), "utf8").match(/-->/g)?.length, 21);
 });
