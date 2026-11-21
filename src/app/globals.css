@@ -810,7 +810,7 @@
   padding: 9px 40px 9px 12px;
   border: 1px solid #b7a99a; border-radius: 9px;
   background-color: var(--surface);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23506459' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23696057' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 14px center;
   background-size: 16px 16px;
@@ -2215,7 +2215,7 @@ article :is(h2, h3) {
 .watch-transcript details div { padding: 4px 0 12px; }
 .watch-transcript details p { margin-bottom: 14px; }
 .watch-reading .watch-caption-note { margin-top: 14px; font-size: 11px; }
-.watch-next-step { align-self: start; padding: 25px; border-radius: 18px; background: #eaf2ec; border: 1px solid #cdc4b8; }
+.watch-next-step { align-self: start; padding: 25px; border-radius: 18px; background: #e8e1d6; border: 1px solid #cdc4b8; }
 .watch-next-step .text-link { display: inline-flex; min-height: 44px; align-items: center; gap: 20px; margin-top: 8px; font-size: 14px; }
 .watch-reading .watch-audit-note { margin-top: 4px; font-size: 11px; }
 .watch-related { margin-top: 48px; }
@@ -2225,7 +2225,7 @@ article :is(h2, h3) {
 .watch-related-card { display: grid; grid-template-columns: 72px minmax(0, 1fr); align-items: center; gap: 16px; min-width: 0; padding: 16px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); transition: border-color .15s, box-shadow .15s; }
 .watch-related-card:hover { border-color: #b7a99a; box-shadow: 0 5px 18px #38312c10; }
 .watch-related-poster { position: relative; }
-.watch-related-poster img { display: block; width: 100%; aspect-ratio: 9 / 16; object-fit: contain; border: 1px solid var(--line); border-radius: 7px; background: #eaf2ec; }
+.watch-related-poster img { display: block; width: 100%; aspect-ratio: 9 / 16; object-fit: contain; border: 1px solid var(--line); border-radius: 7px; background: #e8e1d6; }
 .watch-related-poster > span { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid #fff; border-radius: 50%; background: #38312c; color: #fff; font-size: 11px; }
 .watch-related-card p { color: var(--secondary); font-size: 10px; line-height: 1.5; }
 .watch-related-card h3 { margin-top: 7px; color: var(--ink); font-size: 15px; line-height: 1.3; font-weight: 650; letter-spacing: -.02em; }
