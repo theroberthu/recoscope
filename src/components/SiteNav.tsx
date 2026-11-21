@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 const links = [
   ["/demo", "Example report"],
   ["/tracker", "Benchmarks"],
-  ["/methodology", "How it works"],
+  ["/#how-it-works", "How it works"],
 ];
 
 export function SiteNav() {
