@@ -86,7 +86,7 @@ export function CategoryPoll() {
     <p className="editorial-kicker">Help shape the research</p>
     <h3 id={headingId}>What should we benchmark next?</h3>
     <p className="category-poll-deck">Pick a new category for a future AI comparison.</p>
-    <noscript><p className="category-poll-note">Enable JavaScript to vote, or suggest a category by email below.</p></noscript>
+    <noscript><p className="category-poll-note">Enable JavaScript to vote, or use the category suggestion form below.</p></noscript>
     {reply?.preview && <p className="category-poll-preview">Private preview · Test votes only</p>}
     {results ? <div>
       <p className="category-poll-confirmation" role="status">Thanks—your vote is counted.</p>
@@ -106,11 +106,11 @@ export function CategoryPoll() {
           <span>{option.label}</span>
         </label>)}
       </fieldset>
-      <div className="category-poll-actions"><button type="submit" disabled={!selected || loading || sending}>{loading ? "Loading…" : sending ? "Saving…" : "Vote"}<span aria-hidden="true">↗</span></button><a className="category-poll-suggest" href="mailto:robert@theroberthu.com?subject=RecoScope%20category%20suggestion">Suggest another category <span aria-hidden="true">↗</span></a></div>
+      <div className="category-poll-actions"><button type="submit" disabled={!selected || loading || sending}>{loading ? "Loading…" : sending ? "Saving…" : "Vote"}<span aria-hidden="true">↗</span></button><a className="category-poll-suggest" href="/request-category#category-request">Suggest another category <span aria-hidden="true">↗</span></a></div>
       <p className="category-poll-note">One vote per browser · No email needed.</p>
     </form>}
     {error && <p className="category-poll-error" role="alert">{error}</p>}
-    {results && <a className="category-poll-suggest" href="mailto:robert@theroberthu.com?subject=RecoScope%20category%20suggestion">Suggest another category <span aria-hidden="true">↗</span></a>}
+    {results && <a className="category-poll-suggest" href="/request-category#category-request">Suggest another category <span aria-hidden="true">↗</span></a>}
     </aside>;
   }
 
