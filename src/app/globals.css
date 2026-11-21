@@ -2311,3 +2311,6 @@ article :is(h2, h3) {
 [data-theme="light"] .watch-heading h1 { line-height: 1.08; }
 [data-theme="light"] .videos-index-card { border-radius: 6px; background: var(--surface); }
 [data-theme="light"] .videos-index-card img { background: var(--surface-light); }
+[data-theme="light"] :is(h1, h2).report-eyebrow { font-family: var(--font-reading); font-weight: 650; letter-spacing: .08em; }
+[data-theme="light"] :is(.form-card, .conversion-grid) button[type="submit"] { border-radius: 3px; }
+[data-theme="light"] :is(.rounded-xl, .rounded-2xl, .rounded-lg) { border-radius: 6px; }
