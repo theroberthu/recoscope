@@ -309,3 +309,31 @@ body:has(.research-home) .nav-mobile { background: #f2eee6; border-color: #cdc4b
  .journey-example { padding-block: 38px; gap: 30px; }
  .research-home .editorial-index { padding-block: 38px; }
 }
+
+/* Senior review: lead with proof and keep the home index a compact entry point. */
+.journey-example { grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); padding-block: 42px; border-top: 1px solid var(--line); gap: 44px; align-items: start; }
+.journey-example > .editorial-feature { border: 0; padding: 0; }
+.journey-example-intro { min-width: 0; border-left: 1px solid var(--line); padding-left: 36px; }
+.journey-example-intro h2 { font-size: 38px; }
+.journey-example-intro > p:not(.editorial-kicker) { font-size: 17px; margin-top: 18px; }
+.journey-example-intro .editorial-evidence-link { margin-top: 14px; }
+.journey-delivery { padding-bottom: 30px; }
+.research-home .editorial-index { padding-block: 42px; }
+@media (max-width: 760px) {
+  .journey-example { grid-template-columns: minmax(0, 1fr); padding-block: 28px; gap: 24px; }
+  .journey-example-intro { border-left: 0; border-top: 1px solid var(--line); padding: 22px 0 0; }
+  .journey-example-intro h2 { font-size: 31px; }
+  .journey-example-intro > p:not(.editorial-kicker) { font-size: 16px; margin-top: 13px; }
+  .journey-example-intro > .journey-example-context { font-size: 13px !important; }
+  .research-home .editorial-index { padding-block: 30px; }
+  .research-home .category-card { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 8px 18px; padding-block: 20px; }
+  .research-home .category-illustration { grid-column: 1; grid-row: 1 / 4; height: 116px; margin: 0; border: 0; }
+  .research-home .category-illustration img { height: 116px; padding: 8px; }
+  .research-home .category-illustration > span { display: none; }
+  .research-home .category-card-heading { grid-column: 2; grid-row: 1; gap: 4px; }
+  .research-home .category-card-heading h3 { font-size: 24px; line-height: 1.15; }
+  .research-home .category-card-finding { grid-column: 2; grid-row: 2; margin: 0; font-size: 14px; line-height: 1.55; }
+  .research-home .category-card-meta { grid-column: 2; grid-row: 3; margin: 0; }
+  .research-home .category-card-meta p { display: block !important; margin: 0 !important; font-size: 11px; line-height: 1.6; }
+  .research-home .category-card-meta p:last-child { margin-top: 8px !important; font-size: 13px; }
+}
