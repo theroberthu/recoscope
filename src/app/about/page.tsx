@@ -1,3 +1,4 @@
+import { socialImage } from "@/lib/social-image.mjs";
 import { ROBERT_HU } from "@/lib/seo.mjs";
 import type { Metadata } from "next";
 import { TrackedLink } from "@/components/TrackedLink";
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
   description:
     "Robert Hu brings more than 20 years of commerce experience to AI product discovery. Explore RecoScope, his working benchmark, and connect about AI commerce, strategy, and partnerships roles.",
   openGraph: {
+    images: [socialImage()],
     title: "Robert Hu | AI Commerce Strategy & RecoScope",
     description:
       "Commerce experience applied to AI product discovery: the research, product decisions, and operating system behind RecoScope.",
