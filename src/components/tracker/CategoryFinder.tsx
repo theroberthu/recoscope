@@ -1,4 +1,5 @@
 "use client";
+import illustrations from "@/lib/category-illustrations.json";
 import { useState } from "react";
 import { formatSnapshotDate, snapshotAge, isNewCategory } from "@/lib/discovery.mjs";
 import { TrackedLink } from "@/components/TrackedLink";
@@ -90,6 +91,10 @@ export function CategoryFinder({
             source={compact ? "homepage" : "tracker"}
             className="category-card"
           >
+            {(illustrations as Record<string, { src: string; alt: string }>)[c.slug] && <span className="category-illustration">
+              <img src={(illustrations as Record<string, { src: string; alt: string }>)[c.slug].src} alt={(illustrations as Record<string, { src: string; alt: string }>)[c.slug].alt} loading="lazy" width={320} height={180} />
+              <span>Category illustration</span>
+            </span>}
             <div className="flex flex-wrap items-start justify-between gap-2">
               <h3>{c.name}</h3>
               <span className={isNewCategory(c.slug, today) ? "new-category-badge" : "snapshot-status"}>
@@ -128,7 +133,7 @@ export function CategoryFinder({
         </div>
       )}
       <p className="mt-6 text-sm text-[var(--secondary)]">
-        “Recent” means published within 45 days. Dates show when answers were
+        Images illustrate product categories; they are not rankings or endorsements. “Recent” means published within 45 days. Dates show when answers were
         collected; reports are snapshots, not continuous monitoring.
       </p>
       {compact && (
