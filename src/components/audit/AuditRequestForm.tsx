@@ -316,7 +316,7 @@ export function AuditRequestForm({
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="w-full rounded-full bg-cyan px-8 py-3.5 font-mono text-[13px] font-bold tracking-tight text-void transition-all hover:bg-cyan/90 hover:shadow-[0_0_20px_rgba(0,212,170,0.25)] disabled:opacity-50"
+        className="button-primary w-full disabled:opacity-50"
       >
         {status === "submitting" ? "Submitting..." : "Get my free brand audit"}
       </button>
