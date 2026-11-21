@@ -70,7 +70,7 @@ export function EditorialHome({ categories, snapshot, stats, today }: Props) {
       <section className="journey-opening" aria-labelledby="journey-heading">
         <div className="journey-introduction">
           <p className="editorial-kicker">For brand owners & ecommerce marketers</p>
-          <h1 id="journey-heading">Is AI recommending<br />your competitors?</h1>
+          <h1 id="journey-heading">Is AI recommending<br />{" "}your competitors?</h1>
           <p className="journey-deck">See how your brand compares in AI shopping recommendations—and what to investigate next.</p>
           <div className="journey-actions">
             <TrackedLink href="/audit?source=homepage" event="audit_cta_click" source="homepage" className="button-primary">Get my free brand audit <span aria-hidden="true">↗</span></TrackedLink>
@@ -90,7 +90,7 @@ export function EditorialHome({ categories, snapshot, stats, today }: Props) {
       <section className="journey-example" id="example" aria-labelledby="example-heading">
         <div className="journey-example-intro">
           <p className="editorial-kicker">See what the evidence tells you</p>
-          <h2 id="example-heading">A mention isn’t<br />a <TypewriterPhrase /></h2>
+          <h2 id="example-heading">A mention isn’t<br />{" "}a <TypewriterPhrase /></h2>
           <p>A brand can appear often and still lose the first recommendation. Your audit keeps those two signals separate.</p>
           <p className="journey-example-context">This example uses a published {snapshot?.category.name ?? "category"} benchmark. It illustrates the measures; it is not an assessment of your brand.</p>
           <TrackedLink href="/demo" event="benchmark_browse_click" source="homepage-example" className="editorial-evidence-link">Walk through the example <span aria-hidden="true">↗</span></TrackedLink>
