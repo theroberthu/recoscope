@@ -16,7 +16,7 @@ export default function PrivacyPage() {
         <h1 className="mt-4 text-4xl font-bold tracking-tight text-white">
           Privacy Policy
         </h1>
-        <p className="mt-4 text-[13px] text-white/30">Last updated: April 11, 2026</p>
+        <p className="mt-4 text-[13px] text-white/30">Last updated: November 21, 2026</p>
 
         <div className="mt-12 space-y-10 text-[15px] leading-[1.8] text-[#c8ccd0]">
           <section>
@@ -47,6 +47,11 @@ export default function PrivacyPage() {
               <li>
                 <strong className="text-white/80">Category requests</strong> &mdash; email, category name, role, brand name,
                 and reason submitted via the /request-category form.
+              </li>
+              <li>
+                <strong className="text-white/80">Category poll votes</strong> &mdash; your selected category and a hashed random
+                browser token, stored in our existing Neon database. Voting does not require a name or email.
+                Poll votes are not audit requests or verified counts of individual people.
               </li>
             </ul>
           </section>
@@ -81,6 +86,11 @@ export default function PrivacyPage() {
               to track page views and interactions. If you decline, no analytics cookies are set and PostHog
               is never initialized. Your consent preference is stored in a <code className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-[13px]">recoscope_consent</code> cookie
               that lasts one year.
+            </p>
+            <p className="mt-3">
+              If you vote in a category poll, we set a separate first-party cookie for 30 days to remember your vote
+              and limit repeat votes from the same browser. It is used for the poll, not advertising. Clearing cookies
+              or using another browser can bypass this limit. Aggregate results are shown after voting.
             </p>
           </section>
 
