@@ -47,28 +47,13 @@ export function CrossAgentTable({ rows, whatThisMeans, notableAbsents }: CrossAg
         <div>
           <h2 className="report-result-heading">Who ranks first in each AI answer?</h2>
           <p className="mt-1 text-[14px] text-white/40">
-            Recorded ranks from the comparative prompt (Prompt 3). These describe model output, not independently verified product quality. Historical parsing conventions may differ.
+            Recorded top-three ranks from the comparative prompt (Prompt 3). A mention alone does not imply a rank or establish product quality.
           </p>
         </div>
         <p className="report-rank-coverage">
           {rankedRows.length}/{rows.length} models with recorded ranks
         </p>
       </div>
-
-      {/* Notable absent callout */}
-      {notableAbsents && notableAbsents.length > 0 && (
-        <div className="mb-6 border-l-2 border-amber-400/30 py-2 pl-6">
-          <p className="text-[13px] leading-relaxed text-white/40">
-            {notableAbsents.map((b) => (
-              <span key={b.name}>
-                <span className="font-semibold text-amber-400/80">{b.name}</span>
-                {" "}has a mention count of {b.mentionCount} but is outside the displayed comparison.
-              </span>
-            ))}{" "}
-            Mention frequency and response rank measure different things.
-          </p>
-        </div>
-      )}
 
       <div className="report-rank-cards">
         {rows.map((row) => <section key={row.agentName} className="report-rank-card" aria-label={`${row.agentName} comparative answer`}>
@@ -140,24 +125,6 @@ export function CrossAgentTable({ rows, whatThisMeans, notableAbsents }: CrossAg
             ))}
           </tbody>
 
-          {/* Notable absent footnote */}
-          {notableAbsents && notableAbsents.length > 0 && (
-            <tfoot>
-              <tr className="border-t border-white/5">
-                <td colSpan={4} className="px-6 py-3">
-                  <div className="flex items-center gap-3 text-[12px]">
-                    {notableAbsents.map((b) => (
-                      <span key={b.name} className="flex items-center gap-1.5 text-amber-400/50">
-                        <span className="font-mono font-semibold">{b.name}</span>
-                        <span className="text-white/20">&middot;</span>
-                        <span className="text-white/25">{b.mentionCount} mentions, outside the displayed comparison</span>
-                      </span>
-                    ))}
-                  </div>
-                </td>
-              </tr>
-            </tfoot>
-          )}
         </table>
       </div>
 
@@ -173,7 +140,24 @@ export function CrossAgentTable({ rows, whatThisMeans, notableAbsents }: CrossAg
         </div>
       )}
 
+      {/* Notable absent callout */}
+      {notableAbsents && notableAbsents.length > 0 && (
+        <div className="mt-4 border-l-2 border-amber-400/30 py-2 pl-6">
+          <p className="text-[13px] leading-relaxed text-white/40">
+            {notableAbsents.map((b) => (
+              <span key={b.name}>
+                <span className="font-semibold text-amber-400/80">{b.name}</span>
+                {" "}has a mention count of {b.mentionCount} but is outside the displayed comparison.
+              </span>
+            ))}{" "}
+            Mention frequency and response rank measure different things.
+          </p>
+        </div>
+      )}
+
       <a href="#captured-answers" className="report-evidence-link">Read the captured answers <span aria-hidden="true">↗</span></a>
+
+      <p className="mt-2 text-[13px] leading-relaxed text-white/40">Historical parsing conventions may differ; use the captured answers and collection notes when comparing snapshots.</p>
 
       {/* What this means */}
       {whatThisMeans && whatThisMeans.length > 0 && (

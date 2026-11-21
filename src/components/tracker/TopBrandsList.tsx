@@ -105,9 +105,9 @@ export function TopBrandsList({
     <div>
       <h2 className="report-result-heading">Which brands appear?</h2>
       <p className="mt-2 text-[13px] text-white/30">
-        Mention frequency counts usable answers containing a brand, once per
-        answer. Unranked and critical mentions count as visibility.
-        Comparative ranks are shown in the AI rankings section.
+        Usable answers containing each brand, counted once per answer.
+        Includes unranked and critical mentions. Compare recommendation ranks
+        in the AI rankings section.
       </p>
 
       <div className="report-brand-search">
