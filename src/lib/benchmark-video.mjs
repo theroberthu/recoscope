@@ -1420,7 +1420,56 @@ export const runningShoesNovemberCExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer];
+// November 22 Robot Vacuums, reviewed under the requested standing publication workflow.
+export const robotVacuumsNovemberCExplainer = {
+  "id": "robot-vacuums-2026-11-c-four-discovery-picks",
+  "approved": true,
+  "approvedSha256": "2ab0842799e0c28cc316de01ec01a2c36488ddd8b21b2b59fa8351376bedd9ff",
+  "category": "robot-vacuums",
+  "runId": 196,
+  "period": "2026-11-C",
+  "collected": "2026-11-22",
+  "collectedLabel": "November 22, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Four discovery picks. One comparative first choice.",
+  "duration": "58-second brief",
+  "src": "/tracker-media/robot-vacuums/2026-11-c/robot-vacuums-explainer.mp4",
+  "poster": "/tracker-media/robot-vacuums/2026-11-c/explainer-poster.png",
+  "captions": "/tracker-media/robot-vacuums/2026-11-c/explainer.en.vtt",
+  "summary": [
+    "All four comparative answers ranked Roborock first and Dreame second. But the open recommendation leads split across four brands: ChatGPT chose Dreame, Claude leaned toward Shark, Gemini recommended Roborock, and Perplexity led with MOVA. Discovery leads are separate from comparative first-place flags.",
+    "Roborock appeared in 11/12 usable answers and all four under-$500 budget answers. Four assistants answered three unchanged prompts for a two-story US home with two kids and a long-haired cat. Product models and quoted prices vary; a mention does not verify an under-budget checkout offer.",
+    "On November 16, Roborock also ranked first in all four comparisons and appeared in 12/12 answers. These are two dated captures, not a controlled trend or proof of product quality. Mention frequency, explicit rankings and the recommendation context describe different aspects of captured answers."
+  ],
+  "transcript": [
+    {
+      "text": "Four discovery picks. One comparative first choice."
+    },
+    {
+      "text": "In RecoScope’s November twenty-second robot vacuum snapshot, all four comparisons ranked Roborock first and Dreame second."
+    },
+    {
+      "text": "But the open recommendations led with four different brands: ChatGPT chose Dreame. Claude leaned toward Shark. Gemini recommended Roborock. And Perplexity led with MOVA."
+    },
+    {
+      "text": "We captured twelve usable answers across four AI assistants and three prompt types, using the same two-story household with a long-haired cat."
+    },
+    {
+      "text": "Roborock appeared in eleven of twelve answers, and all four under-five-hundred-dollar answers. A mention does not verify a qualifying price."
+    },
+    {
+      "text": "On November sixteenth, Roborock also ranked first in all four comparisons. These are two dated captures, not a controlled trend or proof of product quality."
+    },
+    {
+      "text": "For your brand, compare visibility, explicit rankings, and the recommendation context."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
