@@ -1469,7 +1469,56 @@ export const robotVacuumsNovemberCExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer];
+// November 22 Electric Shavers, reviewed under the standing publication workflow.
+export const electricShaversNovemberAExplainer = {
+  "id": "electric-shavers-2026-11-a-every-answer-not-every-first-choice",
+  "approved": true,
+  "approvedSha256": "775a4935af95c5936acd3e5d4c94da1de7510523a11a680924a297b593b2907c",
+  "category": "electric-shavers",
+  "runId": 197,
+  "period": "2026-11-A",
+  "collected": "2026-11-22",
+  "collectedLabel": "November 22, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Every answer. Not every first choice.",
+  "duration": "51-second brief",
+  "src": "/tracker-media/electric-shavers/2026-11-a/electric-shavers-explainer.mp4",
+  "poster": "/tracker-media/electric-shavers/2026-11-a/explainer-poster.png",
+  "captions": "/tracker-media/electric-shavers/2026-11-a/explainer.en.vtt",
+  "summary": [
+    "Braun appeared in all 12 usable answers, but ranked first in three of four comparative answers. Claude ranked Panasonic first. Philips Norelco appeared in 11/12 answers and Panasonic in 10/12. Mention frequency and explicit comparative rank are separate measures.",
+    "Four AI assistants answered three prompts, each using the same US daily-shaving, sensitive-skin profile. Braun and Philips Norelco appeared in all four under-$150 budget answers; Panasonic appeared in three. Mentions do not verify checkout prices, and product models and bundles varied.",
+    "This is a new baseline: the full profile is repeated in every prompt, unlike May’s shorter budget and comparison prompts. The older snapshots remain available, but these captures do not establish a historical trend, product quality or clinical benefit."
+  ],
+  "transcript": [
+    {
+      "text": "Every answer. Not every first choice."
+    },
+    {
+      "text": "In RecoScope’s November twenty-second electric-shaver snapshot, Braun appeared in all twelve answers. But only three of the four assistants ranked it first. Claude ranked Panasonic first."
+    },
+    {
+      "text": "Philips Norelco appeared in eleven answers, and Panasonic in ten."
+    },
+    {
+      "text": "We captured twelve usable answers across four AI assistants and three prompt types. Each fresh chat used the same daily-shaving, sensitive-skin profile."
+    },
+    {
+      "text": "Under one hundred fifty dollars, Braun and Philips Norelco appeared in all four answers. Mentions don’t verify checkout prices."
+    },
+    {
+      "text": "This is a new baseline, not a trend against May’s different prompts."
+    },
+    {
+      "text": "Track visibility and explicit ranks separately. Captured answers don’t establish product quality or clinical benefit."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
