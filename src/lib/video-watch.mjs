@@ -1,10 +1,12 @@
 import { benchmarkExplainers, snapshotVideo } from "./benchmark-video.mjs";
 import { canonicalUrl, isoDate, PUBLISHER, ROBERT_HU } from "./seo.mjs";
 
-export const WATCH_PAGES_UPDATED_AT = "2026-11-21";
+export const WATCH_PAGES_UPDATED_AT = "2026-11-22";
 
 // First successful public deployments; collection dates are separate evidence.
 const releases = {
+  // First successful public deployment of the reviewed static media; verified READY timestamp.
+  "robot-vacuums-2026-11-c-four-discovery-picks": ["2026-11-22T15:13:59.654Z", 57.967],
   // First public media deployment, verified from Vercel’s READY timestamp.
   "running-shoes-2026-11-c-every-answer-four-second-places": ["2026-11-21T22:17:09.470Z", 50.3],
   // First public media deployment, verified from Vercel's READY timestamp.
