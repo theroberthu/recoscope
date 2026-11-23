@@ -5,6 +5,8 @@ export const WATCH_PAGES_UPDATED_AT = "2026-11-23";
 
 // First successful public deployments; collection dates are separate evidence.
 const releases = {
+  // First successful public deployment of reviewed static media; verified READY timestamp.
+  "protein-powder-2026-11-c-same-split-different-assistants": ["2026-11-23T20:59:39.404Z", 49.3],
   // First successful public deployment of the reviewed static media; verified READY timestamp.
   "wireless-earbuds-2026-11-c-three-brands-tied": ["2026-11-23T13:59:02.570Z", 52.334],
   // First successful public deployment of the reviewed static media; verified READY timestamp.
