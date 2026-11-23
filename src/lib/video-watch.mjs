@@ -1,10 +1,12 @@
 import { benchmarkExplainers, snapshotVideo } from "./benchmark-video.mjs";
 import { canonicalUrl, isoDate, PUBLISHER, ROBERT_HU } from "./seo.mjs";
 
-export const WATCH_PAGES_UPDATED_AT = "2026-11-22";
+export const WATCH_PAGES_UPDATED_AT = "2026-11-23";
 
 // First successful public deployments; collection dates are separate evidence.
 const releases = {
+  // First successful public deployment of the reviewed static media; verified READY timestamp.
+  "wireless-earbuds-2026-11-c-three-brands-tied": ["2026-11-23T13:59:02.570Z", 52.334],
   // First successful public deployment of the reviewed static media; verified READY timestamp.
   "electric-shavers-2026-11-a-every-answer-not-every-first-choice": ["2026-11-22T20:50:43.875Z", 51.167],
   // First successful public deployment of the reviewed static media; verified READY timestamp.
