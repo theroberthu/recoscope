@@ -1518,7 +1518,56 @@ export const electricShaversNovemberAExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer];
+// November 23 Wireless Earbuds, reviewed under the standing publication workflow.
+export const wirelessEarbudsNovemberCExplainer = {
+  "id": "wireless-earbuds-2026-11-c-three-brands-tied",
+  "approved": true,
+  "approvedSha256": "c88200b899ae4e71d64e13db7f40337a8d5b9d4ee217494a00afba44d9ade6c9",
+  "category": "wireless-earbuds",
+  "runId": 198,
+  "period": "2026-11-C",
+  "collected": "2026-11-23",
+  "collectedLabel": "November 23, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Three brands tied. First choice split.",
+  "duration": "52-second brief",
+  "src": "/tracker-media/wireless-earbuds/2026-11-c/wireless-earbuds-explainer.mp4",
+  "poster": "/tracker-media/wireless-earbuds/2026-11-c/explainer-poster.png",
+  "captions": "/tracker-media/wireless-earbuds/2026-11-c/explainer.en.vtt",
+  "summary": [
+    "Apple, Beats and Sony each appeared in 9/12 usable answers. In the four overall comparative lists, ChatGPT and Perplexity ranked Sony first; Claude and Gemini ranked Beats first. Mention frequency and comparative rank are separate measures.",
+    "Apple had no first place in those overall lists, but Perplexity separately put Apple first for iPhone users. The prompts did not specify a phone platform. Keep that conditional recommendation distinct from the overall ranking.",
+    "Four AI assistants answered three prompt types using the same US commuter-and-gym profile. Soundcore appeared in all four under-$150 answers; mentions do not verify checkout prices. Model generations and browsing behavior varied. These findings describe captured answers and do not establish product quality or a controlled historical trend."
+  ],
+  "transcript": [
+    {
+      "text": "Three brands tied. First choice split."
+    },
+    {
+      "text": "In RecoScope’s November twenty-third wireless-earbuds snapshot, Apple, Beats and Sony each appeared in nine of twelve answers."
+    },
+    {
+      "text": "But the overall rankings told a different story. ChatGPT and Perplexity ranked Sony first. Claude and Gemini ranked Beats first."
+    },
+    {
+      "text": "Apple had no first place in those overall lists. But Perplexity moved it to first specifically for iPhone users."
+    },
+    {
+      "text": "We captured twelve usable answers from four AI assistants across three prompt types, using the same commuter-and-gym profile."
+    },
+    {
+      "text": "Soundcore appeared in all four under-one-hundred-fifty-dollar answers. Mentions don’t verify checkout prices."
+    },
+    {
+      "text": "For your brand, track mentions, overall ranks and shopper conditions separately. These captured answers don’t establish product quality."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer, wirelessEarbudsNovemberCExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
