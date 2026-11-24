@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
 import { Resend } from "resend";
+import { readAudience, sanitizeLeadMeasurement } from "@/lib/journey.mjs";
 
 const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
@@ -32,6 +33,9 @@ export async function POST(req: NextRequest) {
   const source_page = text(body.source_page);
   const lead_type = text(body.lead_type);
   let website = text(body.website);
+  const audience = req.nextUrl.hostname === "www.getrecoscope.com" ? readAudience(req.headers.get("cookie") || "") : "qa";
+  const measurement = sanitizeLeadMeasurement(body.measurement, audience);
+  const isTest = measurement.audience_type === "qa";
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json(
@@ -85,7 +89,7 @@ export async function POST(req: NextRequest) {
     }
 
     await sql`
-      INSERT INTO audit_leads (name, email, brand_name, website, category_interest, source_page, lead_type, notes)
+      INSERT INTO audit_leads (name, email, brand_name, website, category_interest, source_page, lead_type, notes, measurement_context, review_status)
       VALUES (
         ${name || ""},
         ${email},
@@ -94,13 +98,15 @@ export async function POST(req: NextRequest) {
         ${category_interest || null},
         ${source_page || "/audit"},
         ${resolvedLeadType},
-        ${notes || null}
+        ${notes || null},
+        ${JSON.stringify(measurement)}::jsonb,
+        ${isTest ? "test" : "unreviewed"}
       )
     `;
 
     // Finish the notification attempt before the serverless request ends.
     // The saved lead remains successful even when the email provider fails.
-    if (resend) {
+    if (resend && !isTest) {
       const subjects: Record<string, string> = {
         audit: `New Audit Lead: ${brand_name || email}`,
         free_monthly_signup: `New Subscriber: ${email}`,
@@ -152,7 +158,7 @@ export async function POST(req: NextRequest) {
       } catch (err) {
         console.error("[audit-api] email notification failed:", err);
       }
-    } else {
+    } else if (!isTest) {
       console.error(
         "[audit-api] lead saved but RESEND_API_KEY is not configured",
       );

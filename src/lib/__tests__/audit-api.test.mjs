@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import vm from "node:vm";
 import ts from "typescript";
+import * as journey from "../journey.mjs";
 
 const source = readFileSync(
   new URL("../../app/api/audit/route.ts", import.meta.url),
@@ -25,6 +26,7 @@ function setup({
     errors = [];
   const exports = {};
   const modules = {
+    "@/lib/journey.mjs": journey,
     "next/server": {
       NextResponse: { json: (body, options) => Response.json(body, options) },
     },
@@ -59,7 +61,7 @@ function setup({
     },
   });
   return {
-    post: (body) => exports.POST({ json: async () => body }),
+    post: (body) => exports.POST({ nextUrl: new URL("https://www.getrecoscope.com/api/audit"), headers: new Headers(), json: async () => body }),
     queries,
     emails,
     errors,

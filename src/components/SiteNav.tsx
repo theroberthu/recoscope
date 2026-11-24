@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { TrackedLink } from "@/components/TrackedLink";
 
 const links = [
   ["/demo", "Example report"],
@@ -55,13 +56,15 @@ export function SiteNav() {
           ))}
         </div>
         <div className="nav-actions">
-          <Link
+          <TrackedLink
             href="/audit?source=navigation"
+            event="audit_cta_click"
+            source="navigation"
+            element="nav_audit"
             className="button-primary"
-            onClick={() => setOpen(false)}
           >
             Free brand audit
-          </Link>
+          </TrackedLink>
           <button
             ref={button}
             type="button"

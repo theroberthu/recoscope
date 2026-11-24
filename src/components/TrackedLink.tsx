@@ -1,10 +1,11 @@
 "use client";
-import { trackEvent } from "@/lib/analytics";
+import { recordAuditEntry, trackEvent } from "@/lib/analytics";
 
 export function TrackedLink({
   href,
   event,
   source,
+  element,
   className,
   target,
   children,
@@ -12,6 +13,7 @@ export function TrackedLink({
   href: string;
   event: string;
   source: string;
+  element?: string;
   className?: string;
   target?: "_blank";
   children: React.ReactNode;
@@ -22,7 +24,11 @@ export function TrackedLink({
       target={target}
       rel={target ? "noopener noreferrer" : undefined}
       className={className}
-      onClick={() => trackEvent(event, { source })}
+      data-journey-element={element ?? source}
+      onClick={() => {
+        if (href.startsWith("/audit")) recordAuditEntry(element ?? source);
+        trackEvent(event, { ui_element: element ?? source, destination_path: href });
+      }}
     >
       {children}
     </a>

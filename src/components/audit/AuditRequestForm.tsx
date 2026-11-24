@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { trackEvent } from "@/lib/analytics";
+import { auditEventParams, auditMeasurement, trackEvent } from "@/lib/analytics";
 
 interface AuditRequestFormProps {
   categories: { name: string; slug: string }[];
@@ -121,6 +121,7 @@ export function AuditRequestForm({
       website: fd.get("product_url") || null,
       category_interest: category || null,
       notes: fd.get("challenge") || null,
+      measurement: auditMeasurement(),
       lead_type: "audit",
       source_page:
         source === "report" && initialCategory
@@ -142,6 +143,7 @@ export function AuditRequestForm({
       }
 
       if (data?.duplicate === true) {
+        trackEvent("audit_form_duplicate", auditEventParams(source));
         setStatus("duplicate");
         return;
       }
@@ -150,11 +152,11 @@ export function AuditRequestForm({
         throw new Error("We couldn’t confirm your request. Please try again.");
       }
 
-      trackEvent("audit_form_submit", { source });
+      trackEvent("audit_form_submit", auditEventParams(source));
       setSubmittedEmail(email);
       setStatus("success");
     } catch (err) {
-      trackEvent("audit_form_error", { source });
+      trackEvent("audit_form_error", auditEventParams(source));
       setErrorMsg(
         err instanceof Error ? err.message : "Something went wrong. Try again.",
       );
@@ -174,13 +176,13 @@ export function AuditRequestForm({
       onFocusCapture={() => {
         if (!started) {
           setStarted(true);
-          trackEvent("audit_form_start", { source });
+          trackEvent("audit_form_start", auditEventParams(source));
         }
       }}
       onInvalidCapture={(e) =>
         trackEvent("audit_form_validation", {
           field: (e.target as HTMLInputElement).name,
-          source,
+          ...auditEventParams(source),
         })
       }
     >

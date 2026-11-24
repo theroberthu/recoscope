@@ -78,6 +78,7 @@ export function BrandScroller({
   return (
     <section
       id="brand-leaders"
+      data-journey-section="brand_leaders"
       className="page-shell home-brand-strip"
       aria-labelledby="brand-leaders-title"
     >

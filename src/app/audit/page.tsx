@@ -30,6 +30,7 @@ export default async function AuditPage({
     "demo",
     "research",
     "navigation",
+    "video-watch",
   ];
   const source = sources.includes(params.source ?? "")
     ? params.source!
