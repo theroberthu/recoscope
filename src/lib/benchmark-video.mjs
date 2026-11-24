@@ -1637,7 +1637,86 @@ export const proteinPowderNovemberCExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer, wirelessEarbudsNovemberCExplainer, proteinPowderNovemberCExplainer];
+// November 24 Standing Desks, reviewed under the standing publication workflow.
+export const standingDesksNovemberCExplainer = {
+  "id": "standing-desks-2026-11-c-read-past-first-place",
+  "approved": true,
+  "approvedSha256": "b53b8b9dac0eed3cc71682e8da0b2791d1b71919920d2e1d55c3c9b56748ad83",
+  "category": "standing-desks",
+  "runId": 200,
+  "period": "2026-11-C",
+  "collected": "2026-11-24",
+  "collectedLabel": "November 24, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Read past first place.",
+  "duration": "53-second brief",
+  "src": "/tracker-media/standing-desks/2026-11-c/standing-desks-explainer.mp4",
+  "poster": "/tracker-media/standing-desks/2026-11-c/explainer-poster.png",
+  "captions": "/tracker-media/standing-desks/2026-11-c/explainer.en.vtt",
+  "summary": [
+    "FlexiSpot appeared in 11/12 usable answers and UPLIFT in 9/12. All four overall comparative lists ranked UPLIFT first. Mention frequency and overall rank measure different things.",
+    "ChatGPT ranked FlexiSpot second in its comparative list, then named the FlexiSpot E7 Pro its purchase pick in the same answer. Keep the explicit rank and the final recommendation together. This is captured wording, not evidence of an actual purchase.",
+    "Four AI assistants answered three prompt types for the same 42-year-old US remote marketing manager working 9+ hour home-office days. One documented Gemini technical retry followed an explicit error; only the completed replacement counts. FlexiSpot appeared in all four under-$600 answers, but mentions do not verify checkout prices, product quality or pain relief. Browser, model and search behavior varied."
+  ],
+  "transcript": [
+    {
+      "text": "Read past first place."
+    },
+    {
+      "text": "In RecoScope’s November 24 standing-desks snapshot,"
+    },
+    {
+      "text": "FlexiSpot appeared in 11 of 12 answers."
+    },
+    {
+      "text": "UPLIFT appeared in nine."
+    },
+    {
+      "text": "Yet all four overall comparison lists ranked UPLIFT first."
+    },
+    {
+      "text": "Here’s the twist: in that same comparison,"
+    },
+    {
+      "text": "ChatGPT ranked FlexiSpot second,"
+    },
+    {
+      "text": "then named the E7 Pro its purchase pick."
+    },
+    {
+      "text": "That’s a captured recommendation, not evidence of an actual purchase."
+    },
+    {
+      "text": "We collected 12 usable answers"
+    },
+    {
+      "text": "across four AI assistants and three prompt types,"
+    },
+    {
+      "text": "with one documented technical retry."
+    },
+    {
+      "text": "FlexiSpot also appeared in all four under-$600 answers."
+    },
+    {
+      "text": "Mentions don’t verify checkout prices."
+    },
+    {
+      "text": "For your brand, track visibility, overall rank,"
+    },
+    {
+      "text": "and the final recommendation separately."
+    },
+    {
+      "text": "These findings don’t establish product quality."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer, wirelessEarbudsNovemberCExplainer, proteinPowderNovemberCExplainer, standingDesksNovemberCExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
