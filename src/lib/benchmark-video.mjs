@@ -1716,7 +1716,59 @@ export const standingDesksNovemberCExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer, wirelessEarbudsNovemberCExplainer, proteinPowderNovemberCExplainer, standingDesksNovemberCExplainer];
+// November 24 Skincare, reviewed under the standing publication workflow.
+export const skincareNovemberCExplainer = {
+  "id": "skincare-2026-11-c-check-the-basket",
+  "approved": true,
+  "approvedSha256": "e18e6006b05adea97fdcc8edc7f1bfd2d56b7fbaa070b8af8d058dc5b2bfcefc",
+  "category": "skincare",
+  "runId": 201,
+  "period": "2026-11-C",
+  "collected": "2026-11-24",
+  "collectedLabel": "November 24, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Check the basket, not just the mention.",
+  "duration": "55-second brief",
+  "src": "/tracker-media/skincare/2026-11-c/skincare-explainer.mp4",
+  "poster": "/tracker-media/skincare/2026-11-c/explainer-poster.png",
+  "captions": "/tracker-media/skincare/2026-11-c/explainer.en.vtt",
+  "summary": [
+    "In the under-$50 prompt, Gemini called its skincare routine roughly $46, but the four approximate prices it listed add to $52: $17 + $6 + $14 + $15. That is $6 above the heading and $2 above the requested budget before tax or shipping. This checks the arithmetic of captured quotes; it does not verify current checkout prices.",
+    "Claude opened with ‘well under $50’ but later gave a $47–$52 range for its three basics. ChatGPT’s listed starter basket totals $37.97, and Perplexity’s totals $38.98. Optional additions and alternatives are documented in the captured answers. A brand’s presence in a budget answer does not establish budget eligibility.",
+    "Four AI assistants answered three unchanged prompts for a 32-year-old US woman with combination skin and a full-time schedule. All 12 answers were usable, with no technical retries or submitted follow-ups. CeraVe appeared in 10/12 answers and ranked first in 3/4 comparisons; La Roche-Posay appeared in 9/12 and ranked first in Gemini. Mention frequency and explicit comparative rank are separate. These dated findings do not establish product quality, clinical effectiveness or medical suitability."
+  ],
+  "transcript": [
+    {
+      "text": "Gemini’s forty-six-dollar skincare routine adds up to fifty-two."
+    },
+    {
+      "text": "It lists four prices: seventeen, six, fourteen, and fifteen dollars. That’s fifty-two, not forty-six—and above the shopper’s fifty-dollar limit."
+    },
+    {
+      "text": "Claude opens with “well under fifty,” but later gives a forty-seven-to-fifty-two-dollar range."
+    },
+    {
+      "text": "ChatGPT’s listed basket totals thirty-seven ninety-seven. Perplexity’s totals thirty-eight ninety-eight."
+    },
+    {
+      "text": "We checked the arithmetic of captured quotes. We did not verify checkout prices."
+    },
+    {
+      "text": "This November twenty-fourth skincare snapshot contains twelve usable answers across four AI assistants and three prompt types."
+    },
+    {
+      "text": "For your brand, appearing in a budget recommendation doesn’t establish budget eligibility. Check the basket, not just the mention."
+    },
+    {
+      "text": "These findings describe captured answers, not product quality."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer, wirelessEarbudsNovemberCExplainer, proteinPowderNovemberCExplainer, standingDesksNovemberCExplainer, skincareNovemberCExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),

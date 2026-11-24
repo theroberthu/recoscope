@@ -336,7 +336,7 @@ test("approved Humidifiers video is scoped to the first November13 snapshot",asy
  }
  assert.equal(snapshotVideo("sunscreen",run),null);
  assert.equal(snapshotVideo("humidifiers",run,{...v,approved:false}),null);
- assert.equal(benchmarkExplainers.length,35);
+ assert.equal(benchmarkExplainers.length,36);
  const schema=videoSchema(v);assert.equal(schema.duration,"PT43.5S");assert.match(schema.transcript,/Explore benchmark at getrecoscope\.com\.$/);
  const {readFileSync}=await import("node:fs");const {createHash}=await import("node:crypto");
  assert.equal(createHash("sha256").update(readFileSync(new URL("../../../public"+v.src,import.meta.url))).digest("hex"),v.approvedSha256);

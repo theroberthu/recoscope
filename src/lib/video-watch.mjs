@@ -6,6 +6,8 @@ export const WATCH_PAGES_UPDATED_AT = "2026-11-24";
 // First successful public deployments; collection dates are separate evidence.
 const releases = {
   // First successful public deployment of reviewed static media; verified READY timestamp.
+  "skincare-2026-11-c-check-the-basket": ["2026-11-24T19:17:41.318Z", 54.6],
+  // First successful public deployment of reviewed static media; verified READY timestamp.
   "standing-desks-2026-11-c-read-past-first-place": ["2026-11-24T14:28:23.358Z", 53.1],
   // First successful public deployment of reviewed static media; verified READY timestamp.
   "protein-powder-2026-11-c-same-split-different-assistants": ["2026-11-23T20:59:39.404Z", 49.3],
