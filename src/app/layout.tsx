@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { socialImage } from "@/lib/social-image.mjs";
 import Script from "next/script";
+import { Suspense } from "react";
+import { JourneyTracker } from "@/components/JourneyTracker";
+import { analyticsBootstrapScript } from "@/lib/analytics-bootstrap.mjs";
 import Link from "next/link";
 import { PostHogProvider } from "@/lib/posthog";
 import "./globals.css";
@@ -39,20 +42,10 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="light">
       <head>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-NWNHPKNGBB"
-          strategy="afterInteractive"
-        />
-        <Script id="ga4-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-NWNHPKNGBB');
-          `}
-        </Script>
+        <Script id="ga4-init" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: analyticsBootstrapScript }} />
       </head>
       <body className="min-h-screen bg-void font-sans text-ink antialiased">
+        <Suspense fallback={null}><JourneyTracker /></Suspense>
         <SiteNav />
         <PostHogProvider>
           <main id="main-content">{children}</main>
