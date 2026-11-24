@@ -68,6 +68,9 @@ CREATE TABLE audit_leads (
   source_page       TEXT,
   lead_type         TEXT        NOT NULL DEFAULT 'audit' CHECK (lead_type IN ('audit', 'snapshot', 'waitlist')),
   notes             TEXT,
+  measurement_context JSONB,
+  review_status     TEXT NOT NULL DEFAULT 'unreviewed' CHECK (review_status IN ('unreviewed','verified_non_test','test','spam')),
+  reviewed_at       TIMESTAMPTZ,
   created_at        TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
