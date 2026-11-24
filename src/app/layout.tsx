@@ -9,6 +9,7 @@ import { PostHogProvider } from "@/lib/posthog";
 import "./globals.css";
 import { YOUTUBE_CHANNEL_URL } from "@/lib/social-links";
 import { SiteNav } from "@/components/SiteNav";
+import { TrackedLink } from "@/components/TrackedLink";
 
 export const metadata: Metadata = {
   title: {
@@ -138,12 +139,15 @@ export default function RootLayout({
                 </p>
                 <ul className="mt-3 space-y-2 text-[12px] text-white/30">
                   <li>
-                    <Link
+                    <TrackedLink
                       href="/audit"
+                      event="audit_cta_click"
+                      source="footer"
+                      element="footer_audit"
                       className="transition-colors hover:text-white/60"
                     >
                       Get my free brand audit
-                    </Link>
+                    </TrackedLink>
                   </li>
                 </ul>
               </div>
