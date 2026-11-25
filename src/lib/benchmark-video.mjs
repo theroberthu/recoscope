@@ -1768,7 +1768,53 @@ export const skincareNovemberCExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer, wirelessEarbudsNovemberCExplainer, proteinPowderNovemberCExplainer, standingDesksNovemberCExplainer, skincareNovemberCExplainer];
+// November 25 Air Purifiers benchmark brief.
+export const airPurifiersNovemberCExplainer = {
+  "id": "air-purifiers-2026-11-c-four-third-places",
+  "approved": true,
+  "approvedSha256": "72fe2029f59f30ad54a2ae083d8306b93fadfa896cb0feb4d86668c3ec3467ad",
+  "category": "air-purifiers",
+  "runId": 202,
+  "period": "2026-11-C",
+  "collected": "2026-11-25",
+  "collectedLabel": "November 25, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Blueair finished third in all four AI comparisons.",
+  "duration": "46-second brief",
+  "src": "/tracker-media/air-purifiers/2026-11-c/air-purifiers-explainer.mp4",
+  "poster": "/tracker-media/air-purifiers/2026-11-c/explainer-poster.png",
+  "captions": "/tracker-media/air-purifiers/2026-11-c/explainer.en.vtt",
+  "summary": [
+    "All four assistants placed Blueair third in the comparative prompt. ChatGPT, Gemini and Perplexity put Coway first; Claude put Levoit first. All four assistants had placed Blueair fourth in the November 19 snapshot.",
+    "Coway and Levoit appeared in all 12 usable answers. Blueair appeared in 11 of 12, missing only Claude’s under-$300 answer. The comparison and budget prompts capture different kinds of visibility.",
+    "The November 25 snapshot covers unchanged discovery, budget and ranking prompts for a parent working from home with seasonal allergies and young children. The findings describe captured answers. Prices and product quality remain unverified."
+  ],
+  "transcript": [
+    {
+      "text": "Blueair finished third in all four AI rankings. Then one assistant left it out of the budget answer."
+    },
+    {
+      "text": "ChatGPT, Gemini and Perplexity ranked Coway first. Claude picked Levoit. All four put Blueair in the same spot."
+    },
+    {
+      "text": "Across discovery, budget and ranking, Coway and Levoit appeared in every answer. Blueair appeared in eleven of twelve. The one miss was Claude’s under three hundred dollar prompt."
+    },
+    {
+      "text": "Last week, the same four assistants placed Blueair fourth. That’s a change between two snapshots of captured answers."
+    },
+    {
+      "text": "For a brand team, track where you rank and whether you show up when the shopper adds a constraint."
+    },
+    {
+      "text": "We captured these answers November twenty-fifth. They don’t establish product quality or verify prices."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer, wirelessEarbudsNovemberCExplainer, proteinPowderNovemberCExplainer, standingDesksNovemberCExplainer, skincareNovemberCExplainer, airPurifiersNovemberCExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),

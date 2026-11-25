@@ -1,10 +1,12 @@
 import { benchmarkExplainers, snapshotVideo } from "./benchmark-video.mjs";
 import { canonicalUrl, isoDate, PUBLISHER, ROBERT_HU } from "./seo.mjs";
 
-export const WATCH_PAGES_UPDATED_AT = "2026-11-24";
+export const WATCH_PAGES_UPDATED_AT = "2026-11-25";
 
 // First successful public deployments; collection dates are separate evidence.
 const releases = {
+  // First successful public media deployment, verified with Vercel.
+  "air-purifiers-2026-11-c-four-third-places": ["2026-11-25T15:26:02.709Z", 46.034],
   // First successful public deployment of reviewed static media; verified READY timestamp.
   "skincare-2026-11-c-check-the-basket": ["2026-11-24T19:17:41.318Z", 54.6],
   // First successful public deployment of reviewed static media; verified READY timestamp.
