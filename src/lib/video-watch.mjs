@@ -5,6 +5,8 @@ export const WATCH_PAGES_UPDATED_AT = "2026-11-25";
 
 // First successful public deployments; collection dates are separate evidence.
 const releases = {
+  // First verified production deployment of the reviewed media.
+  "humidifiers-2026-11-c-rankings-and-open-picks": ["2026-11-26T00:17:48.293Z", 49.334],
   // First successful public media deployment, verified with Vercel.
   "air-purifiers-2026-11-c-four-third-places": ["2026-11-25T15:26:02.709Z", 46.034],
   // First successful public deployment of reviewed static media; verified READY timestamp.
