@@ -1814,7 +1814,53 @@ export const airPurifiersNovemberCExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer, wirelessEarbudsNovemberCExplainer, proteinPowderNovemberCExplainer, standingDesksNovemberCExplainer, skincareNovemberCExplainer, airPurifiersNovemberCExplainer];
+// November 25 Humidifiers benchmark brief.
+export const humidifiersNovemberCExplainer = {
+  "id": "humidifiers-2026-11-c-rankings-and-open-picks",
+  "approved": true,
+  "approvedSha256": "1902f7d9e615129b0fa9bf8a73c7514bbb623057ccc7a4b8d1a87f998778ec5e",
+  "category": "humidifiers",
+  "runId": 203,
+  "period": "2026-11-C",
+  "collected": "2026-11-25",
+  "collectedLabel": "November 25, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "All four ranked Levoit first. Open picks split.",
+  "duration": "49-second brief",
+  "src": "/tracker-media/humidifiers/2026-11-c/humidifiers-explainer.mp4",
+  "poster": "/tracker-media/humidifiers/2026-11-c/explainer-poster.png",
+  "captions": "/tracker-media/humidifiers/2026-11-c/explainer.en.vtt",
+  "summary": [
+    "All four assistants ranked Levoit first in their comparative answers. In discovery, ChatGPT and Perplexity chose Carepod, Claude chose Levoit, and Gemini led with Dreo as its best overall value.",
+    "For the under-$100 prompt, ChatGPT, Gemini and Perplexity led with Levoit, while Claude called Dreo its best match. Both appeared in all four budget answers. Those mentions do not verify current prices or room coverage.",
+    "Across all 12 answers, Levoit matched its visibility in the November 20 snapshot. It ranked first in four comparisons on November 25 and two on November 20. The research captures answers for a 300-square-foot winter bedroom and does not test product quality."
+  ],
+  "transcript": [
+    {
+      "text": "All four AI assistants ranked Levoit first. But in the open recommendation prompt, two picked Carepod instead."
+    },
+    {
+      "text": "Same shopper. Same winter bedroom. The ranking prompt asked for a brand comparison. The discovery prompt asked for a recommendation."
+    },
+    {
+      "text": "In discovery, ChatGPT and Perplexity picked Carepod. Claude picked Levoit. Gemini led with Dreo as its best overall value."
+    },
+    {
+      "text": "Add an under-one-hundred-dollar budget, and three led with Levoit. Claude called Dreo its best match."
+    },
+    {
+      "text": "Levoit appeared in all twelve answers. Last time, it also appeared in all twelve, but ranked first in only two of four comparisons."
+    },
+    {
+      "text": "Track visibility and first choice for each prompt. These are captured November twenty-fifth answers. We didn’t verify prices or test the products."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer, wirelessEarbudsNovemberCExplainer, proteinPowderNovemberCExplainer, standingDesksNovemberCExplainer, skincareNovemberCExplainer, airPurifiersNovemberCExplainer, humidifiersNovemberCExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
