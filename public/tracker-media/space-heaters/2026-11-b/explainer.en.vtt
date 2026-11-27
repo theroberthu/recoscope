@@ -1,0 +1,92 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:01.940
+Dreo appeared in every answer.
+
+2
+00:00:02.200 --> 00:00:05.560
+But Vornado ranked first
+in three of four comparisons.
+
+3
+00:00:05.920 --> 00:00:08.100
+Same shopper.
+Same winter home office.
+
+4
+00:00:08.480 --> 00:00:12.360
+In the open prompt, ChatGPT,
+Claude and Perplexity
+
+5
+00:00:12.360 --> 00:00:13.250
+led with Dreo.
+
+6
+00:00:13.640 --> 00:00:15.210
+Gemini led with Vornado.
+
+7
+00:00:15.620 --> 00:00:17.580
+Ask for a ranking,
+and the split flips.
+
+8
+00:00:18.340 --> 00:00:21.610
+ChatGPT, Gemini and Perplexity
+put Vornado first.
+
+9
+00:00:21.980 --> 00:00:23.400
+Claude put Dreo first.
+
+10
+00:00:23.680 --> 00:00:27.400
+Dreo also appeared in all four
+under-$100 answers.
+
+11
+00:00:27.400 --> 00:00:29.660
+The picks varied by
+how the assistants weighed
+
+12
+00:00:29.660 --> 00:00:32.620
+fan noise, warm-up speed
+and room coverage.
+
+13
+00:00:32.940 --> 00:00:35.980
+On November 15, Vornado
+took one first place.
+
+14
+00:00:36.360 --> 00:00:38.490
+On November 27, it took three.
+
+15
+00:00:38.840 --> 00:00:40.780
+That’s a change across two snapshots.
+
+16
+00:00:41.280 --> 00:00:43.340
+Check which prompt
+generates the mention,
+
+17
+00:00:43.340 --> 00:00:44.870
+and which earns first place.
+
+18
+00:00:45.180 --> 00:00:46.680
+We captured 12 answers.
+
+19
+00:00:47.120 --> 00:00:49.770
+We didn’t verify prices
+or test product safety.
+
+20
+00:00:50.140 --> 00:00:52.800
+Explore benchmark at getrecoscope.com.
