@@ -1860,7 +1860,53 @@ export const humidifiersNovemberCExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer, wirelessEarbudsNovemberCExplainer, proteinPowderNovemberCExplainer, standingDesksNovemberCExplainer, skincareNovemberCExplainer, airPurifiersNovemberCExplainer, humidifiersNovemberCExplainer];
+// November 27 Space Heaters benchmark brief.
+export const spaceHeatersNovemberBExplainer = {
+  "id": "space-heaters-2026-11-b-dreos-visibility-vornados-first-places",
+  "approved": true,
+  "approvedSha256": "572b1923ab706c2eaa4e18a4809ba5ebd9b347e81a69ea850da3d940b5cd27af",
+  "category": "space-heaters",
+  "runId": 204,
+  "period": "2026-11-B",
+  "collected": "2026-11-27",
+  "collectedLabel": "November 27, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Dreo appeared in every answer. Vornado led the rankings.",
+  "duration": "53-second brief",
+  "src": "/tracker-media/space-heaters/2026-11-b/space-heaters-explainer.mp4",
+  "poster": "/tracker-media/space-heaters/2026-11-b/explainer-poster.png",
+  "captions": "/tracker-media/space-heaters/2026-11-b/explainer.en.vtt",
+  "summary": [
+    "Dreo appeared in all 12 answers. ChatGPT, Claude and Perplexity led with Dreo in the discovery prompt, while Gemini led with Vornado. ChatGPT, Gemini and Perplexity ranked Vornado first in the comparative prompt. Claude ranked Dreo first.",
+    "Dreo appeared in all four under-$100 answers. The picks varied with the answer’s emphasis on noise, warm-up speed and room coverage. Captured mentions do not verify retail prices, specifications or product safety.",
+    "Vornado ranked first in one of four comparisons on November 15 and three of four on November 27. Both snapshots used the same 200-square-foot winter home office profile. The results describe captured answers and cannot establish a sustained trend."
+  ],
+  "transcript": [
+    {
+      "text": "Dreo appeared in every answer. But Vornado ranked first in three of four comparisons."
+    },
+    {
+      "text": "Same shopper, same winter home office. In the open prompt, ChatGPT, Claude and Perplexity led with Dreo. Gemini led with Vornado."
+    },
+    {
+      "text": "Ask for a ranking, and the split flips. ChatGPT, Gemini and Perplexity put Vornado first. Claude put Dreo first."
+    },
+    {
+      "text": "Dreo also appeared in all four under-one-hundred-dollar answers. The picks varied by how the assistants weighed fan noise, warm-up speed and room coverage."
+    },
+    {
+      "text": "On November fifteenth, Vornado took one first place. On November twenty-seventh, it took three. That’s a change across two snapshots."
+    },
+    {
+      "text": "Check which prompt generates the mention, and which earns first place. We captured twelve answers. We didn’t verify prices or test product safety."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer, wirelessEarbudsNovemberCExplainer, proteinPowderNovemberCExplainer, standingDesksNovemberCExplainer, skincareNovemberCExplainer, airPurifiersNovemberCExplainer, humidifiersNovemberCExplainer, spaceHeatersNovemberBExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
