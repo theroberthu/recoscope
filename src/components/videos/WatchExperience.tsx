@@ -21,7 +21,6 @@ export function WatchExperience({ video, related }: { video: BenchmarkVideo; rel
           <p className="watch-date">{category} · Collected <time dateTime={video.collected}>{video.collectedLabel}</time></p>
         </header>
         <figure className="watch-stage">
-          <div className="watch-stage-top"><span>Watch the finding</span><span>▶ {video.duration.replace("-second explainer", "s")}</span></div>
           <div className="watch-media"><BenchmarkPlayer video={video} showPlayButton /></div>
           <figcaption>English captions included · Sound on for narration</figcaption>
         </figure>
