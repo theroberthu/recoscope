@@ -140,4 +140,32 @@ export function promptToDescription(promptText: string, categoryName: string): s
   return `Which ${category} do AI assistants mention? Compare brand visibility and recorded ranks across models, with the exact shopper question behind the results.`;
 }
 
+const promptSearchSummaries = {
+  "electric-shaver-under-150-for-sensitive-skin-daily-use-7b25b63c": {
+    title: "Electric Shavers Under $150 for Sensitive Skin: AI Picks",
+    description: "Braun ranked first in all four AI answers about shavers under $150 for sensitive skin. Philips Norelco appeared in all four. Prices weren’t verified.",
+    result: "Braun ranked first in all four answers.",
+    intro: "We asked four AI assistants which electric shaver they would recommend for daily use on sensitive skin with a budget under $150. Braun and Philips Norelco each appeared in all four answers. Panasonic appeared in three.",
+    limitation: "The $150 limit was part of the question. The benchmark did not verify prices or test performance on sensitive skin.",
+    snapshotDate: "2026-05-30",
+    latestLabel: "See the latest electric shaver benchmark",
+  },
+  "compare-top-wireless-earbud-brands-and-rank-them-same-profil-a7dbfe14": {
+    title: "Wireless Earbuds Ranked by AI: Sony, Apple, Beats and Bose",
+    description: "Sony took first in two of four AI earbud rankings. Apple and Beats each took one. Bose appeared in all four answers. See the picks by assistant.",
+    result: "Sony led the rankings. Bose appeared most often.",
+    intro: "Sony ranked first in two of four AI answers. Apple and Beats each ranked first once. Bose appeared in all four answers and received no first-place ranks.",
+    limitation: "The comparison records how assistants ranked brands for one shopper profile. It does not test sound quality, fit or earbud features.",
+    snapshotDate: "2026-05-25",
+    latestLabel: "See the latest wireless earbud benchmark",
+  },
+} as const;
+
+export function promptSearchSummary(canonicalSlug: string) {
+  if (Object.hasOwn(promptSearchSummaries, canonicalSlug)) {
+    return promptSearchSummaries[canonicalSlug as keyof typeof promptSearchSummaries];
+  }
+  return undefined;
+}
+
 export { CATEGORY_LABELS };

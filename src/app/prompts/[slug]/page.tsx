@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { getAllPublishedPrompts, getPromptDetail } from "@/lib/queries";
-import { resolvePromptSlug, promptToTitle, promptToDescription } from "@/lib/prompt-seo";
+import { resolvePromptSlug, promptToTitle, promptToDescription, promptSearchSummary } from "@/lib/prompt-seo";
 
 export const dynamic = "force-dynamic";
 
@@ -30,8 +30,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const detail = await getPromptDetail(found.prompt_text, found.category_slug);
   if (!detail) return { title: "Not Found" };
 
-  const title = promptToTitle(found.prompt_text, detail.category_name);
-  const description = promptToDescription(found.prompt_text, detail.category_name);
+  const summary = promptSearchSummary(found.canonicalSlug);
+  const title = summary?.title ?? promptToTitle(found.prompt_text, detail.category_name);
+  const description = summary?.description ?? promptToDescription(found.prompt_text, detail.category_name);
 
   return {
     title,
@@ -59,8 +60,9 @@ export default async function PromptDetailPage({ params }: Props) {
   const detail = await getPromptDetail(promptText, found.category_slug);
   if (!detail) notFound();
 
-  const title = promptToTitle(promptText, detail.category_name);
-  const description = promptToDescription(promptText, detail.category_name);
+  const summary = promptSearchSummary(found.canonicalSlug);
+  const title = summary?.title ?? promptToTitle(promptText, detail.category_name);
+  const description = summary?.description ?? promptToDescription(promptText, detail.category_name);
   const baseUrl = "https://www.getrecoscope.com";
   const pageSchema = {
     "@context": "https://schema.org",
@@ -79,7 +81,7 @@ export default async function PromptDetailPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema).replace(/</g, "\\u003c") }}
       />
 
-      <article className="mx-auto max-w-3xl px-6 pb-20 pt-20">
+      <article className={`mx-auto max-w-3xl px-6 pb-20 ${summary ? "pt-10 sm:pt-16" : "pt-20"}`}>
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 font-mono text-[11px] text-white/25">
           <Link href="/prompts" className="transition-colors hover:text-white/50">Prompts</Link>
@@ -92,15 +94,34 @@ export default async function PromptDetailPage({ params }: Props) {
           {title}
         </h1>
 
-        <p className="mt-4 text-[15px] leading-relaxed text-white/60">
-          {description}
-        </p>
-
-        <p className="mt-4 text-[14px] text-white/30">
-          {detail.usable_answers} usable answers from {detail.snapshots.length} benchmark run{detail.snapshots.length !== 1 ? "s" : ""}
-          {` · ${fmtDate(detail.snapshots[detail.snapshots.length - 1].run_date)} – ${fmtDate(detail.snapshots[0].run_date)}`}
-
-        </p>
+        {summary ? (
+          <section className="mt-6 border-t border-white/20 pt-5" aria-labelledby="prompt-summary">
+            <p className="text-sm text-white/50">
+              <time dateTime={summary.snapshotDate}>{fmtDate(summary.snapshotDate)}</time> snapshot · 4 usable answers
+            </p>
+            <h2 id="prompt-summary" className="mt-2 text-xl font-semibold tracking-tight text-white">
+              {summary.result}
+            </h2>
+            <p className="mt-3 max-w-prose text-[15px] leading-relaxed text-white/70">
+              {summary.intro}
+            </p>
+            <p className="mt-2 max-w-prose text-[14px] leading-relaxed text-white/55">
+              {summary.limitation}
+            </p>
+            <div className="mt-4 flex flex-wrap gap-x-6 gap-y-3 text-sm">
+              <a href="#recorded-answers" className="font-semibold text-cyan underline underline-offset-4">See results by assistant</a>
+              <Link href={`/tracker/${detail.category_slug}`} className="text-cyan underline underline-offset-4">{summary.latestLabel}</Link>
+            </div>
+          </section>
+        ) : (
+          <>
+            <p className="mt-4 text-[15px] leading-relaxed text-white/60">{description}</p>
+            <p className="mt-4 text-[14px] text-white/30">
+              {detail.usable_answers} usable answers from {detail.snapshots.length} benchmark run{detail.snapshots.length !== 1 ? "s" : ""}
+              {` · ${fmtDate(detail.snapshots[detail.snapshots.length - 1].run_date)} – ${fmtDate(detail.snapshots[0].run_date)}`}
+            </p>
+          </>
+        )}
 
         {/* H2: exact prompt */}
         <div data-nosnippet="" className="mt-10 rounded-xl border border-white/10 bg-surface p-6">
@@ -147,7 +168,7 @@ export default async function PromptDetailPage({ params }: Props) {
         </section>
 
         <section className="mt-12" aria-labelledby="recorded-answers">
-          <h2 id="recorded-answers" className="text-xl font-semibold text-white">Recorded results by date and assistant</h2>
+          <h2 id="recorded-answers" className={`text-xl font-semibold text-white ${summary ? "scroll-mt-24" : ""}`}>Recorded results by date and assistant</h2>
           <p className="mt-2 text-[13px] leading-relaxed text-white/50">
             Each card shows one captured answer. Rank numbers are preserved, including ties and gaps.
             “Unranked” means no position was recorded. Dates are separate snapshots, not a combined ranking or evidence of a trend.

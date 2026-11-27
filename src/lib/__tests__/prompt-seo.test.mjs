@@ -7,7 +7,7 @@ const compiled = ts.transpileModule(
   readFileSync(new URL("../prompt-seo.ts", import.meta.url), "utf8"),
   { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2020 } },
 ).outputText;
-const { promptToDescription, CATEGORY_LABELS, promptToSlug, categoryPromptSlug, promptPageSlug, resolvePromptSlug } = await import(
+const { promptToDescription, CATEGORY_LABELS, promptToSlug, categoryPromptSlug, promptPageSlug, resolvePromptSlug, promptSearchSummary } = await import(
   `data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`
 );
 
@@ -63,4 +63,20 @@ test("comparison search descriptions offer a concrete reason to click without a 
   assert.equal(text, "Which electric shavers did AI rank first? Compare captured picks from ChatGPT, Claude, Gemini and Perplexity, with dates and the exact question.");
   assert.ok(text.length <= 160);
   assert.doesNotMatch(text, /best products|top recommended|guaranteed/);
+});
+
+test("evidence-led search copy applies only to the two exact prompt identities", () => {
+  const shaver = promptSearchSummary(promptToSlug("Electric shaver under $150 for sensitive skin daily use?"));
+  assert.match(shaver.title, /Under \$150 for Sensitive Skin/);
+  assert.equal(shaver.snapshotDate, "2026-05-30");
+  assert.match(shaver.description, /Braun ranked first in all four/);
+  assert.match(shaver.limitation, /did not verify prices/);
+
+  const earbuds = promptSearchSummary(promptToSlug("Compare top wireless earbud brands and rank them, same profile"));
+  assert.match(earbuds.description, /Sony took first in two of four/);
+  assert.match(earbuds.intro, /Bose appeared in all four answers and received no first-place ranks/);
+  assert.equal(earbuds.snapshotDate, "2026-05-25");
+
+  assert.equal(promptSearchSummary("compare-top-brands-and-rank-them-6537e966"), undefined);
+  assert.equal(promptSearchSummary("i-am-a-38-year-old-man-in-the-usa-daily-commuter-who-shaves--fe817e54"), undefined);
 });
