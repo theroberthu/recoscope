@@ -1906,7 +1906,46 @@ export const spaceHeatersNovemberBExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer, wirelessEarbudsNovemberCExplainer, proteinPowderNovemberCExplainer, standingDesksNovemberCExplainer, skincareNovemberCExplainer, airPurifiersNovemberCExplainer, humidifiersNovemberCExplainer, spaceHeatersNovemberBExplainer];
+export const dogFoodNovemberDExplainer = {
+  "id": "dog-food-2026-11-d-check-the-cited-sources",
+  "approved": true,
+  "approvedSha256": "89b880f045532a0d55e08e80ff9de2e36013942b8832c1c48662448185eb4815",
+  "category": "dog-food",
+  "runId": 205,
+  "period": "2026-11-D",
+  "collected": "2026-11-27",
+  "collectedLabel": "November 27, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Perplexity cited RecoScope in all three dog food answers.",
+  "duration": "47-second brief",
+  "src": "/tracker-media/dog-food/2026-11-d/dog-food-explainer.mp4",
+  "poster": "/tracker-media/dog-food/2026-11-d/explainer-poster.png",
+  "captions": "/tracker-media/dog-food/2026-11-d/explainer.en.vtt",
+  "summary": [
+    "Purina Pro Plan appeared in all 12 captured answers. ChatGPT, Gemini and Perplexity put it first in their numbered comparisons. Claude favored it for the shopper in an unranked comparison.",
+    "Perplexity cited RecoScope in all three answers, including next to the first-place brand in its ranking. The link identifies a source Perplexity cited. The capture cannot establish what caused the ranking or which product is better.",
+    "For your own brand, compare an open recommendation, a budget prompt and a ranked list for the same shopper. Record which brands are mentioned, where they rank and which pages are cited."
+  ],
+  "transcript": [
+    {
+      "text": "Perplexity cited our dog food benchmark in all three answers. Including its number-one pick."
+    },
+    {
+      "text": "We asked four assistants the same shopper’s question three ways. Purina Pro Plan appeared in all twelve answers. ChatGPT, Gemini, and Perplexity each ranked it first. Claude preferred it for this shopper without giving a numbered ranking."
+    },
+    {
+      "text": "In Perplexity’s ranking, the citation beside Purina Pro Plan pointed back to RecoScope. That shows which source it cited. These answers don’t establish what caused the ranking or which product is better."
+    },
+    {
+      "text": "Try this for your brand. Ask for a recommendation, add a budget, then ask for a ranked list. Record who gets mentioned, who gets ranked, and which pages get cited."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer, wirelessEarbudsNovemberCExplainer, proteinPowderNovemberCExplainer, standingDesksNovemberCExplainer, skincareNovemberCExplainer, airPurifiersNovemberCExplainer, humidifiersNovemberCExplainer, spaceHeatersNovemberBExplainer, dogFoodNovemberDExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
