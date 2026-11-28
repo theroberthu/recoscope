@@ -15,6 +15,9 @@
   "Brooks": {
     "src": "/brand-marks/brooks.svg"
   },
+  "ASICS": {
+    "src": "/brand-marks/asics.svg"
+  },
   "Branch": {
     "src": "/brand-marks/branch.png",
     "dark": true

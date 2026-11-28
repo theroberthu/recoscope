@@ -6,7 +6,7 @@ export const WATCH_PAGES_UPDATED_AT = "2026-11-28";
 // First successful public deployments; collection dates are separate evidence.
 const releases = {
   // First public deployment of the approved media, using its verified READY timestamp.
-  "running-shoes-2026-11-d-what-changes-under-150": ["2026-11-28T14:58:14.299Z", 46.267],
+  "running-shoes-2026-11-d-what-changes-under-150": ["2026-11-28T15:06:37.821Z", 46.267],
   // First public deployment of the approved media, using its verified READY timestamp.
   "office-chairs-2026-11-d-what-changes-at-400": ["2026-11-28T02:33:58.059Z", 49.134],
   // First public deployment of the approved media, using its verified READY timestamp.

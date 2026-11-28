@@ -190,6 +190,13 @@
       "image_url": "https://www.sihoo.com/cdn/shop/files/d1163c6c79dbd29abd30e0d32a5b83d8_973bd250-6b12-4af6-bbd8-f688190aad72.png?v=1649489425&width=400",
       "retrieved_on": "2026-11-21",
       "method": "Official brand logo; identifies captured brand without endorsement."
+    },
+    {
+      "file": "asics.svg",
+      "source_page": "https://corp.asics.com/en/focus/ip/brand",
+      "image_url": "https://corp.asics.com/system/assets/logo-asics.svg",
+      "method": "Official logo used in the Running Shoes comparison. Reused from the verified benchmark assets with its aspect ratio preserved.",
+      "sha256": "b8447d0ea869e09c2bbd721b4e76e3c7cafe071b1ac0d751d02a7add0af528a3"
     }
   ]
 }

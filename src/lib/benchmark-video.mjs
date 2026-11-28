@@ -1987,7 +1987,7 @@ export const officeChairsNovemberDExplainer = {
 export const runningShoesNovemberDExplainer = {
   "id": "running-shoes-2026-11-d-what-changes-under-150",
   "approved": true,
-  "approvedSha256": "15a9c3870e58e35bc10b24d48c5ec0ca33b2e92cddec9b4e3fefa51ffb442829",
+  "approvedSha256": "69ca0b2665962af45fd2c37df4f6131846c2b3b8bacc19c17d65a58d15db7136",
   "category": "running-shoes",
   "runId": 207,
   "period": "2026-11-D",
@@ -1996,8 +1996,8 @@ export const runningShoesNovemberDExplainer = {
   "context": "12 usable answers · Four AI assistants · Three prompt types",
   "title": "Saucony appeared in all four under-$150 answers.",
   "duration": "46-second brief",
-  "src": "/tracker-media/running-shoes/2026-11-d/running-shoes-explainer.mp4",
-  "poster": "/tracker-media/running-shoes/2026-11-d/explainer-poster.png",
+  "src": "/tracker-media/running-shoes/2026-11-d/running-shoes-explainer-motion.mp4",
+  "poster": "/tracker-media/running-shoes/2026-11-d/explainer-poster-motion.png",
   "captions": "/tracker-media/running-shoes/2026-11-d/explainer.en.vtt",
   "summary": [
     "Saucony appeared in one of four open discovery answers for the same U.S. runner. In the under-$150 prompt, all four assistants named the Saucony Ride 19. Brooks also appeared in every budget answer.",
