@@ -1945,7 +1945,46 @@ export const dogFoodNovemberDExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer, wirelessEarbudsNovemberCExplainer, proteinPowderNovemberCExplainer, standingDesksNovemberCExplainer, skincareNovemberCExplainer, airPurifiersNovemberCExplainer, humidifiersNovemberCExplainer, spaceHeatersNovemberBExplainer, dogFoodNovemberDExplainer];
+export const officeChairsNovemberDExplainer = {
+  "id": "office-chairs-2026-11-d-what-changes-at-400",
+  "approved": true,
+  "approvedSha256": "eb950f5958f10a487a24e8d28215582dcc239a4814ebdef2314fa62346fc9d7c",
+  "category": "office-chairs",
+  "runId": 206,
+  "period": "2026-11-D",
+  "collected": "2026-11-27",
+  "collectedLabel": "November 27, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Steelcase led the rankings. What changed at $400?",
+  "duration": "49-second brief",
+  "src": "/tracker-media/office-chairs/2026-11-d/office-chairs-explainer.mp4",
+  "poster": "/tracker-media/office-chairs/2026-11-d/explainer-poster.png",
+  "captions": "/tracker-media/office-chairs/2026-11-d/explainer.en.vtt",
+  "summary": [
+    "Steelcase ranked first in all four comparative responses. Branch appeared in all four under-$400 answers. Across all 12 usable answers, Branch appeared 12 times and Steelcase 11.",
+    "Steelcase appeared in three budget answers. Gemini mentioned a used Leap V2, Perplexity a refurbished Leap V2, and Claude a Series 1 around the $400 limit. Branch and SIHOO both appeared in all four budget answers. The captured suggestions do not verify price, chair performance, or health outcomes.",
+    "For your own brand, add a price ceiling to the same shopper prompt. Record product condition and quoted price separately so a used, refurbished, or over-budget suggestion is easy to distinguish."
+  ],
+  "transcript": [
+    {
+      "text": "Steelcase ranked first in all four comparisons. Add a four-hundred-dollar ceiling, and Branch appeared in every answer."
+    },
+    {
+      "text": "Same remote worker. Three different prompts. Across twelve answers, Branch showed up twelve times and Steelcase eleven. In the four numbered lists, all four assistants put Steelcase first."
+    },
+    {
+      "text": "The price ceiling changed how Steelcase appeared. Gemini and Perplexity suggested a used or refurbished Leap. Claude named the Series One around the limit. We captured suggestions and estimates. Prices and chair performance remain unverified."
+    },
+    {
+      "text": "Try this for your brand. Keep the shopper the same and add your target price. Then label each mention: new, used or refurbished, or over budget. That tells you what the shopper was actually shown."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer, wirelessEarbudsNovemberCExplainer, proteinPowderNovemberCExplainer, standingDesksNovemberCExplainer, skincareNovemberCExplainer, airPurifiersNovemberCExplainer, humidifiersNovemberCExplainer, spaceHeatersNovemberBExplainer, dogFoodNovemberDExplainer, officeChairsNovemberDExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
