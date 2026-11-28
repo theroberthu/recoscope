@@ -1984,7 +1984,46 @@ export const officeChairsNovemberDExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer, wirelessEarbudsNovemberCExplainer, proteinPowderNovemberCExplainer, standingDesksNovemberCExplainer, skincareNovemberCExplainer, airPurifiersNovemberCExplainer, humidifiersNovemberCExplainer, spaceHeatersNovemberBExplainer, dogFoodNovemberDExplainer, officeChairsNovemberDExplainer];
+export const runningShoesNovemberDExplainer = {
+  "id": "running-shoes-2026-11-d-what-changes-under-150",
+  "approved": true,
+  "approvedSha256": "15a9c3870e58e35bc10b24d48c5ec0ca33b2e92cddec9b4e3fefa51ffb442829",
+  "category": "running-shoes",
+  "runId": 207,
+  "period": "2026-11-D",
+  "collected": "2026-11-28",
+  "collectedLabel": "November 28, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "Saucony appeared in all four under-$150 answers.",
+  "duration": "46-second brief",
+  "src": "/tracker-media/running-shoes/2026-11-d/running-shoes-explainer.mp4",
+  "poster": "/tracker-media/running-shoes/2026-11-d/explainer-poster.png",
+  "captions": "/tracker-media/running-shoes/2026-11-d/explainer.en.vtt",
+  "summary": [
+    "Saucony appeared in one of four open discovery answers for the same U.S. runner. In the under-$150 prompt, all four assistants named the Saucony Ride 19. Brooks also appeared in every budget answer.",
+    "Brooks led overall mentions at 11 of 12. ASICS took three comparative first places, and Claude put Brooks first. Captured answers reflect this snapshot. Price, availability, and product quality remain unverified.",
+    "For your brand, ask an open question and a version with your shopper’s real price ceiling. Compare which competitors appear in each and record first places separately."
+  ],
+  "transcript": [
+    {
+      "text": "Saucony showed up in one of four open answers. With a hundred-and-fifty-dollar limit, it showed up in all four."
+    },
+    {
+      "text": "We asked four AI assistants about the same U.S. runner on November twenty-eighth. Perplexity was the only one to mention Saucony in the open question. With the price limit, all four named the Ride nineteen."
+    },
+    {
+      "text": "Across all twelve answers, Brooks appeared eleven times. A separate ranked comparison gave ASICS three first places and Brooks one. These are captured recommendations. Prices and product quality are unverified."
+    },
+    {
+      "text": "Try this for your brand. Keep the shopper the same. Ask one open question and one with your real price ceiling. Check which competitors appear in each. Log first place separately."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer, wirelessEarbudsNovemberCExplainer, proteinPowderNovemberCExplainer, standingDesksNovemberCExplainer, skincareNovemberCExplainer, airPurifiersNovemberCExplainer, humidifiersNovemberCExplainer, spaceHeatersNovemberBExplainer, dogFoodNovemberDExplainer, officeChairsNovemberDExplainer, runningShoesNovemberDExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
