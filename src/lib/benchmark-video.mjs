@@ -2023,7 +2023,46 @@ export const runningShoesNovemberDExplainer = {
   ]
 };
 
-export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer, wirelessEarbudsNovemberCExplainer, proteinPowderNovemberCExplainer, standingDesksNovemberCExplainer, skincareNovemberCExplainer, airPurifiersNovemberCExplainer, humidifiersNovemberCExplainer, spaceHeatersNovemberBExplainer, dogFoodNovemberDExplainer, officeChairsNovemberDExplainer, runningShoesNovemberDExplainer];
+export const robotVacuumsNovemberDExplainer = {
+  "id": "robot-vacuums-2026-11-d-one-brand-four-models",
+  "approved": true,
+  "approvedSha256": "5ac5dc4fd06de18532a343535463f0302ed28b42752e523943842733c23d3e84",
+  "category": "robot-vacuums",
+  "runId": 208,
+  "period": "2026-11-D",
+  "collected": "2026-11-28",
+  "collectedLabel": "November 28, 2026",
+  "context": "12 usable answers · Four AI assistants · Three prompt types",
+  "title": "One brand. Four models.",
+  "duration": "47-second brief",
+  "src": "/tracker-media/robot-vacuums/2026-11-d/robot-vacuums-explainer.mp4",
+  "poster": "/tracker-media/robot-vacuums/2026-11-d/explainer-poster.png",
+  "captions": "/tracker-media/robot-vacuums/2026-11-d/explainer.en.vtt",
+  "summary": [
+    "Roborock appeared in all four under-$500 answers for the same household. Each assistant named a different Roborock model first: ChatGPT the Q10 X5+, Claude the Q7 M5+, Gemini the Qrevo S, and Perplexity the Q10 S5+. Gemini also immediately offered the Q5 Max+, and Perplexity co-led with the Yeedi M14 Plus.",
+    "Roborock ranked first in all four comparative answers and appeared in 11 of 12 answers overall. Some of those models also appeared later in other answers. These captures do not verify checkout prices, stock or device performance.",
+    "For your brand, run a shopper question and log the exact model, the reason it was suggested and any caveat. Compare the list with the products you want shoppers to find."
+  ],
+  "transcript": [
+    {
+      "text": "All four budget answers named Roborock. Each named a different Roborock model first."
+    },
+    {
+      "text": "Same under-five-hundred-dollar prompt. Same two-story home and long-haired cat. ChatGPT led with the Q10 X5 Plus. Claude picked the Q7 M5 Plus. Gemini named the Qrevo S first. Perplexity named the Q10 S5 Plus alongside a Yeedi."
+    },
+    {
+      "text": "Roborock also ranked first in all four brand comparisons. That’s agreement at the brand level. The budget answers tell you which products actually came up. We didn’t verify prices or test the vacuums."
+    },
+    {
+      "text": "Try this for your brand. Run one shopper question. Record the exact model, why the assistant brought it up, and any caveat. Then check if that’s the product you want shoppers to find."
+    },
+    {
+      "text": "Explore benchmark at getrecoscope.com."
+    }
+  ]
+};
+
+export const benchmarkExplainers = [proteinExplainer, standingDesksExplainer, skincareExplainer, airPurifiersExplainer, sunscreenExplainer, espressoMachinesExplainer, dogFoodExplainer, officeChairsExplainer, runningShoesExplainer, robotVacuumsExplainer, wirelessEarbudsExplainer, proteinNovemberExplainer, standingNovemberExplainer, skincareNovemberExplainer, airPurifiersNovemberExplainer, humidifiersExplainer, dogFoodNovemberBExplainer, officeChairsNovemberBExplainer, spaceHeatersExplainer, runningShoesNovemberBExplainer, robotVacuumsNovemberBExplainer, wirelessEarbudsNovemberBExplainer, proteinNovemberBExplainer, standingNovemberBExplainer, skincareNovemberBExplainer, airPurifiersNovemberBExplainer, humidifiersNovemberBExplainer, dogFoodNovemberCExplainer, officeChairsNovemberCExplainer, runningShoesNovemberCExplainer, robotVacuumsNovemberCExplainer, electricShaversNovemberAExplainer, wirelessEarbudsNovemberCExplainer, proteinPowderNovemberCExplainer, standingDesksNovemberCExplainer, skincareNovemberCExplainer, airPurifiersNovemberCExplainer, humidifiersNovemberCExplainer, spaceHeatersNovemberBExplainer, dogFoodNovemberDExplainer, officeChairsNovemberDExplainer, runningShoesNovemberDExplainer, robotVacuumsNovemberDExplainer];
 
 export function snapshotVideo(category, run, video = benchmarkExplainers.find(
   (candidate) => candidate.category === category && candidate.runId === Number(run.id),
